@@ -26,7 +26,7 @@ apt::pin { "karmic-security": priority => 700 }
 ### apt::ppa
 Add a ppa repository using `add-apt-repository`.  Somewhat experimental.
 <pre>
-apt::ppa { "ppa:drizzle-developers/ppa" }
+apt::ppa { "ppa:drizzle-developers/ppa": }
 </pre>
 
 ### apt::release
