@@ -35,7 +35,7 @@ Set the default apt release.  Useful when using repositoires like Debian unstabl
 apt::release { "karmic": }
 </pre>
 
-## apt::source
+### apt::source
 Add an apt source to `/etc/apt/sources.list.d/`.
 <pre>
 apt::source { "debian_unstable":
