@@ -7,9 +7,14 @@ define apt::ppa(
 
     package { "python-software-properties": }
 
-	exec { "/usr/bin/add-apt-repository ${name}":
-		require => Package["python-software-properties"],
-		# TODO: unless => 'check'
-	}
+    exec { "apt-update":
+        command     => "/usr/bin/apt-get update",
+        refreshonly => true,
+    }
+
+    exec { "/usr/bin/add-apt-repository ${name}":
+        require => Package["python-software-properties"],
+        notify => Exec["apt-update"]
+    }
 }
 
