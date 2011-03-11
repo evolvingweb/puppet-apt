@@ -22,27 +22,27 @@ define apt::source(
 		mode => 644,
 		content => template("apt/source.list.erb"),
 	}
-	
+
 	if $pin != false {
 		apt::pin { "${release}": priority => "${pin}" }
 	}
-	
+
 	exec { "${name} apt update":
 		command => "${apt::provider} update",
 		subscribe => File["${name}.list"],
 		refreshonly => true,
 	}
-	
+
 	if $required_packages != false {
 		exec { "${apt::provider} -y install ${required_packages}":
 			subscribe => File["${name}.list"],
 			refreshonly => true,
 		}
 	}
-	
+
 	if $key != false {
-		exec { "apt-key adv --keyserver ${key_server} --recv-keys ${key}":
-			unless => "apt-key list | grep ${key}",
+		exec { "/usr/bin/apt-key adv --keyserver ${key_server} --recv-keys ${key}":
+			unless => "/usr/bin/apt-key list | grep ${key}",
 			before => File["${name}.list"],
 		}
 	}

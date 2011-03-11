@@ -5,12 +5,12 @@ define apt::force(
 	$release = 'testing',
 	$version = false
 ) {
-	
-	exec { "aptitude -y -t ${release} install ${name}":
+
+	exec { "/usr/bin/aptitude -y -t ${release} install ${name}":
 		unless => $version ? {
-			false => "dpkg -l | grep ${name}",
-			default => "dpkg -l | grep ${name} | grep ${version}"
+			false => "/usr/bin/dpkg -l | grep ${name}",
+			default => "/usr/bin/dpkg -l | grep ${name} | grep ${version}"
 		}
 	}
-	
+
 }

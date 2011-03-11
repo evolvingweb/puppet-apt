@@ -7,7 +7,7 @@ define apt::pin(
 ) {
 
 	include apt
-	
+
 	file { "${name}.pref":
 		name => "${apt::root}/preferences.d/${name}",
 		ensure => file,

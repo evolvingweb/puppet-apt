@@ -2,8 +2,8 @@
 
 class apt {
 	$root = '/etc/apt'
-	$provider = 'apt-get'
-	
+	$provider = '/usr/bin/apt-get'
+
 	file { "sources.list":
 		name => "${root}/sources.list",
 		ensure => present,
@@ -11,14 +11,14 @@ class apt {
 		group => root,
 		mode => 644,
 	}
-	
+
 	file { "sources.list.d":
 		name => "${root}/sources.list.d",
 		ensure => directory,
 		owner => root,
 		group => root,
 	}
-	
+
 	exec { "apt_update":
 		command => "${provider} update",
 		subscribe => [ File["sources.list"], File["sources.list.d"] ],
