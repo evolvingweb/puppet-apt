@@ -3,18 +3,16 @@
 define apt::ppa(
 
 ) {
-	include apt
+    require apt
 
-    package { "python-software-properties": }
-
-    exec { "apt-update":
-        command     => "/usr/bin/apt-get update",
+    exec { "apt-update-${name}":
+        command     => "/usr/bin/aptitude update",
         refreshonly => true,
     }
 
-    exec { "/usr/bin/add-apt-repository ${name}":
-        require => Package["python-software-properties"],
-        notify => Exec["apt-update"]
+    exec { "add-apt-repository-${name}":
+        command => "/usr/bin/add-apt-repository ${name}",
+        notify  => Exec["apt-update-${name}"],
     }
 }
 
