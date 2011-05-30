@@ -28,20 +28,20 @@ class apt(
 
   package { "python-software-properties": }
 
-	file { "sources.list":
-		ensure => present,
-		owner => root,
-		group => root,
-		mode => 644,
-	}
+  file { "sources.list":
     name => "${apt::params::root}/sources.list",
+    ensure => present,
+    owner => root,
+    group => root,
+    mode => 644,
+  }
 
-	file { "sources.list.d":
-		ensure => directory,
-		owner => root,
-		group => root,
-	}
+  file { "sources.list.d":
     name => "${apt::params::root}/sources.list.d",
+    ensure => directory,
+    owner => root,
+    group => root,
+  }
 
   exec { "apt_update":
     command => "${apt::params::provider} update",
