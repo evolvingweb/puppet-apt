@@ -19,8 +19,8 @@ class apt(
   $always_apt_update = false
 ) {
 
-	$root = '/etc/apt'
-	$provider = '/usr/bin/apt-get'
+  include apt::params
+
   $refresh_only_apt_update = $always_apt_update? {
     true => false,
     false => true
@@ -29,19 +29,19 @@ class apt(
   package { "python-software-properties": }
 
 	file { "sources.list":
-		name => "${root}/sources.list",
 		ensure => present,
 		owner => root,
 		group => root,
 		mode => 644,
 	}
+    name => "${apt::params::root}/sources.list",
 
 	file { "sources.list.d":
-		name => "${root}/sources.list.d",
 		ensure => directory,
 		owner => root,
 		group => root,
 	}
+    name => "${apt::params::root}/sources.list.d",
 
   exec { "apt_update":
     command => "${apt::params::provider} update",
