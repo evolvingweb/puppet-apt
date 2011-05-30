@@ -1,9 +1,8 @@
 # ppa.pp
 
-define apt::ppa(
+define apt::ppa() {
 
-) {
-    require apt
+  Class['apt'] -> Apt::Ppa[$title]
 
     exec { "apt-update-${name}":
         command     => "/usr/bin/aptitude update",
