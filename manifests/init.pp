@@ -1,8 +1,30 @@
-# apt.pp
+# Class: apt
+#
+# This module manages the initial configuration of apt.
+#
+# Parameters:
+#   Both of the parameters listed here are not required in general and were
+#     added for use cases related to development environments.
+#   disable_keys - disables the requirement for all packages to be signed
+#   always_apt_update - rather apt should be updated on every run (intended
+#     for development environments where package updates are frequent
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#  class { 'apt': }
+class apt(
+  $disable_keys = false,
+  $always_apt_update = false
+) {
 
-class apt {
 	$root = '/etc/apt'
 	$provider = '/usr/bin/apt-get'
+  $refresh_only_apt_update = $always_apt_update? {
+    true => false,
+    false => true
+  }
 
   package { "python-software-properties": }
 
@@ -21,9 +43,15 @@ class apt {
 		group => root,
 	}
 
-	exec { "apt_update":
-		command => "${provider} update",
-		subscribe => [ File["sources.list"], File["sources.list.d"] ],
-		refreshonly => true,
-	}
+  exec { "apt_update":
+    command => "${apt::params::provider} update",
+    subscribe => [ File["sources.list"], File["sources.list.d"] ],
+    refreshonly => $refresh_only_apt_update,
+  }
+  if($disable_keys) {
+    exec { 'make-apt-insecure':
+      command => '/bin/echo "APT::Get::AllowUnauthenticated 1;" >> /etc/apt/apt.conf.d/99unauth',
+      creates => '/etc/apt/apt.conf.d/99unauth'
+    }
+  }
 }
