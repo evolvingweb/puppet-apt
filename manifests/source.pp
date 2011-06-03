@@ -9,7 +9,8 @@ define apt::source(
   $required_packages = false,
   $key = false,
   $key_server = 'keyserver.ubuntu.com',
-  $pin = false
+  $pin = false,
+  $key_content = false
 ) {
 
   include apt::params
@@ -42,9 +43,17 @@ define apt::source(
   }
 
   if $key != false {
-    exec { "/usr/bin/apt-key adv --keyserver ${key_server} --recv-keys ${key}":
-      unless => "/usr/bin/apt-key list | grep ${key}",
-      before => File["${name}.list"],
+    if $key_content {
+      exec { "Add key: ${key} from content":
+        command => "/bin/echo '${key_content}' | /usr/bin/apt-key add -",
+        unless => "/usr/bin/apt-key list | /bin/grep '${key}'",
+        before => File["${name}.list"],
+      } 
+    } else {
+      exec { "/usr/bin/apt-key adv --keyserver ${key_server} --recv-keys ${key}":
+        unless => "/usr/bin/apt-key list | /bin/grep ${key}",
+        before => File["${name}.list"],
+      }
     }
   }
 }
