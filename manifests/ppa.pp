@@ -1,18 +1,17 @@
 # ppa.pp
 
-define apt::ppa(
+define apt::ppa() {
 
-) {
-    require apt
+  Class['apt'] -> Apt::Ppa[$title]
 
-    exec { "apt-update-${name}":
-        command     => "/usr/bin/aptitude update",
-        refreshonly => true,
-    }
+  exec { "apt-update-${name}":
+    command     => "/usr/bin/aptitude update",
+    refreshonly => true,
+  }
 
-    exec { "add-apt-repository-${name}":
-        command => "/usr/bin/add-apt-repository ${name}",
-        notify  => Exec["apt-update-${name}"],
-    }
+  exec { "add-apt-repository-${name}":
+    command => "/usr/bin/add-apt-repository ${name}",
+    notify  => Exec["apt-update-${name}"],
+  }
 }
 
