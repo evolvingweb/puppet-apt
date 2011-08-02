@@ -2,7 +2,7 @@
 
 define apt::builddep() {
 
-  Class['apt'] -> Apt::Ppa[$title]
+  Class['apt'] -> Apt::Builddep[$name]
 
   exec { "apt-update-${name}":
     command     => "/usr/bin/apt-get update",
@@ -11,6 +11,6 @@ define apt::builddep() {
 
   exec { "apt-builddep-${name}":
     command     => "/usr/bin/apt-get -y --force-yes build-dep $name",
-    notify  => Exec["apt-update-${name}"],
+    notify      => Exec["apt-update-${name}"],
   }
 }
