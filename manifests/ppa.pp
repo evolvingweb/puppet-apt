@@ -5,7 +5,10 @@ define apt::ppa() {
   Class['apt'] -> Apt::Ppa[$title]
 
   Exec {
-    onlyif => "/usr/bin/test ! $(/bin/ls /etc/apt/sources.list.d | /bin/grep -v $(echo \"${title}\" | /usr/bin/gawk 'match(\$0, /^ppa:(.*)\/(.*)$/, vals) {printf \"%s-%s\", vals[1], vals[2]}'))",
+    unless => $name? {
+      /ppa:(.*)/ => "/bin/cat /etc/apt/sources.list /etc/apt/sources.list.d/* | /bin/egrep '^[^#].*ppa.*$1.*$'",
+      default    => "/bin/cat /etc/apt/sources.list /etc/apt/sources.list.d/* | /bin/egrep '^[^#].*${title}.*$'",
+    }
   }
 
   exec { "apt-update-${name}":
