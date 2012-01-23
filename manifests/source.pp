@@ -17,7 +17,7 @@ define apt::source(
 
 
   file { "${name}.list":
-    name => "${apt::params::root}/sources.list.d/${name}.list",
+    path => "${apt::params::root}/sources.list.d/${name}.list",
     ensure => file,
     owner => root,
     group => root,
