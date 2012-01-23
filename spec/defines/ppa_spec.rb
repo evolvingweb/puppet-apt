@@ -29,4 +29,9 @@ describe 'apt::ppa', :type => :define do
       it { should contain_exec("apt-update-#{t}").without_unless }
     end
   end
+
+  describe "without Class[apt] should raise a Puppet::Error" do
+    let(:title) { "ppa" }
+    it { expect { should create_resource("apt::ppa", title) }.to raise_error(Puppet::Error) }
+  end
 end
