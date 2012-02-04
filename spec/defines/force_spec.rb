@@ -19,7 +19,7 @@ describe 'apt::force', :type => :define do
   ].each do |param_set|
     describe "when #{param_set == {} ? "using default" : "specifying"} define parameters" do
       let :param_hash do
-        param_set == {} ? default_params : params
+        default_params.merge(param_set)
       end
 
       let :params do

@@ -20,7 +20,7 @@ describe 'apt::ppa', :type => :define do
         'notify'  => "Exec[apt-update-#{t}]"
         )
       }
-      it { should contain_exec("add-apt-repository-#{t}").with_unless(unless_statement) }
+      it { should contain_exec("add-apt-repository-#{t}").with({"unless" => unless_statement}) }
       it { should contain_exec("apt-update-#{t}").with(
         'command'     => '/usr/bin/aptitude update',
         'refreshonly' => true
@@ -32,6 +32,6 @@ describe 'apt::ppa', :type => :define do
 
   describe "without Class[apt] should raise a Puppet::Error" do
     let(:title) { "ppa" }
-    it { expect { should create_resource("apt::ppa", title) }.to raise_error(Puppet::Error) }
+    it { expect { should contain_apt__ppa(title) }.to raise_error(Puppet::Error) }
   end
 end
