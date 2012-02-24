@@ -33,7 +33,7 @@ describe 'apt::source', :type => :define do
   ].each do |param_set|
     describe "when #{param_set == {} ? "using default" : "specifying"} class parameters" do
       let :param_hash do
-        default_params.merge(param_set)
+        param_set == {} ? default_params : params
       end
 
       let :params do
@@ -104,34 +104,37 @@ describe 'apt::source', :type => :define do
       it {
         if param_hash[:key]
           if param_hash[:key_content]
-            should contain_exec("Add key: #{param_hash[:key]} from content").with({
+            should contain_exec("Add key: #{param_hash[:key]} from content for #{title}").with({
               "command" => "/bin/echo '#{param_hash[:key_content]}' | /usr/bin/apt-key add -",
               "unless"  => "/usr/bin/apt-key list | /bin/grep '#{param_hash[:key]}'",
               "before"  => "File[#{title}.list]"
             })
-            should_not contain_exec("/usr/bin/apt-key adv --keyserver #{param_hash[:key_server]} --recv-keys #{param_hash[:key]}").with({
-              "unless"  => "/usr/bin/apt-key list | /bin/grep #{param_hash[:key]}",
-              "before"  => "File[#{title}.list]"
+            should_not contain_exec("Add key: #{param_hash[:key]} from #{param_hash[:key_server]} for #{title}").with({
+                "command" => "/usr/bin/apt-key adv --keyserver #{param_hash[:key_server]} --recv-keys #{param_hash[:key]}",
+                "unless"  => "/usr/bin/apt-key list | /bin/grep #{param_hash[:key]}",
+                "before"  => "File[#{title}.list]"
             })
 
           else
-            should contain_exec("/usr/bin/apt-key adv --keyserver #{param_hash[:key_server]} --recv-keys #{param_hash[:key]}").with({
-                "unless"  => "/usr/bin/apt-key list | /bin/grep #{param_hash[:key]}",
-                "before"  => "File[#{title}.list]"
-              })
-            should_not contain_exec("Add key: #{param_hash[:key]} from content").with({
+            should_not contain_exec("Add key: #{param_hash[:key]} from content for #{title}").with({
                 "command" => "/bin/echo '#{param_hash[:key_content]}' | /usr/bin/apt-key add -",
                 "unless"  => "/usr/bin/apt-key list | /bin/grep '#{param_hash[:key]}'",
                 "before"  => "File[#{title}.list]"
-              })
+            })
+            should contain_exec("Add key: #{param_hash[:key]} from #{param_hash[:key_server]} for #{title}").with({
+                "command" => "/usr/bin/apt-key adv --keyserver #{param_hash[:key_server]} --recv-keys #{param_hash[:key]}",
+                "unless"  => "/usr/bin/apt-key list | /bin/grep #{param_hash[:key]}",
+                "before"  => "File[#{title}.list]"
+            })
           end
         else
-          should_not contain_exec("Add key: #{param_hash[:key]} from content").with({
+          should_not contain_exec("Add key: #{param_hash[:key]} from content for #{title}").with({
             "command"   => "/bin/echo '#{param_hash[:key_content]}' | /usr/bin/apt-key add -",
             "unless"    => "/usr/bin/apt-key list | /bin/grep '#{param_hash[:key]}'",
             "before"    => "File[#{title}.list]"
           })
-          should_not contain_exec("/usr/bin/apt-key adv --keyserver #{param_hash[:key_server]} --recv-keys #{param_hash[:key]}").with({
+          should_not contain_exec("Add key: #{param_hash[:key]} from #{param_hash[:key_server]} for #{title}").with({
+              "command" => "/usr/bin/apt-key adv --keyserver #{param_hash[:key_server]} --recv-keys #{param_hash[:key]}",
               "unless"  => "/usr/bin/apt-key list | /bin/grep #{param_hash[:key]}",
               "before"  => "File[#{title}.list]"
           })
