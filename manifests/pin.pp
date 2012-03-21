@@ -8,7 +8,6 @@ define apt::pin(
 
   include apt::params
 
-  $pcontent = "# ${name}\nPackage: ${packages}\nPin: release a=${name}\nPin-Priority: ${priority}"
   file { "${name}.pref":
     ensure  => file,
     path    => "${apt::params::root}/preferences.d/${name}",

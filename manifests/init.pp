@@ -41,16 +41,17 @@ class apt(
     package { 'python-software-properties': }
   }
 
+  $sources_list_content = $purge_sources_list ? {
+    false =>  undef,
+    true  => "# Repos managed by puppet.\n",
+  }
   file { 'sources.list':
     ensure  => present,
     path    => "${apt::params::root}/sources.list",
     owner   => root,
     group   => root,
     mode    => '0644',
-    content => $purge_sources_list ? {
-      false =>  undef,
-      true  => "# Repos managed by puppet.\n",
-    },
+    content => $sources_list_content,
   }
 
   file { 'sources.list.d':

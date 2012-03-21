@@ -31,24 +31,25 @@ define apt::key (
 
       anchor { "apt::key/${title}":; }
 
-      if defined(Exec["apt::key $upkey absent"]) {
-        fail ("Cannot ensure Apt::Key[$upkey] present; $upkey already ensured absent")
+      if defined(Exec["apt::key ${upkey} absent"]) {
+        fail("Cannot ensure Apt::Key[${upkey}] present; ${upkey} already ensured absent")
       }
 
-      if !defined(Anchor["apt::key $upkey present"]) {
-        anchor { "apt::key $upkey present":; }
+      if !defined(Anchor["apt::key ${upkey} present"]) {
+        anchor { "apt::key ${upkey} present":; }
       }
 
       if !defined(Exec[$digest]) {
+        $digest_command = $method ? {
+          'content' => "echo '${key_content}' | /usr/bin/apt-key add -",
+          'source'  => "wget -q '${key_source}' -O- | apt-key add -",
+          'server'  => "apt-key adv --keyserver '${key_server}' --recv-keys '${upkey}'",
+        }
         exec { $digest:
           path    => '/bin:/usr/bin',
           unless  => "/usr/bin/apt-key list | /bin/grep '${upkey}'",
           before  => Anchor["apt::key ${upkey} present"],
-          command => $method ? {
-            'content' => "echo '${key_content}' | /usr/bin/apt-key add -",
-            'source'  => "wget -q '${key_source}' -O- | apt-key add -",
-            'server'  => "apt-key adv --keyserver '${key_server}' --recv-keys '${upkey}'",
-          },
+          command => $digest_command,
         }
       }
 
@@ -57,11 +58,11 @@ define apt::key (
     }
     absent: {
 
-      if defined(Anchor["apt::key $upkey present"]) {
-        fail ("Cannot ensure Apt::Key[$upkey] absent; $upkey already ensured present")
+      if defined(Anchor["apt::key ${upkey} present"]) {
+        fail("Cannot ensure Apt::Key[${upkey}] absent; ${upkey} already ensured present")
       }
 
-      exec { "apt::key $upkey absent":
+      exec { "apt::key ${upkey} absent":
         path    => '/bin:/usr/bin',
         onlyif  => "apt-key list | grep '${upkey}'",
         command => "apt-key del '${upkey}'",
