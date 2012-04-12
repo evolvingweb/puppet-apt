@@ -12,10 +12,10 @@ class apt::params {
     'ubuntu': {
       case $lsbdistcodename {
         'hardy','lucid','maverick','natty','oneiric','precise': {
-          $backports_location = http://us.archive.ubuntu.com/ubuntuk
+          $backports_location = 'http://us.archive.ubuntu.com/ubuntu'
         }
         default: {
-          $backports_location = 'http://old-releases.ubuntu.com/ubuntu',
+          $backports_location = 'http://old-releases.ubuntu.com/ubuntu'
         }
       }
     }

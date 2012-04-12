@@ -62,7 +62,7 @@ class apt(
 
   file { 'sources.list.d':
     ensure  => directory,
-    path    => $sources_list_d
+    path    => $sources_list_d,
     owner   => root,
     group   => root,
     purge   => $purge_sources_list_d,

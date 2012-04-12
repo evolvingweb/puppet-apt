@@ -25,7 +25,7 @@ define apt::source(
 
   file { "${name}.list":
     ensure  => file,
-    path    => "${apt::params::sources_list_d}/${name}.list",
+    path    => "${sources_list_d}/${name}.list",
     owner   => root,
     group   => root,
     mode    => '0644',

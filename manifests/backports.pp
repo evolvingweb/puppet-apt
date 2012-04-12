@@ -23,12 +23,14 @@
 # Copyright 2011 Puppet Labs Inc, unless otherwise noted.
 class apt::backports(
   $release  = $lsbdistcodename,
-  $location = $apt::params::backports_locations
+  $location = $apt::params::backports_location
 ) inherits apt::params {
+
+  $release_real = downcase($release)
 
   apt::source { 'backports.list':
     location   => $location,
-    release    => "${release}-backports",
+    release    => "${release_real}-backports",
     repos      => $lsbdistid ? {
       'debian' => 'main contrib non-free',
       'ubuntu' => 'universe multiverse restricted',
@@ -39,7 +41,6 @@ class apt::backports(
     },
     key_server => 'pgp.mit.edu',
     pin        => '200',
-    notify => Exec["apt-get update"],
+    notify => Exec["apt_update"],
   }
 }
-
