@@ -97,7 +97,7 @@ describe 'apt::source', :type => :define do
       }
 
       it {
-        should contain_exec("apt update").with({
+        should contain_exec("apt_update").with({
           "command"     => "/usr/bin/apt-get update",
           "refreshonly" => true
         })

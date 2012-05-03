@@ -7,6 +7,6 @@ define apt::builddep() {
 
   exec { "apt-builddep-${name}":
     command => "/usr/bin/apt-get -y --force-yes build-dep ${name}",
-    notify  => Exec['apt update'],
+    notify  => Exec['apt_update'],
   }
 }

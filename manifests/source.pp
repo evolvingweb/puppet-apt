@@ -32,7 +32,7 @@ define apt::source(
     group   => root,
     mode    => '0644',
     content => template("${module_name}/source.list.erb"),
-    notify  => Exec['apt update'],
+    notify  => Exec['apt_update'],
   }
 
   if ($pin != false) and ($ensure == 'present') {

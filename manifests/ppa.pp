@@ -23,7 +23,7 @@ define apt::ppa(
   exec { "add-apt-repository-${name}":
     command => "/usr/bin/add-apt-repository ${name}",
     creates => "${sources_list_d}/${sources_list_d_filename}",
-    notify  => Exec['apt update'],
+    notify  => Exec['apt_update'],
   }
 
   file { "${sources_list_d}/${sources_list_d_filename}":
