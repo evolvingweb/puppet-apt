@@ -5,7 +5,7 @@ define apt::pin(
   $ensure   = present,
   $packages = '*',
   $priority = 0,
-  $release = "${name}"
+  $release  = $name
 ) {
 
   include apt::params
