@@ -72,7 +72,8 @@ describe 'apt', :type => :class do
             'owner'   => "root",
             'group'   => "root",
             'purge'   => true,
-            'recurse' => true
+            'recurse' => true,
+            'notify'  => 'Exec[apt update]'
           })
         else
           should create_file("sources.list.d").with({
@@ -81,15 +82,15 @@ describe 'apt', :type => :class do
             'owner'   => "root",
             'group'   => "root",
             'purge'   => false,
-            'recurse' => false
+            'recurse' => false,
+            'notify'  => 'Exec[apt update]'
           })
         end
       }
 
       it {
-        should contain_exec("apt_update").with({
+        should contain_exec("apt update").with({
           'command'     => "/usr/bin/apt-get update",
-          'subscribe'   => ["File[sources.list]", "File[sources.list.d]"],
           'refreshonly' => refresh_only_apt_update
         })
       }
@@ -118,7 +119,7 @@ describe 'apt', :type => :class do
             should contain_file('configure-apt-proxy').with(
               'path'    => '/etc/apt/apt.conf.d/proxy',
               'content' => "Acquire::http::Proxy \"http://#{param_hash[:proxy_host]}:#{param_hash[:proxy_port]}\";",
-              'notify'  => "Exec[apt_update]"
+              'notify'  => "Exec[apt update]"
             )
           else
             should_not contain_file('configure_apt_proxy')

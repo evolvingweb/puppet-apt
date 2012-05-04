@@ -29,13 +29,9 @@ class apt(
 ) {
 
   include apt::params
+  include apt::update
 
   validate_bool($purge_sources_list, $purge_sources_list_d)
-
-  $refresh_only_apt_update = $always_apt_update? {
-    true  => false,
-    false => true,
-  }
 
   if ! defined(Package['python-software-properties']) {
     package { 'python-software-properties': }
@@ -44,6 +40,12 @@ class apt(
   $sources_list_content = $purge_sources_list ? {
     false => undef,
     true  => "# Repos managed by puppet.\n",
+  }
+
+  if $always_apt_update == true {
+    Exec <| title=='apt update' |> {
+      refreshonly => false,
+    }
   }
 
   $root           = $apt::params::root
@@ -58,6 +60,7 @@ class apt(
     group   => root,
     mode    => '0644',
     content => $sources_list_content,
+    notify  => Exec['apt update'],
   }
 
   file { 'sources.list.d':
@@ -67,12 +70,7 @@ class apt(
     group   => root,
     purge   => $purge_sources_list_d,
     recurse => $purge_sources_list_d,
-  }
-
-  exec { 'apt_update':
-    command     => "${provider} update",
-    subscribe   => [ File['sources.list'], File['sources.list.d'] ],
-    refreshonly => $refresh_only_apt_update,
+    notify  => Exec['apt update'],
   }
 
   case $disable_keys {
@@ -89,7 +87,7 @@ class apt(
         path   => "${apt_conf_d}/99unauth",
       }
     }
-    undef: { } # do nothing
+    undef:   { } # do nothing
     default: { fail('Valid values for disable_keys are true or false') }
   }
 
@@ -97,7 +95,7 @@ class apt(
     file { 'configure-apt-proxy':
       path    => "${apt_conf_d}/proxy",
       content => "Acquire::http::Proxy \"http://${proxy_host}:${proxy_port}\";",
-      notify  => Exec['apt_update'],
+      notify  => Exec['apt update'],
     }
   }
 }
