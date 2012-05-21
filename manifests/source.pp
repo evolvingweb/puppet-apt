@@ -2,17 +2,17 @@
 # add an apt source
 
 define apt::source(
-  $ensure = present,
-  $location = '',
-  $release = $lsbdistcodename,
-  $repos = 'main',
-  $include_src = true,
+  $ensure            = present,
+  $location          = '',
+  $release           = $lsbdistcodename,
+  $repos             = 'main',
+  $include_src       = true,
   $required_packages = false,
-  $key = false,
-  $key_server = 'keyserver.ubuntu.com',
-  $key_content = false,
-  $key_source  = false,
-  $pin = false
+  $key               = false,
+  $key_server        = 'keyserver.ubuntu.com',
+  $key_content       = false,
+  $key_source        = false,
+  $pin               = false
 ) {
 
   include apt::params
