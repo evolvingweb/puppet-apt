@@ -27,6 +27,6 @@ define apt::pin(
     owner   => root,
     group   => root,
     mode    => '0644',
-    content => "# ${name}\nPackage: ${packages}\nPin: ${pin}\nPin-Priority: ${priority}",
+    content => template("apt/pin.pref.erb"),
   }
 }
