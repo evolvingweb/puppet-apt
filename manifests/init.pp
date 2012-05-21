@@ -32,7 +32,7 @@ class apt(
   include apt::params
   include apt::update
 
-  validate_bool($purge_sources_list, $purge_sources_list_d)
+  validate_bool($purge_sources_list, $purge_sources_list_d, $purge_preferences_d)
 
   $sources_list_content = $purge_sources_list ? {
     false => undef,
@@ -48,6 +48,7 @@ class apt(
   $root           = $apt::params::root
   $apt_conf_d     = $apt::params::apt_conf_d
   $sources_list_d = $apt::params::sources_list_d
+  $preferences_d  = $apt::params::preferences_d
   $provider       = $apt::params::provider
 
   file { 'sources.list':
