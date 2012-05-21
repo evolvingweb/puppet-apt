@@ -36,12 +36,13 @@ define apt::source(
   }
 
 
-  if ($pin != false) and ($ensure == 'present') {
+  if ($pin != false) {
     # Get the host portion out of the url so we can pin to origin
     $url_split = split($location, '/')
     $host      = $url_split[2]
 
     apt::pin { $name:
+      ensure   => $ensure,
       priority => $pin,
       before   => File["${name}.list"],
       origin   => $host,
