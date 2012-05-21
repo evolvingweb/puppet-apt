@@ -18,7 +18,7 @@ define apt::pin(
   } elsif $origin != '' {
     $pin = "origin \"${origin}\""
   } else {
-    err("Apt::Pin needs either $release or $origin")
+    $pin = "release a=${name}"
   }
 
   file { "${name}.pref":
