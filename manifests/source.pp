@@ -35,10 +35,16 @@ define apt::source(
     notify  => Exec['apt_update'],
   }
 
+
   if ($pin != false) and ($ensure == 'present') {
-    apt::pin { $release:
+    # Get the host portion out of the url so we can pin to origin
+    $url_split = split($location, '/')
+    $host      = $url_split[2]
+
+    apt::pin { $name:
       priority => $pin,
-      before   => File["${name}.list"]
+      before   => File["${name}.list"],
+      origin   => $host,
     }
   }
 

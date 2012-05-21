@@ -5,12 +5,21 @@ define apt::pin(
   $ensure   = present,
   $packages = '*',
   $priority = 0,
-  $release  = $name
+  $release  = '',
+  $origin   = ''
 ) {
 
   include apt::params
 
   $preferences_d = $apt::params::preferences_d
+
+  if $release != '' {
+    $pin = "release a=${release}"
+  } elsif $origin != '' {
+    $pin = "origin \"${origin}\""
+  } else {
+    err("Apt::Pin needs either $release or $origin")
+  }
 
   file { "${name}.pref":
     ensure  => $ensure,
@@ -18,6 +27,6 @@ define apt::pin(
     owner   => root,
     group   => root,
     mode    => '0644',
-    content => "# ${name}\nPackage: ${packages}\nPin: release a=${release}\nPin-Priority: ${priority}",
+    content => "# ${name}\nPackage: ${packages}\nPin: ${pin}\nPin-Priority: ${priority}",
   }
 }
