@@ -23,7 +23,7 @@ define apt::pin(
 
   file { "${name}.pref":
     ensure  => $ensure,
-    path    => "${preferences_d}/${name}",
+    path    => "${preferences_d}/${name}.pref",
     owner   => root,
     group   => root,
     mode    => '0644',
