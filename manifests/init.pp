@@ -105,6 +105,12 @@ class apt(
       content => "Acquire::http::Proxy \"http://${proxy_host}:${proxy_port}\";",
       notify  => Exec['apt_update'],
     }
+  } else {
+    file { 'configure-apt-proxy':
+      path    => "${apt_conf_d}/proxy",
+      ensure  => absent
+      notify  => Exec['apt_update'],
+    }
   }
 
   # Need anchor to provide containment for dependencies.
