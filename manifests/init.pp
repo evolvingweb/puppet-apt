@@ -108,7 +108,7 @@ class apt(
   } else {
     file { 'configure-apt-proxy':
       path    => "${apt_conf_d}/proxy",
-      ensure  => absent
+      ensure  => absent,
       notify  => Exec['apt_update'],
     }
   }
