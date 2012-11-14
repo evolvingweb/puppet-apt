@@ -41,10 +41,18 @@ define apt::source(
 	}
 
 	if $key != false {
-		exec { "/usr/bin/apt-key adv --keyserver ${key_server} --recv-keys ${key}":
-			unless => "/usr/bin/apt-key list | grep ${key}",
-			before => File["${name}.list"],
-		}
+	  if $key =~ /^http:\/\/.+/ {
+      exec { "curl $key | /usr/bin/apt-key add - ":
+        unless => "/usr/bin/apt-key list | grep -i ${name}",  # look for $name in keys  
+        before => File["${name}.list"],
+        provider => "shell",
+      }
+	  } else {
+  		exec { "/usr/bin/apt-key adv --keyserver ${key_server} --recv-keys ${key}":
+  			unless => "/usr/bin/apt-key list | grep ${key}",
+  			before => File["${name}.list"],
+  		}
+    }
 	}
 
 }
