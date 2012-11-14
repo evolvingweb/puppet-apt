@@ -4,8 +4,12 @@ class apt {
 	$root = '/etc/apt'
 	$provider = '/usr/bin/apt-get'
 
-  package { "python-software-properties": }
-
+  if !defined(Package["python-software-properties"]) {
+    package { "python-software-properties":
+      ensure => installed,
+    }
+  }
+  
 	file { "sources.list":
 		name => "${root}/sources.list",
 		ensure => present,
