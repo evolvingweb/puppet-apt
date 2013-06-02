@@ -8,11 +8,5 @@ description 'APT Module for Puppet'
 project_page 'https://github.com/puppetlabs/puppetlabs-apt'
 
 ## Add dependencies, if any:
-<<<<<<< HEAD
 dependency 'puppetlabs/stdlib', '>= 3.0.1'
-=======
-#dependency 'puppetlabs/stdlib', '2.x'
-# The dependency should be written as above but librarian-puppet
-# does not support the expression as the PMT does.
-dependency 'puppetlabs/stdlib', '>= 2.2.1'
->>>>>>> 18ee4cc6c9eb8d16becfec68254d8955eb10c7d5
+
