@@ -14,7 +14,7 @@ define apt::pin(
   $release_version = '', # v=
   $component       = '', # c=
   $originator      = '', # o=
-  $label           = '', # l=
+  $label           = ''  # l=
 ) {
 
   include apt::params
@@ -25,13 +25,14 @@ define apt::pin(
     fail('Only integers are allowed in the apt::pin order param')
   }
 
-  $pin_release = join([
+  $pin_release_array = [
     $release,
     $codename,
     $release_version,
     $component,
     $originator,
-    $label], '')
+    $label] 
+  $pin_release = join($pin_release_array, '')
 
   # Read the manpage 'apt_preferences(5)', especially the chapter
   # 'Thea Effect of APT Preferences' to understand the following logic
