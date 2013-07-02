@@ -31,6 +31,8 @@ Thanks to all the community contributors below that made this patch possible.
 * Update travis.yml to latest versions of puppet (Ken Barber)
 * Fix proxy file removal (Scott Barber)
 * Add spec test for removing proxy configuration (Dean Reilly)
+* Fix apt::key listing longer than 8 chars (Benjamin Knofe)
+
 
 ---------------------------------------
 
