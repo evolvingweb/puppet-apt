@@ -12,7 +12,7 @@ class apt::params {
           $backports_location = 'http://backports.debian.org/debian-backports'
         }
         default: {
-          $backports_location = 'http://ftp.debian.org/debian/'
+          $backports_location = 'http://http.debian.net/debian/'
         }
       }
     }
