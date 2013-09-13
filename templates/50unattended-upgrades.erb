@@ -33,11 +33,11 @@ Unattended-Upgrade::InstallOnShutdown "<%= @install_on_shutdown %>";
 // If empty or unset then no email is sent, make sure that you
 // have a working mail setup on your system. A package that provides
 // 'mailx' must be installed.
-<% if @mail_to != "NONE" %> Unattended-Upgrade::Mail "<%= @mail_to %>"; <% end %>
+<% if @mail_to != "NONE" %>Unattended-Upgrade::Mail "<%= @mail_to %>";<% end %>
 
 // Set this value to "true" to get emails only on errors. Default
 // is to always send a mail if Unattended-Upgrade::Mail is set
-<% if @mail_to != "NONE" %> Unattended-Upgrade::MailOnlyOnError "<%= @mail_only_on_error %>"; <% end %>
+<% if @mail_to != "NONE" %>Unattended-Upgrade::MailOnlyOnError "<%= @mail_only_on_error %>";<% end %>
 
 // Do automatic removal of new unused dependencies after the upgrade
 // (equivalent to apt-get autoremove)
@@ -50,4 +50,4 @@ Unattended-Upgrade::Automatic-Reboot "<%= @auto_reboot %>";
 
 // Use apt bandwidth limit feature, this example limits the download
 // speed to 70kb/sec
-<% if @dl_limit != "NONE" %> Acquire::http::Dl-Limit "<%= @dl_limit %>"; <% end %>
+<% if @dl_limit != "NONE" %>Acquire::http::Dl-Limit "<%= @dl_limit %>";<% end %>
