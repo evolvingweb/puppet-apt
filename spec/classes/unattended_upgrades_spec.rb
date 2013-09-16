@@ -21,18 +21,32 @@ describe 'apt::unattended_upgrades', :type => :class do
     })
   }
 
-  describe "with origins => ['ubuntu:precise-security']" do
-    let :params do
-      { :origins => ['ubuntu:precise-security'] }
+  describe "origins" do
+    describe "with param defaults" do
+      let(:params) {{ }}
+      it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::Allowed-Origins \{\n\t"\${distro_id}:\${distro_codename}-security";\n\};$/) }
     end
-    it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::Allowed-Origins \{\n\t"ubuntu:precise-security";\n\};$/) }
+
+    describe "with origins => ['ubuntu:precise-security']" do
+      let :params do
+        { :origins => ['ubuntu:precise-security'] }
+      end
+      it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::Allowed-Origins \{\n\t"ubuntu:precise-security";\n\};$/) }
+    end
   end
   
-  describe "with blacklist => []" do
-    let :params do
-      { :blacklist => [] }
+  describe "blacklist" do
+    describe "with param defaults" do
+      let(:params) {{ }}
+      it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::Package-Blacklist \{\n\};$/) }
     end
-    it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::Package-Blacklist \{\n\};$/) }
+
+    describe "with blacklist => []" do
+      let :params do
+        { :blacklist => ['libc6', 'libc6-dev'] }
+      end
+      it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::Package-Blacklist \{\n\t"libc6";\n\t"libc6-dev";\n\};$/) }
+    end
   end
   
   describe "with update => 2" do
@@ -84,21 +98,21 @@ describe 'apt::unattended_upgrades', :type => :class do
     it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::InstallOnShutdown "true";$/) }
   end
   
-  describe "with mail_to => NONE" do
-    let :params do
-      { :mail_to => "NONE" }
+  describe "mail_to" do
+    describe "param defaults" do
+      let(:params) {{ }}
+      it { should_not contain_file(file_unattended).with_content(/^Unattended-Upgrade::Mail /) }
+      it { should_not contain_file(file_unattended).with_content(/^Unattended-Upgrade::MailOnlyOnError /) }
     end
-    it { should contain_file(file_unattended).with_content(/^\/\/ 'mailx' must be installed.\n$/) }
-    it { should contain_file(file_unattended).with_content(/^\/\/ is to always send a mail if Unattended-Upgrade::Mail is set\n$/) }
-  end
-  
-  describe "with mail_to => user@website, mail_only_on_error => true" do
-    let :params do
-      { :mail_to => "user@website",
-        :mail_only_on_error => true }
+
+    describe "with mail_to => user@website, mail_only_on_error => true" do
+      let :params do
+        { :mail_to => "user@website",
+          :mail_only_on_error => true }
+      end
+      it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::Mail "user@website";$/) }
+      it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::MailOnlyOnError "true";$/) }
     end
-    it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::Mail "user@website";$/) }
-    it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::MailOnlyOnError "true";$/) }
   end
   
   describe "with remove_unused => false" do
@@ -115,11 +129,18 @@ describe 'apt::unattended_upgrades', :type => :class do
     it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::Automatic-Reboot "true";$/) }
   end
   
-  describe "with dl_limit => 70" do
-    let :params do
-      { :dl_limit => "70" }
+  describe "dl_limit" do
+    describe "param defaults" do
+      let(:params) {{ }}
+      it { should_not contain_file(file_unattended).with_content(/^Acquire::http::Dl-Limit /) }
     end
-    it { should contain_file(file_unattended).with_content(/^Acquire::http::Dl-Limit "70";$/) }
+
+    describe "with dl_limit => 70" do
+      let :params do
+        { :dl_limit => "70" }
+      end
+      it { should contain_file(file_unattended).with_content(/^Acquire::http::Dl-Limit "70";$/) }
+    end
   end
   
   describe "with enable => 0" do
