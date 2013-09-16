@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe 'apt::unattended-upgrades', :type => :class do
+describe 'apt::unattended_upgrades', :type => :class do
 
   it { should contain_package("unattended-upgrades") }
 

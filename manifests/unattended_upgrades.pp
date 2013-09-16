@@ -1,19 +1,19 @@
-# unattended-upgrades.pp
-
+# Class: apt::unattended_upgrades
+#
 # This class manages the unattended-upgrades package and related configuration
 # files for ubuntu
-
+#
 # origins are the repositories to automatically upgrade included packages
 # blacklist is a list of packages to not automatically upgrade
 # update is how often to run "apt-get update" in days
 # download is how often to run "apt-get upgrade --download-only" in days
 # upgrade is how often to upgrade packages included in the origins list in days
 # autoclean is how often to run "apt-get autoclean" in days
-
+#
 # information on the other options can be found in the 50unattended-upgrades
 # file and in /etc/cron.daily/apt
-
-class apt::unattended-upgrades (
+#
+class apt::unattended_upgrades (
   $origins = ['${distro_id}:${distro_codename}-security'],
   $blacklist = [],
   $update = "1",
