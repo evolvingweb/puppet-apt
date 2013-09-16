@@ -63,21 +63,21 @@ describe 'apt::unattended_upgrades', :type => :class do
   
   describe "with auto_fix => false" do
     let :params do
-      { :auto_fix => "false" }
+      { :auto_fix => false }
     end
     it { should contain_file('/etc/apt/apt.conf.d/50unattended-upgrades').with_content(/^Unattended-Upgrade::AutoFixInterruptedDpkg "false";$/) }
   end
   
   describe "with minimal_steps => true" do
     let :params do
-      { :minimal_steps => "true" }
+      { :minimal_steps => true }
     end
     it { should contain_file('/etc/apt/apt.conf.d/50unattended-upgrades').with_content(/^Unattended-Upgrade::MinimalSteps "true";$/) }
   end
   
   describe "with install_on_shutdown => true" do
     let :params do
-      { :install_on_shutdown => "true" }
+      { :install_on_shutdown => true }
     end
     it { should contain_file('/etc/apt/apt.conf.d/50unattended-upgrades').with_content(/^Unattended-Upgrade::InstallOnShutdown "true";$/) }
   end
@@ -93,7 +93,7 @@ describe 'apt::unattended_upgrades', :type => :class do
   describe "with mail_to => user@website, mail_only_on_error => true" do
     let :params do
       { :mail_to => "user@website",
-        :mail_only_on_error => "true" }
+        :mail_only_on_error => true }
     end
     it { should contain_file('/etc/apt/apt.conf.d/50unattended-upgrades').with_content(/^Unattended-Upgrade::Mail "user@website";$/) }
     it { should contain_file('/etc/apt/apt.conf.d/50unattended-upgrades').with_content(/^Unattended-Upgrade::MailOnlyOnError "true";$/) }
@@ -101,14 +101,14 @@ describe 'apt::unattended_upgrades', :type => :class do
   
   describe "with remove_unused => false" do
     let :params do
-      { :remove_unused => "false" }
+      { :remove_unused => false }
     end
     it { should contain_file('/etc/apt/apt.conf.d/50unattended-upgrades').with_content(/^Unattended-Upgrade::Remove-Unused-Dependencies "false";$/) }
   end
   
   describe "with auto_reboot => true" do
     let :params do
-      { :auto_reboot => "true" }
+      { :auto_reboot => true }
     end
     it { should contain_file('/etc/apt/apt.conf.d/50unattended-upgrades').with_content(/^Unattended-Upgrade::Automatic-Reboot "true";$/) }
   end

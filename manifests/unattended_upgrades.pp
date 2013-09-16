@@ -20,13 +20,13 @@ class apt::unattended_upgrades (
   $download = "1",
   $upgrade = "1",
   $autoclean = "7",
-  $auto_fix = "true",
-  $minimal_steps = "false",
-  $install_on_shutdown = "false",
+  $auto_fix = true,
+  $minimal_steps = false,
+  $install_on_shutdown = false,
   $mail_to = "NONE",
-  $mail_only_on_error = "false",
-  $remove_unused = "true",
-  $auto_reboot = "false",
+  $mail_only_on_error = false,
+  $remove_unused = true,
+  $auto_reboot = false,
   $dl_limit = "NONE",
   $enable = "1",
   $backup_interval = "0",
@@ -37,6 +37,15 @@ class apt::unattended_upgrades (
   $download_delta = "0",
   $verbose = "0",
 ) {
+
+  validate_bool(
+    $auto_fix,
+    $minimal_steps,
+    $install_on_shutdown,
+    $mail_only_on_error,
+    $remove_unused,
+    $auto_reboot
+  )
 
   package { 'unattended-upgrades':
     ensure => present,
