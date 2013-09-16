@@ -56,6 +56,7 @@ class apt::unattended_upgrades (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
+    require => Package['unattended-upgrades'],
   }
 
   file {

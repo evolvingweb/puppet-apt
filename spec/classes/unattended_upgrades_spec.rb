@@ -10,6 +10,7 @@ describe 'apt::unattended_upgrades', :type => :class do
       "owner"   => "root",
       "group"   => "root",
       "mode"    => "0644",
+      "require" => "Package[unattended-upgrades]",
     })
   }
   
@@ -18,6 +19,7 @@ describe 'apt::unattended_upgrades', :type => :class do
       "owner"   => "root",
       "group"   => "root",
       "mode"    => "0644",
+      "require" => "Package[unattended-upgrades]",
     })
   }
 
