@@ -73,7 +73,7 @@ describe 'apt::source', :type => :define do
       let :content do
         content = "# #{title}"
         if param_hash[:architecture]
-          arch = "[arch=#{param_hash[:architecture]}]"
+          arch = "[arch=#{param_hash[:architecture]}] "
         end
         content << "\ndeb #{arch}#{param_hash[:location]} #{param_hash[:release]} #{param_hash[:repos]}\n"
 
