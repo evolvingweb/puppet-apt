@@ -26,7 +26,7 @@ describe 'apt::unattended_upgrades', :type => :class do
   describe "origins" do
     describe "with param defaults" do
       let(:params) {{ }}
-      it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::Allowed-Origins \{\n\t"\${distro_id}:\${distro_codename}-security";\n\};$/) }
+      it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::Allowed-Origins \{\n\t"\$\{distro_id\}:\$\{distro_codename\}-security";\n\};$/) }
     end
 
     describe "with origins => ['ubuntu:precise-security']" do
