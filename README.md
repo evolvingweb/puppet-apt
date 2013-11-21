@@ -4,12 +4,15 @@ apt
 [![Build Status](https://travis-ci.org/puppetlabs/puppetlabs-apt.png?branch=master)](https://travis-ci.org/puppetlabs/puppetlabs-apt)
 
 ## Description
+
 Provides helpful definitions for dealing with Apt.
+
 =======
+
 Overview
 --------
 
-The APT module provides a simple interface for managing APT source, key, and definitions with Puppet. 
+The APT module provides a simple interface for managing APT source, key, and definitions with Puppet.
 
 Module Description
 ------------------
@@ -28,11 +31,11 @@ Setup
 * authentication keys
 * wget (optional)
 
-###Beginning with APT
+### Beginning with APT
 
 To begin using the APT module with default parameters, declare the class
 
-    class { 'apt': }
+    include apt
  
 Puppet code that uses anything from the APT module requires that the core apt class be declared. 
 
@@ -41,7 +44,7 @@ Usage
 
 Using the APT module consists predominantly in declaring classes that provide desired functionality and features. 
  
-###apt
+### apt
 
 `apt` provides a number of common resources and options that are shared by the various defined types in this module, so you MUST always include this class in your manifests.
 
@@ -62,13 +65,13 @@ Puppet will manage your system's `sources.list` file and `sources.list.d` direct
 
 If you declare your apt class with `purge_sources_list` and `purge_sources_list_d` set to 'true', Puppet will unapologetically purge any existing content it finds that wasn't declared with Puppet. 
 
-###apt::builddep
+### apt::builddep
 
 Installs the build depends of a specified package.
 
     apt::builddep { 'glusterfs-server': }
 
-###apt::force
+### apt::force
 
 Forces a package to be installed from a specific release.  This class is particularly useful when using repositories, like Debian, that are unstable in Ubuntu.
 
@@ -78,7 +81,7 @@ Forces a package to be installed from a specific release.  This class is particu
 	  require => Apt::Source['debian_unstable'],
     }
 
-###apt::key
+### apt::key
 
 Adds a key to the list of keys used by APT to authenticate packages.
 
@@ -94,7 +97,7 @@ Adds a key to the list of keys used by APT to authenticate packages.
 
 Note that use of `key_source` requires wget to be installed and working.
 
-###apt::pin
+### apt::pin
 
 Adds an apt pin for a certain release.
 
@@ -112,13 +115,13 @@ Note you can also specifying more complex pins using distribution properties.
       label           => 'Debian'
     }
 
-###apt::ppa
+### apt::ppa
 
 Adds a ppa repository using `add-apt-repository`.
 
     apt::ppa { 'ppa:drizzle-developers/ppa': }
 
-###apt::release
+### apt::release
 
 Sets the default apt release. This class is particularly useful when using repositories, like Debian, that are unstable in Ubuntu.
 
@@ -126,7 +129,7 @@ Sets the default apt release. This class is particularly useful when using repos
       release_id => 'precise',
     }
 
-###apt::source
+### apt::source
 
 Adds an apt source to `/etc/apt/sources.list.d/`.
 
@@ -150,11 +153,11 @@ If you would like to configure your system so the source is the Puppet Labs APT 
       key_server => 'pgp.mit.edu',
     }
 
-###Testing
+### Testing
 
 The APT module is mostly a collection of defined resource types, which provide reusable logic that can be leveraged to manage APT. It does provide smoke tests for testing functionality on a target system, as well as spec tests for checking a compiled catalog against an expected set of resources.
 
-####Example Test
+#### Example Test
 
 This test will set up a Puppet Labs apt repository. Start by creating a new smoke test in the apt module's test folder. Call it puppetlabs-apt.pp. Inside, declare a single resource representing the Puppet Labs APT source and gpg key
 
@@ -183,7 +186,7 @@ The above example used a smoke test to easily lay out a resource declaration and
 Implementation
 --------------
 
-###apt::backports
+### apt::backports
 
 Adds the necessary components to get backports for Ubuntu and Debian. The release name defaults to `$lsbdistcodename`. Setting this manually can cause undefined behavior (read: universe exploding).
 
