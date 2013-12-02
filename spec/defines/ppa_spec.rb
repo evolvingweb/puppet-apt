@@ -46,7 +46,7 @@ describe 'apt::ppa', :type => :define do
           it { should contain_exec("add-apt-repository-#{t}").with(
             'command' => "/usr/bin/add-apt-repository #{options} #{t}",
             'unless'  => "/usr/bin/test -s /etc/apt/sources.list.d/#{filename}",
-            'require' => ["File[/etc/apt/sources.list.d]", "Package[#{package}]"],
+            'require' => ["File[sources.list.d]", "Package[#{package}]"],
             'notify'  => "Exec[apt_update]"
             )
           }
@@ -75,7 +75,7 @@ describe 'apt::ppa', :type => :define do
           'environment' => [],
           'command'     => "/usr/bin/add-apt-repository #{options} #{title}",
           'unless'      => "/usr/bin/test -s /etc/apt/sources.list.d/#{filename}",
-          'require'     => ["File[/etc/apt/sources.list.d]", "Package[#{package}]"],
+          'require'     => ["File[sources.list.d]", "Package[#{package}]"],
           'notify'      => "Exec[apt_update]"
           )
         }
@@ -101,7 +101,7 @@ describe 'apt::ppa', :type => :define do
           ],
           'command'     => "/usr/bin/add-apt-repository #{options} #{title}",
           'unless'      => "/usr/bin/test -s /etc/apt/sources.list.d/#{filename}",
-          'require'     => ["File[/etc/apt/sources.list.d]", "Package[#{package}]"],
+          'require'     => ["File[sources.list.d]", "Package[#{package}]"],
           'notify'      => "Exec[apt_update]"
           )
         }
