@@ -48,7 +48,7 @@ define apt::ppa(
         logoutput    => 'on_failure',
         notify       => Exec['apt_update'],
         require      => [
-        File[$sources_list_d],
+        File['sources.list.d'],
         Package[$package],
         ],
     }
