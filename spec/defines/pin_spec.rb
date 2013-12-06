@@ -85,7 +85,7 @@ describe 'apt::pin', :type => :define do
         param_set[:params]
       end
 
-      it { should include_class("apt::params") }
+      it { should contain_class("apt::params") }
 
       it { should contain_file("#{title}.pref").with({
           'ensure'  => param_hash[:ensure],

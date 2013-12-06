@@ -8,7 +8,7 @@ describe 'apt::release', :type => :class do
 
   let (:params) { param_set }
 
-  it { should include_class("apt::params") }
+  it { should contain_class("apt::params") }
 
   it {
     should contain_file("/etc/apt/apt.conf.d/01release").with({
