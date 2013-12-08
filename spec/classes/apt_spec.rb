@@ -39,7 +39,7 @@ describe 'apt', :type => :class do
         end
       end
 
-      it { should include_class("apt::params") }
+      it { should contain_class("apt::params") }
 
       it {
         if param_hash[:purge_sources_list]
