@@ -1,11 +1,11 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
 describe 'apt::ppa' do
 
   context 'reset' do
     it 'removes ppa' do
-      shell('rm /etc/apt/sources.list.d/drizzle-developers-ppa*')
-      shell('rm /etc/apt/sources.list.d/raravena80-collectd5-*')
+      shell('rm /etc/apt/sources.list.d/canonical-kernel-team-ppa-*', :acceptable_exit_codes => [0,1,2])
+      shell('rm /etc/apt/sources.list.d/raravena80-collectd5-*', :acceptable_exit_codes => [0,1,2])
     end
   end
 
@@ -13,19 +13,15 @@ describe 'apt::ppa' do
     it 'should work with no errors' do
       pp = <<-EOS
       include '::apt'
-      apt::ppa { 'ppa:drizzle-developers/ppa': }
+      apt::ppa { 'ppa:canonical-kernel-team/ppa': }
       EOS
 
-      puppet_apply(pp) do |r|
-        r.exit_code.should_not == 1
-      end
+      apply_manifest(pp, :catch_failures => true)
     end
 
     describe 'contains the source file' do
-      it 'contains a drizzle ppa source' do
-        shell('ls /etc/apt/sources.list.d/drizzle-developers-ppa-*.list') do |r|
-          r.exit_code.should be_zero
-        end
+      it 'contains a kernel ppa source' do
+        shell('ls /etc/apt/sources.list.d/canonical-kernel-team-ppa-*', :acceptable_exit_codes => [0])
       end
     end
   end
@@ -43,15 +39,13 @@ describe 'apt::ppa' do
       apt::ppa { 'ppa:raravena80/collectd5': }
       EOS
 
-      puppet_apply(pp) do |r|
-        r.exit_code.should_not == 1
-      end
+      apply_manifest(pp, :catch_failures => true)
     end
   end
 
   context 'reset' do
     it 'removes added ppas' do
-      shell('rm /etc/apt/sources.list.d/drizzle-developers-ppa*')
+      shell('rm /etc/apt/sources.list.d/canonical-kernel-team-ppa-*')
       shell('rm /etc/apt/sources.list.d/raravena80-collectd5-*')
     end
   end

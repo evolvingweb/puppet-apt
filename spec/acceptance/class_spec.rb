@@ -1,4 +1,4 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
 describe 'apt class' do
 
@@ -10,11 +10,8 @@ describe 'apt class' do
       EOS
 
       # Run it twice and test for idempotency
-      puppet_apply(pp) do |r|
-        r.exit_code.should_not == 1
-        r.refresh
-        r.exit_code.should be_zero
-      end
+      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_failures => true)
     end
   end
 end
