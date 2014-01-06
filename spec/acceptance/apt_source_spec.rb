@@ -1,11 +1,11 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
 describe 'apt::source' do
 
   context 'reset' do
     it 'clean up puppetlabs repo' do
-      shell('apt-key del 4BD6EC30')
-      shell('rm /etc/apt/sources.list.d/puppetlabs.list')
+      shell('apt-key del 4BD6EC30', :acceptable_exit_codes => [0,1,2])
+      shell('rm /etc/apt/sources.list.d/puppetlabs.list', :acceptable_exit_codes => [0,1,2])
     end
   end
 
@@ -21,15 +21,13 @@ describe 'apt::source' do
       }
       EOS
 
-      puppet_apply(pp) do |r|
-        r.exit_code.should_not == 1
-      end
+      apply_manifest(pp, :catch_failures => true)
     end
 
     describe 'key should exist' do
       it 'finds puppetlabs key' do
         shell('apt-key list | grep 4BD6EC30') do |r|
-          r.exit_code.should be_zero
+          expect(r.exit_code).to be_zero
         end
       end
     end
