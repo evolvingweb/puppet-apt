@@ -50,4 +50,89 @@ describe 'apt::ppa' do
     end
   end
 
+  context 'ensure' do
+    context 'present' do
+      it 'works without failure' do
+        pp = <<-EOS
+        include '::apt'
+        apt::ppa { 'ppa:canonical-kernel-team/ppa': ensure => present }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe 'contains the source file' do
+        it 'contains a kernel ppa source' do
+          shell('ls /etc/apt/sources.list.d/canonical-kernel-team-ppa-*', :acceptable_exit_codes => [0])
+        end
+      end
+    end
+  end
+
+  context 'ensure' do
+    context 'absent' do
+      it 'works without failure' do
+        pp = <<-EOS
+        include '::apt'
+        apt::ppa { 'ppa:canonical-kernel-team/ppa': ensure => absent }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe 'doesnt contain the source file' do
+        it 'fails' do
+          shell('ls /etc/apt/sources.list.d/canonical-kernel-team-ppa-*', :acceptable_exit_codes => [2])
+        end
+      end
+    end
+  end
+
+  context 'release' do
+    context 'precise' do
+      it 'works without failure' do
+        pp = <<-EOS
+        include '::apt'
+        apt::ppa { 'ppa:canonical-kernel-team/ppa':
+          ensure  => present,
+          release => precise,
+        }
+        EOS
+
+        shell('rm -rf /etc/apt/sources.list.d/canonical-kernel-team-ppa*', :acceptable_exit_codes => [0,1,2])
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe file('/etc/apt/sources.list.d/canonical-kernel-team-ppa-precise.list') do
+        it { should be_file }
+      end
+    end
+  end
+
+  context 'options' do
+    context '-y' do
+      it 'works without failure' do
+        pp = <<-EOS
+        include '::apt'
+        apt::ppa { 'ppa:canonical-kernel-team/ppa':
+          ensure  => present,
+          release => precise,
+          options => '-y',
+        }
+        EOS
+
+        shell('rm -rf /etc/apt/sources.list.d/canonical-kernel-team-ppa*', :acceptable_exit_codes => [0,1,2])
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe file('/etc/apt/sources.list.d/canonical-kernel-team-ppa-precise.list') do
+        it { should be_file }
+      end
+    end
+  end
+
+  context 'reset' do
+    it { shell('rm -rf /etc/apt/sources.list.d/canonical-kernel-team-ppa*', :acceptable_exit_codes => [0,1,2]) }
+  end
+
 end
