@@ -2,6 +2,12 @@ require 'spec_helper_acceptance'
 
 describe 'apt class' do
 
+  context 'reset' do
+    it 'fixes the sources.list' do
+      shell('cp /etc/apt/sources.list /tmp')
+    end
+  end
+
   context 'always_apt_update => true' do
     it 'should work with no errors' do
       pp = <<-EOS
@@ -217,4 +223,11 @@ describe 'apt class' do
       end
     end
   end
+
+  context 'reset' do
+    it 'fixes the sources.list' do
+      shell('cp /tmp/sources.list /etc/apt')
+    end
+  end
+
 end

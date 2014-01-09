@@ -40,4 +40,12 @@ describe 'apt::backports class' do
       it { should contain 'deb http://localhost/ubuntu precise-backports main universe multiverse restricted' }
     end
   end
+
+  context 'reset' do
+    it 'deletes backport files' do
+      shell('rm -rf /etc/apt/sources.list.d/backports.list')
+      shell('rm -rf /etc/apt/preferences.d/backports.pref')
+    end
+  end
+
 end
