@@ -1,5 +1,13 @@
 require 'spec_helper_acceptance'
 
+codename = fact('lsbdistcodename')
+case fact('operatingsystem')
+when 'Ubuntu'
+  repos = 'main universe multiverse restricted'
+when 'Debian'
+  repos = 'main contrib non-free'
+end
+
 describe 'apt::backports class' do
   context 'defaults' do
     it 'should work with no errors' do
@@ -14,7 +22,7 @@ describe 'apt::backports class' do
   context 'release' do
     it 'should work with no errors' do
       pp = <<-EOS
-      class { 'apt::backports': release => 'precise' }
+      class { 'apt::backports': release => '#{codename}' }
       EOS
 
       apply_manifest(pp, :catch_failures => true)
@@ -22,7 +30,7 @@ describe 'apt::backports class' do
 
     describe file('/etc/apt/sources.list.d/backports.list') do
       it { should be_file }
-      it { should contain 'precise-backports main universe multiverse restricted' }
+      it { should contain "#{codename}-backports #{repos}" }
     end
   end
 
@@ -37,7 +45,7 @@ describe 'apt::backports class' do
 
     describe file('/etc/apt/sources.list.d/backports.list') do
       it { should be_file }
-      it { should contain 'deb http://localhost/ubuntu precise-backports main universe multiverse restricted' }
+      it { should contain "deb http://localhost/ubuntu precise-backports #{repos}" }
     end
   end
 

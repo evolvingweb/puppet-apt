@@ -255,6 +255,7 @@ describe 'apt::source' do
         apt::source { 'puppetlabs':
           ensure     => present,
           location   => 'http://apt.puppetlabs.com',
+          release    => 'precise',
           repos      => 'main',
           key        => '4BD6EC30',
           key_source  => 'http://apt.puppetlabs.com/pubkey.gpg',

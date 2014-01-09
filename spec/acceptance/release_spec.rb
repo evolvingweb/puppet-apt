@@ -17,4 +17,10 @@ describe 'apt::release class' do
     end
   end
 
+  context 'reset' do
+    it 'cleans up' do
+      shell('rm -rf /etc/apt/apt.conf.d/01release')
+    end
+  end
+
 end

@@ -1,5 +1,7 @@
 require 'spec_helper_acceptance'
 
+codename = fact('lsbdistcodename')
+
 describe 'apt::force define' do
   context 'defaults' do
     it 'should work with no errors' do
@@ -21,12 +23,12 @@ describe 'apt::force define' do
     it 'should work with no errors' do
       pp = <<-EOS
       include apt
-      apt::force { 'vim': release => 'precise' }
+      apt::force { 'vim': release => '#{codename}' }
       EOS
 
       shell('apt-get remove -y vim')
       apply_manifest(pp, :catch_failures => true) do |r|
-        expect(r.stdout).to match(/apt-get -y -t precise install vim/)
+        expect(r.stdout).to match(/apt-get -y -t #{codename} install vim/)
       end
     end
 
@@ -57,7 +59,7 @@ describe 'apt::force define' do
     it 'should work with no errors' do
       pp = <<-EOS
       include apt
-      apt::force { 'tomcat7': timeout => '1' }
+      apt::force { 'vim': timeout => '1' }
       EOS
 
       shell('apt-get clean')
