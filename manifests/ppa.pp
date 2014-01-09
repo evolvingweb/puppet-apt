@@ -14,6 +14,10 @@ define apt::ppa(
     fail('lsbdistcodename fact not available: release parameter required')
   }
 
+  if $::operatingsystem != 'Ubuntu' {
+    fail("apt::ppa is currently supported on Ubuntu only.")
+  }
+
   $filename_without_slashes = regsubst($name, '/', '-', 'G')
   $filename_without_dots    = regsubst($filename_without_slashes, '\.', '_', 'G')
   $filename_without_ppa     = regsubst($filename_without_dots, '^ppa:', '', 'G')
