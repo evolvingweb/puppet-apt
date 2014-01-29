@@ -25,7 +25,7 @@
 class apt(
   $always_apt_update    = false,
   $disable_keys         = undef,
-  $proxy_host           = false,
+  $proxy_host           = undef,
   $proxy_port           = '8080',
   $purge_sources_list   = false,
   $purge_sources_list_d = false,
@@ -103,7 +103,7 @@ class apt(
   }
 
   $proxy_set = $proxy_host ? {
-    false   => absent,
+    undef   => absent,
     default => present
   }
 
