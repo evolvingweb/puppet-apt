@@ -4,7 +4,10 @@ class apt {
 	$root = '/etc/apt'
 	$provider = '/usr/bin/apt-get'
 
-  package { "python-software-properties": }
+    # Check if not already defined, before declaring the package
+    if ! defined(Package["python-software-properties"]) {
+        package { "python-software-properties": }
+    }
 
 	file { "sources.list":
 		name => "${root}/sources.list",
