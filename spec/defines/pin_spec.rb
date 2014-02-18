@@ -60,7 +60,7 @@ describe 'apt::pin', :type => :define do
         :priority => '1',
         :origin   => 'ftp.de.debian.org'
       },
-      :content => "# my_pin\nExplanation: : my_pin\nPackage: *\nPin: origin \"ftp.de.debian.org\"\nPin-Priority: 1\n"
+      :content => "# my_pin\nExplanation: : my_pin\nPackage: *\nPin: origin ftp.de.debian.org\nPin-Priority: 1\n"
     },
     {
       :params => {
