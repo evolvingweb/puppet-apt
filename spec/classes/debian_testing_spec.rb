@@ -6,7 +6,7 @@ describe 'apt::debian::testing', :type => :class do
       "release"             => "testing",
       "repos"               => "main contrib non-free",
       "required_packages"   => "debian-keyring debian-archive-keyring",
-      "key"                 => "55BE302B",
+      "key"                 => "46925553",
       "key_server"          => "subkeys.pgp.net",
       "pin"                 => "-10"
     })

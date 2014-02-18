@@ -142,7 +142,7 @@ Adds an apt source to `/etc/apt/sources.list.d/`.
       release           => 'unstable',
       repos             => 'main contrib non-free',
       required_packages => 'debian-keyring debian-archive-keyring',
-      key               => '55BE302B',
+      key               => '46925553',
       key_server        => 'subkeys.pgp.net',
       pin               => '-10',
       include_src       => true
