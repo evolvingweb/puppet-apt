@@ -67,6 +67,9 @@ define apt::ppa(
 
     file { "${sources_list_d}/${sources_list_d_filename}":
         ensure => 'absent',
+        mode   => '0644',
+        owner  => 'root',
+        gruop  => 'root',
         notify => Exec['apt_update'],
     }
   }
