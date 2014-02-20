@@ -49,8 +49,8 @@ Puppet::Type.newtype(:apt_key) do
   end
 
   newparam(:source) do
-    desc 'Location of a GPG key file, /path/to/file, http:// or https://'
-    newvalues(/\Ahttps?:\/\//, /\A\/\w+/)
+    desc 'Location of a GPG key file, /path/to/file, ftp://, http:// or https://'
+    newvalues(/\Ahttps?:\/\//, /\Aftp:\/\//, /\A\/\w+/)
   end
 
   autorequire(:file) do

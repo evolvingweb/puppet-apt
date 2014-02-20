@@ -143,6 +143,13 @@ describe Puppet::Type::type(:apt_key) do
       )}.to_not raise_error
     end
 
+    it 'allows the ftp URI scheme in source' do
+      expect { Puppet::Type.type(:apt_key).new(
+        :id      => '4BD6EC30',
+        :source  => 'ftp://pgp.mit.edu'
+      )}.to_not raise_error
+    end
+
     it 'allows an absolute path in source' do
       expect { Puppet::Type.type(:apt_key).new(
         :id      => '4BD6EC30',
