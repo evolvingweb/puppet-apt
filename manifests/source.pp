@@ -8,10 +8,10 @@ define apt::source(
   $repos             = 'main',
   $include_src       = true,
   $required_packages = false,
-  $key               = false,
+  $key               = undef,
   $key_server        = 'keyserver.ubuntu.com',
-  $key_content       = false,
-  $key_source        = false,
+  $key_content       = undef,
+  $key_source        = undef,
   $pin               = false,
   $architecture      = undef
 ) {
@@ -69,7 +69,7 @@ define apt::source(
   }
 
   # We do not want to remove keys when the source is absent.
-  if ($key != false) and ($ensure == 'present') {
+  if $key and ($ensure == 'present') {
     apt::key { "Add key: ${key} from Apt::Source ${title}":
       ensure      => present,
       key         => $key,
