@@ -70,31 +70,29 @@ if fact('operatingsystem') == 'Ubuntu'
       end
     end
 
-    if ! default[:platform].match(/10\.04/)
-      context 'options' do
-        context '-y' do
-          it 'works without failure' do
-            pp = <<-EOS
-            include '::apt'
-            apt::ppa { 'ppa:canonical-kernel-team/ppa':
-              release => precise,
-              options => '-y',
-            }
-            EOS
+    context 'options' do
+      context '-y', :unless => default[:platform].match(/10\.04/) do
+        it 'works without failure' do
+          pp = <<-EOS
+          include '::apt'
+          apt::ppa { 'ppa:canonical-kernel-team/ppa':
+            release => precise,
+            options => '-y',
+          }
+          EOS
 
-            shell('rm -rf /etc/apt/sources.list.d/canonical-kernel-team-ppa*', :acceptable_exit_codes => [0,1,2])
-            apply_manifest(pp, :catch_failures => true)
-          end
+          shell('rm -rf /etc/apt/sources.list.d/canonical-kernel-team-ppa*', :acceptable_exit_codes => [0,1,2])
+          apply_manifest(pp, :catch_failures => true)
+        end
 
-          describe file('/etc/apt/sources.list.d/canonical-kernel-team-ppa-precise.list') do
-            it { should be_file }
-          end
+        describe file('/etc/apt/sources.list.d/canonical-kernel-team-ppa-precise.list') do
+          it { should be_file }
         end
       end
+    end
 
-      context 'reset' do
-        it { shell('rm -rf /etc/apt/sources.list.d/canonical-kernel-team-ppa*', :acceptable_exit_codes => [0,1,2]) }
-      end
+    context 'reset' do
+      it { shell('rm -rf /etc/apt/sources.list.d/canonical-kernel-team-ppa*', :acceptable_exit_codes => [0,1,2]) }
     end
   end
 end
