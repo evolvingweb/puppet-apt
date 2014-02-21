@@ -68,7 +68,7 @@ describe 'apt class' do
       pp = <<-EOS
       class { 'apt': 
         proxy_host => 'localhost',
-        proxy_port => '8080',
+        proxy_port => '7042',
       }
       EOS
 
@@ -77,7 +77,7 @@ describe 'apt class' do
 
     describe file('/etc/apt/apt.conf.d/proxy') do
       it { should be_file }
-      it { should contain 'Acquire::http::Proxy "http://localhost:8080\";' }
+      it { should contain 'Acquire::http::Proxy "http://localhost:7042\";' }
     end
   end
 
@@ -110,7 +110,7 @@ describe 'apt class' do
       pp = <<-EOS
       class { 'apt': 
         proxy_host => 'localhost',
-        proxy_port => '8080',
+        proxy_port => '7042',
       }
       EOS
 
@@ -119,7 +119,7 @@ describe 'apt class' do
 
     describe file('/etc/apt/apt.conf.d/proxy') do
       it { should be_file }
-      it { should contain 'Acquire::http::Proxy "http://localhost:8080\";' }
+      it { should contain 'Acquire::http::Proxy "http://localhost:7042\";' }
     end
   end
 
