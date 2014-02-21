@@ -208,6 +208,13 @@ We want to keep it as easy as possible to contribute changes so that our modules
 
 You can read the complete module contribution guide [on the Puppet Labs wiki.](http://projects.puppetlabs.com/projects/module-site/wiki/Module_contributing)
 
+License
+-------
+
+The original code for this module comes from Evolving Web and was licensed under the MIT license. Code added since the fork of this module is licensed under the Apache 2.0 License like the rest of the Puppet Labs products.
+
+The LICENSE contains both licenses.
+
 Contributors
 ------------
 
