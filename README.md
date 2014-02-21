@@ -17,14 +17,14 @@ The APT module provides a simple interface for managing APT source, key, and def
 Module Description
 ------------------
 
-APT automates obtaining and installing software packages on *nix systems. 
+APT automates obtaining and installing software packages on \*nix systems.
 
 Setup
 -----
 
 **What APT affects:**
 
-* package/service/configuration files for APT 
+* package/service/configuration files for APT
 * your system's `sources.list` file and `sources.list.d` directory
     * NOTE: Setting the `purge_sources_list` and `purge_sources_list_d` parameters to 'true' will destroy any existing content that was not declared with Puppet. The default for these parameters is 'false'.
 * system repositories
@@ -36,14 +36,14 @@ Setup
 To begin using the APT module with default parameters, declare the class
 
     include apt
- 
-Puppet code that uses anything from the APT module requires that the core apt class be declared. 
+
+Puppet code that uses anything from the APT module requires that the core apt class be declared/\s\+$//e
 
 Usage
 -----
 
-Using the APT module consists predominantly in declaring classes that provide desired functionality and features. 
- 
+Using the APT module consists predominantly in declaring classes that provide desired functionality and features.
+
 ### apt
 
 `apt` provides a number of common resources and options that are shared by the various defined types in this module, so you MUST always include this class in your manifests.
@@ -61,9 +61,9 @@ The parameters for `apt` are not required in general and are predominantly for d
       update_timeout       => undef
     }
 
-Puppet will manage your system's `sources.list` file and `sources.list.d` directory but will do its best to respect existing content. 
+Puppet will manage your system's `sources.list` file and `sources.list.d` directory but will do its best to respect existing content.
 
-If you declare your apt class with `purge_sources_list` and `purge_sources_list_d` set to 'true', Puppet will unapologetically purge any existing content it finds that wasn't declared with Puppet. 
+If you declare your apt class with `purge_sources_list` and `purge_sources_list_d` set to 'true', Puppet will unapologetically purge any existing content it finds that wasn't declared with Puppet.
 
 ### apt::builddep
 
@@ -76,9 +76,9 @@ Installs the build depends of a specified package.
 Forces a package to be installed from a specific release.  This class is particularly useful when using repositories, like Debian, that are unstable in Ubuntu.
 
     apt::force { 'glusterfs-server':
-	  release => 'unstable',
-	  version => '3.0.3',
-	  require => Apt::Source['debian_unstable'],
+      release => 'unstable',
+      version => '3.0.3',
+      require => Apt::Source['debian_unstable'],
     }
 
 ### apt::key
@@ -167,7 +167,7 @@ This test will set up a Puppet Labs apt repository. Start by creating a new smok
       key        => '4BD6EC30',
       key_server => 'pgp.mit.edu',
     }
-    
+
 This resource creates an apt source named puppetlabs and gives Puppet information about the repository's location and key used to sign its packages. Puppet leverages Facter to determine the appropriate release, but you can set it directly by adding the release type.
 
 Check your smoke test for syntax errors
@@ -181,7 +181,7 @@ If you receive no output from that command, it means nothing is wrong. Then appl
     info: /Stage[main]//Apt::Source[puppetlabs]/File[puppetlabs.list]: Scheduling refresh of Exec[puppetlabs apt update]
     notice: /Stage[main]//Apt::Source[puppetlabs]/Exec[puppetlabs apt update]: Triggered 'refresh' from 1 events>
 
-The above example used a smoke test to easily lay out a resource declaration and apply it on your system. In production, you may want to declare your APT sources inside the classes where they’re needed. 
+The above example used a smoke test to easily lay out a resource declaration and apply it on your system. In production, you may want to declare your APT sources inside the classes where they’re needed.
 
 Implementation
 --------------
@@ -193,7 +193,7 @@ Adds the necessary components to get backports for Ubuntu and Debian. The releas
 Limitations
 -----------
 
-This module should work across all versions of Debian/Ubuntu and support all major APT repository management features. 
+This module should work across all versions of Debian/Ubuntu and support all major APT repository management features.
 
 Development
 ------------
@@ -218,19 +218,19 @@ A lot of great people have contributed to this module. A somewhat current list f
 
 * Ben Godfrey <ben.godfrey@wonga.com>
 * Branan Purvine-Riley <branan@puppetlabs.com>
-* Christian G. Warden <cwarden@xerus.org>  
-* Dan Bode <bodepd@gmail.com> <dan@puppetlabs.com>  
-* Garrett Honeycutt <github@garretthoneycutt.com>  
-* Jeff Wallace <jeff@evolvingweb.ca> <jeff@tjwallace.ca>  
-* Ken Barber <ken@bob.sh>  
-* Matthaus Litteken <matthaus@puppetlabs.com> <mlitteken@gmail.com>  
-* Matthias Pigulla <mp@webfactory.de>  
-* Monty Taylor <mordred@inaugust.com>  
-* Peter Drake <pdrake@allplayers.com>  
-* Reid Vandewiele <marut@cat.pdx.edu>  
-* Robert Navarro <rnavarro@phiivo.com>  
-* Ryan Coleman <ryan@puppetlabs.com>  
-* Scott McLeod <scott.mcleod@theice.com>  
-* Spencer Krum <spencer@puppetlabs.com>  
-* William Van Hevelingen <blkperl@cat.pdx.edu> <wvan13@gmail.com>  
-* Zach Leslie <zach@puppetlabs.com>  
+* Christian G. Warden <cwarden@xerus.org>
+* Dan Bode <bodepd@gmail.com> <dan@puppetlabs.com>
+* Garrett Honeycutt <github@garretthoneycutt.com>
+* Jeff Wallace <jeff@evolvingweb.ca> <jeff@tjwallace.ca>
+* Ken Barber <ken@bob.sh>
+* Matthaus Litteken <matthaus@puppetlabs.com> <mlitteken@gmail.com>
+* Matthias Pigulla <mp@webfactory.de>
+* Monty Taylor <mordred@inaugust.com>
+* Peter Drake <pdrake@allplayers.com>
+* Reid Vandewiele <marut@cat.pdx.edu>
+* Robert Navarro <rnavarro@phiivo.com>
+* Ryan Coleman <ryan@puppetlabs.com>
+* Scott McLeod <scott.mcleod@theice.com>
+* Spencer Krum <spencer@puppetlabs.com>
+* William Van Hevelingen <blkperl@cat.pdx.edu> <wvan13@gmail.com>
+* Zach Leslie <zach@puppetlabs.com>
