@@ -27,14 +27,13 @@ if fact('operatingsystem') == 'Ubuntu'
       end
     end
 
-    context 'readding a removed ppa.' do
+    context 'reading a removed ppa.' do
       it 'setup' do
-        shell('add-apt-repository -y ppa:raravena80/collectd5')
         # This leaves a blank file
-        shell('add-apt-repository --remove ppa:raravena80/collectd5')
+        shell('echo > /etc/apt/sources.list.d/raravena80-collectd5-$(lsb_release -c -s).list')
       end
 
-      it 'should readd it successfully' do
+      it 'should read it successfully' do
         pp = <<-EOS
         include '::apt'
         apt::ppa { 'ppa:raravena80/collectd5': }
@@ -71,30 +70,31 @@ if fact('operatingsystem') == 'Ubuntu'
       end
     end
 
-    context 'options' do
-      context '-y' do
-        it 'works without failure' do
-          pp = <<-EOS
-          include '::apt'
-          apt::ppa { 'ppa:canonical-kernel-team/ppa':
-            release => precise,
-            options => '-y',
-          }
-          EOS
+    if ! default[:platform].match(/10\.04/)
+      context 'options' do
+        context '-y' do
+          it 'works without failure' do
+            pp = <<-EOS
+            include '::apt'
+            apt::ppa { 'ppa:canonical-kernel-team/ppa':
+              release => precise,
+              options => '-y',
+            }
+            EOS
 
-          shell('rm -rf /etc/apt/sources.list.d/canonical-kernel-team-ppa*', :acceptable_exit_codes => [0,1,2])
-          apply_manifest(pp, :catch_failures => true)
-        end
+            shell('rm -rf /etc/apt/sources.list.d/canonical-kernel-team-ppa*', :acceptable_exit_codes => [0,1,2])
+            apply_manifest(pp, :catch_failures => true)
+          end
 
-        describe file('/etc/apt/sources.list.d/canonical-kernel-team-ppa-precise.list') do
-          it { should be_file }
+          describe file('/etc/apt/sources.list.d/canonical-kernel-team-ppa-precise.list') do
+            it { should be_file }
+          end
         end
       end
-    end
 
-    context 'reset' do
-      it { shell('rm -rf /etc/apt/sources.list.d/canonical-kernel-team-ppa*', :acceptable_exit_codes => [0,1,2]) }
+      context 'reset' do
+        it { shell('rm -rf /etc/apt/sources.list.d/canonical-kernel-team-ppa*', :acceptable_exit_codes => [0,1,2]) }
+      end
     end
-
   end
 end
