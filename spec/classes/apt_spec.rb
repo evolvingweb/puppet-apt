@@ -19,6 +19,10 @@ describe 'apt', :type => :class do
       :purge_sources_list_d => true,
     },
     {
+      :purge_preferences   => true,
+      :purge_preferences_d => true,
+    },
+    {
       :disable_keys => false
     }
   ].each do |param_set|
@@ -82,6 +86,49 @@ describe 'apt', :type => :class do
             'purge'   => false,
             'recurse' => false,
             'notify'  => 'Exec[apt_update]'
+          })
+        end
+      }
+      it {
+        if param_hash[:purge_preferences]
+          should create_file('apt-preferences').with({
+            :ensure  => 'present',
+            :path    => '/etc/apt/preferences',
+            :owner   => 'root',
+            :group   => 'root',
+            :mode    => '0644',
+            :content => /Explanation/,
+          })
+        else
+          should create_file('apt-preferences').with({
+            :ensure  => 'present',
+            :path    => '/etc/apt/preferences',
+            :owner   => 'root',
+            :group   => 'root',
+            :mode    => '0644',
+            :content => nil,
+          })
+        end
+      }
+
+      it {
+        if param_hash[:purge_preferences_d]
+          should create_file("preferences.d").with({
+            'path'    => "/etc/apt/preferences.d",
+            'ensure'  => "directory",
+            'owner'   => "root",
+            'group'   => "root",
+            'purge'   => true,
+            'recurse' => true,
+          })
+        else
+          should create_file("preferences.d").with({
+            'path'    => "/etc/apt/preferences.d",
+            'ensure'  => "directory",
+            'owner'   => "root",
+            'group'   => "root",
+            'purge'   => false,
+            'recurse' => false,
           })
         end
       }

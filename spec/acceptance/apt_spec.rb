@@ -175,6 +175,50 @@ describe 'apt class' do
     end
   end
 
+  context 'purge_preferences' do
+    context 'false' do
+      it 'creates a preferences file' do
+        shell("echo 'original' > /etc/apt/preferences")
+      end
+
+      it 'should work with no errors' do
+        pp = <<-EOS
+        class { 'apt': purge_preferences => false }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe file('/etc/apt/preferences') do
+        it { should be_file }
+        it 'is not managed by Puppet' do
+          shell("grep 'original' /etc/apt/preferences", {:acceptable_exit_codes => 0})
+        end
+      end
+    end
+
+    context 'true' do
+      it 'creates a preferences file' do
+        shell('touch /etc/apt/preferences')
+      end
+
+      it 'should work with no errors' do
+        pp = <<-EOS
+        class { 'apt': purge_preferences => true }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe file('/etc/apt/preferences') do
+        it { should be_file }
+        it 'is managed by Puppet' do
+          shell("grep 'Explanation' /etc/apt/preferences", {:acceptable_exit_codes => 0})
+        end
+      end
+    end
+  end
+
   context 'purge_preferences_d' do
     context 'false' do
       it 'creates a preferences file' do
