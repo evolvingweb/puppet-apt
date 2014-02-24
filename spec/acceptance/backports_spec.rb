@@ -8,7 +8,7 @@ when 'Debian'
   repos = 'main contrib non-free'
 end
 
-describe 'apt::backports class' do
+describe 'apt::backports class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   context 'defaults' do
     it 'should work with no errors' do
       pp = <<-EOS
