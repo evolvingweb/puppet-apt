@@ -1,5 +1,6 @@
 require 'spec_helper'
 describe 'apt::debian::testing', :type => :class do
+  let(:facts) { { :lsbdistid => 'Debian' } }
   it {
     should contain_apt__source("debian_testing").with({
       "location"            => "http://debian.mirror.iweb.ca/debian/",

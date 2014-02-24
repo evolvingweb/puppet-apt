@@ -1,5 +1,6 @@
 require 'spec_helper'
 describe 'apt::pin', :type => :define do
+  let(:facts) { { :lsbdistid => 'Debian' } }
   let(:title) { 'my_pin' }
 
   let :default_params do
@@ -12,21 +13,21 @@ describe 'apt::pin', :type => :define do
     }
   end
 
-  [ 
+  [
     { :params  => {},
       :content => "# my_pin\nExplanation: : my_pin\nPackage: *\nPin: release a=my_pin\nPin-Priority: 0\n"
     },
     {
       :params => {
-        :packages => 'apache', 
+        :packages => 'apache',
         :priority => '1'
       },
       :content => "# my_pin\nExplanation: : my_pin\nPackage: apache\nPin: release a=my_pin\nPin-Priority: 1\n"
     },
     {
       :params => {
-        :order    => 50, 
-        :packages => 'apache', 
+        :order    => 50,
+        :packages => 'apache',
         :priority => '1'
       },
       :content => "# my_pin\nExplanation: : my_pin\nPackage: apache\nPin: release a=my_pin\nPin-Priority: 1\n"
