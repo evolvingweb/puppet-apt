@@ -3,7 +3,7 @@
 define apt::ppa(
   $ensure  = 'present',
   $release = $::lsbdistcodename,
-  $options = '-y'
+  $options = $apt::params::ppa_options,
 ) {
   include apt::params
   include apt::update

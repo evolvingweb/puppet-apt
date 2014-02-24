@@ -4,7 +4,7 @@ describe 'apt::builddep' do
 
   context 'reset' do
     it 'removes packages' do
-      shell('apt-get -y remove glusterfs-server')
+      shell('apt-get -y remove znc')
       shell('apt-get -y remove g++')
     end
   end
@@ -13,7 +13,7 @@ describe 'apt::builddep' do
     it 'should work with no errors' do
       pp = <<-EOS
       include '::apt'
-      apt::builddep { 'glusterfs-server': }
+      apt::builddep { 'znc': }
       EOS
 
       apply_manifest(pp, :catch_failures => true)
@@ -28,7 +28,7 @@ describe 'apt::builddep' do
 
   context 'reset' do
     it 'removes packages' do
-      shell('apt-get -y remove glusterfs-server')
+      shell('apt-get -y remove znc')
       shell('apt-get -y remove g++')
     end
   end

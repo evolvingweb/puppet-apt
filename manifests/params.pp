@@ -21,11 +21,17 @@ class apt::params {
     }
     'ubuntu': {
       case $::lsbdistcodename {
-        'hardy','lucid','maverick','natty','oneiric','precise': {
+        'hardy','maverick','natty','oneiric','precise': {
           $backports_location = 'http://us.archive.ubuntu.com/ubuntu'
+          $ppa_options = '-y'
+        }
+        'lucid': {
+          $backports_location = 'http://us.archive.ubuntu.com/ubuntu'
+          $ppa_options = undef
         }
         default: {
           $backports_location = 'http://old-releases.ubuntu.com/ubuntu'
+          $ppa_options = '-y'
         }
       }
     }

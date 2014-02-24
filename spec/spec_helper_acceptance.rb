@@ -1,13 +1,12 @@
 require 'beaker-rspec'
 
+# Install Puppet
 unless ENV['RS_PROVISION'] == 'no'
   hosts.each do |host|
-    # Install Puppet
     if host.is_pe?
       install_pe
     else
-      install_package host, 'rubygems'
-      on host, 'gem install puppet --no-ri --no-rdoc'
+      install_puppet
       on host, "mkdir -p #{host['distmoduledir']}"
     end
   end
