@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 
 if fact('operatingsystem') == 'Ubuntu'
-  describe 'apt::ppa' do
+  describe 'apt::ppa', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
 
     context 'reset' do
       it 'removes ppa' do

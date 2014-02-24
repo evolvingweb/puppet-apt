@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apt::source' do
+describe 'apt::source', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
 
   context 'apt::source' do
     context 'ensure => present' do

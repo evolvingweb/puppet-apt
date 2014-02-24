@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apt::conf define' do
+describe 'apt::conf define', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   context 'defaults' do
     it 'should work with no errors' do
       pp = <<-EOS

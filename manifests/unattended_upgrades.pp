@@ -37,6 +37,7 @@ class apt::unattended_upgrades (
   $download_delta = "0",
   $verbose = "0",
 ) {
+  include apt::params
 
   validate_bool(
     $auto_fix,

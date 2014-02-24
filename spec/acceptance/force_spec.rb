@@ -2,7 +2,7 @@ require 'spec_helper_acceptance'
 
 codename = fact('lsbdistcodename')
 
-describe 'apt::force define' do
+describe 'apt::force define', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   context 'defaults' do
     it 'should work with no errors' do
       pp = <<-EOS

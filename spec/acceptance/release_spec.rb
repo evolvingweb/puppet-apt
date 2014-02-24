@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apt::release class' do
+describe 'apt::release class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   context 'release_id' do
     it 'should work with no errors' do
       pp = <<-EOS
