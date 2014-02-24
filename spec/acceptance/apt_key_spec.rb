@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apt::key' do
+describe 'apt::key', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   context 'apt::key' do
     it 'should work with no errors' do
       pp = <<-EOS

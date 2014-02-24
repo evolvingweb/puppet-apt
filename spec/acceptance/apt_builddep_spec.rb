@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apt::builddep' do
+describe 'apt::builddep', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
 
   context 'reset' do
     it 'removes packages' do

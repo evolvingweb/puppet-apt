@@ -12,6 +12,8 @@ unless ENV['RS_PROVISION'] == 'no'
   end
 end
 
+UNSUPPORTED_PLATFORMS = ['RedHat','Suse','windows','AIX','Solaris']
+
 RSpec.configure do |c|
   # Project root
   proj_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
