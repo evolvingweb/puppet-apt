@@ -1,5 +1,6 @@
 require 'spec_helper'
 describe 'apt::force', :type => :define do
+  let(:facts) { { :lsbdistid => 'Debian' } }
   let :pre_condition do
     'include apt::params'
   end

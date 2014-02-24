@@ -2,6 +2,7 @@ require 'spec_helper'
 describe 'apt::unattended_upgrades', :type => :class do
   let(:file_unattended) { '/etc/apt/apt.conf.d/50unattended-upgrades' }
   let(:file_periodic) { '/etc/apt/apt.conf.d/10periodic' }
+  let(:facts) { { :lsbdistid => 'Debian' } }
 
   it { should contain_package("unattended-upgrades") }
 
