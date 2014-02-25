@@ -29,6 +29,7 @@ class apt(
   $proxy_port           = '8080',
   $purge_sources_list   = false,
   $purge_sources_list_d = false,
+  $purge_preferences    = false,
   $purge_preferences_d  = false,
   $update_timeout       = undef
 ) {
@@ -36,11 +37,19 @@ class apt(
   include apt::params
   include apt::update
 
-  validate_bool($purge_sources_list, $purge_sources_list_d, $purge_preferences_d)
+  validate_bool($purge_sources_list, $purge_sources_list_d,
+                $purge_preferences, $purge_preferences_d)
 
   $sources_list_content = $purge_sources_list ? {
     false => undef,
     true  => "# Repos managed by puppet.\n",
+  }
+
+  $preferences_content = $purge_preferences ? {
+    false => undef,
+    true  => "Explanation: Preferences managed by Puppet\n
+Explanation: We need a bogus package line because of Debian Bug #732746\n
+Package: bogus-package\n",
   }
 
   if $always_apt_update == true {
@@ -73,6 +82,15 @@ class apt(
     purge   => $purge_sources_list_d,
     recurse => $purge_sources_list_d,
     notify  => Exec['apt_update'],
+  }
+
+  file { 'apt-preferences':
+    ensure  => present,
+    path    => "${root}/preferences",
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    content => $preferences_content,
   }
 
   file { 'preferences.d':
