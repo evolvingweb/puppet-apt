@@ -3,6 +3,9 @@ require 'spec_helper_acceptance'
 PUPPETLABS_GPG_KEY_ID   = '4BD6EC30'
 PUPPETLABS_APT_URL      = 'apt.puppetlabs.com'
 PUPPETLABS_GPG_KEY_FILE = 'pubkey.gpg'
+CENTOS_GPG_KEY_ID       = 'C105B9DE'
+CENTOS_REPO_URL         = 'ftp.cvut.cz/centos'
+CENTOS_GPG_KEY_FILE     = 'RPM-GPG-KEY-CentOS-6'
 
 describe 'apt_key' do
   before(:each) do
@@ -242,6 +245,55 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
           id     => '#{PUPPETLABS_GPG_KEY_ID}',
           ensure => 'present',
           source => 'http://apt.puppetlabss.com/herpderp.gpg',
+        }
+        EOS
+
+        apply_manifest(pp, :expect_failures => true) do |r|
+          expect(r.stderr).to match(/could not resolve/)
+        end
+      end
+    end
+
+    context 'ftp://' do
+      before(:each) do
+        shell("apt-key del #{CENTOS_GPG_KEY_ID}",
+              :acceptable_exit_codes => [0,1,2])
+      end
+
+      it 'works' do
+        pp = <<-EOS
+        apt_key { 'CentOS 6':
+          id     => '#{CENTOS_GPG_KEY_ID}',
+          ensure => 'present',
+          source => 'ftp://#{CENTOS_REPO_URL}/#{CENTOS_GPG_KEY_FILE}',
+        }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+        expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+        shell("apt-key list | grep #{CENTOS_GPG_KEY_ID}")
+      end
+
+      it 'fails with a 550' do
+        pp = <<-EOS
+        apt_key { 'CentOS 6':
+          id     => '#{CENTOS_GPG_KEY_ID}',
+          ensure => 'present',
+          source => 'ftp://#{CENTOS_REPO_URL}/herpderp.gpg',
+        }
+        EOS
+
+        apply_manifest(pp, :expect_failures => true) do |r|
+          expect(r.stderr).to match(/550 Failed to open/)
+        end
+      end
+
+      it 'fails with a socket error' do
+        pp = <<-EOS
+        apt_key { 'puppetlabs':
+          id     => '#{PUPPETLABS_GPG_KEY_ID}',
+          ensure => 'present',
+          source => 'ftp://apt.puppetlabss.com/herpderp.gpg',
         }
         EOS
 
