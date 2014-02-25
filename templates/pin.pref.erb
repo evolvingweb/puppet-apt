@@ -12,7 +12,7 @@ if @pin_release.length > 0
 elsif @version.length > 0
   @pin = "version #{@version}"
 elsif @origin.length > 0
-  @pin = "origin \"#{@origin}\""
+  @pin = "origin #{@origin}"
 end
 -%>
 # <%= @name %>
