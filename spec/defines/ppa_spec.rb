@@ -133,7 +133,8 @@ describe 'apt::ppa', :type => :define do
         end
         let :facts do
           {:lsbdistcodename => '#{platform[:lsbdistcodename]}',
-           :operatingsystem => 'Ubuntu'}
+           :operatingsystem => 'Ubuntu',
+           :lsbdistid => 'Ubuntu'}
         end
         let(:title) { "ppa" }
         let(:release) { "#{platform[:lsbdistcodename]}" }
