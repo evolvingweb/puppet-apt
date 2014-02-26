@@ -36,7 +36,7 @@ class apt::params {
       }
     }
     default: {
-      fail("Unsupported osfamily (${::osfamily}) or lsbdistid (${::lsbdistid})")
+      fail("Unsupported lsbdistid (${::lsbdistid})")
     }
   }
 }
