@@ -11,4 +11,17 @@ describe 'apt::params', :type => :class do
   it "Should not contain any resources" do
     subject.resources.size.should == 4
   end
+
+  describe "With unknown lsbdistid" do
+
+    let(:facts) { { :lsbdistid => 'CentOS' } }
+    let (:title) { 'my_package' }
+
+    it do
+      expect {
+       should compile
+      }.to raise_error(Puppet::Error, /Unsupported lsbdistid/)
+    end
+
+  end
 end
