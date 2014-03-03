@@ -1,9 +1,15 @@
-##2014-03-04 - Supported Release
+##2014-03-04 - Supported Release 1.4.2
 ###Summary
+
+This is a supported release. This release tidies up 1.4.1 and re-enables
+support for Ubuntu 10.04
 
 ####Features
 
 ####Bugfixes
+- Fix apt:ppa to include the -y Ubuntu 10.04 requires.
+- Documentation changes.
+- Test fixups.
 
 ####Known Bugs
 
