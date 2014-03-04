@@ -21,7 +21,7 @@ class apt::params {
     }
     'ubuntu': {
       case $::lsbdistcodename {
-        'oneiric','precise','trusty': {
+        'precise','trusty': {
           $backports_location = 'http://us.archive.ubuntu.com/ubuntu'
           $ppa_options = '-y'
         }
