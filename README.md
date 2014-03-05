@@ -138,6 +138,45 @@ If you wish to pin a number of packages you may specify the packages as a space
 delimited string using the `packages` attribute or pass in an array of package
 names.
 
+### apt::hold
+
+When you wish to hold a package in Puppet is should be done by passing in
+'held' as the ensure attribute to the package resource. However, a lot of
+public modules do not take this into account and generally do not work well
+with an ensure of 'held'.
+
+There is an additional issue that when Puppet is told to hold a package, it
+will hold it at the current version installed, there is no way to tell it in
+one go to install a specific version and then hold that version without using
+an exec resource that wraps `dpkg --set-selections` or `apt-mark`.
+
+At first glance this could also be solved by just passing the version required
+to the ensure attribute but that only means that Puppet will install that
+version once it processes that package. It does not inform apt that we want
+this package to be held. In other words; if another package somehow wants to
+upgrade this one (because of a version requirement in a dependency), apt
+should not allow it.
+
+In order to solve this you can use apt::hold. It's implemented by creating
+a preferences file with a priority of 1001, meaning that under normal
+circumstances this preference will always win. Because the priority is > 1000
+apt will interpret this as 'this should be the version installed and I am
+allowed to downgrade the current package if needed'.
+
+With this you can now set a package's ensure attribute to 'latest' but still
+get the version specified by apt::hold. You can do it like this:
+
+    apt::hold { 'vim':
+      version => '2:7.3.547-7',
+    }
+
+Since you might just want to hold Vim at version 7.3 and not care about the
+rest you can also pass in a version with a glob:
+
+    apt::hold { 'vim':
+      version => '2:7.3.*',
+    }
+
 ### apt::ppa
 
 Adds a ppa repository using `add-apt-repository`.
@@ -257,3 +296,4 @@ A lot of great people have contributed to this module. A somewhat current list f
 * Spencer Krum <spencer@puppetlabs.com>
 * William Van Hevelingen <blkperl@cat.pdx.edu> <wvan13@gmail.com>
 * Zach Leslie <zach@puppetlabs.com>
+* Daniele Sluijters <github@daenney.net>
