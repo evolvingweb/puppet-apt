@@ -29,7 +29,6 @@ Setup
     * NOTE: Setting the `purge_sources_list` and `purge_sources_list_d` parameters to 'true' will destroy any existing content that was not declared with Puppet. The default for these parameters is 'false'.
 * system repositories
 * authentication keys
-* wget (optional)
 
 ### Beginning with APT
 
@@ -81,9 +80,31 @@ Forces a package to be installed from a specific release.  This class is particu
       require => Apt::Source['debian_unstable'],
     }
 
+### apt_key
+
+A native Puppet type and provider for managing GPG keys for APT is provided by
+this module.
+
+    apt_key { 'puppetlabs':
+      ensure => 'present',
+      id     => '4BD6EC30',
+    }
+
+You can additionally set the following attributes:
+
+ * `source`: HTTP, HTTPS or FTP location of a GPG key or path to a file on the
+             target host;
+ * `content`: Instead of pointing to a file, pass the key in as a string;
+ * `server`: The GPG key server to use. It defaults to *keyserver.ubuntu.com*;
+ * `keyserver_options`: Additional options to pass to `--keyserver`.
+
+Because it is a native type it can be used in and queried for with MCollective.
+
 ### apt::key
 
-Adds a key to the list of keys used by APT to authenticate packages.
+Adds a key to the list of keys used by APT to authenticate packages. This type
+uses the aforementioned `apt_key` native type. As such it no longer requires
+the wget command that the old implementation depended on.
 
     apt::key { 'puppetlabs':
       key        => '4BD6EC30',
@@ -94,8 +115,6 @@ Adds a key to the list of keys used by APT to authenticate packages.
       key        => 'D50582E6',
       key_source => 'http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key',
     }
-
-Note that use of `key_source` requires wget to be installed and working.
 
 ### apt::pin
 
