@@ -1,124 +1,285 @@
 require 'spec_helper'
+
 describe 'apt::key', :type => :define do
   let(:facts) { { :lsbdistid => 'Debian' } }
+  GPG_KEY_ID = '4BD6EC30'
+
   let :title do
-    '8347A27F'
+    GPG_KEY_ID
   end
 
-  let :default_params do
-    {
-      :key         => title,
-      :ensure      => 'present',
-      :key_server  => "keyserver.ubuntu.com",
-      :key_source  => false,
-      :key_content => false
-    }
-  end
-
-  [{},
-    {
-      :ensure  => 'absent'
-    },
-    {
-      :ensure  => 'random'
-    },
-    {
-      :key_source => 'ftp://ftp.example.org/key',
-    },
-    {
-      :key_content => 'deadbeef',
-    }
-  ].each do |param_set|
-
-    let :param_hash do
-      param_hash = default_params.merge(param_set)
-      param_hash[:key].upcase! if param_hash[:key]
-      param_hash
+  describe 'normal operation' do
+    describe 'default options' do
+      it 'contains the apt::key' do
+        should contain_apt__key(title).with({
+          :key    => title,
+          :ensure => 'present',
+        })
+      end
+      it 'contains the apt_key' do
+        should contain_apt_key(title).with({
+          :id                => title,
+          :ensure            => 'present',
+          :source            => nil,
+          :server            => nil,
+          :content           => nil,
+          :keyserver_options => nil,
+        })
+      end
+      it 'contains the apt_key present anchor' do
+        should contain_anchor("apt_key #{title} present")
+      end
     end
 
-    let :params do
-      param_set
-    end
-
-    let :digest do
-      str = String.new
-      str << param_hash[:key].to_s         << '/'
-      str << param_hash[:key_content].to_s << '/'
-      str << param_hash[:key_source].to_s  << '/'
-      str << param_hash[:key_server].to_s  << '/'
-      Digest::SHA1.hexdigest(str)
-    end
-
-    describe "when #{param_set == {} ? "using default" : "specifying"} define parameters" do
-
-      it {
-        if [:present, 'present', :absent, 'absent'].include? param_hash[:ensure]
-          should contain_apt__params
-        end
-      }
-
-      it {
-        if [:present, 'present'].include? param_hash[:ensure]
-          should_not contain_exec("apt::key #{param_hash[:key]} absent")
-          should contain_anchor("apt::key #{param_hash[:key]} present")
-          should contain_exec(digest).with({
-            "path"    => "/bin:/usr/bin",
-            "unless"  => "/usr/bin/apt-key list | /bin/grep '#{param_hash[:key]}'"
-          })
-        elsif [:absent, 'absent'].include? param_hash[:ensure]
-          should_not contain_anchor("apt::key #{param_hash[:key]} present")
-          should contain_exec("apt::key #{param_hash[:key]} absent").with({
-            "path"    => "/bin:/usr/bin",
-            "onlyif"  => "apt-key list | grep '#{param_hash[:key]}'",
-            "command" => "apt-key del '#{param_hash[:key]}'"
-          })
-        else
-          expect { should raise_error(Puppet::Error) }
-        end
-      }
-
-      it {
-        if [:present, 'present'].include? param_hash[:ensure]
-          if param_hash[:key_content]
-            should contain_exec(digest).with({
-              "command" => "echo '#{param_hash[:key_content]}' | /usr/bin/apt-key add -"
-            })
-          elsif param_hash[:key_source]
-            should contain_exec(digest).with({
-              "command" => "wget -q '#{param_hash[:key_source]}' -O- | apt-key add -"
-            })
-          elsif param_hash[:key_server]
-            should contain_exec(digest).with({
-              "command" => "apt-key adv --keyserver '#{param_hash[:key_server]}' --recv-keys '#{param_hash[:key]}'"
-            })
-          end
-        end
-      }
-
-    end
-  end
-
-  [{ :ensure => 'present' }, { :ensure => 'absent' }].each do |param_set|
-    describe "should correctly handle duplicate definitions" do
-
-      let :pre_condition do
-        "apt::key { 'duplicate': key => '#{title}'; }"
+    describe 'title and key =>' do
+      let :title do
+        'puppetlabs'
       end
 
-      let(:params) { param_set }
+      let :params do {
+        :key => GPG_KEY_ID,
+      } end
 
-      it {
-        if param_set[:ensure] == 'present'
-          should contain_anchor("apt::key #{title} present")
-          should contain_apt__key(title)
-          should contain_apt__key("duplicate")
-        elsif param_set[:ensure] == 'absent'
-          expect { should raise_error(Puppet::Error) }
-        end
-      }
+      it 'contains the apt::key' do
+        should contain_apt__key(title).with({
+          :key    => GPG_KEY_ID,
+          :ensure => 'present',
+        })
+      end
+      it 'contains the apt_key' do
+        should contain_apt_key(title).with({
+          :id                => GPG_KEY_ID,
+          :ensure            => 'present',
+          :source            => nil,
+          :server            => nil,
+          :content           => nil,
+          :keyserver_options => nil,
+        })
+      end
+      it 'contains the apt_key present anchor' do
+        should contain_anchor("apt_key #{GPG_KEY_ID} present")
+      end
+    end
 
+    describe 'ensure => absent' do
+      let :params do {
+        :ensure => 'absent',
+      } end
+
+      it 'contains the apt::key' do
+        should contain_apt__key(title).with({
+          :key          => title,
+          :ensure       => 'absent',
+        })
+      end
+      it 'contains the apt_key' do
+        should contain_apt_key(title).with({
+          :id                => title,
+          :ensure            => 'absent',
+          :source            => nil,
+          :server            => nil,
+          :content           => nil,
+          :keyserver_options => nil,
+        })
+      end
+      it 'contains the apt_key absent anchor' do
+        should contain_anchor("apt_key #{title} absent")
+      end
+    end
+
+    describe 'key_content =>' do
+      let :params do {
+        :key_content => 'GPG key content',
+      } end
+
+      it 'contains the apt::key' do
+        should contain_apt__key(title).with({
+          :key         => title,
+          :ensure      => 'present',
+          :key_content => params[:key_content],
+        })
+      end
+      it 'contains the apt_key' do
+        should contain_apt_key(title).with({
+          :id                => title,
+          :ensure            => 'present',
+          :source            => nil,
+          :server            => nil,
+          :content           => params[:key_content],
+          :keyserver_options => nil,
+        })
+      end
+      it 'contains the apt_key present anchor' do
+        should contain_anchor("apt_key #{title} present")
+      end
+    end
+
+    describe 'key_source =>' do
+      let :params do {
+        :key_source => 'http://apt.puppetlabs.com/pubkey.gpg',
+      } end
+
+      it 'contains the apt::key' do
+        should contain_apt__key(title).with({
+          :key         => title,
+          :ensure      => 'present',
+          :key_source => params[:key_source],
+        })
+      end
+      it 'contains the apt_key' do
+        should contain_apt_key(title).with({
+          :id                => title,
+          :ensure            => 'present',
+          :source            => params[:key_source],
+          :server            => nil,
+          :content           => nil,
+          :keyserver_options => nil,
+        })
+      end
+      it 'contains the apt_key present anchor' do
+        should contain_anchor("apt_key #{title} present")
+      end
+    end
+
+    describe 'key_server =>' do
+      let :params do {
+        :key_server => 'pgp.mit.edu',
+      } end
+
+      it 'contains the apt::key' do
+        should contain_apt__key(title).with({
+          :key         => title,
+          :ensure      => 'present',
+          :key_server  => 'pgp.mit.edu',
+        })
+      end
+      it 'contains the apt_key' do
+        should contain_apt_key(title).with({
+          :id                => title,
+          :ensure            => 'present',
+          :source            => nil,
+          :server            => params[:key_server],
+          :content           => nil,
+          :keyserver_options => nil,
+        })
+      end
+      it 'contains the apt_key present anchor' do
+        should contain_anchor("apt_key #{title} present")
+      end
+    end
+
+    describe 'key_options =>' do
+      let :params do {
+        :key_options => 'debug',
+      } end
+
+      it 'contains the apt::key' do
+        should contain_apt__key(title).with({
+          :key          => title,
+          :ensure       => 'present',
+          :key_options  => 'debug',
+        })
+      end
+      it 'contains the apt_key' do
+        should contain_apt_key(title).with({
+          :id                => title,
+          :ensure            => 'present',
+          :source            => nil,
+          :server            => nil,
+          :content           => nil,
+          :keyserver_options => params[:key_options],
+        })
+      end
+      it 'contains the apt_key present anchor' do
+        should contain_anchor("apt_key #{title} present")
+      end
     end
   end
 
-end
+  describe 'validation' do
+    context 'invalid key' do
+      let :title do
+        'Out of rum. Why? Why are we out of rum?'
+      end
+      it 'fails' do
+        expect { subject }.to raise_error(/does not match/)
+      end
+    end
 
+    context 'invalid source' do
+      let :params do {
+        :key_source => 'afp://puppetlabs.com/key.gpg',
+      } end
+      it 'fails' do
+        expect { subject }.to raise_error(/does not match/)
+      end
+    end
+
+    context 'invalid content' do
+      let :params do {
+        :key_content => [],
+      } end
+      it 'fails' do
+        expect { subject }.to raise_error(/is not a string/)
+      end
+    end
+
+    context 'invalid server' do
+      let :params do {
+        :key_server => 'two bottles of rum',
+      } end
+      it 'fails' do
+        expect { subject }.to raise_error(/must be a valid domain name/)
+      end
+    end
+
+    context 'invalid keyserver_options' do
+      let :params do {
+        :key_options => {},
+      } end
+      it 'fails' do
+        expect { subject }.to raise_error(/is not a string/)
+      end
+    end
+  end
+
+  describe 'duplication' do
+    context 'two apt::key resources for same key, different titles' do
+      let :pre_condition do
+        "apt::key { 'duplicate': key => #{title}, }"
+      end
+
+      it 'contains two apt::key resources' do
+        should contain_apt__key('duplicate').with({
+          :key    => title,
+          :ensure => 'present',
+        })
+        should contain_apt__key(title).with({
+          :key    => title,
+          :ensure => 'present',
+        })
+      end
+
+      it 'contains only a single apt_key' do
+        should contain_apt_key('duplicate').with({
+          :id                => title,
+          :ensure            => 'present',
+          :source            => nil,
+          :server            => nil,
+          :content           => nil,
+          :keyserver_options => nil,
+        })
+        should_not contain_apt_key(title)
+      end
+    end
+
+    context 'two apt::key resources, different ensure' do
+      let :pre_condition do
+        "apt::key { 'duplicate': key => #{title}, ensure => 'absent', }"
+      end
+      it 'informs the user of the impossibility' do
+        expect { subject }.to raise_error(/already ensured as absent/)
+      end
+    end
+  end
+end
