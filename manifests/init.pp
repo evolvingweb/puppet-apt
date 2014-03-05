@@ -31,7 +31,8 @@ class apt(
   $purge_sources_list_d = false,
   $purge_preferences    = false,
   $purge_preferences_d  = false,
-  $update_timeout       = undef
+  $update_timeout       = undef,
+  $sources              = undef
 ) {
 
   include apt::params
@@ -135,5 +136,11 @@ Package: bogus-package\n",
   # Need anchor to provide containment for dependencies.
   anchor { 'apt::update':
     require => Class['apt::update'],
+  }
+
+  # manage sources if present
+  if $sources != undef {
+   validate_hash($sources)
+   create_resources('apt::source', $sources)
   }
 }
