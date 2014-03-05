@@ -68,7 +68,17 @@ define apt::pin(
     ''      => "${preferences_d}/${name}.pref",
     default => "${preferences_d}/${order}-${name}.pref",
   }
-  file { "${name}.pref":
+
+  # According to man 5 apt_preferences:
+  # The files have either no or "pref" as filename extension
+  # and only contain alphanumeric, hyphen (-), underscore (_) and period
+  # (.) characters. Otherwise APT will print a notice that it has ignored a
+  # file, unless that file matches a pattern in the
+  # Dir::Ignore-Files-Silently configuration list - in which case it will
+  # be silently ignored.
+  $file_name = regsubst($title, '[^0-9a-z\-_\.]', '_', 'IG')
+
+  file { "${file_name}.pref":
     ensure  => $ensure,
     path    => $path,
     owner   => root,
