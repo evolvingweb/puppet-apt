@@ -164,7 +164,7 @@ describe 'apt', :type => :class do
           if param_hash[:proxy_host]
             should contain_file('configure-apt-proxy').with(
               'path'    => '/etc/apt/apt.conf.d/proxy',
-              'content' => "Acquire::http::Proxy \"http://#{param_hash[:proxy_host]}:#{param_hash[:proxy_port]}\";",
+              'content' => "Acquire::http::Proxy \"http://#{param_hash[:proxy_host]}:#{param_hash[:proxy_port]}\";\n",
               'notify'  => "Exec[apt_update]"
             )
           else
