@@ -32,6 +32,7 @@ class apt(
   $purge_preferences    = false,
   $purge_preferences_d  = false,
   $update_timeout       = undef,
+  $update_tries         = undef,
   $sources              = undef
 ) {
 
