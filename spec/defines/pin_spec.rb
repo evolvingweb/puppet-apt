@@ -105,4 +105,16 @@ describe 'apt::pin', :type => :define do
       }
     end
   end
+
+  describe 'resource title with invalid chars' do
+    context 'spaces' do
+      let(:title) { 'oh my god this is not valid' }
+      it { should contain_file('oh_my_god_this_is_not_valid.pref') }
+    end
+
+    context '#$&*$' do
+      let(:title) { 'so && many $* invalid @! things' }
+      it { should contain_file('so____many____invalid____things.pref') }
+    end
+  end
 end
