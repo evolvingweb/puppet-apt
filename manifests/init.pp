@@ -14,6 +14,9 @@
 #     to true, Puppet will purge all unmanaged entries from sources.list.d
 #   update_timeout - Overrides the exec timeout in seconds for apt-get update.
 #     If not set defaults to Exec's default (300)
+#   update_tries - Number of times that `apt-get update` will be tried. Use this
+#     to work around transient DNS and HTTP errors. By default, the command
+#     will only be run once.
 #
 # Actions:
 #
@@ -32,6 +35,7 @@ class apt(
   $purge_preferences    = false,
   $purge_preferences_d  = false,
   $update_timeout       = undef,
+  $update_tries         = undef,
   $sources              = undef
 ) {
 
