@@ -1,6 +1,6 @@
 require 'spec_helper'
 describe 'apt', :type => :class do
-  let(:facts) { { :lsbdistid => 'Debian' } }
+  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian' } }
   let :default_params do
     {
       :disable_keys => :undef,
