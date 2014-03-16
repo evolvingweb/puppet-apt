@@ -6,7 +6,8 @@ require 'tempfile'
 if RUBY_VERSION == '1.8.7'
   # Mothers cry, puppies die and Ruby 1.8.7's open-uri needs to be
   # monkeypatched to support passing in :ftp_passive_mode.
-  require 'puppet_x/apt_key/patch_openuri'
+  require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..',
+                                    'puppet_x', 'apt_key', 'patch_openuri.rb'))
   OpenURI::Options.merge!({:ftp_active_mode => false,})
 end
 
