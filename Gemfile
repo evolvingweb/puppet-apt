@@ -1,7 +1,7 @@
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
 group :development, :test do
-  gem 'rake',                    :require => false
+  gem 'rake', '10.1.1',          :require => false
   gem 'pry',                     :require => false
   gem 'rspec-puppet',            :require => false
   gem 'puppet-lint',             :require => false
