@@ -273,6 +273,10 @@ Implementation
 
 Adds the necessary components to get backports for Ubuntu and Debian. The release name defaults to `$lsbdistcodename`. Setting this manually can cause undefined behavior (read: universe exploding).
 
+By default this class drops a Pin-file for Backports pinning it to a priority of 200, lower than the normal Debian archive which gets a priority of 500 to ensure your packages with `ensure => latest` don't get magically upgraded from Backports without your explicit say-so.
+
+If you raise the priority through the `pin_priority` parameter to *500*, identical to the rest of the Debian mirrors, normal policy goes into effect and the newest version wins/becomes the candidate apt will want to install or upgrade to. This means that if a package is available from Backports it and its dependencies will be pulled in from Backports unless you explicitly set the `ensure` attribute of the `package` resource to `installed`/`present` or a specific version.
+
 Limitations
 -----------
 

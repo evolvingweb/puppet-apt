@@ -49,6 +49,20 @@ describe 'apt::backports class', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
     end
   end
 
+  context 'pin_priority' do
+    it 'should work with no errors' do
+      pp = <<-EOS
+      class { 'apt::backports': pin_priority => 500, }
+      EOS
+
+      apply_manifest(pp, :catch_failures => true)
+    end
+    describe file('/etc/apt/preferences.d/backports.pref') do
+      it { should be_file }
+      it { should contain "Pin-Priority: 500" }
+    end
+  end
+
   context 'reset' do
     it 'deletes backport files' do
       shell('rm -rf /etc/apt/sources.list.d/backports.list')
