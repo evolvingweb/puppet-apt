@@ -1,5 +1,9 @@
 // Automatically upgrade packages from these (origin:archive) pairs
+<%- if @legacy_origin -%>
 Unattended-Upgrade::Allowed-Origins {
+<%- else -%>
+Unattended-Upgrade::Origins-Pattern {
+<%- end -%>
 <% @origins.each do |origin| -%>
 	"<%= origin %>";
 <% end -%>
