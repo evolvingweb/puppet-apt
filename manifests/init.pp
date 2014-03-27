@@ -151,7 +151,7 @@ Package: bogus-package\n",
 
   # manage sources if present
   if $sources != undef {
-   validate_hash($sources)
-   create_resources('apt::source', $sources)
+    validate_hash($sources)
+    create_resources('apt::source', $sources)
   }
 }
