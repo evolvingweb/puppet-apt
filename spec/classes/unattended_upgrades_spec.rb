@@ -25,16 +25,100 @@ describe 'apt::unattended_upgrades', :type => :class do
   }
 
   describe "origins" do
-    describe "with param defaults" do
-      let(:params) {{ }}
-      it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::Allowed-Origins \{\n\t"\$\{distro_id\}:\$\{distro_codename\}-security";\n\};$/) }
+    describe 'on Debian' do
+      default_facts = { :lsbdistid => 'Debian' }
+      context 'defaults' do
+        let :facts do default_facts end
+        it {
+          should contain_file(file_unattended).with_content(
+            /^Unattended-Upgrade::Origins-Pattern/
+          ).with_content(
+            /"origin=Debian,archive=stable,label=Debian-Security";/
+          )
+        }
+      end
+      context 'defaults with custom origin' do
+        let :facts do default_facts end
+        let :params do { :origins => ['bananana']} end
+        it {
+          should contain_file(file_unattended).with_content(
+            /^Unattended-Upgrade::Origins-Pattern/
+          ).with_content(
+            /"bananana";/
+          )
+        }
+      end
+      context 'defaults with invalid origin' do
+        let :facts do default_facts end
+        let :params do { :origins => 'bananana'} end
+        it {
+          expect {subject}.to raise_error(/is not an Array/)
+        }
+      end
+      context 'squeeze' do
+        let :facts do default_facts.merge({:lsbdistcodename => 'squeeze'}) end
+        it {
+          should contain_file(file_unattended).with_content(
+            /^Unattended-Upgrade::Allowed-Origins/
+          ).with_content(
+            /"\${distro_id} \${distro_codename}-security";/
+          )
+        }
+      end
+      context 'wheezy' do
+        let :facts do default_facts.merge({:lsbdistcodename => 'wheezy'}) end
+        it {
+          should contain_file(file_unattended).with_content(
+            /^Unattended-Upgrade::Origins-Pattern/
+          ).with_content(
+            /"origin=Debian,archive=stable,label=Debian-Security";/
+          )
+        }
+      end
     end
 
-    describe "with origins => ['ubuntu:precise-security']" do
-      let :params do
-        { :origins => ['ubuntu:precise-security'] }
+    describe 'on Ubuntu' do
+      default_facts = { :lsbdistid => 'Ubuntu' }
+      context 'default' do
+        let :facts do default_facts end
+        it {
+          should contain_file(file_unattended).with_content(
+            /^Unattended-Upgrade::Allowed-Origins/
+          ).with_content(
+            /"\${distro_id}\:\${distro_codename}-security";/
+          )
+        }
       end
-      it { should contain_file(file_unattended).with_content(/^Unattended-Upgrade::Allowed-Origins \{\n\t"ubuntu:precise-security";\n\};$/) }
+      context 'lucid' do
+        let :facts do default_facts.merge({:lsbdistcodename => 'lucid'}) end
+        it {
+          should contain_file(file_unattended).with_content(
+            /^Unattended-Upgrade::Allowed-Origins/
+          ).with_content(
+            /"\${distro_id} \${distro_codename}-security";/
+          )
+        }
+      end
+      context 'precise' do
+        let :facts do default_facts.merge({:lsbdistcodename => 'precise'}) end
+        it {
+          should contain_file(file_unattended).with_content(
+            /^Unattended-Upgrade::Allowed-Origins/
+          ).with_content(
+            /"\${distro_id}\:\${distro_codename}-security";/
+          )
+        }
+      end
+      context 'trusty' do
+        let :facts do default_facts.merge({:lsbdistcodename => 'trusty'}) end
+        it {
+          should contain_file(file_unattended).with_content(
+            /^Unattended-Upgrade::Allowed-Origins/
+          ).with_content(
+            /"\${distro_id}\:\${distro_codename}-security";/
+          )
+        }
+      end
     end
   end
 
