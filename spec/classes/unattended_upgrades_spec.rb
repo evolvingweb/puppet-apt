@@ -62,6 +62,8 @@ describe 'apt::unattended_upgrades', :type => :class do
             /^Unattended-Upgrade::Allowed-Origins/
           ).with_content(
             /"\${distro_id} \${distro_codename}-security";/
+          ).with_content(
+            /"\${distro_id} oldstable";/
           )
         }
       end
