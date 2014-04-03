@@ -11,7 +11,8 @@ class apt::params {
         'squeeze': {
           $backports_location = 'http://backports.debian.org/debian-backports'
           $legacy_origin       = true
-          $origins             = ['${distro_id} ${distro_codename}-security']
+          $origins             = ['${distro_id} oldstable',
+                                  '${distro_id} ${distro_codename}-security']
         }
         'wheezy': {
           $backports_location = 'http://ftp.debian.org/debian/'
