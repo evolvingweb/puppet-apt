@@ -3,12 +3,6 @@ apt
 
 [![Build Status](https://travis-ci.org/puppetlabs/puppetlabs-apt.png?branch=master)](https://travis-ci.org/puppetlabs/puppetlabs-apt)
 
-## Description
-
-Provides helpful definitions for dealing with Apt.
-
-=======
-
 Overview
 --------
 
@@ -18,6 +12,8 @@ Module Description
 ------------------
 
 APT automates obtaining and installing software packages on \*nix systems.
+
+***Note:** While this module allows the use of short keys, we STRONGLY RECOMMEND that you DO NOT USE short keys, as they pose a serious security issue in that they open you up to collision attacks.*
 
 Setup
 -----
