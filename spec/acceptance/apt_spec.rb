@@ -75,9 +75,12 @@ describe 'apt class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file('/etc/apt/apt.conf.d/proxy') do
+    describe file('/etc/apt/apt.conf.d/01proxy') do
       it { should be_file }
       it { should contain 'Acquire::http::Proxy "http://localhost:7042\";' }
+    end
+    describe file('/etc/apt/apt.conf.d/proxy') do
+      it { should_not be_file }
     end
   end
 
@@ -117,9 +120,12 @@ describe 'apt class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file('/etc/apt/apt.conf.d/proxy') do
+    describe file('/etc/apt/apt.conf.d/01proxy') do
       it { should be_file }
       it { should contain 'Acquire::http::Proxy "http://localhost:7042\";' }
+    end
+    describe file('/etc/apt/apt.conf.d/proxy') do
+      it { should_not be_file }
     end
   end
 

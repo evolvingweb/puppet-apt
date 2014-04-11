@@ -134,14 +134,20 @@ Package: bogus-package\n",
     default => present
   }
 
-  file { 'configure-apt-proxy':
+  file { '01proxy':
     ensure  => $proxy_set,
-    path    => "${apt_conf_d}/proxy",
+    path    => "${apt_conf_d}/01proxy",
     content => "Acquire::http::Proxy \"http://${proxy_host}:${proxy_port}\";\n",
     notify  => Exec['apt_update'],
     mode    => '0644',
     owner   => root,
     group   => root,
+  }
+  
+  file { 'old-proxy-file':
+    ensure  => absent,
+    path    => "${apt_conf_d}/proxy",
+    notify  => Exec['apt_update'],
   }
 
   # Need anchor to provide containment for dependencies.
