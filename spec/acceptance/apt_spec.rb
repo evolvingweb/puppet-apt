@@ -274,6 +274,34 @@ describe 'apt class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')
     end
   end
 
+  context 'fancy_progress => true' do
+    it 'should work with no errors' do
+      pp = <<-EOS
+      class { 'apt': fancy_progress => true }
+      EOS
+
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file('/etc/apt/apt.conf.d/99progressbar') do
+      it { should be_file }
+      it { should contain 'Dpkg::Progress-Fancy "1";' }
+    end
+  end
+  context 'fancy_progress => false' do
+    it 'should work with no errors' do
+      pp = <<-EOS
+      class { 'apt': fancy_progress => false }
+      EOS
+
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file('/etc/apt/apt.conf.d/99progressbar') do
+      it { should_not be_file }
+    end
+  end
+
   context 'reset' do
     it 'fixes the sources.list' do
       shell('cp /tmp/sources.list /etc/apt')
