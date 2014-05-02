@@ -96,6 +96,8 @@ describe 'apt', :type => :class do
             :ensure  => 'absent',
             :path    => '/etc/apt/preferences',
           })
+        else
+          should_not contain_file('apt-preferences')
         end
       }
 
