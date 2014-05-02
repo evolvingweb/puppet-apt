@@ -54,11 +54,16 @@ class apt(
     true  => "# Repos managed by puppet.\n",
   }
 
-  $preferences_content = $purge_preferences ? {
-    false => undef,
-    true  => "Explanation: Preferences managed by Puppet\n
+  if $lsbdistcodename == 'wheezy' {
+    $preferences_content = undef
+  } 
+  else {
+    $preferences_content = $purge_preferences ? {
+      false => undef,
+      true => "Explanation: Preferences managed by Puppet\n
 Explanation: We need a bogus package line because of Debian Bug #732746\n
 Package: bogus-package\n",
+    }
   }
 
   if $always_apt_update == true {
