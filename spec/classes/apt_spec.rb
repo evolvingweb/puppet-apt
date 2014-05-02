@@ -93,21 +93,8 @@ describe 'apt', :type => :class do
       it {
         if param_hash[:purge_preferences]
           should create_file('apt-preferences').with({
-            :ensure  => 'present',
+            :ensure  => 'absent',
             :path    => '/etc/apt/preferences',
-            :owner   => 'root',
-            :group   => 'root',
-            :mode    => '0644',
-            :content => /Explanation/,
-          })
-        else
-          should create_file('apt-preferences').with({
-            :ensure  => 'present',
-            :path    => '/etc/apt/preferences',
-            :owner   => 'root',
-            :group   => 'root',
-            :mode    => '0644',
-            :content => nil,
           })
         end
       }
