@@ -21,6 +21,7 @@ Setup
 **What APT affects:**
 
 * package/service/configuration files for APT
+    * NOTE: Setting the `purge_preferences` or `purge_preferences_d` parameters to 'true' will destroy any existing configuration that was not declared with puppet. The default for these parameters is 'false'.
 * your system's `sources.list` file and `sources.list.d` directory
     * NOTE: Setting the `purge_sources_list` and `purge_sources_list_d` parameters to 'true' will destroy any existing content that was not declared with Puppet. The default for these parameters is 'false'.
 * system repositories
@@ -58,7 +59,7 @@ The parameters for `apt` are not required in general and are predominantly for d
 
 Puppet will manage your system's `sources.list` file and `sources.list.d` directory but will do its best to respect existing content.
 
-If you declare your apt class with `purge_sources_list` and `purge_sources_list_d` set to 'true', Puppet will unapologetically purge any existing content it finds that wasn't declared with Puppet.
+If you declare your apt class with `purge_sources_list`, `purge_sources_list_d`, `purge_preferences` and `purge_preferences_d` set to 'true', Puppet will unapologetically purge any existing content it finds that wasn't declared with Puppet.
 
 ### apt::builddep
 
@@ -319,3 +320,4 @@ A lot of great people have contributed to this module. A somewhat current list f
 * William Van Hevelingen <blkperl@cat.pdx.edu> <wvan13@gmail.com>
 * Zach Leslie <zach@puppetlabs.com>
 * Daniele Sluijters <github@daenney.net>
+* Daniel Paulus <daniel@inuits.eu>
