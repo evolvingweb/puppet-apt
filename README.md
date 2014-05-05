@@ -320,3 +320,4 @@ A lot of great people have contributed to this module. A somewhat current list f
 * William Van Hevelingen <blkperl@cat.pdx.edu> <wvan13@gmail.com>
 * Zach Leslie <zach@puppetlabs.com>
 * Daniele Sluijters <github@daenney.net>
+* Daniel Paulus <daniel@inuits.eu>
