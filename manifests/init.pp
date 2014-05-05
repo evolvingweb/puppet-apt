@@ -86,7 +86,7 @@ class apt(
     notify  => Exec['apt_update'],
   }
 
-  if $purge_preferences == true {
+  if $purge_preferences {
     file { 'apt-preferences':
       ensure  => absent,
       path    => "${root}/preferences",
