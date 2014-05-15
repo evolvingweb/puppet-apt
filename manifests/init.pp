@@ -36,7 +36,8 @@ class apt(
   $purge_preferences_d  = false,
   $update_timeout       = undef,
   $update_tries         = undef,
-  $sources              = undef
+  $sources              = undef,
+  $fancy_progress       = undef
 ) {
 
   if $::osfamily != 'Debian' {
@@ -100,6 +101,24 @@ class apt(
     group   => root,
     purge   => $purge_preferences_d,
     recurse => $purge_preferences_d,
+  }
+
+  case $fancy_progress {
+    true: {
+      file { '99progressbar':
+        ensure  => present,
+        content => 'Dpkg::Progress-Fancy "1";',
+        path    => "${apt_conf_d}/99progressbar",
+      }
+    }
+    false: {
+      file { '99progressbar':
+        ensure  => absent,
+        path    => "${apt_conf_d}/99progressbar",
+      }
+    }
+    undef: {} # do nothing
+    default: { fail('Valid values for fancy_progress are true or false') }
   }
 
   case $disable_keys {
