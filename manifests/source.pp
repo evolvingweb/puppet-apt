@@ -10,6 +10,7 @@ define apt::source(
 	$key = false,
 	$key_server = 'keyserver.ubuntu.com',
 	$pin = false
+	$key_link = false
 ) {
 
 	include apt
@@ -43,6 +44,13 @@ define apt::source(
 	if $key != false {
 		exec { "/usr/bin/apt-key adv --keyserver ${key_server} --recv-keys ${key}":
 			unless => "/usr/bin/apt-key list | grep ${key}",
+			before => File["${name}.list"],
+		}
+	}
+
+
+	if $key_link != false {
+		exec { "/usr/bin/apt-key add ${key_link}":
 			before => File["${name}.list"],
 		}
 	}
