@@ -35,7 +35,7 @@ Set the default apt release.  Useful when using repositoires like Debian unstabl
 apt::release { "karmic": }
 </pre>
 
-### apt::source
+### apt::source with keyserver
 Add an apt source to `/etc/apt/sources.list.d/`.
 <pre>
 apt::source { "debian_unstable":
@@ -46,5 +46,16 @@ apt::source { "debian_unstable":
 	key => "55BE302B",
 	key_server => "subkeys.pgp.net",
 	pin => "-10"
+}
+</pre>
+
+### apt::source without keyserver
+Add an apt source to `/etc/apt/sources.list.d/`.
+<pre>
+apt::source { "zabbix":
+	location => " http://repo.zabbix.com/zabbix/2.2/ubuntu",
+	release => "precise",
+	pin => "-10"
+	key_link => "http://repo.zabbix.com/zabbix-official-repo.key",
 }
 </pre>
