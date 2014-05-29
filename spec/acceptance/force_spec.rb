@@ -59,7 +59,7 @@ describe 'apt::force define', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     it 'should work with no errors' do
       pp = <<-EOS
       include apt
-      apt::force { 'vim': timeout => '1' }
+      apt::force { 'ocaml': timeout => '1' }
       EOS
 
       shell('apt-get clean')
@@ -68,7 +68,7 @@ describe 'apt::force define', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
       end
     end
 
-    describe package('vim') do
+    describe package('ocaml') do
       it { should_not be_installed }
     end
   end
