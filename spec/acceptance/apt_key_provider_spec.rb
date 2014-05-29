@@ -203,7 +203,7 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
         EOS
 
         apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/Host not found/)
+          expect(r.stderr).to match(/(Host not found|Couldn't resolve host)/)
         end
       end
     end
