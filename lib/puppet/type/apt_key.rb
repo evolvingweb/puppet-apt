@@ -60,10 +60,10 @@ Puppet::Type.newtype(:apt_key) do
   end
 
   newparam(:server) do
-    desc 'The key server to fetch the key from based on the ID.'
+    desc 'The key server to fetch the key from based on the ID. It can either be a domain name or url.'
     defaultto :'keyserver.ubuntu.com'
-    # Need to validate this, preferably through stdlib is_fqdn
-    # but still working on getting to that.
+    
+    newvalues(/\A((hkp|http|https):\/\/)?([a-z\d])([a-z\d-]{0,61}\.)+[a-z\d]+(:\d{2,4})?$/)
   end
 
   newparam(:keyserver_options) do

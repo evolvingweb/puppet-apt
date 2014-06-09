@@ -192,6 +192,22 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
       end
     end
 
+    context 'hkp://pgp.mit.edu:80' do
+      it 'works' do
+        pp = <<-EOS
+        apt_key { 'puppetlabs':
+          id     => '#{PUPPETLABS_GPG_KEY_ID}',
+          ensure => 'present',
+          server => 'hkp://pgp.mit.edu:80',
+        }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+        expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+        shell("apt-key list | grep #{PUPPETLABS_GPG_KEY_ID}")
+      end
+    end
+
     context 'nonexistant.key.server' do
       it 'fails' do
         pp = <<-EOS
@@ -204,6 +220,22 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
 
         apply_manifest(pp, :expect_failures => true) do |r|
           expect(r.stderr).to match(/Host not found/)
+        end
+      end
+    end
+
+    context 'key server start with dot' do
+      it 'fails' do
+        pp = <<-EOS
+        apt_key { 'puppetlabs':
+          id     => '#{PUPPETLABS_GPG_KEY_ID}',
+          ensure => 'present',
+          server => '.pgp.key.server',
+        }
+        EOS
+
+        apply_manifest(pp, :expect_failures => true) do |r|
+          expect(r.stderr).to match(/Invalid value \".pgp.key.server\"/)
         end
       end
     end

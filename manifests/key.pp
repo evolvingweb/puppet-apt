@@ -69,7 +69,7 @@ define apt::key (
   }
 
   if $key_server {
-    validate_re($key_server,['\A((hkp|http|https):\/\/)?([a-z\d]{0,62}\.)+[a-z\d]+(:\d{2,4})?$'])
+    validate_re($key_server,['\A((hkp|http|https):\/\/)?([a-z\d])([a-z\d-]{0,61}\.)+[a-z\d]+(:\d{2,4})?$'])
   }
 
   if $key_options {
