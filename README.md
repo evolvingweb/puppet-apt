@@ -194,6 +194,7 @@ Sets the default apt release. This class is particularly useful when using repos
 Adds an apt source to `/etc/apt/sources.list.d/`.
 
     apt::source { 'debian_unstable':
+      comment           => 'This is the iWeb Debian unstable mirror',
       location          => 'http://debian.mirror.iweb.ca/debian/',
       release           => 'unstable',
       repos             => 'main contrib non-free',
