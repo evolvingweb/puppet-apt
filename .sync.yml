@@ -1,0 +1,5 @@
+---
+.travis.yml:
+  env_matrix:
+  - PUPPET_GEM_VERSION="~> 3.4.0"
+  - PUPPET_GEM_VERSION="~> 3.5.0"
