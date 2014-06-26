@@ -142,31 +142,159 @@ describe 'apt::key', :type => :define do
     end
 
     describe 'key_server =>' do
-      let :params do {
-        :key_server => 'pgp.mit.edu',
-      } end
+    	context 'domain name' do
+        let :params do {
+          :key_server => 'pgp.mit.edu',
+      	} end
 
-      it 'contains the apt::key' do
-        should contain_apt__key(title).with({
-          :key         => title,
-          :ensure      => 'present',
-          :key_server  => 'pgp.mit.edu',
-        })
+      	it 'contains the apt::key' do
+          should contain_apt__key(title).with({
+            :key         => title,
+            :ensure      => 'present',
+            :key_server  => 'pgp.mit.edu',
+          })
+      	end
+      	it 'contains the apt_key' do
+          should contain_apt_key(title).with({
+            :id                => title,
+            :ensure            => 'present',
+            :source            => nil,
+            :server            => params[:key_server],
+            :content           => nil,
+            :keyserver_options => nil,
+          })
+      	end
+      	it 'contains the apt_key present anchor' do
+          should contain_anchor("apt_key #{title} present")
+      	end
+			end
+
+      context "domain with dash" do
+        let(:params) do{
+          :key_server => 'p-gp.m-it.edu',
+        } end
+        it "should contain apt::key" do
+          should contain_apt__key(title).with({
+            :key        => title,
+            :ensure     => 'present',
+            :key_server => 'p-gp.m-it.edu',
+          })
+        end
       end
-      it 'contains the apt_key' do
-        should contain_apt_key(title).with({
-          :id                => title,
-          :ensure            => 'present',
-          :source            => nil,
-          :server            => params[:key_server],
-          :content           => nil,
-          :keyserver_options => nil,
-        })
+
+      context "domain begin with dash" do
+        let(:params) do{
+          :key_server => '-pgp.mit.edu',
+        } end
+        it 'fails' do
+          expect { subject } .to raise_error(/does not match/)
+        end
       end
-      it 'contains the apt_key present anchor' do
-        should contain_anchor("apt_key #{title} present")
+
+      context "domain begin with dot" do
+        let(:params) do{
+          :key_server => '.pgp.mit.edu',
+        } end
+        it 'fails' do
+          expect { subject } .to raise_error(/does not match/)
+        end
       end
-    end
+
+      context "domain end with dot" do
+        let(:params) do{
+          :key_server => "pgp.mit.edu.",
+        } end
+        it 'fails' do
+          expect { subject } .to raise_error(/does not match/)
+        end
+      end
+
+      context "url" do
+        let (:params) do{
+          :key_server => 'hkp://pgp.mit.edu',
+        } end
+        it "should contain apt::key" do
+         should contain_apt__key(title).with({
+           :key         => title,
+           :ensure      => 'present',
+           :key_server  => 'hkp://pgp.mit.edu',
+         })
+        end
+      end
+      context "url with port number" do
+        let (:params) do{
+          :key_server => 'hkp://pgp.mit.edu:80',
+        } end
+        it "should contain apt::key" do
+         should contain_apt__key(title).with({
+            :key        => title,
+            :ensure     => 'present',
+            :key_server => 'hkp://pgp.mit.edu:80',
+         })
+        end
+      end
+
+      context "incorrect port number url" do
+        let (:params) do{
+          :key_server => 'hkp://pgp.mit.edu:8008080'
+        } end
+        it 'fails' do
+          expect { subject }.to raise_error(/does not match/)
+        end
+      end
+      context "incorrect protocol for  url" do
+        let (:params) do{
+          :key_server => 'abc://pgp.mit.edu:80'
+        } end
+        it 'fails' do
+          expect { subject }.to raise_error(/does not match/)
+        end
+      end
+      context "missing port number url" do
+        let (:params) do{
+          :key_server => 'hkp://pgp.mit.edu:'
+        } end
+        it 'fails' do
+          expect { subject }.to raise_error(/does not match/)
+        end
+      end
+      context "url ending with a dot" do
+        let (:params) do{
+          :key_server => 'hkp://pgp.mit.edu.'
+        } end
+        it 'fails' do
+          expect { subject }.to raise_error(/does not match/)
+        end
+      end
+      context "url begin with a dash" do
+        let(:params) do{
+          :key_server => "hkp://-pgp.mit.edu",
+        } end
+        it 'fails' do
+          expect { subject }.to raise_error(/does not match/)
+        end
+      end
+      context "url with dash" do
+        let(:params) do{
+          :key_server => 'hkp://p-gp.m-it.edu',
+        } end
+        it "should contain apt::key" do
+          should contain_apt__key(title).with({
+            :key        => title,
+            :ensure     => 'present',
+            :key_server => 'hkp://p-gp.m-it.edu',
+          })
+        end
+      end
+      context "exceed characher url" do
+        let (:params) do{
+          :key_server => 'hkp://pgpiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.mit.edu'
+        } end
+        it 'fails' do
+          expect { subject }.to raise_error(/does not match/)
+        end
+      end
+		end
 
     describe 'key_options =>' do
       let :params do {
@@ -229,7 +357,7 @@ describe 'apt::key', :type => :define do
         :key_server => 'two bottles of rum',
       } end
       it 'fails' do
-        expect { subject }.to raise_error(/must be a valid domain name/)
+        expect { subject }.to raise_error(/does not match/)
       end
     end
 
