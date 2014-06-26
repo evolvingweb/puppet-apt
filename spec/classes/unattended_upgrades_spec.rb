@@ -61,6 +61,8 @@ describe 'apt::unattended_upgrades', :type => :class do
           should contain_file(file_unattended).with_content(
             /^Unattended-Upgrade::Allowed-Origins/
           ).with_content(
+            /"\${distro_id} \${distro_codename}-lts";/
+          ).with_content(
             /"\${distro_id} \${distro_codename}-security";/
           ).with_content(
             /"\${distro_id} oldstable";/
