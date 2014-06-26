@@ -213,6 +213,13 @@ If you would like to configure your system so the source is the Puppet Labs APT 
       key_server => 'pgp.mit.edu',
     }
 
+### Facts
+
+There are a few facts included within the apt module describing the state of the apt system:
+
+* `apt_updates` - the number of updates available on the system
+* `apt_security_updates` - the number of updates which are security updates
+* `apt_package_updates` - the package names that are available for update. On Facter 2.0 and newer this will be a list type, in earlier versions it is a comma delimitered string.
 
 #### Hiera example
 <pre>
