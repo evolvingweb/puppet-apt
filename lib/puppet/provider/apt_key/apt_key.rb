@@ -26,6 +26,11 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
   commands   :apt_key  => 'apt-key'
 
   def self.instances
+    if RUBY_VERSION > '1.8.7'
+      key_output = apt_key('list').encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '')
+    else
+      key_output = apt_key('list')
+    end
     key_array = apt_key('list').split("\n").collect do |line|
       line_hash = key_line_hash(line)
       next unless line_hash
