@@ -31,7 +31,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
     else
       key_output = apt_key('list')
     end
-    key_array = apt_key('list').split("\n").collect do |line|
+    key_array = key_output.split("\n").collect do |line|
       line_hash = key_line_hash(line)
       next unless line_hash
       expired = false
