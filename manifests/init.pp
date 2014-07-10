@@ -139,19 +139,25 @@ class apt(
     default: { fail('Valid values for disable_keys are true or false') }
   }
 
-  $proxy_set = $proxy_host ? {
-    undef   => absent,
-    default => present
-  }
-
-  file { '01proxy':
-    ensure  => $proxy_set,
-    path    => "${apt_conf_d}/01proxy",
-    content => "Acquire::http::Proxy \"http://${proxy_host}:${proxy_port}\";\n",
-    notify  => Exec['apt_update'],
-    mode    => '0644',
-    owner   => root,
-    group   => root,
+  case $proxy_host {
+    false, '', undef: {
+      file { '01proxy':
+        ensure  => absent,
+        path    => "${apt_conf_d}/01proxy",
+        content => "Acquire::http::Proxy \"http://${proxy_host}:${proxy_port}\";\n",
+        notify  => Exec['apt_update'],
+        mode    => '0644',
+        owner   => root,
+        group   => root,
+      }
+    }
+    default: {
+      file { '01proxy':
+        ensure  => present,
+        path    => "${apt_conf_d}/01proxy",
+        notify  => Exec['apt_update'],
+      }
+    }
   }
 
   file { 'old-proxy-file':
