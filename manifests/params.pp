@@ -49,6 +49,9 @@ class apt::params {
         }
       }
     }
+    '': {
+      fail('Unable to determine lsbdistid, is lsb-release installed?')
+    }
     default: {
       fail("Unsupported lsbdistid (${::lsbdistid})")
     }

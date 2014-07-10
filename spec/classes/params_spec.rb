@@ -24,4 +24,16 @@ describe 'apt::params', :type => :class do
     end
 
   end
+
+  describe "With lsb-release not installed" do
+    let(:facts) { { :lsbdistid => '' } }
+    let (:title) { 'my_package' }
+
+    it do
+      expect {
+        should compile
+      }.to raise_error(Puppet::Error, /Unable to determine lsbdistid, is lsb-release installed/)
+    end
+  end
+
 end
