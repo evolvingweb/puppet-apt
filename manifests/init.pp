@@ -144,18 +144,18 @@ class apt(
       file { '01proxy':
         ensure  => absent,
         path    => "${apt_conf_d}/01proxy",
-        content => "Acquire::http::Proxy \"http://${proxy_host}:${proxy_port}\";\n",
         notify  => Exec['apt_update'],
-        mode    => '0644',
-        owner   => root,
-        group   => root,
       }
     }
     default: {
       file { '01proxy':
         ensure  => present,
         path    => "${apt_conf_d}/01proxy",
+        content => "Acquire::http::Proxy \"http://${proxy_host}:${proxy_port}\";\n",
         notify  => Exec['apt_update'],
+        mode    => '0644',
+        owner   => root,
+        group   => root,
       }
     }
   }
