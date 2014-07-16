@@ -33,7 +33,7 @@ To begin using the APT module with default parameters, declare the class
 
     include apt
 
-Puppet code that uses anything from the APT module requires that the core apt class be declared/\s\+$//e
+Puppet code that uses anything from the APT module requires that the core apt class be declared.
 
 Usage
 -----
