@@ -15,6 +15,7 @@ describe 'apt::source', :type => :define do
       :release            => 'karmic',
       :repos              => 'main',
       :include_src        => true,
+      :include_deb        => true,
       :required_packages  => false,
       :key                => false,
       :key_server         => false,
@@ -83,8 +84,9 @@ describe 'apt::source', :type => :define do
         if param_hash[:architecture]
           arch = "[arch=#{param_hash[:architecture]}] "
         end
-        content << "\ndeb #{arch}#{param_hash[:location]} #{param_hash[:release]} #{param_hash[:repos]}\n"
-
+        if param_hash[:include_deb]
+	  content << "\ndeb #{arch}#{param_hash[:location]} #{param_hash[:release]} #{param_hash[:repos]}\n"
+	end
         if param_hash[:include_src]
           content << "deb-src #{arch}#{param_hash[:location]} #{param_hash[:release]} #{param_hash[:repos]}\n"
         end

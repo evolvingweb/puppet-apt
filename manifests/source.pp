@@ -8,6 +8,7 @@ define apt::source(
   $release           = 'UNDEF',
   $repos             = 'main',
   $include_src       = true,
+  $include_deb       = true,
   $required_packages = false,
   $key               = undef,
   $key_server        = 'keyserver.ubuntu.com',

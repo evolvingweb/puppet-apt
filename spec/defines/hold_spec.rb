@@ -25,7 +25,7 @@ describe 'apt::hold' do
         :priority => 1001,
       })
 
-      should contain_apt__pin("hold #{title} at #{params[:version]}").with({
+      should contain_apt__pin("hold_#{title}").with({
         :ensure   => 'present',
         :packages => title,
         :version  => params[:version],
@@ -42,7 +42,7 @@ describe 'apt::hold' do
         :ensure   => params[:ensure],
       })
 
-      should contain_apt__pin("hold #{title} at #{params[:version]}").with({
+      should contain_apt__pin("hold_#{title}").with({
         :ensure   => params[:ensure],
       })
     end
@@ -59,7 +59,7 @@ describe 'apt::hold' do
         :priority => params[:priority],
       })
 
-      should contain_apt__pin("hold #{title} at #{params[:version]}").with({
+      should contain_apt__pin("hold_#{title}").with({
         :ensure   => 'present',
         :packages => title,
         :version  => params[:version],
