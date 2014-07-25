@@ -1,3 +1,19 @@
+##2014-07-30 - Supported Release 1.6.0
+###Summary
+
+####Features
+- Allow URL or domain name for key_server parameter
+- Allow custom comment for sources list
+- Files synced using ModuleSync!
+- Enable auto-update for Debian squeeze LTS
+- Add facts showing available updates
+
+####Bugfixes
+- Fix regex to follow apt requirements
+- Allow dashes in URL or domain for key_server parameter
+- Test fixes for Ubuntu 10.04
+- Fix for unicode characters
+
 ##2014-07-15 - Supported Release 1.5.2
 ###Summary
 
