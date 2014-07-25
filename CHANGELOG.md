@@ -1,3 +1,14 @@
+##2014-07-15 - Supported Release 1.5.2
+###Summary
+
+This release merely updates metadata.json so the module can be uninstalled and
+upgraded via the puppet module command.
+
+##2014-07-10 - Supported Release 1.5.1
+###Summary
+
+This release has added tests to ensure graceful failure on OSX.
+
 ##2014-06-04 - Release 1.5.0
 ###Summary
 
