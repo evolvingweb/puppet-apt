@@ -7,7 +7,7 @@ CENTOS_GPG_KEY_ID       = 'C105B9DE'
 CENTOS_REPO_URL         = 'ftp.cvut.cz/centos'
 CENTOS_GPG_KEY_FILE     = 'RPM-GPG-KEY-CentOS-6'
 
-describe 'apt_key', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+describe 'apt_key' do
   before(:each) do
     shell("apt-key del #{PUPPETLABS_GPG_KEY_ID}",
           :acceptable_exit_codes => [0,1,2])
