@@ -15,7 +15,7 @@ describe 'apt class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')
       EOS
 
       apply_manifest(pp, :catch_failures => true) do |r|
-        expect(r.stdout).to match(/apt_update/)
+        expect(r.stdout).to match(/Exec\[apt_update\]/)
       end
     end
   end
@@ -26,7 +26,7 @@ describe 'apt class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')
       EOS
 
       apply_manifest(pp, :catch_failures => true) do |r|
-        expect(r.stdout).to_not match(/apt_update/)
+        expect(r.stdout).to_not match(/Exec\[apt_update\]/)
       end
     end
   end
