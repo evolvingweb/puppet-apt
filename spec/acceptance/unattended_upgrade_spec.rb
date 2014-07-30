@@ -10,8 +10,8 @@ describe 'apt::unattended_upgrades class', :unless => UNSUPPORTED_PLATFORMS.incl
 
       # Attempted workaround for problems seen on debian with
       # something holding the package database open.
-      #shell('killall -9 apt-get')
-      #shell('killall -9 dpkg')
+      shell('killall -9 apt-get', { :acceptable_exit_codes => [0,1] })
+      shell('killall -9 dpkg', { :acceptable_exit_codes => [0,1] })
       apply_manifest(pp, :catch_failures => true)
     end
 
