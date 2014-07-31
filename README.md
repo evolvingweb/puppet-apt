@@ -202,7 +202,8 @@ Adds an apt source to `/etc/apt/sources.list.d/`.
       key               => '46925553',
       key_server        => 'subkeys.pgp.net',
       pin               => '-10',
-      include_src       => true
+      include_src       => true,
+      include_deb       => true
     }
 
 If you would like to configure your system so the source is the Puppet Labs APT repository
@@ -234,6 +235,7 @@ apt::sources:
       key_server: 'subkeys.pgp.net'
       pin: '-10'
       include_src: 'true'
+      include_deb: 'true'
 
   'puppetlabs':
       location: 'http://apt.puppetlabs.com'

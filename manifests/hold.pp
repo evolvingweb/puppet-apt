@@ -40,13 +40,13 @@ define apt::hold(
   }
 
   if $ensure == 'present' {
-    ::apt::pin { "hold ${package} at ${version}":
+    ::apt::pin { "hold_${package}":
       packages => $package,
       version  => $version,
       priority => $priority,
     }
   } else {
-    ::apt::pin { "hold ${package} at ${version}":
+    ::apt::pin { "hold_${package}":
       ensure => 'absent',
     }
   }
