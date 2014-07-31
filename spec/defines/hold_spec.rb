@@ -1,9 +1,9 @@
 require 'spec_helper'
 describe 'apt::hold' do
   let :facts do {
-      :osfamily   => 'Debian',
-      :lsbdistid  => 'Debian',
-      :lsbrelease => 'wheezy',
+    :osfamily   => 'Debian',
+    :lsbdistid  => 'Debian',
+    :lsbrelease => 'wheezy',
   } end
 
   let :title do
@@ -18,13 +18,6 @@ describe 'apt::hold' do
     let :params do default_params end
 
     it 'creates an apt preferences file' do
-      should contain_apt__hold(title).with({
-        :ensure   => 'present',
-        :package  => title,
-        :version  => params[:version],
-        :priority => 1001,
-      })
-
       should contain_apt__pin("hold_#{title}").with({
         :ensure   => 'present',
         :packages => title,
@@ -38,9 +31,6 @@ describe 'apt::hold' do
     let :params do default_params.merge({:ensure => 'absent',}) end
 
     it 'creates an apt preferences file' do
-      should contain_apt__hold(title).with({
-        :ensure   => params[:ensure],
-      })
 
       should contain_apt__pin("hold_#{title}").with({
         :ensure   => params[:ensure],
@@ -52,13 +42,6 @@ describe 'apt::hold' do
     let :params do default_params.merge({:priority => 990,}) end
 
     it 'creates an apt preferences file' do
-      should contain_apt__hold(title).with({
-        :ensure   => 'present',
-        :package  => title,
-        :version  => params[:version],
-        :priority => params[:priority],
-      })
-
       should contain_apt__pin("hold_#{title}").with({
         :ensure   => 'present',
         :packages => title,
@@ -67,6 +50,20 @@ describe 'apt::hold' do
       })
     end
   end
+
+  describe 'package => foo' do
+    let :params do default_params.merge({:package => 'foo'}) end
+
+    it 'creates an apt preferences file' do
+      should contain_apt__pin("hold_foo").with({
+        :ensure   => 'present',
+        :packages => 'foo',
+        :version  => params[:version],
+        :priority => 1001,
+      })
+    end
+  end
+
 
   describe 'validation' do
     context 'version => {}' do

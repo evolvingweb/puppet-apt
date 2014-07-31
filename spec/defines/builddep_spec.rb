@@ -4,10 +4,10 @@ describe 'apt::builddep', :type => :define do
   let(:facts) { { :lsbdistid => 'Debian' } }
   let(:title) { 'my_package' }
 
-  describe "should require apt-get update" do
-    it { should contain_exec("apt_update").with({
-        'command' => "/usr/bin/apt-get update",
-        'refreshonly' => true
+  describe "defaults" do
+    it { should contain_exec("apt-builddep-my_package").that_notifies('Exec[apt_update]').with({
+        'command' => "/usr/bin/apt-get -y --force-yes build-dep my_package",
+        'logoutput' => 'on_failure'
       })
     }
     it { should contain_anchor("apt::builddep::my_package").with({
