@@ -16,7 +16,6 @@ define apt::pin(
   $originator      = '', # o=
   $label           = ''  # l=
 ) {
-
   include apt::params
 
   $preferences_d = $apt::params::preferences_d
@@ -35,7 +34,7 @@ define apt::pin(
   $pin_release = join($pin_release_array, '')
 
   # Read the manpage 'apt_preferences(5)', especially the chapter
-  # 'Thea Effect of APT Preferences' to understand the following logic
+  # 'The Effect of APT Preferences' to understand the following logic
   # and the difference between specific and general form
   if is_array($packages) {
     $packages_string = join($packages, ' ')
@@ -44,24 +43,17 @@ define apt::pin(
   }
 
   if $packages_string != '*' { # specific form
-
     if ( $pin_release != '' and ( $origin != '' or $version != '' )) or
-      ( $origin != '' and ( $pin_release != '' or $version != '' )) or
       ( $version != '' and ( $pin_release != '' or $origin != '' )) {
       fail('parameters release, origin, and version are mutually exclusive')
     }
-
   } else { # general form
-
     if $version != '' {
       fail('parameter version cannot be used in general form')
     }
-
-    if ( $pin_release != '' and $origin != '' ) or
-      ( $origin != '' and $pin_release != '' ) {
-      fail('parmeters release and origin are mutually exclusive')
+    if ( $pin_release != '' and $origin != '' ) {
+      fail('parameters release and origin are mutually exclusive')
     }
-
   }
 
 
