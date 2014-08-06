@@ -17,12 +17,10 @@ describe 'apt::force', :type => :define do
   end
 
   describe "when using default parameters" do
-    let :params do
-      default_params
-    end
     it { should contain_exec("/usr/bin/apt-get -y  install #{title}").with(
-      :unless  => "/usr/bin/dpkg -s #{title} | grep -q 'Status: install'",
-      :timeout => '300'
+      :unless    => "/usr/bin/dpkg -s #{title} | grep -q 'Status: install'",
+      :logoutput => 'on_failure',
+      :timeout   => '300'
     ) }
   end
 
