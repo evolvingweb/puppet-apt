@@ -8,10 +8,14 @@ describe 'apt::unattended_upgrades class', :unless => UNSUPPORTED_PLATFORMS.incl
       include apt::unattended_upgrades
       EOS
 
-      # Attempted workaround for problems seen on debian with
-      # something holding the package database open.
-      shell('killall -9 apt-get', { :acceptable_exit_codes => [0,1] })
-      shell('killall -9 dpkg', { :acceptable_exit_codes => [0,1] })
+      if fact('operatingsystem') == 'Debian'
+        # Attempted workaround for problems seen on debian with
+        # something holding the package database open.
+        shell('killall -9 apt-get', { :acceptable_exit_codes => [0,1] })
+        shell('killall -9 dpkg', { :acceptable_exit_codes => [0,1] })
+        shell('dpkg --configure -a')
+      end
+
       apply_manifest(pp, :catch_failures => true)
     end
 
