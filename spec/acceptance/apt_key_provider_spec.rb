@@ -36,7 +36,7 @@ describe 'apt_key' do
           EOS
 
           apply_manifest(pp, :catch_failures => true)
-          expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+          apply_manifest(pp, :catch_failures => true)
           shell("apt-key list | grep #{PUPPETLABS_GPG_KEY_ID}")
         end
       end
@@ -74,7 +74,7 @@ describe 'apt_key' do
 
         # Time to remove it using Puppet
         apply_manifest(pp, :catch_failures => true)
-        expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+        apply_manifest(pp, :catch_failures => true)
 
         shell("apt-key list | grep #{PUPPETLABS_GPG_KEY_ID}",
               :acceptable_exit_codes => [1])
@@ -153,7 +153,7 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+        apply_manifest(pp, :catch_failures => true)
         shell("apt-key list | grep #{PUPPETLABS_GPG_KEY_ID}")
       end
     end
@@ -187,7 +187,7 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+        apply_manifest(pp, :catch_failures => true)
         shell("apt-key list | grep #{PUPPETLABS_GPG_KEY_ID}")
       end
     end
@@ -203,7 +203,7 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+        apply_manifest(pp, :catch_failures => true)
         shell("apt-key list | grep #{PUPPETLABS_GPG_KEY_ID}")
       end
     end
@@ -253,7 +253,7 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+        apply_manifest(pp, :catch_failures => true)
         shell("apt-key list | grep #{PUPPETLABS_GPG_KEY_ID}")
       end
 
@@ -302,7 +302,7 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+        apply_manifest(pp, :catch_failures => true)
         shell("apt-key list | grep #{CENTOS_GPG_KEY_ID}")
       end
 
@@ -346,7 +346,7 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+        apply_manifest(pp, :catch_failures => true)
         shell("apt-key list | grep #{PUPPETLABS_GPG_KEY_ID}")
       end
 
@@ -399,7 +399,7 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+        apply_manifest(pp, :catch_failures => true)
         shell("apt-key list | grep #{PUPPETLABS_GPG_KEY_ID}")
       end
     end
@@ -456,7 +456,7 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+        apply_manifest(pp, :catch_failures => true)
         shell("apt-key list | grep #{PUPPETLABS_GPG_KEY_ID}")
       end
 
@@ -469,6 +469,7 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
         }
         EOS
 
+        shell("apt-key del #{PUPPETLABS_GPG_KEY_ID}", :acceptable_exit_codes => [0,1,2])
         apply_manifest(pp, :expect_failures => true) do |r|
           expect(r.stderr).to match(/--keyserver-options this is totally/)
         end
