@@ -52,18 +52,21 @@ class apt::unattended_upgrades (
     ensure => present,
   }
 
-  File {
+  file { '/etc/apt/apt.conf.d/50unattended-upgrades':
     ensure  => file,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
+    content => template('apt/50unattended-upgrades.erb'),
     require => Package['unattended-upgrades'],
   }
 
-  file {
-    '/etc/apt/apt.conf.d/50unattended-upgrades':
-      content => template('apt/50unattended-upgrades.erb');
-    '/etc/apt/apt.conf.d/10periodic':
-      content => template('apt/10periodic.erb');
+  file { '/etc/apt/apt.conf.d/10periodic':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template('apt/10periodic.erb'),
+    require => Package['unattended-upgrades'],
   }
 }
