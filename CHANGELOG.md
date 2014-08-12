@@ -6,6 +6,7 @@
 - Allow custom comment for sources list
 - Enable auto-update for Debian squeeze LTS
 - Add facts showing available updates
+- Test refactoring
 
 ####Bugfixes
 - Allow dashes in URL or domain for key_server parameter
