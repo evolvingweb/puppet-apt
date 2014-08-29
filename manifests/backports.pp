@@ -39,17 +39,18 @@ class apt::backports(
   }
 
   if $::lsbdistid == 'LinuxMint' {
-    $distid = $::lsbdistcodename ? {
-      'debian' => 'debian',
-      default  => 'ubuntu',
-    }
-    $release_real = $::lsbdistcodename ? {
-      'debian' => 'wheezy',
-      'qiana'  => 'trusty',
-      'petra'  => 'saucy',
-      'olivia' => 'raring',
-      'nadia'  => 'quantal',
-      'maya'   => 'precise',
+    if $::lsbdistcodename == 'debian' {
+      $distid = 'debian'
+      $release_real = 'wheezy'
+    } else {
+      $distid = 'ubuntu'
+      $release_real = $::lsbdistcodename ? {
+        'qiana'  => 'trusty',
+        'petra'  => 'saucy',
+        'olivia' => 'raring',
+        'nadia'  => 'quantal',
+        'maya'   => 'precise',
+      }
     }
   } else {
     $distid = $::lsbdistid

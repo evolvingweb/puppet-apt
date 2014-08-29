@@ -6,23 +6,24 @@ class apt::params {
   $preferences_d  = "${root}/preferences.d"
 
   case $::lsbdistid {
-    'linuxmint': {
-      $distid = $::lsbdistcodename ? {
-        'debian' => 'debian',
-        default  => 'ubuntu',
-      }
-      $distcodename = $::lsbdistcodename ? {
-        'debian' => 'wheezy',
-        'qiana'  => 'trusty',
-        'petra'  => 'saucy',
-        'olivia' => 'raring',
-        'nadia'  => 'quantal',
-        'maya'   => 'precise',
-      }
-    }
     'ubuntu', 'debian': {
       $distid = $::lsbdistid
       $distcodename = $::lsbdistcodename
+    }
+    'linuxmint': {
+      if $::lsbdistcodename == 'debian' {
+        $distid = 'debian'
+        $distcodename = 'wheezy'
+      } else {
+        $distid = 'ubuntu'
+        $distcodename = $::lsbdistcodename ? {
+          'qiana'  => 'trusty',
+          'petra'  => 'saucy',
+          'olivia' => 'raring',
+          'nadia'  => 'quantal',
+          'maya'   => 'precise',
+        }
+      }
     }
     '': {
       fail('Unable to determine lsbdistid, is lsb-release installed?')
