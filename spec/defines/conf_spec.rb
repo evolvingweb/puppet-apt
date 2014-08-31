@@ -19,7 +19,7 @@ describe 'apt::conf', :type => :define do
 
     it { should contain_file(filename).with({
           'ensure'    => 'present',
-          'content'   => "Apt::Install-Recommends 0;\nApt::AutoRemove::InstallRecommends 1;\n",
+          'content'   => /Apt::Install-Recommends 0;\nApt::AutoRemove::InstallRecommends 1;/,
           'owner'     => 'root',
           'group'     => 'root',
           'mode'      => '0644',
@@ -42,7 +42,7 @@ describe 'apt::conf', :type => :define do
 
     it { should contain_file(filename).with({
         'ensure'    => 'absent',
-        'content'   => "Apt::Install-Recommends 0;\nApt::AutoRemove::InstallRecommends 1;\n",
+        'content'   => /Apt::Install-Recommends 0;\nApt::AutoRemove::InstallRecommends 1;/,
         'owner'     => 'root',
         'group'     => 'root',
         'mode'      => '0644',

@@ -92,7 +92,7 @@ class apt(
 
   file { '/etc/apt/apt.conf.d/15update-stamp':
     ensure  => 'file',
-    content => 'APT::Update::Post-Invoke-Success {"touch /var/lib/apt/periodic/update-success-stamp 2>/dev/null || true";};',
+    content => template('apt/_header.erb', 'apt/15update-stamp.erb'),
     group   => 'root',
     mode    => '0644',
     owner   => 'root',
@@ -144,7 +144,7 @@ class apt(
     true: {
       file { '99progressbar':
         ensure  => present,
-        content => 'Dpkg::Progress-Fancy "1";',
+        content => template('apt/_header.erb', 'apt/progressbar.erb'),
         path    => "${apt_conf_d}/99progressbar",
       }
     }
@@ -162,7 +162,7 @@ class apt(
     true: {
       file { '99unauth':
         ensure  => present,
-        content => "APT::Get::AllowUnauthenticated 1;\n",
+        content => template('apt/_header.erb', 'apt/unauth.erb'),
         path    => "${apt_conf_d}/99unauth",
       }
     }
@@ -188,7 +188,7 @@ class apt(
       file { '01proxy':
         ensure  => present,
         path    => "${apt_conf_d}/01proxy",
-        content => "Acquire::http::Proxy \"http://${proxy_host}:${proxy_port}\";\n",
+        content => template('apt/_header.erb', 'apt/proxy.erb'),
         notify  => Exec['apt_update'],
         mode    => '0644',
         owner   => root,
