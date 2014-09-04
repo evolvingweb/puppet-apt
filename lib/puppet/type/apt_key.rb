@@ -28,8 +28,8 @@ Puppet::Type.newtype(:apt_key) do
   newparam(:id, :namevar => true) do
     desc 'The ID of the key you want to manage.'
     # GPG key ID's should be either 32-bit (short) or 64-bit (long) key ID's
-    # and may start with the optional 0x
-    newvalues(/\A(0x)?[0-9a-fA-F]{8}\Z/, /\A(0x)?[0-9a-fA-F]{16}\Z/)
+    # and may start with the optional 0x, or they can be 40-digit key fingerprints
+    newvalues(/\A(0x)?[0-9a-fA-F]{8}\Z/, /\A(0x)?[0-9a-fA-F]{16}\Z/, /\A(0x)?[0-9a-fA-F]{40}\Z/)
     munge do |value|
       if value.start_with?('0x')
         id = value.partition('0x').last.upcase
@@ -66,6 +66,30 @@ Puppet::Type.newtype(:apt_key) do
     desc 'Additional options to pass to apt-key\'s --keyserver-options.'
   end
 
+  newproperty(:fingerprint) do
+    desc <<-EOS
+      The 40-digit hexadecimal fingerprint of the specified GPG key.
+
+      This property is read-only.
+    EOS
+  end
+
+  newproperty(:long) do
+    desc <<-EOS
+      The 16-digit hexadecimal id of the specified GPG key.
+
+      This property is read-only.
+    EOS
+  end
+
+  newproperty(:short) do
+    desc <<-EOS
+      The 8-digit hexadecimal id of the specified GPG key.
+
+      This property is read-only.
+    EOS
+  end
+
   newproperty(:expired) do
     desc <<-EOS
       Indicates if the key has expired.
@@ -92,7 +116,7 @@ Puppet::Type.newtype(:apt_key) do
 
   newproperty(:type) do
     desc <<-EOS
-      The key type, either RSA or DSA.
+      The key type, one of: rsa, dsa, ecc, ecdsa
 
       This property is read-only.
     EOS
