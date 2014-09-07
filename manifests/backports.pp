@@ -38,12 +38,30 @@ class apt::backports(
     fail('$pin_priority must be an integer')
   }
 
-  $release_real = downcase($release)
-  $key = $::lsbdistid ? {
+  if $::lsbdistid == 'LinuxMint' {
+    if $::lsbdistcodename == 'debian' {
+      $distid = 'debian'
+      $release_real = 'wheezy'
+    } else {
+      $distid = 'ubuntu'
+      $release_real = $::lsbdistcodename ? {
+        'qiana'  => 'trusty',
+        'petra'  => 'saucy',
+        'olivia' => 'raring',
+        'nadia'  => 'quantal',
+        'maya'   => 'precise',
+      }
+    }
+  } else {
+    $distid = $::lsbdistid
+    $release_real = downcase($release)
+  }
+
+  $key = $distid ? {
     'debian' => '46925553',
     'ubuntu' => '437D05B5',
   }
-  $repos = $::lsbdistid ? {
+  $repos = $distid ? {
     'debian' => 'main contrib non-free',
     'ubuntu' => 'main universe multiverse restricted',
   }

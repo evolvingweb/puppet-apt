@@ -6,8 +6,35 @@ class apt::params {
   $preferences_d  = "${root}/preferences.d"
 
   case $::lsbdistid {
+    'ubuntu', 'debian': {
+      $distid = $::lsbdistid
+      $distcodename = $::lsbdistcodename
+    }
+    'linuxmint': {
+      if $::lsbdistcodename == 'debian' {
+        $distid = 'debian'
+        $distcodename = 'wheezy'
+      } else {
+        $distid = 'ubuntu'
+        $distcodename = $::lsbdistcodename ? {
+          'qiana'  => 'trusty',
+          'petra'  => 'saucy',
+          'olivia' => 'raring',
+          'nadia'  => 'quantal',
+          'maya'   => 'precise',
+        }
+      }
+    }
+    '': {
+      fail('Unable to determine lsbdistid, is lsb-release installed?')
+    }
+    default: {
+      fail("Unsupported lsbdistid (${::lsbdistid})")
+    }
+  }
+  case $distid {
     'debian': {
-      case $::lsbdistcodename {
+      case $distcodename {
         'squeeze': {
           $backports_location = 'http://backports.debian.org/debian-backports'
           $legacy_origin       = true
@@ -28,7 +55,7 @@ class apt::params {
       }
     }
     'ubuntu': {
-      case $::lsbdistcodename {
+      case $distcodename {
         'lucid': {
           $backports_location = 'http://us.archive.ubuntu.com/ubuntu'
           $ppa_options        = undef
@@ -48,12 +75,6 @@ class apt::params {
           $origins            = ['${distro_id}:${distro_codename}-security'] #lint:ignore:single_quote_string_with_variables
         }
       }
-    }
-    '': {
-      fail('Unable to determine lsbdistid, is lsb-release installed?')
-    }
-    default: {
-      fail("Unsupported lsbdistid (${::lsbdistid})")
     }
   }
 }
