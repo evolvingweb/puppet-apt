@@ -85,7 +85,7 @@ this module.
 
     apt_key { 'puppetlabs':
       ensure => 'present',
-      id     => '4BD6EC30',
+      id     => '1054B7A24BD6EC30',
     }
 
 You can additionally set the following attributes:
@@ -105,12 +105,12 @@ uses the aforementioned `apt_key` native type. As such it no longer requires
 the wget command that the old implementation depended on.
 
     apt::key { 'puppetlabs':
-      key        => '4BD6EC30',
+      key        => '1054B7A24BD6EC30',
       key_server => 'pgp.mit.edu',
     }
 
     apt::key { 'jenkins':
-      key        => 'D50582E6',
+      key        => '9B7D32F2D50582E6',
       key_source => 'http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key',
     }
 
@@ -199,7 +199,7 @@ Adds an apt source to `/etc/apt/sources.list.d/`.
       release           => 'unstable',
       repos             => 'main contrib non-free',
       required_packages => 'debian-keyring debian-archive-keyring',
-      key               => '46925553',
+      key               => '8B48AD6246925553',
       key_server        => 'subkeys.pgp.net',
       pin               => '-10',
       include_src       => true,
@@ -211,7 +211,7 @@ If you would like to configure your system so the source is the Puppet Labs APT 
     apt::source { 'puppetlabs':
       location   => 'http://apt.puppetlabs.com',
       repos      => 'main',
-      key        => '4BD6EC30',
+      key        => '1054B7A24BD6EC30',
       key_server => 'pgp.mit.edu',
     }
 
@@ -231,7 +231,7 @@ apt::sources:
       release: 'unstable'
       repos: 'main contrib non-free'
       required_packages: 'debian-keyring debian-archive-keyring'
-      key: '55BE302B'
+      key: '9AA38DCD55BE302B'
       key_server: 'subkeys.pgp.net'
       pin: '-10'
       include_src: 'true'
@@ -240,7 +240,7 @@ apt::sources:
   'puppetlabs':
       location: 'http://apt.puppetlabs.com'
       repos: 'main'
-      key: '4BD6EC30'
+      key: '1054B7A24BD6EC30'
       key_server: 'pgp.mit.edu'
 </pre>
 
@@ -255,7 +255,7 @@ This test will set up a Puppet Labs apt repository. Start by creating a new smok
     apt::source { 'puppetlabs':
       location   => 'http://apt.puppetlabs.com',
       repos      => 'main',
-      key        => '4BD6EC30',
+      key        => '1054B7A24BD6EC30',
       key_server => 'pgp.mit.edu',
     }
 
