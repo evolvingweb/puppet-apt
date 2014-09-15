@@ -1,3 +1,32 @@
+##2014-08-20 - Supported Release 1.6.0
+###Summary
+
+####Features
+- Allow URL or domain name for key_server parameter
+- Allow custom comment for sources list
+- Enable auto-update for Debian squeeze LTS
+- Add facts showing available updates
+- Test refactoring
+
+####Bugfixes
+- Allow dashes in URL or domain for key_server parameter
+
+##2014-08-13 - Supported Release 1.5.3
+###Summary
+
+This is a bugfix releases.  It addresses a bad regex, failures with unicode
+characters, and issues with the $proxy_host handling in apt::ppa.
+
+####Features
+- Synced files from Modulesync
+
+####Bugfixes
+- Fix regex to follow APT requirements in apt::pin
+- Fix for unicode characters
+- Fix inconsistent $proxy_host handling in apt and apt::ppa
+- Fix typo in README
+- Fix broken acceptance tests
+
 ##2014-07-15 - Supported Release 1.5.2
 ###Summary
 
