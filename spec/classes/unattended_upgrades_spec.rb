@@ -94,6 +94,14 @@ describe 'apt::unattended_upgrades', :type => :class do
       it { expect { should raise_error(Puppet::Error) } }
     end
 
+    context 'bad randomsleep' do
+      let :params do
+        {
+          'randomsleep' => '4ever'
+        }
+      end
+      it { expect { should raise_error(Puppet::Error) } }
+    end
   end
 
   context 'defaults' do
@@ -123,6 +131,7 @@ describe 'apt::unattended_upgrades', :type => :class do
     it { is_expected.to contain_file("/etc/apt/apt.conf.d/10periodic").with_content %r{APT::Periodic::Unattended-Upgrade "1";}}
     it { is_expected.to contain_file("/etc/apt/apt.conf.d/10periodic").with_content %r{APT::Periodic::AutocleanInterval "7";}}
     it { is_expected.to contain_file("/etc/apt/apt.conf.d/10periodic").with_content %r{APT::Periodic::Verbose "0";}}
+    it { is_expected.to_not contain_file("/etc/apt/apt.conf.d/10periodic").with_content %r{APT::Periodic::RandomSleep}}
   end
 
   context 'anything but defaults' do
@@ -157,6 +166,7 @@ describe 'apt::unattended_upgrades', :type => :class do
         'remove_unused'       => false,
         'auto_reboot'         => true,
         'dl_limit'            => '70',
+        'randomsleep'         => '1799',
       }
     end
 
@@ -183,6 +193,7 @@ describe 'apt::unattended_upgrades', :type => :class do
     it { is_expected.to contain_file("/etc/apt/apt.conf.d/10periodic").with_content %r{APT::Periodic::Unattended-Upgrade "0";}}
     it { is_expected.to contain_file("/etc/apt/apt.conf.d/10periodic").with_content %r{APT::Periodic::AutocleanInterval "0";}}
     it { is_expected.to contain_file("/etc/apt/apt.conf.d/10periodic").with_content %r{APT::Periodic::Verbose "1";}}
+    it { is_expected.to contain_file("/etc/apt/apt.conf.d/10periodic").with_content %r{APT::Periodic::RandomSleep "1799";}}
 
   end
 end
