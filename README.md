@@ -283,6 +283,7 @@ apt::sources:
 * `download`: How often, in days, to run `apt-get upgrade --download-only`.
 * `upgrade`: How often, in days, to upgrade packages included in the origins list.
 * `autoclean`: How often, in days, to run `apt-get autoclean`.
+* `randomsleep`: How long, in seconds, to randomly wait before applying upgrades.
 
 ### Testing
 
