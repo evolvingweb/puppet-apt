@@ -45,7 +45,8 @@ class apt::params {
         'wheezy': {
           $backports_location = 'http://ftp.debian.org/debian/'
           $legacy_origin      = false
-          $origins            = ['origin=Debian,archive=stable,label=Debian-Security']
+          $origins            = ['origin=Debian,archive=stable,label=Debian-Security',
+                                  'origin=Debian,archive=oldstable,label=Debian-Security']
         }
         default: {
           $backports_location = 'http://http.debian.net/debian/'
