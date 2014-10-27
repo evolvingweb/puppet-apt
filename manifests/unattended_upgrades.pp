@@ -28,6 +28,7 @@ class apt::unattended_upgrades (
   $remove_unused       = true,
   $auto_reboot         = false,
   $dl_limit            = 'NONE',
+  $randomsleep         = undef,
   $enable              = '1',
   $backup_interval     = '0',
   $backup_level        = '3',
@@ -47,6 +48,12 @@ class apt::unattended_upgrades (
     $auto_reboot
   )
   validate_array($origins)
+
+  if $randomsleep {
+    unless is_numeric($randomsleep) {
+      fail('randomsleep must be numeric')
+    }
+  }
 
   package { 'unattended-upgrades':
     ensure => present,
