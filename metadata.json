@@ -1,12 +1,12 @@
 {
   "name": "puppetlabs-apt",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "author": "Puppet Labs",
   "summary": "Puppet Labs Apt Module",
   "license": "Apache-2.0",
   "source": "https://github.com/puppetlabs/puppetlabs-apt",
   "project_page": "https://github.com/puppetlabs/puppetlabs-apt",
-  "issues_url": "https://github.com/puppetlabs/puppetlabs-apt/issues",
+  "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
   "operatingsystem_support": [
     {
       "operatingsystem": "Debian",
@@ -35,9 +35,6 @@
     }
   ],
   "dependencies": [
-    {
-      "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 2.2.1"
-    }
+    {"name":"puppetlabs/stdlib","version_requirement":">= 2.2.1"}
   ]
 }

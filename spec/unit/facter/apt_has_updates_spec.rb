@@ -26,7 +26,7 @@ describe 'apt_has_updates fact' do
       File.stubs(:executable?) # Stub all other calls
       Facter::Util::Resolution.stubs(:exec) # Catch all other calls
       File.expects(:executable?).with('/usr/lib/update-notifier/apt-check').returns true
-      Facter::Util::Resolution.expects(:exec).with('/usr/lib/update-notifier/apt-check 2>&1').returns "4;3"
+      Facter::Util::Resolution.expects(:exec).with('/usr/lib/update-notifier/apt-check 2>/dev/null').returns "4;3"
     }
     it { should be true }
   end
