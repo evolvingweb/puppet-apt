@@ -1,3 +1,25 @@
+##2014-10-28 - Supported Release 1.7.0
+###Summary
+
+This release includes several new features, documentation and test improvements, and a few bug fixes.
+
+####Features
+- Updated unit and acceptance tests
+- Update module to work with Linux Mint
+- Documentation updates
+- Future parser / strict variables support
+- Improved support for long GPG keys
+- New parameters!
+  - Added `apt_update_frequency` to apt
+  - Added `cfg_files` and `cfg_missing` parameters to apt::force
+  - Added `randomsleep` to apt::unattended_upgrades
+- Added `apt_update_last_success` fact
+- Refactored facts for performance improvements
+
+####Bugfixes
+- Update apt::builddep to require Exec['apt_update'] instead of notifying it
+- Clean up lint errors
+
 ##2014-08-20 - Supported Release 1.6.0
 ###Summary
 
