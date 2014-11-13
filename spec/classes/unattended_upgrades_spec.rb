@@ -134,6 +134,17 @@ describe 'apt::unattended_upgrades', :type => :class do
     it { is_expected.to_not contain_file("/etc/apt/apt.conf.d/10periodic").with_content %r{APT::Periodic::RandomSleep}}
   end
 
+  context 'wheezy' do
+    let :facts do
+      {
+        'lsbdistid'       => 'debian',
+        'lsbdistcodename' => 'wheezy',
+      }
+    end
+
+    it { is_expected.to contain_file("/etc/apt/apt.conf.d/50unattended-upgrades").with_content %r{Unattended-Upgrade::Origins-Pattern \{\n\t"origin=Debian,archive=stable,label=Debian-Security";\n\t"origin=Debian,archive=oldstable,label=Debian-Security";\n\};} }
+  end
+
   context 'anything but defaults' do
     let :facts do
       {

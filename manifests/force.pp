@@ -25,15 +25,15 @@ define apt::force(
   }
 
   case $cfg_files {
-    'new':       { $config_files = '-o Dpkg::Options::="--force-confnew"' }
-    'old':       { $config_files = '-o Dpkg::Options::="--force-confold"' }
-    'unchanged': { $config_files = '-o Dpkg::Options::="--force-confdef"' }
-    'none':      { $config_files = '' }
+    'new':           { $config_files = '-o Dpkg::Options::="--force-confnew"' }
+    'old':           { $config_files = '-o Dpkg::Options::="--force-confold"' }
+    'unchanged':     { $config_files = '-o Dpkg::Options::="--force-confdef"' }
+    'none', default: { $config_files = '' }
   }
 
   case $cfg_missing {
-    true:    { $config_missing = '-o Dpkg::Options::="--force-confmiss"' }
-    false:   { $config_missing = '' }
+    true:           { $config_missing = '-o Dpkg::Options::="--force-confmiss"' }
+    false, default: { $config_missing = '' }
   }
 
   if $version == false {
