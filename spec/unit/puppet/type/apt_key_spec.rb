@@ -82,7 +82,7 @@ describe Puppet::Type::type(:apt_key) do
       resource[:source].should eq 'http://apt.puppetlabs.com/pubkey.gpg'
     end
   end
-  
+
   context 'with content' do
     let(:resource) { Puppet::Type.type(:apt_key).new(
       :id => '4BD6EC30',
@@ -93,7 +93,7 @@ describe Puppet::Type::type(:apt_key) do
       resource[:content].should eq 'http://apt.puppetlabs.com/pubkey.gpg'
     end
   end
-  
+
   context 'with keyserver' do
     let(:resource) { Puppet::Type.type(:apt_key).new(
       :id => '4BD6EC30',
@@ -140,6 +140,13 @@ describe Puppet::Type::type(:apt_key) do
       expect { Puppet::Type.type(:apt_key).new(
         :id      => '4BD6EC30',
         :source  => 'https://pgp.mit.edu'
+      )}.to_not raise_error
+    end
+
+    it 'allows the https URI with username and password' do
+      expect { Puppet::Type.type(:apt_key).new(
+          :id      => '4BD6EC30',
+          :source  => 'https://testme:Password2@pgp.mit.edu'
       )}.to_not raise_error
     end
 

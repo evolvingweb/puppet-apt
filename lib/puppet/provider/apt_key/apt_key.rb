@@ -113,12 +113,13 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
   end
 
   def source_to_file(value)
-    if URI::parse(value).scheme.nil?
+    parsedValue = URI::parse(value)
+    if parsedValue.scheme.nil?
       fail("The file #{value} does not exist") unless File.exists?(value)
       value
     else
       begin
-        key = open(value, :ftp_active_mode => false).read
+        key = parsedValue.read
       rescue OpenURI::HTTPError, Net::FTPPermError => e
         fail("#{e.message} for #{resource[:source]}")
       rescue SocketError
@@ -163,6 +164,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
   end
 
   def destroy
+    #Currently del only removes the first key, we need to recursively list and ensure all with id are absent.
     apt_key('del', resource[:id])
     @property_hash.clear
   end
