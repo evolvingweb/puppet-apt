@@ -52,8 +52,9 @@ define apt::force(
   }
 
   exec { "${provider} -y ${config_files} ${config_missing} ${release_string} install ${name}${version_string}":
-    unless    => $install_check,
-    logoutput => 'on_failure',
-    timeout   => $timeout,
+    unless      => $install_check,
+    environment => ['LC_ALL=C', 'LANG=C'],
+    logoutput   => 'on_failure',
+    timeout     => $timeout,
   }
 }
