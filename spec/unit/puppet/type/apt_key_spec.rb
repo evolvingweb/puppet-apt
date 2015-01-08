@@ -163,5 +163,19 @@ describe Puppet::Type::type(:apt_key) do
         :source  => '/path/to/a/file'
       )}.to_not raise_error
     end
+
+    it 'allows 5-digit ports' do
+      expect { Puppet::Type.type(:apt_key).new(
+        :id      => '4BD6EC30',
+        :source  => 'http://pgp.mit.edu:12345/key'
+      )}.to_not raise_error
+    end
+
+    it 'allows 5-digit ports when using key servers' do
+      expect { Puppet::Type.type(:apt_key).new(
+        :id      => '4BD6EC30',
+        :server  => 'http://pgp.mit.edu:12345'
+      )}.to_not raise_error
+    end
   end
 end
