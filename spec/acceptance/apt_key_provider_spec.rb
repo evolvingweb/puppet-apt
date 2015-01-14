@@ -11,6 +11,8 @@ CENTOS_GPG_KEY_FINGERPRINT     = 'C1DAC52D1664E8A4386DBA430946FCA2C105B9DE'
 CENTOS_REPO_URL                = 'ftp.cvut.cz/centos'
 CENTOS_GPG_KEY_FILE            = 'RPM-GPG-KEY-CentOS-6'
 
+SHOULD_NEVER_EXIST_ID          = '4BD6EC30'
+
 KEY_CHECK_COMMAND              = "apt-key adv --list-keys --with-colons --fingerprint | grep "
 PUPPETLABS_KEY_CHECK_COMMAND   = "#{KEY_CHECK_COMMAND} #{PUPPETLABS_GPG_KEY_FINGERPRINT}"
 CENTOS_KEY_CHECK_COMMAND       = "#{KEY_CHECK_COMMAND} #{CENTOS_GPG_KEY_FINGERPRINT}"
@@ -351,7 +353,7 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
       it 'fails with a 550' do
         pp = <<-EOS
         apt_key { 'CentOS 6':
-          id     => '#{CENTOS_GPG_KEY_LONG_ID}',
+          id     => '#{SHOULD_NEVER_EXIST_ID}',
           ensure => 'present',
           source => 'ftp://#{CENTOS_REPO_URL}/herpderp.gpg',
         }
@@ -395,7 +397,7 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
       it 'fails with a 404' do
         pp = <<-EOS
         apt_key { 'puppetlabs':
-          id     => '4BD6EC30',
+          id     => '#{SHOULD_NEVER_EXIST_ID}',
           ensure => 'present',
           source => 'https://#{PUPPETLABS_APT_URL}/herpderp.gpg',
         }
@@ -409,7 +411,7 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
       it 'fails with a socket error' do
         pp = <<-EOS
         apt_key { 'puppetlabs':
-          id     => '4BD6EC30',
+          id     => '#{SHOULD_NEVER_EXIST_ID}',
           ensure => 'present',
           source => 'https://apt.puppetlabss.com/herpderp.gpg',
         }

@@ -50,7 +50,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
 
       new(
         :name        => line_hash[:key_fingerprint],
-        :id          => line_hash[:key_fingerprint],
+        :id          => line_hash[:key_long],
         :fingerprint => line_hash[:key_fingerprint],
         :short       => line_hash[:key_short],
         :long        => line_hash[:key_long],
@@ -166,8 +166,10 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
   end
 
   def destroy
-    #Currently del only removes the first key, we need to recursively list and ensure all with id are absent.
-    apt_key('del', resource[:id])
+    begin
+      apt_key('del', resource.provider.long)
+      r = execute(["#{command(:apt_key)} list | grep #{resource.provider.long}"], :failonfail => false)
+    end while r.exitstatus == 0
     @property_hash.clear
   end
 
