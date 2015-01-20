@@ -1,47 +1,56 @@
-# Class: apt
+# == Class: apt
 #
 # This module manages the initial configuration of apt.
 #
-# Parameters:
-#   The parameters listed here are not required in general and were
-#     added for use cases related to development environments.
+# The parameters listed here are not required in general and were
+# added for use cases related to development environments.
 #
-#   disable_keys - disables the requirement for all packages to be signed
+# === Parameters
 #
-#   always_apt_update - rather apt should be updated on every run (intended
-#     for development environments where package updates are frequent)
+# [*disable_keys*]
+#   Disables the requirement for all packages to be signed
 #
-#   apt_update_frequency - *string* Supported values:
-#     **always**: Will fire `apt-get update` at every puppet run. Intended to
+# [*always_apt_update*]
+#   Rather apt should be updated on every run (intended
+#   for development environments where package updates are frequent)
+#
+# [*apt_update_frequency*]
+#   String: Supported values:
+#   **always**: Will fire `apt-get update` at every puppet run. Intended to
 #       deprecate the `always_apt_update` parameter.
-#     **daily**: Trigger `apt-get update` if the value of the fact
+#   *daily**: Trigger `apt-get update` if the value of the fact
 #       `apt_update_last_success` is less than current epoch time - 86400.
 #        *notifying the apt_update exec will trigger apt-get update regardless*
-#     **weekly**: Trigger `apt-get update` if the value of the fact
+#   *weekly**: Trigger `apt-get update` if the value of the fact
 #       `apt_update_last_success` is less than current epoch time - 604800.
 #        *notifying the apt_update exec will trigger apt-get update regardless*
-#     **reluctantly**: *Default* only run apt-get update if the exec resource `apt_update` is notified.
+#   *reluctantly**: *Default* only run apt-get update if the exec resource `apt_update` is notified.
 #
-#   purge_sources_list - Accepts true or false. Defaults to false If set to
-#     true, Puppet will purge all unmanaged entries from sources.list
+# [*purge_sources_list*]
+#   Accepts true or false. Defaults to false If set to
+#   true, Puppet will purge all unmanaged entries from sources.list
 #
-#   purge_sources_list_d - Accepts true or false. Defaults to false. If set
-#     to true, Puppet will purge all unmanaged entries from sources.list.d
+# [*purge_sources_list_d*]
+#   Accepts true or false. Defaults to false. If set
+#   to true, Puppet will purge all unmanaged entries from sources.list.d
 #
-#   update_timeout - Overrides the exec timeout in seconds for apt-get update.
-#     If not set defaults to Exec's default (300)
+# [*update_timeout*]
+#   Overrides the exec timeout in seconds for apt-get update.
+#   If not set defaults to Exec's default (300)
 #
-#   update_tries - Number of times that `apt-get update` will be tried. Use this
-#     to work around transient DNS and HTTP errors. By default, the command
-#     will only be run once.
+# [*update_tries*]
+#   Number of times that `apt-get update` will be tried. Use this
+#   to work around transient DNS and HTTP errors. By default, the command
+#   will only be run once.
 #
-# Actions:
+# === Examples
 #
-# Requires:
-#   puppetlabs/stdlib
-# Sample Usage:
-#  class { 'apt': }
-
+# class { 'apt': }
+#
+# === Requires
+#
+# puppetlabs/stdlib >= 2.2.1
+#
 class apt(
   $always_apt_update    = false,
   $apt_update_frequency = 'reluctantly',
