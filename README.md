@@ -287,6 +287,24 @@ apt::sources:
 * `autoclean`: How often, in days, to run `apt-get autoclean`.
 * `randomsleep`: How long, in seconds, to randomly wait before applying upgrades.
 
+####apt::source
+
+* `comment`: Add a comment to the apt source file.
+* `ensure`: Allows you to remove the apt source file. Can be 'present' or 'absent'.
+* `location`: The URL of the apt repository.
+* `release`: The distribution of the apt repository. Defaults to fact 'lsbdistcodename'.
+* `repos`: The component of the apt repository. This defaults to 'main'.
+* `include_deb`: References a Debian distribution's binary package.
+* `include_src`: Enable the deb-src type, references a Debian distribution's source code in the same form as the include_deb type. A deb-src line is required to fetch source indexes.
+* `required_packages`: todo
+* `key`: See apt::key
+* `key_server`: See apt::key
+* `key_content`: See apt::key
+* `key_source`: See apt::key
+* `pin`: See apt::pin
+* `architecture`: can be used to specify for which architectures information should be downloaded. If this option is not set all architectures defined by the APT::Architectures option will be downloaded. Defaults to 'undef' which means all. Example values can be 'i386' or 'i386,alpha,powerpc'
+* `trusted` can be set to indicate that packages from this source are always authenticated even if the Release file is not signed or the signature can't be checked. Defaults to false. Can be 'true' or 'false'.
+
 ### Testing
 
 The apt module is mostly a collection of defined resource types, which provide reusable logic for managing Apt. It provides smoke tests for testing functionality on a target system, as well as spec tests for checking a compiled catalog against an expected set of resources.
