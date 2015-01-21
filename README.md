@@ -303,7 +303,7 @@ apt::sources:
 * `key_source`: See apt::key
 * `pin`: See apt::pin
 * `architecture`: can be used to specify for which architectures information should be downloaded. If this option is not set all architectures defined by the APT::Architectures option will be downloaded. Defaults to 'undef' which means all. Example values can be 'i386' or 'i386,alpha,powerpc'
-* `trusted` can be set to indicate that packages from this source are always authenticated even if the Release file is not signed or the signature can't be checked. Defaults to false. Can be 'true' or 'false'.
+* `trusted_source` can be set to indicate that packages from this source are always authenticated even if the Release file is not signed or the signature can't be checked. Defaults to false. Can be 'true' or 'false'.
 
 ### Testing
 

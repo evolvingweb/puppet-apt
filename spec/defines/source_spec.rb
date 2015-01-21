@@ -55,7 +55,7 @@ describe 'apt::source', :type => :define do
         'key_source'        => 'http://apt.puppetlabs.com/pubkey.gpg',
         'pin'               => '10',
         'architecture'      => 'x86_64',
-        'trusted'           => true,
+        'trusted_source'    => true,
       }
     end
 
@@ -94,7 +94,7 @@ describe 'apt::source', :type => :define do
     }
   end
 
-  context 'trusted true' do
+  context 'trusted_source true' do
     let :facts do
       {
         :lsbdistid       => 'Debian',
@@ -104,8 +104,8 @@ describe 'apt::source', :type => :define do
     end
     let :params do
       {
-        'include_src' => false,
-        'trusted'     => true,
+        'include_src'    => false,
+        'trusted_source' => true,
       }
     end
 
