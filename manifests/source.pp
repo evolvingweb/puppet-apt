@@ -16,14 +16,14 @@ define apt::source(
   $key_source        = undef,
   $pin               = false,
   $architecture      = undef,
-  $trusted           = false,
+  $trusted_source    = false,
 ) {
 
   include apt::params
   include apt::update
 
   validate_string($architecture)
-  validate_bool($trusted)
+  validate_bool($trusted_source)
 
   $sources_list_d = $apt::params::sources_list_d
   $provider       = $apt::params::provider
