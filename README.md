@@ -72,16 +72,16 @@ class { 'apt':
   }
   ```  
 
-* `apt::unattended_updates`: This class manages the unattended-upgrades package and related configuration files for Ubuntu and Debian systems. You can configure the class to automatically upgrade all new package releases or just security releases.
+* `apt::unattended_upgrades`: This class manages the unattended-upgrades package and related configuration files for Ubuntu and Debian systems. You can configure the class to automatically upgrade all new package releases or just security releases.
 
   ```
-  apt::unattended_upgrades {
-    origins             = $::apt::params::origins,
-    blacklist           = [],
-    update              = '1',
-    download            = '1',
-    upgrade             = '1',
-    autoclean           = '7',
+  class { 'apt::unattended_upgrades':
+    origins     => $::apt::params::origins,
+    blacklist   => [],
+    update      => '1',
+    download    => '1',
+    upgrade     => '1',
+    autoclean   => '7',
   }
   ```
   
