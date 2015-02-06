@@ -42,7 +42,7 @@ describe 'apt', :type => :class do
         'group' => 'root',
         'mode'  => '0644',
         'owner' => 'root',
-      }).with_content('APT::Update::Post-Invoke-Success {"touch /var/lib/apt/periodic/update-success-stamp 2>/dev/null || true";};')
+      }).with_content(/APT::Update::Post-Invoke-Success \{"touch \/var\/lib\/apt\/periodic\/update-success-stamp 2>\/dev\/null \|\| true";\};/)
     end
 
     it { should contain_file('old-proxy-file').that_notifies('Exec[apt_update]').only_with({
@@ -94,20 +94,20 @@ describe 'apt', :type => :class do
 
     it { should contain_file('99progressbar').only_with({
       'ensure'  => 'present',
-      'content' => 'Dpkg::Progress-Fancy "1";',
+      'content' => /Dpkg::Progress-Fancy "1";/,
       'path'    => '/etc/apt/apt.conf.d/99progressbar',
     })}
 
     it { should contain_file('99unauth').only_with({
       'ensure'  => 'present',
-      'content' => "APT::Get::AllowUnauthenticated 1;\n",
+      'content' => /APT::Get::AllowUnauthenticated 1;/,
       'path'    => '/etc/apt/apt.conf.d/99unauth',
     })}
 
     it { should contain_file('01proxy').that_notifies('Exec[apt_update]').only_with({
       'ensure'  => 'present',
       'path'    => '/etc/apt/apt.conf.d/01proxy',
-      'content' => "Acquire::http::Proxy \"http://foo:9876\";\n",
+      'content' => /Acquire::http::Proxy "http:\/\/foo:9876";/,
       'notify'  => 'Exec[apt_update]',
       'mode'    => '0644',
       'owner'   => 'root',
