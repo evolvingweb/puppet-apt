@@ -1,4 +1,4 @@
-class { 'apt': }
-class { 'apt::release':
-  release_id => 'karmic'
+apt::conf { 'release':
+  content  => 'APT::Default-Release "karmic";',
+  priority => '01',
 }
