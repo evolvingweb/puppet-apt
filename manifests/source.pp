@@ -18,8 +18,6 @@ define apt::source(
   $architecture      = undef,
   $trusted_source    = false,
 ) {
-
-  include apt::params
   include apt::update
 
   validate_string($architecture)

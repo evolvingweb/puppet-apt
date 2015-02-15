@@ -5,7 +5,6 @@ define apt::ppa(
   $release = $::lsbdistcodename,
   $options = $apt::params::ppa_options,
 ) {
-  include apt::params
   include apt::update
 
   $sources_list_d = $apt::params::sources_list_d

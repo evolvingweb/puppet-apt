@@ -3,9 +3,6 @@
 class apt::release (
   $release_id
 ) {
-
-  include apt::params
-
   $root = $apt::params::root
 
   file { "${root}/apt.conf.d/01release":

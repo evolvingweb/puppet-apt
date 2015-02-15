@@ -16,8 +16,6 @@ define apt::pin(
   $originator      = '', # o=
   $label           = ''  # l=
 ) {
-  include apt::params
-
   $preferences_d = $apt::params::preferences_d
 
   if $order != '' and !is_integer($order) {
