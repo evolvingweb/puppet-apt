@@ -1,2 +1,3 @@
-class { 'apt': }
-apt::builddep{ 'glusterfs-server': }
+package{ 'glusterfs-server': 
+  install_options => 'build-dep',
+}
