@@ -37,41 +37,16 @@ class apt::params {
     }
   }
   case $distid {
-    'debian': {
-      case $distcodename {
-        'squeeze': {
-          $legacy_origin       = true
-          $origins             = ['${distro_id} oldstable', #lint:ignore:single_quote_string_with_variables
-                                  '${distro_id} ${distro_codename}-security', #lint:ignore:single_quote_string_with_variables
-                                  '${distro_id} ${distro_codename}-lts'] #lint:ignore:single_quote_string_with_variables
-        }
-        'wheezy': {
-          $legacy_origin      = false
-          $origins            = ['origin=Debian,archive=stable,label=Debian-Security',
-                                  'origin=Debian,archive=oldstable,label=Debian-Security']
-        }
-        default: {
-          $legacy_origin      = false
-          $origins            = ['origin=Debian,archive=stable,label=Debian-Security']
-        }
-      }
-    }
     'ubuntu': {
       case $distcodename {
         'lucid': {
           $ppa_options        = undef
-          $legacy_origin      = true
-          $origins            = ['${distro_id} ${distro_codename}-security'] #lint:ignore:single_quote_string_with_variables
         }
         'precise', 'trusty', 'utopic', 'vivid': {
           $ppa_options        = '-y'
-          $legacy_origin      = true
-          $origins            = ['${distro_id}:${distro_codename}-security'] #lint:ignore:single_quote_string_with_variables
         }
         default: {
           $ppa_options        = '-y'
-          $legacy_origin      = true
-          $origins            = ['${distro_id}:${distro_codename}-security'] #lint:ignore:single_quote_string_with_variables
         }
       }
     }
