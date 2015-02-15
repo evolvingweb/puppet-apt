@@ -13,7 +13,6 @@ describe 'apt class' do
       pp = <<-EOS
       class { 'apt':
         always_apt_update    => true,
-        disable_keys         => true,
         purge_sources_list   => true,
         purge_sources_list_d => true,
         purge_preferences    => true,
@@ -29,7 +28,6 @@ describe 'apt class' do
             'key_server' => 'pgp.mit.edu',
           }
         },
-        fancy_progress       => true,
       }
       EOS
 
