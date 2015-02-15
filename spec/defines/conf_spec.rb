@@ -1,6 +1,6 @@
 require 'spec_helper'
 describe 'apt::conf', :type => :define do
-  let(:facts) { { :lsbdistid => 'Debian' } }
+  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian' } }
   let :title do
     'norecommends'
   end

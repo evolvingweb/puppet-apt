@@ -5,6 +5,10 @@ class apt::params {
   $apt_conf_d     = "${root}/apt.conf.d"
   $preferences_d  = "${root}/preferences.d"
 
+  if $::osfamily != 'Debian' {
+    fail('This module only works on Debian or derivatives like Ubuntu')
+  }
+
   case $::lsbdistid {
     'ubuntu', 'debian': {
       $distid = $::lsbdistid

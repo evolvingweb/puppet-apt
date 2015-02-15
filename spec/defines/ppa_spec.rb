@@ -67,41 +67,6 @@ describe 'apt::ppa', :type => :define do
     }
   end
 
-  describe 'apt included, proxy' do
-    let :pre_condition do
-      'class { "apt": proxy_host => "example.com" }'
-    end
-    let :facts do
-      {
-        :lsbdistrelease  => '14.04',
-        :lsbdistcodename => 'trusty',
-        :operatingsystem => 'Ubuntu',
-        :lsbdistid       => 'Ubuntu',
-        :osfamily        => 'Debian',
-      }
-    end
-    let :params do
-      {
-        'release' => 'lucid',
-      }
-    end
-    let(:title) { 'ppa:foo' }
-    it { is_expected.to contain_package('software-properties-common') }
-    it { is_expected.to contain_exec('add-apt-repository-ppa:foo').that_notifies('Exec[apt_update]').with({
-      'environment' => ['http_proxy=http://example.com:8080', 'https_proxy=http://example.com:8080'],
-      'command'     => '/usr/bin/add-apt-repository -y ppa:foo',
-      'unless'      => '/usr/bin/test -s /etc/apt/sources.list.d/foo-lucid.list',
-      'user'        => 'root',
-      'logoutput'   => 'on_failure',
-    })
-    }
-
-    it { is_expected.to contain_file('/etc/apt/sources.list.d/foo-lucid.list').that_requires('Exec[add-apt-repository-ppa:foo]').with({
-      'ensure' => 'file',
-    })
-    }
-  end
-
   describe 'ensure absent' do
     let :facts do
       {

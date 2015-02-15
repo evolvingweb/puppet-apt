@@ -11,10 +11,6 @@ class apt(
   $sources              = undef,
 ) inherits ::apt::params {
 
-  if $::osfamily != 'Debian' {
-    fail('This module only works on Debian or derivatives like Ubuntu')
-  }
-
   include apt::update
 
   $frequency_options = ['always','daily','weekly','reluctantly']

@@ -2,7 +2,7 @@ require 'spec_helper'
 describe 'apt::unattended_upgrades', :type => :class do
   let(:file_unattended) { '/etc/apt/apt.conf.d/50unattended-upgrades' }
   let(:file_periodic) { '/etc/apt/apt.conf.d/10periodic' }
-  let(:facts) { { :lsbdistid => 'Debian' } }
+  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian' } }
 
   it { should contain_package("unattended-upgrades") }
 
@@ -29,6 +29,7 @@ describe 'apt::unattended_upgrades', :type => :class do
       {
         'lsbdistid'       => 'debian',
         'lsbdistcodename' => 'squeeze',
+        'osfamily'        => 'Debian',
       }
     end
     context 'bad auto_fix' do
@@ -109,6 +110,7 @@ describe 'apt::unattended_upgrades', :type => :class do
       {
         'lsbdistid'       => 'debian',
         'lsbdistcodename' => 'squeeze',
+        'osfamily'        => 'Debian',
       }
     end
 
@@ -139,6 +141,7 @@ describe 'apt::unattended_upgrades', :type => :class do
       {
         'lsbdistid'       => 'debian',
         'lsbdistcodename' => 'wheezy',
+        'osfamily'        => 'Debian',
       }
     end
 
@@ -150,6 +153,7 @@ describe 'apt::unattended_upgrades', :type => :class do
       {
         'lsbdistid'       => 'debian',
         'lsbdistcodename' => 'wheezy',
+        'osfamily'        => 'Debian',
       }
     end
 
