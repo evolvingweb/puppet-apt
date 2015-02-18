@@ -3,6 +3,9 @@ require 'spec_helper'
 describe 'apt::source', :type => :define do
   GPG_KEY_ID = '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
 
+  let :pre_condition do
+    'class { "apt": }'
+  end
 
   let :title do
     'my_source'

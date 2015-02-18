@@ -1,5 +1,8 @@
 require 'spec_helper'
 describe 'apt::pin', :type => :define do
+  let :pre_condition do
+    'class { "apt": }'
+  end
   let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian' } }
   let(:title) { 'my_pin' }
 

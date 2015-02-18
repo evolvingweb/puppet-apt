@@ -68,6 +68,9 @@ describe 'apt::ppa', :type => :define do
   end
 
   describe 'ensure absent' do
+    let :pre_condition do
+      'class { "apt": }'
+    end
     let :facts do
       {
         :lsbdistrelease  => '14.04',
