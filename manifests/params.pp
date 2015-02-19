@@ -1,8 +1,10 @@
 class apt::params {
   $root           = '/etc/apt'
   $provider       = '/usr/bin/apt-get'
+  $sources_list   = "${root}/sources.list"
   $sources_list_d = "${root}/sources.list.d"
-  $apt_conf_d     = "${root}/apt.conf.d"
+  $conf_d         = "${root}/apt.conf.d"
+  $preferences    = "${root}/preferences"
   $preferences_d  = "${root}/preferences.d"
 
   if $::osfamily != 'Debian' {
