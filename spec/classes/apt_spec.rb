@@ -135,7 +135,6 @@ describe 'apt', :type => :class do
     }
 
     it { should contain_file('puppetlabs.list').with_content(/^deb http:\/\/apt.puppetlabs.com precise main$/) }
-    it { should contain_file('puppetlabs.list').with_content(/^deb-src http:\/\/apt.puppetlabs.com precise main$/) }
   end
 
   describe 'failing tests' do

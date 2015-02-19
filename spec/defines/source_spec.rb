@@ -23,6 +23,7 @@ describe 'apt::source', :type => :define do
     let :params do
       {
         'include_deb' => false,
+        'include_src' => true,
       }
     end
 
@@ -123,6 +124,7 @@ describe 'apt::source', :type => :define do
     let :params do
       {
         'include_deb'  => false,
+        'include_src'  => true,
         'architecture' => 'x86_64',
       }
     end
