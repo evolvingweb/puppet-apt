@@ -96,7 +96,6 @@ describe 'apt', :type => :class do
         'location'          => 'http://debian.mirror.iweb.ca/debian/',
         'release'           => 'unstable',
         'repos'             => 'main contrib non-free',
-        'required_packages' => 'debian-keyring debian-archive-keyring',
         'key'               => '55BE302B',
         'key_server'        => 'subkeys.pgp.net',
         'pin'               => '-10',
