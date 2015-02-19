@@ -1,7 +1,5 @@
 # apt
 
-[![Build Status](https://travis-ci.org/puppetlabs/puppetlabs-apt.png?branch=master)](https://travis-ci.org/puppetlabs/puppetlabs-apt)
-
 ## Overview
 
 The apt module provides a simple interface for managing Apt source, key, and definitions with Puppet.
