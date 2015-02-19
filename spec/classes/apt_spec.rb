@@ -31,12 +31,6 @@ describe 'apt', :type => :class do
       'recurse' => false,
     })}
 
-    it { should contain_file('01proxy').that_notifies('Exec[apt_update]').only_with({
-      'ensure' => 'absent',
-      'path'   => '/etc/apt/apt.conf.d/01proxy',
-      'notify' => 'Exec[apt_update]',
-    })}
-
     it 'should lay down /etc/apt/apt.conf.d/15update-stamp' do
       should contain_file('/etc/apt/apt.conf.d/15update-stamp').with({
         'group' => 'root',
@@ -44,12 +38,6 @@ describe 'apt', :type => :class do
         'owner' => 'root',
       }).with_content(/APT::Update::Post-Invoke-Success \{"touch \/var\/lib\/apt\/periodic\/update-success-stamp 2>\/dev\/null \|\| true";\};/)
     end
-
-    it { should contain_file('old-proxy-file').that_notifies('Exec[apt_update]').only_with({
-      'ensure' => 'absent',
-      'path'   => '/etc/apt/apt.conf.d/proxy',
-      'notify' => 'Exec[apt_update]',
-    })}
 
     it { should contain_exec('apt_update').with({
       'refreshonly' => 'true',
@@ -60,16 +48,12 @@ describe 'apt', :type => :class do
     let :params do
       {
         :always_apt_update    => true,
-        :disable_keys         => true,
-        :proxy_host           => 'foo',
-        :proxy_port           => '9876',
         :purge_sources_list   => true,
         :purge_sources_list_d => true,
         :purge_preferences    => true,
         :purge_preferences_d  => true,
         :update_timeout       => '1',
         :update_tries         => '3',
-        :fancy_progress       => true,
       }
     end
 
@@ -92,52 +76,10 @@ describe 'apt', :type => :class do
       'recurse' => 'true',
     })}
 
-    it { should contain_file('99progressbar').only_with({
-      'ensure'  => 'present',
-      'content' => /Dpkg::Progress-Fancy "1";/,
-      'path'    => '/etc/apt/apt.conf.d/99progressbar',
-    })}
-
-    it { should contain_file('99unauth').only_with({
-      'ensure'  => 'present',
-      'content' => /APT::Get::AllowUnauthenticated 1;/,
-      'path'    => '/etc/apt/apt.conf.d/99unauth',
-    })}
-
-    it { should contain_file('01proxy').that_notifies('Exec[apt_update]').only_with({
-      'ensure'  => 'present',
-      'path'    => '/etc/apt/apt.conf.d/01proxy',
-      'content' => /Acquire::http::Proxy "http:\/\/foo:9876";/,
-      'notify'  => 'Exec[apt_update]',
-      'mode'    => '0644',
-      'owner'   => 'root',
-      'group'   => 'root'
-    })}
-
     it { should contain_exec('apt_update').with({
       'refreshonly' => 'false',
       'timeout'     => '1',
       'tries'       => '3',
-    })}
-
-  end
-
-  context 'more non-default' do
-    let :params do
-      {
-        :fancy_progress => false,
-        :disable_keys   => false,
-      }
-    end
-
-    it { should contain_file('99progressbar').only_with({
-      'ensure'  => 'absent',
-      'path'    => '/etc/apt/apt.conf.d/99progressbar',
-    })}
-
-    it { should contain_file('99unauth').only_with({
-      'ensure'  => 'absent',
-      'path'    => '/etc/apt/apt.conf.d/99unauth',
     })}
 
   end

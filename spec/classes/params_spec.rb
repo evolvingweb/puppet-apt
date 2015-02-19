@@ -14,7 +14,7 @@ describe 'apt::params', :type => :class do
 
   describe "With unknown lsbdistid" do
 
-    let(:facts) { { :lsbdistid => 'CentOS' } }
+    let(:facts) { { :lsbdistid => 'CentOS', :osfamily => 'Debian' } }
     let (:title) { 'my_package' }
 
     it do
@@ -26,7 +26,7 @@ describe 'apt::params', :type => :class do
   end
 
   describe "With lsb-release not installed" do
-    let(:facts) { { :lsbdistid => '' } }
+    let(:facts) { { :lsbdistid => '', :osfamily => 'Debian' } }
     let (:title) { 'my_package' }
 
     it do

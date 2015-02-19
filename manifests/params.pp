@@ -5,6 +5,10 @@ class apt::params {
   $apt_conf_d     = "${root}/apt.conf.d"
   $preferences_d  = "${root}/preferences.d"
 
+  if $::osfamily != 'Debian' {
+    fail('This module only works on Debian or derivatives like Ubuntu')
+  }
+
   case $::lsbdistid {
     'ubuntu', 'debian': {
       $distid = $::lsbdistid
@@ -33,47 +37,16 @@ class apt::params {
     }
   }
   case $distid {
-    'debian': {
-      case $distcodename {
-        'squeeze': {
-          $backports_location = 'http://backports.debian.org/debian-backports'
-          $legacy_origin       = true
-          $origins             = ['${distro_id} oldstable', #lint:ignore:single_quote_string_with_variables
-                                  '${distro_id} ${distro_codename}-security', #lint:ignore:single_quote_string_with_variables
-                                  '${distro_id} ${distro_codename}-lts'] #lint:ignore:single_quote_string_with_variables
-        }
-        'wheezy': {
-          $backports_location = 'http://ftp.debian.org/debian/'
-          $legacy_origin      = false
-          $origins            = ['origin=Debian,archive=stable,label=Debian-Security',
-                                  'origin=Debian,archive=oldstable,label=Debian-Security']
-        }
-        default: {
-          $backports_location = 'http://http.debian.net/debian/'
-          $legacy_origin      = false
-          $origins            = ['origin=Debian,archive=stable,label=Debian-Security']
-        }
-      }
-    }
     'ubuntu': {
       case $distcodename {
         'lucid': {
-          $backports_location = 'http://us.archive.ubuntu.com/ubuntu'
           $ppa_options        = undef
-          $legacy_origin      = true
-          $origins            = ['${distro_id} ${distro_codename}-security'] #lint:ignore:single_quote_string_with_variables
         }
         'precise', 'trusty', 'utopic', 'vivid': {
-          $backports_location = 'http://us.archive.ubuntu.com/ubuntu'
           $ppa_options        = '-y'
-          $legacy_origin      = true
-          $origins            = ['${distro_id}:${distro_codename}-security'] #lint:ignore:single_quote_string_with_variables
         }
         default: {
-          $backports_location = 'http://old-releases.ubuntu.com/ubuntu'
           $ppa_options        = '-y'
-          $legacy_origin      = true
-          $origins            = ['${distro_id}:${distro_codename}-security'] #lint:ignore:single_quote_string_with_variables
         }
       }
     }
