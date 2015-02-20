@@ -9,7 +9,6 @@ define apt::source(
   $repos             = 'main',
   $include_src       = true,
   $include_deb       = true,
-  $required_packages = false,
   $key               = undef,
   $key_server        = 'keyserver.ubuntu.com',
   $key_content       = undef,
@@ -57,18 +56,6 @@ define apt::source(
       priority => $pin,
       before   => File["${name}.list"],
       origin   => $host,
-    }
-  }
-
-  if ($required_packages != false) and ($ensure == 'present') {
-    exec { "Required packages: '${required_packages}' for ${name}":
-      command     => "${provider} -y install ${required_packages}",
-      logoutput   => 'on_failure',
-      refreshonly => true,
-      tries       => 3,
-      try_sleep   => 1,
-      subscribe   => File["${name}.list"],
-      before      => Exec['apt_update'],
     }
   }
 

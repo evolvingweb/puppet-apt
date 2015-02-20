@@ -51,7 +51,6 @@ describe 'apt::source', :type => :define do
         'release'           => 'sid',
         'repos'             => 'testing',
         'include_src'       => false,
-        'required_packages' => 'vim',
         'key'               => GPG_KEY_ID,
         'key_server'        => 'pgp.mit.edu',
         'key_content'       => 'GPG key content',
@@ -75,15 +74,6 @@ describe 'apt::source', :type => :define do
       'ensure'   => 'present',
       'priority' => '10',
       'origin'   => 'debian.mirror.iweb.ca',
-    })
-    }
-
-    it { is_expected.to contain_exec("Required packages: 'vim' for my_source").that_comes_before('Exec[apt_update]').that_subscribes_to('File[my_source.list]').with({
-      'command'     => '/usr/bin/apt-get -y install vim',
-      'logoutput'   => 'on_failure',
-      'refreshonly' => true,
-      'tries'       => '3',
-      'try_sleep'   => '1',
     })
     }
 
