@@ -332,6 +332,14 @@ apt::sources:
 
 It is recommended to read the manpage 'apt_preferences(5)'
 
+####apt::ppa
+
+* `ensure`: Whether we are adding or removing the PPA. Can be 'present' or 'absent'. Defaults to 'present'.
+* `release`: The codename for the operating system you're running. Defaults to `$lsbdistcodename`. Required if lsb-release is not installed.
+* `options`: Options to be passed to the `apt-add-repository` command. OS-dependent defaults are set in `apt::params`.
+* `package_name`: The package that provides the `apt-add-repository` command. OS-dependent defaults are set in `apt::params`.
+* `package_manage`: Whether or not to manage the package providing `apt-add-repository`. Defaults to true.
+
 ### Testing
 
 The apt module is mostly a collection of defined resource types, which provide reusable logic for managing Apt. It provides smoke tests for testing functionality on a target system, as well as spec tests for checking a compiled catalog against an expected set of resources.

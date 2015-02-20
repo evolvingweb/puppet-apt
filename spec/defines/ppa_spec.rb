@@ -32,6 +32,78 @@ describe 'apt::ppa', :type => :define do
     }
   end
 
+  describe 'package_name => software-properties-common' do
+    let :pre_condition do
+      'class { "apt": }'
+    end
+    let :params do
+      {
+        :package_name => 'software-properties-common'
+      }
+    end
+    let :facts do
+      {
+        :lsbdistrelease  => '11.04',
+        :lsbdistcodename => 'natty',
+        :operatingsystem => 'Ubuntu',
+        :osfamily        => 'Debian',
+        :lsbdistid       => 'Ubuntu',
+      }
+    end
+
+    let(:title) { 'ppa:needs/such.substitution/wow' }
+    it { is_expected.to contain_package('software-properties-common') }
+    it { is_expected.to contain_exec('add-apt-repository-ppa:needs/such.substitution/wow').that_notifies('Exec[apt_update]').with({
+      'environment' => [],
+      'command'     => '/usr/bin/add-apt-repository -y ppa:needs/such.substitution/wow',
+      'unless'      => '/usr/bin/test -s /etc/apt/sources.list.d/needs-such_substitution-wow-natty.list',
+      'user'        => 'root',
+      'logoutput'   => 'on_failure',
+    })
+    }
+
+    it { is_expected.to contain_file('/etc/apt/sources.list.d/needs-such_substitution-wow-natty.list').that_requires('Exec[add-apt-repository-ppa:needs/such.substitution/wow]').with({
+      'ensure' => 'file',
+    })
+    }
+  end
+
+  describe 'package_manage => false' do
+    let :pre_condition do
+      'class { "apt": }'
+    end
+    let :facts do
+      {
+        :lsbdistrelease  => '11.04',
+        :lsbdistcodename => 'natty',
+        :operatingsystem => 'Ubuntu',
+        :osfamily        => 'Debian',
+        :lsbdistid       => 'Ubuntu',
+      }
+    end
+    let :params do
+      {
+        :package_manage => false,
+      }
+    end
+
+    let(:title) { 'ppa:needs/such.substitution/wow' }
+    it { is_expected.to_not contain_package('python-software-properties') }
+    it { is_expected.to contain_exec('add-apt-repository-ppa:needs/such.substitution/wow').that_notifies('Exec[apt_update]').with({
+      'environment' => [],
+      'command'     => '/usr/bin/add-apt-repository -y ppa:needs/such.substitution/wow',
+      'unless'      => '/usr/bin/test -s /etc/apt/sources.list.d/needs-such_substitution-wow-natty.list',
+      'user'        => 'root',
+      'logoutput'   => 'on_failure',
+    })
+    }
+
+    it { is_expected.to contain_file('/etc/apt/sources.list.d/needs-such_substitution-wow-natty.list').that_requires('Exec[add-apt-repository-ppa:needs/such.substitution/wow]').with({
+      'ensure' => 'file',
+    })
+    }
+  end
+
   describe 'apt included, no proxy' do
     let :pre_condition do
       'class { "apt": }'

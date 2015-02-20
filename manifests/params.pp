@@ -64,18 +64,28 @@ class apt::params {
         'lucid': {
           $backports_location = 'http://us.archive.ubuntu.com/ubuntu'
           $ppa_options        = undef
+          $ppa_package        = 'python-software-properties'
           $legacy_origin      = true
           $origins            = ['${distro_id} ${distro_codename}-security'] #lint:ignore:single_quote_string_with_variables
         }
-        'precise', 'trusty', 'utopic', 'vivid': {
+        'precise': {
           $backports_location = 'http://us.archive.ubuntu.com/ubuntu'
           $ppa_options        = '-y'
+          $ppa_package        = 'python-software-properties'
+          $legacy_origin      = true
+          $origins            = ['${distro_id}:${distro_codename}-security'] #lint:ignore:single_quote_string_with_variables
+        }
+        'trusty', 'utopic', 'vivid': {
+          $backports_location = 'http://us.archive.ubuntu.com/ubuntu'
+          $ppa_options        = '-y'
+          $ppa_package        = 'software-properties-common'
           $legacy_origin      = true
           $origins            = ['${distro_id}:${distro_codename}-security'] #lint:ignore:single_quote_string_with_variables
         }
         default: {
           $backports_location = 'http://old-releases.ubuntu.com/ubuntu'
           $ppa_options        = '-y'
+          $ppa_package        = 'python-software-properties'
           $legacy_origin      = true
           $origins            = ['${distro_id}:${distro_codename}-security'] #lint:ignore:single_quote_string_with_variables
         }
