@@ -1,12 +1,9 @@
 # ppa.pp
-
 define apt::ppa(
   $ensure  = 'present',
   $release = $::lsbdistcodename,
   $options = $apt::params::ppa_options,
 ) {
-  include apt::update
-
   $sources_list_d = $apt::params::sources_list_d
 
   if ! $release {

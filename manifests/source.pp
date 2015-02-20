@@ -17,8 +17,6 @@ define apt::source(
   $architecture      = undef,
   $trusted_source    = false,
 ) {
-  include apt::update
-
   validate_string($architecture)
   validate_bool($trusted_source)
 
