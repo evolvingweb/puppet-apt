@@ -2,9 +2,8 @@
 define apt::ppa(
   $ensure  = 'present',
   $release = $::lsbdistcodename,
-  $options = $apt::params::ppa_options,
+  $options = $::apt::ppa_options,
 ) {
-  $sources_list_d = $apt::params::sources_list_d
 
   if ! $release {
     fail('lsbdistcodename fact not available: release parameter required')
@@ -46,7 +45,7 @@ define apt::ppa(
     exec { "add-apt-repository-${name}":
         environment => $proxy_env,
         command     => "/usr/bin/add-apt-repository ${options} ${name}",
-        unless      => "/usr/bin/test -s ${sources_list_d}/${sources_list_d_filename}",
+        unless      => "/usr/bin/test -s ${::apt::sources_list_d}/${sources_list_d_filename}",
         user        => 'root',
         logoutput   => 'on_failure',
         notify      => Exec['apt_update'],
@@ -56,14 +55,14 @@ define apt::ppa(
         ],
     }
 
-    file { "${sources_list_d}/${sources_list_d_filename}":
+    file { "${::apt::sources_list_d}/${sources_list_d_filename}":
         ensure  => file,
         require => Exec["add-apt-repository-${name}"],
     }
   }
   else {
 
-    file { "${sources_list_d}/${sources_list_d_filename}":
+    file { "${::apt::sources_list_d}/${sources_list_d_filename}":
         ensure => 'absent',
         notify => Exec['apt_update'],
     }

@@ -57,7 +57,7 @@ class apt::update {
     $_refresh = true
   }
   exec { 'apt_update':
-    command     => "${apt::params::provider} update",
+    command     => "${::apt::provider} update",
     logoutput   => 'on_failure',
     refreshonly => $_refresh,
     timeout     => $apt::update_timeout,
