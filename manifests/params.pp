@@ -11,6 +11,27 @@ class apt::params {
     fail('This module only works on Debian or derivatives like Ubuntu')
   }
 
+  $config_files = {
+    'conf'   => {
+      'path' => $conf_d,
+      'ext'  => '',
+    },
+    'pref'   => {
+      'path' => $preferences_d,
+      'ext'  => '',
+    },
+    'list'   => {
+      'path' => $sources_list_d,
+      'ext'  => '.list',
+    }
+  }
+
+  $file_defaults = {
+    'owner' => 'root',
+    'group' => 'root',
+    'mode'  => '0644',
+  }
+
   case $::lsbdistid {
     'ubuntu', 'debian': {
       $distid = $::lsbdistid
