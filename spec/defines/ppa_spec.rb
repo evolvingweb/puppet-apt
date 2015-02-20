@@ -16,18 +16,13 @@ describe 'apt::ppa', :type => :define do
     end
 
     let(:title) { 'ppa:needs/such.substitution/wow' }
-    it { is_expected.to contain_package('python-software-properties') }
+    it { is_expected.to_not contain_package('python-software-properties') }
     it { is_expected.to contain_exec('add-apt-repository-ppa:needs/such.substitution/wow').that_notifies('Exec[apt_update]').with({
       'environment' => [],
       'command'     => '/usr/bin/add-apt-repository -y ppa:needs/such.substitution/wow',
       'unless'      => '/usr/bin/test -s /etc/apt/sources.list.d/needs-such_substitution-wow-natty.list',
       'user'        => 'root',
       'logoutput'   => 'on_failure',
-    })
-    }
-
-    it { is_expected.to contain_file('/etc/apt/sources.list.d/needs-such_substitution-wow-natty.list').that_requires('Exec[add-apt-repository-ppa:needs/such.substitution/wow]').with({
-      'ensure' => 'file',
     })
     }
   end
@@ -48,6 +43,7 @@ describe 'apt::ppa', :type => :define do
     let :params do
       {
         'options' => '',
+        'package_manage' => true,
       }
     end
     let(:title) { 'ppa:foo' }
@@ -58,11 +54,6 @@ describe 'apt::ppa', :type => :define do
       'unless'      => '/usr/bin/test -s /etc/apt/sources.list.d/foo-trusty.list',
       'user'        => 'root',
       'logoutput'   => 'on_failure',
-    })
-    }
-
-    it { is_expected.to contain_file('/etc/apt/sources.list.d/foo-trusty.list').that_requires('Exec[add-apt-repository-ppa:foo]').with({
-      'ensure' => 'file',
     })
     }
   end

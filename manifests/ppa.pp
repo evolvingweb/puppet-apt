@@ -1,10 +1,11 @@
 # ppa.pp
 define apt::ppa(
-  $ensure  = 'present',
-  $release = $::lsbdistcodename,
-  $options = $::apt::ppa_options,
+  $ensure         = 'present',
+  $release        = $::lsbdistcodename,
+  $options        = $::apt::ppa_options,
+  $package_name   = $::apt::ppa_package,
+  $package_manage = false,
 ) {
-
   if ! $release {
     fail('lsbdistcodename fact not available: release parameter required')
   }
@@ -19,52 +20,42 @@ define apt::ppa(
   $sources_list_d_filename  = "${filename_without_ppa}-${release}.list"
 
   if $ensure == 'present' {
-    $package = $::lsbdistrelease ? {
-        /^[1-9]\..*|1[01]\..*|12.04$/ => 'python-software-properties',
-        default  => 'software-properties-common',
-    }
+    if $package_manage {
+      package { $package_name: }
 
-    if ! defined(Package[$package]) {
-        package { $package: }
-    }
-
-    if defined(Class[apt]) {
-        $proxy_host = $apt::proxy_host
-        $proxy_port = $apt::proxy_port
-        case $proxy_host {
-          false, '', undef: {
-            $proxy_env = []
-          }
-          default: {
-            $proxy_env = ["http_proxy=http://${proxy_host}:${proxy_port}", "https_proxy=http://${proxy_host}:${proxy_port}"]
-          }
-        }
+      $_require = [File['sources.list.d'], Package[$package_name]]
     } else {
-        $proxy_env = []
+      $_require = File['sources.list.d']
     }
+
+    case $::apt::proxy_host {
+      false, '', undef: {
+        $_proxy_env = []
+      }
+      default: {
+        $_proxy_env = ["http_proxy=http://${::apt::proxy_host}:${::apt::proxy_port}", "https_proxy=http://${::apt::proxy_host}:${::apt::proxy_port}"]
+      }
+    }
+
     exec { "add-apt-repository-${name}":
-        environment => $proxy_env,
-        command     => "/usr/bin/add-apt-repository ${options} ${name}",
-        unless      => "/usr/bin/test -s ${::apt::sources_list_d}/${sources_list_d_filename}",
-        user        => 'root',
-        logoutput   => 'on_failure',
-        notify      => Exec['apt_update'],
-        require     => [
-        File['sources.list.d'],
-        Package[$package],
-        ],
+      environment => $_proxy_env,
+      command     => "/usr/bin/add-apt-repository ${options} ${name}",
+      unless      => "/usr/bin/test -s ${::apt::sources_list_d}/${sources_list_d_filename}",
+      user        => 'root',
+      logoutput   => 'on_failure',
+      notify      => Exec['apt_update'],
+      require     => $_require,
     }
 
     file { "${::apt::sources_list_d}/${sources_list_d_filename}":
-        ensure  => file,
-        require => Exec["add-apt-repository-${name}"],
+      ensure  => file,
+      require => Exec["add-apt-repository-${name}"],
     }
   }
   else {
-
     file { "${::apt::sources_list_d}/${sources_list_d_filename}":
-        ensure => 'absent',
-        notify => Exec['apt_update'],
+      ensure => 'absent',
+      notify => Exec['apt_update'],
     }
   }
 
