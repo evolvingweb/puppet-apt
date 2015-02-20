@@ -4,9 +4,7 @@ define apt::conf (
   $priority = '50'
 ) {
 
-  $apt_conf_d = $apt::params::apt_conf_d
-
-  file { "${apt_conf_d}/${priority}${name}":
+  file { "${$apt::conf_d}/${priority}${name}":
     ensure  => $ensure,
     content => template('apt/_header.erb', 'apt/conf.erb'),
     owner   => root,

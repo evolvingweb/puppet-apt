@@ -38,15 +38,9 @@ class apt(
     owner   => 'root',
   }
 
-  $root           = $apt::params::root
-  $apt_conf_d     = $apt::params::apt_conf_d
-  $sources_list_d = $apt::params::sources_list_d
-  $preferences_d  = $apt::params::preferences_d
-  $provider       = $apt::params::provider
-
   file { 'sources.list':
     ensure  => present,
-    path    => "${root}/sources.list",
+    path    => $::apt::sources_list,
     owner   => root,
     group   => root,
     mode    => '0644',
@@ -56,7 +50,7 @@ class apt(
 
   file { 'sources.list.d':
     ensure  => directory,
-    path    => $sources_list_d,
+    path    => $::apt::sources_list_d,
     owner   => root,
     group   => root,
     purge   => $purge_sources_list_d,
@@ -67,13 +61,13 @@ class apt(
   if $purge_preferences {
     file { 'apt-preferences':
       ensure => absent,
-      path   => "${root}/preferences",
+      path   => $::apt::preferences,
     }
   }
 
   file { 'preferences.d':
     ensure  => directory,
-    path    => $preferences_d,
+    path    => $::apt::preferences_d,
     owner   => root,
     group   => root,
     purge   => $purge_preferences_d,
