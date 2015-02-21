@@ -23,16 +23,12 @@ define apt::source(
     fail('lsbdistcodename fact not available: release parameter required')
   }
 
-  file { "${name}.list":
-    ensure  => $ensure,
-    path    => "${::apt::sources_list_d}/${name}.list",
-    owner   => root,
-    group   => root,
-    mode    => '0644',
-    content => template('apt/_header.erb', 'apt/source.list.erb'),
-    notify  => Exec['apt_update'],
+  apt::setting { $name:
+    ensure       => $ensure,
+    setting_type => 'list',
+    content      => template('apt/_header.erb', 'apt/source.list.erb'),
+    notify       => Exec['apt_update'],
   }
-
 
   if ($pin != false) {
     # Get the host portion out of the url so we can pin to origin
@@ -42,7 +38,7 @@ define apt::source(
     apt::pin { $name:
       ensure   => $ensure,
       priority => $pin,
-      before   => File["${name}.list"],
+      before   => Apt::Setting[$name],
       origin   => $host,
     }
   }
@@ -55,7 +51,7 @@ define apt::source(
       key_server  => $key_server,
       key_content => $key_content,
       key_source  => $key_source,
-      before      => File["${name}.list"],
+      before      => Apt::Setting[$name],
     }
   }
 

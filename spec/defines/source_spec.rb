@@ -27,12 +27,8 @@ describe 'apt::source', :type => :define do
       }
     end
 
-    it { is_expected.to contain_file('my_source.list').that_notifies('Exec[apt_update]').with({
+    it { is_expected.to contain_apt__setting('my_source').that_notifies('Exec[apt_update]').with({
       'ensure' => 'present',
-      'path'   => '/etc/apt/sources.list.d/my_source.list',
-      'owner'  => 'root',
-      'group'  => 'root',
-      'mode'   => '0644',
     }).with_content(/# my_source\ndeb-src  wheezy main\n/)
     }
   end
@@ -62,23 +58,19 @@ describe 'apt::source', :type => :define do
       }
     end
 
-    it { is_expected.to contain_file('my_source.list').that_notifies('Exec[apt_update]').with({
+    it { is_expected.to contain_apt__setting('my_source').that_notifies('Exec[apt_update]').with({
       'ensure' => 'present',
-      'path'   => '/etc/apt/sources.list.d/my_source.list',
-      'owner'  => 'root',
-      'group'  => 'root',
-      'mode'   => '0644',
     }).with_content(/# foo\ndeb \[arch=x86_64 trusted=yes\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ sid testing\n/).without_content(/deb-src/)
     }
 
-    it { is_expected.to contain_apt__pin('my_source').that_comes_before('File[my_source.list]').with({
+    it { is_expected.to contain_apt__pin('my_source').that_comes_before('Apt::Setting[my_source]').with({
       'ensure'   => 'present',
       'priority' => '10',
       'origin'   => 'debian.mirror.iweb.ca',
     })
     }
 
-    it { is_expected.to contain_apt__key("Add key: #{GPG_KEY_ID} from Apt::Source my_source").that_comes_before('File[my_source.list]').with({
+    it { is_expected.to contain_apt__key("Add key: #{GPG_KEY_ID} from Apt::Source my_source").that_comes_before('Apt::Setting[my_source]').with({
       'ensure' => 'present',
         'key'  => GPG_KEY_ID,
         'key_server' => 'pgp.mit.edu',
@@ -103,12 +95,8 @@ describe 'apt::source', :type => :define do
       }
     end
 
-    it { is_expected.to contain_file('my_source.list').that_notifies('Exec[apt_update]').with({
+    it { is_expected.to contain_apt__setting('my_source').that_notifies('Exec[apt_update]').with({
       'ensure' => 'present',
-      'path'   => '/etc/apt/sources.list.d/my_source.list',
-      'owner'  => 'root',
-      'group'  => 'root',
-      'mode'   => '0644',
     }).with_content(/# my_source\ndeb \[trusted=yes\]  wheezy main\n/)
     }
   end
@@ -129,12 +117,8 @@ describe 'apt::source', :type => :define do
       }
     end
 
-    it { is_expected.to contain_file('my_source.list').that_notifies('Exec[apt_update]').with({
+    it { is_expected.to contain_apt__setting('my_source').that_notifies('Exec[apt_update]').with({
       'ensure' => 'present',
-      'path'   => '/etc/apt/sources.list.d/my_source.list',
-      'owner'  => 'root',
-      'group'  => 'root',
-      'mode'   => '0644',
     }).with_content(/# my_source\ndeb-src \[arch=x86_64 \]  wheezy main\n/)
     }
   end
@@ -153,7 +137,7 @@ describe 'apt::source', :type => :define do
       }
     end
 
-    it { is_expected.to contain_file('my_source.list').that_notifies('Exec[apt_update]').with({
+    it { is_expected.to contain_apt__setting('my_source').that_notifies('Exec[apt_update]').with({
       'ensure' => 'absent'
     })
     }

@@ -110,31 +110,23 @@ describe 'apt', :type => :class do
     } } }
 
     it {
-      should contain_file('debian_unstable.list').with({
+      should contain_apt__setting('debian_unstable').with({
         'ensure'  => 'present',
-        'path'    => '/etc/apt/sources.list.d/debian_unstable.list',
-        'owner'   => 'root',
-        'group'   => 'root',
-        'mode'    => '0644',
         'notify'  => 'Exec[apt_update]',
       })
     }
 
-    it { should contain_file('debian_unstable.list').with_content(/^deb http:\/\/debian.mirror.iweb.ca\/debian\/ unstable main contrib non-free$/) }
-    it { should contain_file('debian_unstable.list').with_content(/^deb-src http:\/\/debian.mirror.iweb.ca\/debian\/ unstable main contrib non-free$/) }
+    it { should contain_file('/etc/apt/sources.list.d/debian_unstable.list').with_content(/^deb http:\/\/debian.mirror.iweb.ca\/debian\/ unstable main contrib non-free$/) }
+    it { should contain_file('/etc/apt/sources.list.d/debian_unstable.list').with_content(/^deb-src http:\/\/debian.mirror.iweb.ca\/debian\/ unstable main contrib non-free$/) }
 
     it {
-      should contain_file('puppetlabs.list').with({
+      should contain_apt__setting('puppetlabs').with({
         'ensure'  => 'present',
-        'path'    => '/etc/apt/sources.list.d/puppetlabs.list',
-        'owner'   => 'root',
-        'group'   => 'root',
-        'mode'    => '0644',
         'notify'  => 'Exec[apt_update]',
       })
     }
 
-    it { should contain_file('puppetlabs.list').with_content(/^deb http:\/\/apt.puppetlabs.com precise main$/) }
+    it { should contain_file('/etc/apt/sources.list.d/puppetlabs.list').with_content(/^deb http:\/\/apt.puppetlabs.com precise main$/) }
   end
 
   describe 'failing tests' do
