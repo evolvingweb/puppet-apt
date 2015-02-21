@@ -1,13 +1,12 @@
 # source.pp
 # add an apt source
-
 define apt::source(
   $comment           = $name,
   $ensure            = present,
   $location          = '',
-  $release           = 'UNDEF',
+  $release           = $::lsbdistcodename,
   $repos             = 'main',
-  $include_src       = true,
+  $include_src       = false,
   $include_deb       = true,
   $key               = undef,
   $key_server        = 'keyserver.ubuntu.com',
@@ -17,29 +16,19 @@ define apt::source(
   $architecture      = undef,
   $trusted_source    = false,
 ) {
-  validate_string($architecture)
-  validate_bool($trusted_source)
+  validate_string($architecture, $comment, $location, $release, $repos, $key_server)
+  validate_bool($trusted_source, $include_src, $include_deb)
 
-  if $release == 'UNDEF' {
-    if $::lsbdistcodename == undef {
-      fail('lsbdistcodename fact not available: release parameter required')
-    } else {
-      $release_real = $::lsbdistcodename
-    }
-  } else {
-    $release_real = $release
+  if ! $release {
+    fail('lsbdistcodename fact not available: release parameter required')
   }
 
-  file { "${name}.list":
-    ensure  => $ensure,
-    path    => "${::apt::sources_list_d}/${name}.list",
-    owner   => root,
-    group   => root,
-    mode    => '0644',
-    content => template('apt/_header.erb', 'apt/source.list.erb'),
-    notify  => Exec['apt_update'],
+  apt::setting { $name:
+    ensure       => $ensure,
+    setting_type => 'list',
+    content      => template('apt/_header.erb', 'apt/source.list.erb'),
+    notify       => Exec['apt_update'],
   }
-
 
   if ($pin != false) {
     # Get the host portion out of the url so we can pin to origin
@@ -49,7 +38,7 @@ define apt::source(
     apt::pin { $name:
       ensure   => $ensure,
       priority => $pin,
-      before   => File["${name}.list"],
+      before   => Apt::Setting[$name],
       origin   => $host,
     }
   }
@@ -62,7 +51,7 @@ define apt::source(
       key_server  => $key_server,
       key_content => $key_content,
       key_source  => $key_source,
-      before      => File["${name}.list"],
+      before      => Apt::Setting[$name],
     }
   }
 

@@ -2,10 +2,10 @@
 <%- if @include_deb then -%>
 deb <%- if @architecture or @trusted_source -%>
 [<%- if @architecture %>arch=<%= @architecture %> <% end %><% if @trusted_source %>trusted=yes<% end -%>
-] <%- end %><%= @location %> <%= @release_real %> <%= @repos %>
+] <%- end %><%= @location %> <%= @release %> <%= @repos %>
 <%- end -%>
 <%- if @include_src then -%>
 deb-src <%- if @architecture or @trusted_source -%>
 [<%- if @architecture %>arch=<%= @architecture %> <% end %><% if @trusted_source %>trusted=yes<% end -%>
-] <%- end %><%= @location %> <%= @release_real %> <%= @repos %>
+] <%- end %><%= @location %> <%= @release %> <%= @repos %>
 <%- end -%>
