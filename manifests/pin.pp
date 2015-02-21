@@ -16,8 +16,6 @@ define apt::pin(
   $originator      = '', # o=
   $label           = ''  # l=
 ) {
-  $preferences_d = $apt::params::preferences_d
-
   if $order != '' and !is_integer($order) {
     fail('Only integers are allowed in the apt::pin order param')
   }
@@ -65,8 +63,8 @@ define apt::pin(
   $file_name = regsubst($title, '[^0-9a-z\-_\.]', '_', 'IG')
 
   $path = $order ? {
-    ''      => "${preferences_d}/${file_name}.pref",
-    default => "${preferences_d}/${order}-${file_name}.pref",
+    ''      => "${::apt::preferences_d}/${file_name}.pref",
+    default => "${::apt::preferences_d}/${order}-${file_name}.pref",
   }
   file { "${file_name}.pref":
     ensure  => $ensure,

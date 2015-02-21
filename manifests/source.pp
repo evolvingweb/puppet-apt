@@ -20,9 +20,6 @@ define apt::source(
   validate_string($architecture)
   validate_bool($trusted_source)
 
-  $sources_list_d = $apt::params::sources_list_d
-  $provider       = $apt::params::provider
-
   if $release == 'UNDEF' {
     if $::lsbdistcodename == undef {
       fail('lsbdistcodename fact not available: release parameter required')
@@ -35,7 +32,7 @@ define apt::source(
 
   file { "${name}.list":
     ensure  => $ensure,
-    path    => "${sources_list_d}/${name}.list",
+    path    => "${::apt::sources_list_d}/${name}.list",
     owner   => root,
     group   => root,
     mode    => '0644',
