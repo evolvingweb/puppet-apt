@@ -5,39 +5,39 @@ describe 'apt::setting' do
   let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian' } }
   let(:title) { 'teddybear' }
 
-  let(:default_params) { { :type => 'conf', :content => 'di' } }
+  let(:default_params) { { :setting_type => 'conf', :content => 'di' } }
 
   describe 'when using the defaults' do
-    context 'without type' do
+    context 'without setting_type' do
       it do
-        expect { should compile }.to raise_error(Puppet::Error, /Must pass type /)
+        expect { should compile }.to raise_error(Puppet::Error, /Must pass setting_type /)
       end
     end
 
     context 'without source or content' do
-      let(:params) { { :type => 'conf' } }
+      let(:params) { { :setting_type => 'conf' } }
       it do
         expect { should compile }.to raise_error(Puppet::Error, /needs either of /)
       end
     end
 
-    context 'with type=conf' do
+    context 'with setting_type=conf' do
       let(:params) { default_params }
       it { should contain_file('/etc/apt/apt.conf.d/50teddybear') }
     end
 
-    context 'with type=pref' do
-      let(:params) { { :type => 'pref', :content => 'di' } }
+    context 'with setting_type=pref' do
+      let(:params) { { :setting_type => 'pref', :content => 'di' } }
       it { should contain_file('/etc/apt/preferences.d/50teddybear') }
     end
 
-    context 'with type=list' do
-      let(:params) { { :type => 'list', :content => 'di' } }
+    context 'with setting_type=list' do
+      let(:params) { { :setting_type => 'list', :content => 'di' } }
       it { should contain_file('/etc/apt/sources.list.d/teddybear.list') }
     end
 
     context 'with source' do
-      let(:params) { { :type => 'conf', :source => 'puppet:///la/die/dah' } }
+      let(:params) { { :setting_type => 'conf', :source => 'puppet:///la/die/dah' } }
       it {
         should contain_file('/etc/apt/apt.conf.d/50teddybear').with({
         :ensure => 'file',
@@ -68,8 +68,8 @@ describe 'apt::setting' do
       end
     end
 
-    context 'with type=ext' do
-      let(:params) { default_params.merge({ :type => 'ext' }) }
+    context 'with setting_type=ext' do
+      let(:params) { default_params.merge({ :setting_type => 'ext' }) }
       it do
         expect { should compile }.to raise_error(Puppet::Error, /"ext" does not /)
       end
