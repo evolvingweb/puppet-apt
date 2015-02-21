@@ -1,5 +1,5 @@
 define apt::setting (
-  $type,
+  $setting_type,
   $priority   = 50,
   $ensure     = file,
   $source     = undef,
@@ -17,7 +17,7 @@ define apt::setting (
     fail('apt::setting needs either of content or source')
   }
 
-  validate_re($type, ['conf', 'pref', 'list'])
+  validate_re($setting_type, ['conf', 'pref', 'list'])
   validate_re($ensure,  ['file', 'present', 'absent'])
 
   unless is_integer($priority) {
@@ -32,14 +32,14 @@ define apt::setting (
     validate_string($content)
   }
 
-  if $type == 'list' {
+  if $setting_type == 'list' {
     $_priority = ''
   } else {
     $_priority = $priority
   }
 
-  $_path = $::apt::config_files[$type]['path']
-  $_ext  = $::apt::config_files[$type]['ext']
+  $_path = $::apt::config_files[$setting_type]['path']
+  $_ext  = $::apt::config_files[$setting_type]['ext']
 
   file { "${_path}/${_priority}${title}${_ext}":
     ensure  => $ensure,
