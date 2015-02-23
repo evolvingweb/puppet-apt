@@ -64,12 +64,19 @@ class apt::params {
       case $distcodename {
         'lucid': {
           $ppa_options        = undef
+          $ppa_package        = 'python-software-properties'
         }
-        'precise', 'trusty', 'utopic', 'vivid': {
+        'precise': {
           $ppa_options        = '-y'
+          $ppa_package        = 'python-software-properties'
+        }
+        'trusty', 'utopic', 'vivid': {
+          $ppa_options        = '-y'
+          $ppa_package        = 'software-properties-common'
         }
         default: {
           $ppa_options        = '-y'
+          $ppa_package        = 'software-properties-common'
         }
       }
     }
