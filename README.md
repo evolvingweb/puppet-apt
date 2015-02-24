@@ -244,8 +244,8 @@ apt::sources:
     key: '9AA38DCD55BE302B'
     key_server: 'subkeys.pgp.net'
     pin: '-10'
-    include_src: 'true'
-    include_deb: 'true'
+    include_src: true
+    include_deb: true
 
   'puppetlabs':
     location: 'http://apt.puppetlabs.com'
