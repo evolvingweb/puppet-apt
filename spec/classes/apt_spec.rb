@@ -110,7 +110,7 @@ describe 'apt', :type => :class do
     } } }
 
     it {
-      is_expected.to contain_apt__setting('debian_unstable').with({
+      is_expected.to contain_apt__setting('list-debian_unstable').with({
         'ensure'  => 'present',
         'notify'  => 'Exec[apt_update]',
       })
@@ -120,7 +120,7 @@ describe 'apt', :type => :class do
     it { is_expected.to contain_file('/etc/apt/sources.list.d/debian_unstable.list').with_content(/^deb-src http:\/\/debian.mirror.iweb.ca\/debian\/ unstable main contrib non-free$/) }
 
     it {
-      is_expected.to contain_apt__setting('puppetlabs').with({
+      is_expected.to contain_apt__setting('list-puppetlabs').with({
         'ensure'  => 'present',
         'notify'  => 'Exec[apt_update]',
       })

@@ -7,13 +7,10 @@ describe 'apt::pin', :type => :define do
   let(:title) { 'my_pin' }
 
   context 'defaults' do
-    it { is_expected.to contain_file("my_pin.pref").with_content(/Explanation: : my_pin\nPackage: \*\nPin: release a=my_pin\nPin-Priority: 0\n/)}
-    it { is_expected.to contain_file("my_pin.pref").with({
-      'ensure' => 'present',
-      'path'   => '/etc/apt/preferences.d/my_pin.pref',
-      'owner'  => 'root',
-      'group'  => 'root',
-      'mode'   => '0644',
+    it { is_expected.to contain_apt__setting("pref-my_pin").with_content(/Explanation: : my_pin\nPackage: \*\nPin: release a=my_pin\nPin-Priority: 0\n/)}
+    it { is_expected.to contain_apt__setting("pref-my_pin").with({
+      'setting_type' => 'pref',
+      'base_name'    => 'my_pin',
     })
     }
   end
@@ -25,13 +22,10 @@ describe 'apt::pin', :type => :define do
         'version'  => '1',
       }
     end
-    it { is_expected.to contain_file("my_pin.pref").with_content(/Explanation: : my_pin\nPackage: vim\nPin: version 1\nPin-Priority: 0\n/)}
-    it { is_expected.to contain_file("my_pin.pref").with({
-      'ensure' => 'present',
-      'path'   => '/etc/apt/preferences.d/my_pin.pref',
-      'owner'  => 'root',
-      'group'  => 'root',
-      'mode'   => '0644',
+    it { is_expected.to contain_apt__setting("pref-my_pin").with_content(/Explanation: : my_pin\nPackage: vim\nPin: version 1\nPin-Priority: 0\n/)}
+    it { is_expected.to contain_apt__setting("pref-my_pin").with({
+      'setting_type' => 'pref',
+      'base_name'    => 'my_pin',
     })
     }
   end
@@ -43,13 +37,10 @@ describe 'apt::pin', :type => :define do
         'origin'   => 'test',
       }
     end
-    it { is_expected.to contain_file("my_pin.pref").with_content(/Explanation: : my_pin\nPackage: vim\nPin: origin test\nPin-Priority: 0\n/)}
-    it { is_expected.to contain_file("my_pin.pref").with({
-      'ensure' => 'present',
-      'path'   => '/etc/apt/preferences.d/my_pin.pref',
-      'owner'  => 'root',
-      'group'  => 'root',
-      'mode'   => '0644',
+    it { is_expected.to contain_apt__setting("pref-my_pin").with_content(/Explanation: : my_pin\nPackage: vim\nPin: origin test\nPin-Priority: 0\n/)}
+    it { is_expected.to contain_apt__setting("pref-my_pin").with({
+      'setting_type' => 'pref',
+      'base_name'    => 'my_pin',
     })
     }
   end
@@ -68,13 +59,11 @@ describe 'apt::pin', :type => :define do
         'priority'        => 10,
       }
     end
-    it { is_expected.to contain_file("my_pin.pref").with_content(/Explanation: foo\nPackage: \*\nPin: release a=1, n=bar, v=2, c=baz, o=foobar, l=foobaz\nPin-Priority: 10\n/) }
-    it { is_expected.to contain_file("my_pin.pref").with({
-      'ensure' => 'present',
-      'path'   => '/etc/apt/preferences.d/99-my_pin.pref',
-      'owner'  => 'root',
-      'group'  => 'root',
-      'mode'   => '0644',
+    it { is_expected.to contain_apt__setting("pref-my_pin").with_content(/Explanation: foo\nPackage: \*\nPin: release a=1, n=bar, v=2, c=baz, o=foobar, l=foobaz\nPin-Priority: 10\n/) }
+    it { is_expected.to contain_apt__setting("pref-my_pin").with({
+      'setting_type' => 'pref',
+      'base_name'    => 'my_pin',
+      'priority'     => 99,
     })
     }
   end
@@ -85,7 +74,7 @@ describe 'apt::pin', :type => :define do
         'ensure' => 'absent'
       }
     end
-    it { is_expected.to contain_file("my_pin.pref").with({
+    it { is_expected.to contain_apt__setting("pref-my_pin").with({
       'ensure' => 'absent',
     })
     }
@@ -93,7 +82,7 @@ describe 'apt::pin', :type => :define do
 
   context 'bad characters' do
     let(:title) { 'such  bad && wow!' }
-    it { is_expected.to contain_file("such__bad____wow_.pref") }
+    it { is_expected.to contain_apt__setting("pref-such__bad____wow_") }
   end
 
   describe 'validation' do
