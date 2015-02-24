@@ -1,5 +1,6 @@
 define apt::setting (
   $setting_type,
+  $base_name  = $title,
   $priority   = 50,
   $ensure     = file,
   $source     = undef,
@@ -19,6 +20,7 @@ define apt::setting (
 
   validate_re($setting_type, ['conf', 'pref', 'list'])
   validate_re($ensure,  ['file', 'present', 'absent'])
+  validate_string($base_name)
 
   unless is_integer($priority) {
     fail('apt::setting priority must be an integer')
@@ -41,7 +43,7 @@ define apt::setting (
   $_path = $::apt::config_files[$setting_type]['path']
   $_ext  = $::apt::config_files[$setting_type]['ext']
 
-  file { "${_path}/${_priority}${title}${_ext}":
+  file { "${_path}/${_priority}${base_name}${_ext}":
     ensure  => $ensure,
     owner   => $_file['owner'],
     group   => $_file['group'],

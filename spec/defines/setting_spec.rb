@@ -95,6 +95,18 @@ describe 'apt::setting' do
     it { should contain_file('/etc/apt/apt.conf.d/100teddybear') }
   end
 
+  describe 'with base_name=puppy' do
+    let(:params) { default_params.merge({ :base_name => 'puppy' }) }
+    it { should contain_file('/etc/apt/apt.conf.d/50puppy') }
+  end
+
+  describe 'with base_name=true' do
+    let(:params) { default_params.merge({ :base_name => true }) }
+      it do
+        expect { should compile }.to raise_error(Puppet::Error, /not a string/)
+      end
+  end
+
   describe 'with ensure=absent' do
     let(:params) { default_params.merge({ :ensure => 'absent' }) }
     it { should contain_file('/etc/apt/apt.conf.d/50teddybear').with({
