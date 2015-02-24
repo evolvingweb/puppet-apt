@@ -21,7 +21,8 @@ define apt::setting (
   validate_re($ensure,  ['file', 'present', 'absent'])
 
   unless is_integer($priority) {
-    fail('apt::setting priority must be an integer')
+    # need this to allow zero-padded priority.
+    validate_re($priority, '^\d+$', 'apt::setting priority must be an integer or a zero-padded integer.')
   }
 
   if $source {
