@@ -1,4 +1,9 @@
 class apt::params {
+
+  if $caller_module_name and $caller_module_name != $module_name {
+    fail('apt::params is a private class and cannot be accessed directly')
+  }
+
   $root           = '/etc/apt'
   $provider       = '/usr/bin/apt-get'
   $sources_list   = "${root}/sources.list"
