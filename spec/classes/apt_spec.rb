@@ -3,7 +3,7 @@ describe 'apt', :type => :class do
   let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian' } }
 
   context 'defaults' do
-    it { should contain_file('sources.list').that_notifies('Exec[apt_update]').only_with({
+    it { is_expected.to contain_file('sources.list').that_notifies('Exec[apt_update]').only_with({
       'ensure' => 'present',
       'path'   => '/etc/apt/sources.list',
       'owner'  => 'root',
@@ -12,7 +12,7 @@ describe 'apt', :type => :class do
       'notify' => 'Exec[apt_update]',
     })}
 
-    it { should contain_file('sources.list.d').that_notifies('Exec[apt_update]').only_with({
+    it { is_expected.to contain_file('sources.list.d').that_notifies('Exec[apt_update]').only_with({
       'ensure'  => 'directory',
       'path'    => '/etc/apt/sources.list.d',
       'owner'   => 'root',
@@ -22,7 +22,7 @@ describe 'apt', :type => :class do
       'notify'  => 'Exec[apt_update]',
     })}
 
-    it { should contain_file('preferences.d').only_with({
+    it { is_expected.to contain_file('preferences.d').only_with({
       'ensure'  => 'directory',
       'path'    => '/etc/apt/preferences.d',
       'owner'   => 'root',
@@ -32,14 +32,14 @@ describe 'apt', :type => :class do
     })}
 
     it 'should lay down /etc/apt/apt.conf.d/15update-stamp' do
-      should contain_file('/etc/apt/apt.conf.d/15update-stamp').with({
+      is_expected.to contain_file('/etc/apt/apt.conf.d/15update-stamp').with({
         'group' => 'root',
         'mode'  => '0644',
         'owner' => 'root',
       }).with_content(/APT::Update::Post-Invoke-Success \{"touch \/var\/lib\/apt\/periodic\/update-success-stamp 2>\/dev\/null \|\| true";\};/)
     end
 
-    it { should contain_exec('apt_update').with({
+    it { is_expected.to contain_exec('apt_update').with({
       'refreshonly' => 'true',
     })}
   end
@@ -57,26 +57,26 @@ describe 'apt', :type => :class do
       }
     end
 
-    it { should contain_file('sources.list').with({
+    it { is_expected.to contain_file('sources.list').with({
       'content' => "# Repos managed by puppet.\n"
     })}
 
-    it { should contain_file('sources.list.d').with({
+    it { is_expected.to contain_file('sources.list.d').with({
       'purge'   => 'true',
       'recurse' => 'true',
     })}
 
-    it { should contain_file('apt-preferences').only_with({
+    it { is_expected.to contain_file('apt-preferences').only_with({
       'ensure' => 'absent',
       'path'   => '/etc/apt/preferences',
     })}
 
-    it { should contain_file('preferences.d').with({
+    it { is_expected.to contain_file('preferences.d').with({
       'purge'   => 'true',
       'recurse' => 'true',
     })}
 
-    it { should contain_exec('apt_update').with({
+    it { is_expected.to contain_exec('apt_update').with({
       'refreshonly' => 'false',
       'timeout'     => '1',
       'tries'       => '3',
@@ -110,23 +110,23 @@ describe 'apt', :type => :class do
     } } }
 
     it {
-      should contain_apt__setting('debian_unstable').with({
+      is_expected.to contain_apt__setting('debian_unstable').with({
         'ensure'  => 'present',
         'notify'  => 'Exec[apt_update]',
       })
     }
 
-    it { should contain_file('/etc/apt/sources.list.d/debian_unstable.list').with_content(/^deb http:\/\/debian.mirror.iweb.ca\/debian\/ unstable main contrib non-free$/) }
-    it { should contain_file('/etc/apt/sources.list.d/debian_unstable.list').with_content(/^deb-src http:\/\/debian.mirror.iweb.ca\/debian\/ unstable main contrib non-free$/) }
+    it { is_expected.to contain_file('/etc/apt/sources.list.d/debian_unstable.list').with_content(/^deb http:\/\/debian.mirror.iweb.ca\/debian\/ unstable main contrib non-free$/) }
+    it { is_expected.to contain_file('/etc/apt/sources.list.d/debian_unstable.list').with_content(/^deb-src http:\/\/debian.mirror.iweb.ca\/debian\/ unstable main contrib non-free$/) }
 
     it {
-      should contain_apt__setting('puppetlabs').with({
+      is_expected.to contain_apt__setting('puppetlabs').with({
         'ensure'  => 'present',
         'notify'  => 'Exec[apt_update]',
       })
     }
 
-    it { should contain_file('/etc/apt/sources.list.d/puppetlabs.list').with_content(/^deb http:\/\/apt.puppetlabs.com precise main$/) }
+    it { is_expected.to contain_file('/etc/apt/sources.list.d/puppetlabs.list').with_content(/^deb http:\/\/apt.puppetlabs.com precise main$/) }
   end
 
   describe 'failing tests' do
@@ -138,7 +138,7 @@ describe 'apt', :type => :class do
       end
       it do
         expect {
-          should compile
+          is_expected.to compile
         }.to raise_error(Puppet::Error)
       end
     end
@@ -151,7 +151,7 @@ describe 'apt', :type => :class do
       end
       it do
         expect {
-          should compile
+          is_expected.to compile
         }.to raise_error(Puppet::Error)
       end
     end
@@ -164,7 +164,7 @@ describe 'apt', :type => :class do
       end
       it do
         expect {
-          should compile
+          is_expected.to compile
         }.to raise_error(Puppet::Error)
       end
     end
@@ -177,7 +177,7 @@ describe 'apt', :type => :class do
       end
       it do
         expect {
-          should compile
+          is_expected.to compile
         }.to raise_error(Puppet::Error)
       end
     end
@@ -189,7 +189,7 @@ describe 'apt', :type => :class do
 
       it do
         expect {
-          should compile
+          is_expected.to compile
         }.to raise_error(Puppet::Error, /This module only works on Debian or derivatives like Ubuntu/)
       end
     end

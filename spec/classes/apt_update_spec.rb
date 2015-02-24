@@ -8,7 +8,7 @@ describe 'apt::update', :type => :class do
     let (:pre_condition) { "class{'::apt': always_apt_update => true}" }
     it 'should trigger an apt-get update run' do
       #set the apt_update exec's refreshonly attribute to false
-      should contain_exec('apt_update').with({'refreshonly' => false })
+      is_expected.to contain_exec('apt_update').with({'refreshonly' => false })
     end
     ['always','daily','weekly','reluctantly'].each do |update_frequency|
       context "when apt::apt_update_frequency has the value of #{update_frequency}" do
@@ -18,7 +18,7 @@ describe 'apt::update', :type => :class do
             let (:pre_condition) { "class{'::apt': always_apt_update => true, apt_update_frequency => '#{update_frequency}' }" }
             it 'should trigger an apt-get update run' do
               # set the apt_update exec's refreshonly attribute to false
-              should contain_exec('apt_update').with({'refreshonly' => false})
+              is_expected.to contain_exec('apt_update').with({'refreshonly' => false})
             end
           end
           context 'when $::apt_update_last_success is nil' do
@@ -26,7 +26,7 @@ describe 'apt::update', :type => :class do
             let (:pre_condition) { "class{'::apt': always_apt_update => true, apt_update_frequency => '#{update_frequency}' }" }
             it 'should trigger an apt-get update run' do
               #set the apt_update exec\'s refreshonly attribute to false
-              should contain_exec('apt_update').with({'refreshonly' => false})
+              is_expected.to contain_exec('apt_update').with({'refreshonly' => false})
             end
           end
         end
@@ -42,7 +42,7 @@ describe 'apt::update', :type => :class do
           let (:pre_condition) { "class{'::apt': always_apt_update => false, apt_update_frequency => 'always' }" }
           it 'should trigger an apt-get update run' do
             #set the apt_update exec's refreshonly attribute to false
-            should contain_exec('apt_update').with({'refreshonly' => false})
+            is_expected.to contain_exec('apt_update').with({'refreshonly' => false})
           end
         end
       end
@@ -51,7 +51,7 @@ describe 'apt::update', :type => :class do
         let (:pre_condition) { "class{ '::apt': always_apt_update => false, apt_update_frequency => 'always' }" }
         it 'should trigger an apt-get update run' do
           #set the apt_update exec\'s refreshonly attribute to false
-          should contain_exec('apt_update').with({'refreshonly' => false})
+          is_expected.to contain_exec('apt_update').with({'refreshonly' => false})
         end
       end
     end
@@ -62,7 +62,7 @@ describe 'apt::update', :type => :class do
           let (:pre_condition) { "class{ '::apt': always_apt_update => false, apt_update_frequency => 'reluctantly' }" }
           it 'should not trigger an apt-get update run' do
             #don't change the apt_update exec's refreshonly attribute. (it should be true)
-            should contain_exec('apt_update').with({'refreshonly' => true})
+            is_expected.to contain_exec('apt_update').with({'refreshonly' => true})
           end
         end
       end
@@ -71,7 +71,7 @@ describe 'apt::update', :type => :class do
         let (:pre_condition) { "class{ '::apt': always_apt_update => false, apt_update_frequency => 'reluctantly' }" }
         it 'should not trigger an apt-get update run' do
           #don't change the apt_update exec's refreshonly attribute. (it should be true)
-          should contain_exec('apt_update').with({'refreshonly' => true})
+          is_expected.to contain_exec('apt_update').with({'refreshonly' => true})
         end
       end
     end
@@ -83,7 +83,7 @@ describe 'apt::update', :type => :class do
             let (:pre_condition) { "class{ '::apt': always_apt_update => false, apt_update_frequency => '#{update_frequency}' }" }
             it 'should trigger an apt-get update run' do
               #set the apt_update exec\'s refreshonly attribute to false
-              should contain_exec('apt_update').with({'refreshonly' => false})
+              is_expected.to contain_exec('apt_update').with({'refreshonly' => false})
             end
           end
         end
@@ -92,7 +92,7 @@ describe 'apt::update', :type => :class do
           let (:pre_condition) { "class{ '::apt': always_apt_update => false, apt_update_frequency => '#{update_frequency}' }" }
           it 'should not trigger an apt-get update run' do
             #don't change the apt_update exec\'s refreshonly attribute. (it should be true)
-            should contain_exec('apt_update').with({'refreshonly' => true})
+            is_expected.to contain_exec('apt_update').with({'refreshonly' => true})
           end
         end
         context 'when $::apt_update_last_success is nil' do
@@ -100,7 +100,7 @@ describe 'apt::update', :type => :class do
           let (:pre_condition) { "class{ '::apt': always_apt_update => false, apt_update_frequency => '#{update_frequency}' }" }
           it 'should trigger an apt-get update run' do
             #set the apt_update exec\'s refreshonly attribute to false
-            should contain_exec('apt_update').with({'refreshonly' => false})
+            is_expected.to contain_exec('apt_update').with({'refreshonly' => false})
           end
         end
       end
