@@ -5,6 +5,7 @@ define apt::ppa(
   $options        = $::apt::ppa_options,
   $package_name   = $::apt::ppa_package,
   $package_manage = false,
+  $proxy          = {},
 ) {
   if ! $release {
     fail('lsbdistcodename fact not available: release parameter required')
@@ -19,6 +20,8 @@ define apt::ppa(
   $filename_without_ppa     = regsubst($filename_without_dots, '^ppa:', '', 'G')
   $sources_list_d_filename  = "${filename_without_ppa}-${release}.list"
 
+  $_proxy = merge($apt::proxy, $proxy)
+
   if $ensure == 'present' {
     if $package_manage {
       package { $package_name: }
@@ -28,12 +31,12 @@ define apt::ppa(
       $_require = File['sources.list.d']
     }
 
-    case $::apt::proxy_host {
+    case $_proxy['host'] {
       false, '', undef: {
         $_proxy_env = []
       }
       default: {
-        $_proxy_env = ["http_proxy=http://${::apt::proxy_host}:${::apt::proxy_port}", "https_proxy=http://${::apt::proxy_host}:${::apt::proxy_port}"]
+        $_proxy_env = ["http_proxy=http://${_proxy['host']}:${_proxy['port']}", "https_proxy=http://${_proxy['host']}:${_proxy['port']}"]
       }
     }
 
