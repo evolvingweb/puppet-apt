@@ -20,7 +20,7 @@ describe 'apt::conf', :type => :define do
       "/etc/apt/apt.conf.d/00norecommends"
     end
 
-    it { should contain_file(filename).with({
+    it { is_expected.to contain_file(filename).with({
           'ensure'    => 'present',
           'content'   => /Apt::Install-Recommends 0;\nApt::AutoRemove::InstallRecommends 1;/,
           'owner'     => 'root',
@@ -43,7 +43,7 @@ describe 'apt::conf', :type => :define do
       "/etc/apt/apt.conf.d/00norecommends"
     end
 
-    it { should contain_file(filename).with({
+    it { is_expected.to contain_file(filename).with({
         'ensure'    => 'absent',
         'content'   => /Apt::Install-Recommends 0;\nApt::AutoRemove::InstallRecommends 1;/,
         'owner'     => 'root',
