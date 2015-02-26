@@ -31,6 +31,11 @@ class apt::params {
     }
   }
 
+  $proxy = {
+    'host' => undef,
+    'port' => 8080,
+  }
+
   $file_defaults = {
     'owner' => 'root',
     'group' => 'root',
