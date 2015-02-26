@@ -31,10 +31,8 @@ class apt(
   }
 
   apt::setting { 'conf-update-stamp':
-    base_name    => 'update-stamp',
-    setting_type => 'conf',
-    priority     => 15,
-    content      => template('apt/_header.erb', 'apt/15update-stamp.erb'),
+    priority => 15,
+    content  => template('apt/_header.erb', 'apt/15update-stamp.erb'),
   }
 
   file { 'sources.list':
