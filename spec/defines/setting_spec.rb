@@ -3,41 +3,36 @@ require 'spec_helper'
 describe 'apt::setting' do
   let(:pre_condition) { 'class { "apt": }' }
   let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian' } }
-  let(:title) { 'teddybear' }
+  let(:title) { 'conf-teddybear' }
 
-  let(:default_params) { { :setting_type => 'conf', :content => 'di' } }
+  let(:default_params) { { :content => 'di' } }
 
   describe 'when using the defaults' do
-    context 'without setting_type' do
-      it do
-        expect { is_expected.to compile }.to raise_error(Puppet::Error, /Must pass setting_type /)
-      end
-    end
-
     context 'without source or content' do
-      let(:params) { { :setting_type => 'conf' } }
       it do
         expect { is_expected.to compile }.to raise_error(Puppet::Error, /needs either of /)
       end
     end
 
-    context 'with setting_type=conf' do
+    context 'with title=conf-teddybear ' do
       let(:params) { default_params }
       it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear') }
     end
 
-    context 'with setting_type=pref' do
-      let(:params) { { :setting_type => 'pref', :content => 'di' } }
+    context 'with title=pref-teddybear' do
+      let(:title) { 'pref-teddybear' }
+      let(:params) { default_params }
       it { is_expected.to contain_file('/etc/apt/preferences.d/50teddybear') }
     end
 
-    context 'with setting_type=list' do
-      let(:params) { { :setting_type => 'list', :content => 'di' } }
+    context 'with title=list-teddybear' do
+      let(:title) { 'list-teddybear' }
+      let(:params) { default_params }
       it { is_expected.to contain_file('/etc/apt/sources.list.d/teddybear.list') }
     end
 
     context 'with source' do
-      let(:params) { { :setting_type => 'conf', :source => 'puppet:///la/die/dah' } }
+      let(:params) { { :source => 'puppet:///la/die/dah' } }
       it {
         is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').with({
         :ensure => 'file',
@@ -68,10 +63,11 @@ describe 'apt::setting' do
       end
     end
 
-    context 'with setting_type=ext' do
-      let(:params) { default_params.merge({ :setting_type => 'ext' }) }
+    context 'with title=ext-teddybear' do
+      let(:title) { 'ext-teddybear' }
+      let(:params) { default_params }
       it do
-        expect { is_expected.to compile }.to raise_error(Puppet::Error, /"ext" does not /)
+        expect { is_expected.to compile }.to raise_error(Puppet::Error, /must start with /)
       end
     end
 
@@ -93,18 +89,6 @@ describe 'apt::setting' do
   describe 'with priority=100' do
     let(:params) { default_params.merge({ :priority => 100 }) }
     it { is_expected.to contain_file('/etc/apt/apt.conf.d/100teddybear') }
-  end
-
-  describe 'with base_name=puppy' do
-    let(:params) { default_params.merge({ :base_name => 'puppy' }) }
-    it { should contain_file('/etc/apt/apt.conf.d/50puppy') }
-  end
-
-  describe 'with base_name=true' do
-    let(:params) { default_params.merge({ :base_name => true }) }
-      it do
-        expect { should compile }.to raise_error(Puppet::Error, /not a string/)
-      end
   end
 
   describe 'with ensure=absent' do

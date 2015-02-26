@@ -24,11 +24,9 @@ define apt::source(
   }
 
   apt::setting { "list-${name}":
-    ensure       => $ensure,
-    base_name    => $name,
-    setting_type => 'list',
-    content      => template('apt/_header.erb', 'apt/source.list.erb'),
-    notify       => Exec['apt_update'],
+    ensure  => $ensure,
+    content => template('apt/_header.erb', 'apt/source.list.erb'),
+    notify  => Exec['apt_update'],
   }
 
   if ($pin != false) {
