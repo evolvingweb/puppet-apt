@@ -23,8 +23,9 @@ define apt::source(
     fail('lsbdistcodename fact not available: release parameter required')
   }
 
-  apt::setting { $name:
+  apt::setting { "list-${name}":
     ensure       => $ensure,
+    base_name    => $name,
     setting_type => 'list',
     content      => template('apt/_header.erb', 'apt/source.list.erb'),
     notify       => Exec['apt_update'],
@@ -38,7 +39,7 @@ define apt::source(
     apt::pin { $name:
       ensure   => $ensure,
       priority => $pin,
-      before   => Apt::Setting[$name],
+      before   => Apt::Setting["list-${name}"],
       origin   => $host,
     }
   }
@@ -51,7 +52,7 @@ define apt::source(
       key_server  => $key_server,
       key_content => $key_content,
       key_source  => $key_source,
-      before      => Apt::Setting[$name],
+      before      => Apt::Setting["list-${name}"],
     }
   }
 

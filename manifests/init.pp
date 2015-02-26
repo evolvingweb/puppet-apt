@@ -30,12 +30,11 @@ class apt(
     }
   }
 
-  file { '/etc/apt/apt.conf.d/15update-stamp':
-    ensure  => 'file',
-    content => template('apt/_header.erb', 'apt/15update-stamp.erb'),
-    group   => 'root',
-    mode    => '0644',
-    owner   => 'root',
+  apt::setting { 'conf-update-stamp':
+    base_name    => 'update-stamp',
+    setting_type => 'conf',
+    priority     => 15,
+    content      => template('apt/_header.erb', 'apt/15update-stamp.erb'),
   }
 
   file { 'sources.list':
