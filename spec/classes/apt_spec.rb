@@ -112,7 +112,6 @@ describe 'apt', :type => :class do
     it {
       is_expected.to contain_apt__setting('list-debian_unstable').with({
         'ensure'  => 'present',
-        'notify'  => 'Exec[apt_update]',
       })
     }
 
@@ -122,7 +121,6 @@ describe 'apt', :type => :class do
     it {
       is_expected.to contain_apt__setting('list-puppetlabs').with({
         'ensure'  => 'present',
-        'notify'  => 'Exec[apt_update]',
       })
     }
 

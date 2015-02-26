@@ -16,25 +16,25 @@ describe 'apt::setting' do
 
     context 'with title=conf-teddybear ' do
       let(:params) { default_params }
-      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear') }
+      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]') }
     end
 
     context 'with title=pref-teddybear' do
       let(:title) { 'pref-teddybear' }
       let(:params) { default_params }
-      it { is_expected.to contain_file('/etc/apt/preferences.d/50teddybear') }
+      it { is_expected.to contain_file('/etc/apt/preferences.d/50teddybear').that_notifies('Exec[apt_update]') }
     end
 
     context 'with title=list-teddybear' do
       let(:title) { 'list-teddybear' }
       let(:params) { default_params }
-      it { is_expected.to contain_file('/etc/apt/sources.list.d/teddybear.list') }
+      it { is_expected.to contain_file('/etc/apt/sources.list.d/teddybear.list').that_notifies('Exec[apt_update]') }
     end
 
     context 'with source' do
       let(:params) { { :source => 'puppet:///la/die/dah' } }
       it {
-        is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').with({
+        is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]').with({
         :ensure => 'file',
         :owner  => 'root',
         :group  => 'root',
@@ -45,7 +45,7 @@ describe 'apt::setting' do
 
     context 'with content' do
       let(:params) { default_params }
-      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').with({
+      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]').with({
         :ensure  => 'file',
         :owner   => 'root',
         :group   => 'root',
@@ -88,12 +88,12 @@ describe 'apt::setting' do
 
   describe 'with priority=100' do
     let(:params) { default_params.merge({ :priority => 100 }) }
-    it { is_expected.to contain_file('/etc/apt/apt.conf.d/100teddybear') }
+    it { is_expected.to contain_file('/etc/apt/apt.conf.d/100teddybear').that_notifies('Exec[apt_update]') }
   end
 
   describe 'with ensure=absent' do
     let(:params) { default_params.merge({ :ensure => 'absent' }) }
-    it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').with({
+    it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]').with({
       :ensure => 'absent',
     })}
   end
@@ -101,7 +101,7 @@ describe 'apt::setting' do
   describe 'with file_perms' do
     context "{'owner' => 'roosevelt'}" do
       let(:params) { default_params.merge({ :file_perms => {'owner' => 'roosevelt'} }) }
-      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').with({
+      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]').with({
         :owner => 'roosevelt',
         :group => 'root',
         :mode  => '0644',
@@ -110,7 +110,7 @@ describe 'apt::setting' do
 
     context "'group' => 'roosevelt'}" do
       let(:params) { default_params.merge({ :file_perms => {'group' => 'roosevelt'} }) }
-      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').with({
+      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]').with({
         :owner => 'root',
         :group => 'roosevelt',
         :mode  => '0644',
@@ -119,11 +119,18 @@ describe 'apt::setting' do
 
     context "'owner' => 'roosevelt'}" do
       let(:params) { default_params.merge({ :file_perms => {'mode' => '0600'} }) }
-      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').with({
+      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]').with({
         :owner => 'root',
         :group => 'root',
         :mode  => '0600',
       })}
     end
+
+    context "'notify_update' => false}" do
+      let(:params) { default_params.merge({ :notify_update => false }) }
+      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear') }
+      it { is_expected.not_to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]') }
+    end
+
   end
 end

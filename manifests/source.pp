@@ -26,7 +26,6 @@ define apt::source(
   apt::setting { "list-${name}":
     ensure  => $ensure,
     content => template('apt/_header.erb', 'apt/source.list.erb'),
-    notify  => Exec['apt_update'],
   }
 
   if ($pin != false) {
@@ -52,10 +51,5 @@ define apt::source(
       key_source  => $key_source,
       before      => Apt::Setting["list-${name}"],
     }
-  }
-
-  # Need anchor to provide containment for dependencies.
-  anchor { "apt::source::${name}":
-    require => Class['apt::update'],
   }
 }
