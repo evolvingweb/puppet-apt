@@ -60,7 +60,9 @@ describe 'apt::ppa' do
 
   describe 'apt included, proxy host' do
     let :pre_condition do
-      'class { "apt": }'
+      'class { "apt":
+        proxy => { "host" => "localhost" },
+      }'
     end
     let :facts do
       {
@@ -75,13 +77,12 @@ describe 'apt::ppa' do
       {
         'options' => '',
         'package_manage' => true,
-        'proxy' => { 'host' => 'localhost', }
       }
     end
     let(:title) { 'ppa:foo' }
     it { is_expected.to contain_package('software-properties-common') }
     it { is_expected.to contain_exec('add-apt-repository-ppa:foo').that_notifies('Exec[apt_update]').with({
-      :environment => ['http_proxy=http://localhost:8080', 'https_proxy=http://localhost:8080'],
+      :environment => ['http_proxy=http://localhost:8080'],
       :command     => '/usr/bin/add-apt-repository  ppa:foo',
       :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/foo-trusty.list',
       :user        => 'root',
@@ -92,7 +93,9 @@ describe 'apt::ppa' do
 
   describe 'apt included, proxy host and port' do
     let :pre_condition do
-      'class { "apt": }'
+      'class { "apt":
+        proxy => { "host" => "localhost", "port" => 8180 },
+      }'
     end
     let :facts do
       {
@@ -107,13 +110,45 @@ describe 'apt::ppa' do
       {
         :options => '',
         :package_manage => true,
-        :proxy => { 'host' => 'localhost', 'port' => 8180, }
       }
     end
     let(:title) { 'ppa:foo' }
     it { is_expected.to contain_package('software-properties-common') }
     it { is_expected.to contain_exec('add-apt-repository-ppa:foo').that_notifies('Exec[apt_update]').with({
-      :environment => ['http_proxy=http://localhost:8180', 'https_proxy=http://localhost:8180'],
+      :environment => ['http_proxy=http://localhost:8180'],
+      :command     => '/usr/bin/add-apt-repository  ppa:foo',
+      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/foo-trusty.list',
+      :user        => 'root',
+      :logoutput   => 'on_failure',
+    })
+    }
+  end
+
+  describe 'apt included, proxy host and port and https' do
+    let :pre_condition do
+      'class { "apt":
+        proxy => { "host" => "localhost", "port" => 8180, "https" => true },
+      }'
+    end
+    let :facts do
+      {
+        :lsbdistrelease  => '14.04',
+        :lsbdistcodename => 'trusty',
+        :operatingsystem => 'Ubuntu',
+        :lsbdistid       => 'Ubuntu',
+        :osfamily        => 'Debian',
+      }
+    end
+    let :params do
+      {
+        :options => '',
+        :package_manage => true,
+      }
+    end
+    let(:title) { 'ppa:foo' }
+    it { is_expected.to contain_package('software-properties-common') }
+    it { is_expected.to contain_exec('add-apt-repository-ppa:foo').that_notifies('Exec[apt_update]').with({
+      :environment => ['http_proxy=http://localhost:8180', 'https_proxy=https://localhost:8180'],
       :command     => '/usr/bin/add-apt-repository  ppa:foo',
       :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/foo-trusty.list',
       :user        => 'root',

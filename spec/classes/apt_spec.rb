@@ -42,8 +42,44 @@ describe 'apt' do
     it { is_expected.to contain_exec('apt_update').with({
       :refreshonly => 'true',
     })}
+
+    it { is_expected.not_to contain_apt__setting('conf-proxy') }
   end
 
+  describe 'proxy=' do
+    context 'host=localhost' do
+      let(:params) { { :proxy => { 'host' => 'localhost'} } }
+      it { is_expected.to contain_apt__setting('conf-proxy').with({
+        :priority => '01',
+      }).with_content(
+        /Acquire::http::proxy "http:\/\/localhost:8080\/";/
+      ).without_content(
+        /Acquire::https::proxy/
+      )}
+    end
+
+    context 'host=localhost and port=8180' do
+      let(:params) { { :proxy => { 'host' => 'localhost', 'port' => 8180} } }
+      it { is_expected.to contain_apt__setting('conf-proxy').with({
+        :priority => '01',
+      }).with_content(
+        /Acquire::http::proxy "http:\/\/localhost:8180\/";/
+      ).without_content(
+        /Acquire::https::proxy/
+      )}
+    end
+
+    context 'host=localhost and https=true' do
+      let(:params) { { :proxy => { 'host' => 'localhost', 'https' => true} } }
+      it { is_expected.to contain_apt__setting('conf-proxy').with({
+        :priority => '01',
+      }).with_content(
+        /Acquire::http::proxy "http:\/\/localhost:8080\/";/
+      ).with_content(
+        /Acquire::https::proxy "https:\/\/localhost:8080\/";/
+      )}
+    end
+  end
   context 'lots of non-defaults' do
     let :params do
       {
