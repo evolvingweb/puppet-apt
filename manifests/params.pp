@@ -31,9 +31,10 @@ class apt::params {
     }
   }
 
-  $proxy = {
-    'host' => undef,
-    'port' => 8080,
+  $proxy_defaults = {
+    'host'  => undef,
+    'port'  => 8080,
+    'https' => false,
   }
 
   $file_defaults = {

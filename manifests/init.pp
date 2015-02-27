@@ -1,5 +1,6 @@
 #
 class apt(
+  $proxy                = {},
   $always_apt_update    = false,
   $apt_update_frequency = 'reluctantly',
   $purge_sources_list   = false,
@@ -18,6 +19,28 @@ class apt(
 
   validate_bool($purge_sources_list, $purge_sources_list_d,
                 $purge_preferences, $purge_preferences_d)
+
+  validate_hash($proxy)
+  if $proxy['host'] {
+    validate_string($proxy['host'])
+  }
+  if $proxy['port'] {
+    unless is_integer($proxy['port']) {
+      fail('$proxy port must be an integer')
+    }
+  }
+  if $proxy['https'] {
+    validate_bool($proxy['https'])
+  }
+
+  $_proxy = merge($apt::proxy_defaults, $proxy)
+
+  if $proxy['host'] {
+    apt::setting { 'conf-proxy':
+      priority => '01',
+      content  => template('apt/_header.erb', 'apt/proxy.erb'),
+    }
+  }
 
   $sources_list_content = $purge_sources_list ? {
     false => undef,
