@@ -27,7 +27,7 @@ describe 'apt::source', :type => :define do
       }
     end
 
-    it { is_expected.to contain_apt__setting('list-my_source').that_notifies('Exec[apt_update]').with({
+    it { is_expected.to contain_apt__setting('list-my_source').with({
       'ensure' => 'present',
     }).with_content(/# my_source\ndeb-src  wheezy main\n/)
     }
@@ -58,7 +58,7 @@ describe 'apt::source', :type => :define do
       }
     end
 
-    it { is_expected.to contain_apt__setting('list-my_source').that_notifies('Exec[apt_update]').with({
+    it { is_expected.to contain_apt__setting('list-my_source').with({
       'ensure' => 'present',
     }).with_content(/# foo\ndeb \[arch=x86_64 trusted=yes\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ sid testing\n/).without_content(/deb-src/)
     }
@@ -95,7 +95,7 @@ describe 'apt::source', :type => :define do
       }
     end
 
-    it { is_expected.to contain_apt__setting('list-my_source').that_notifies('Exec[apt_update]').with({
+    it { is_expected.to contain_apt__setting('list-my_source').with({
       'ensure' => 'present',
     }).with_content(/# my_source\ndeb \[trusted=yes\]  wheezy main\n/)
     }
@@ -117,7 +117,7 @@ describe 'apt::source', :type => :define do
       }
     end
 
-    it { is_expected.to contain_apt__setting('list-my_source').that_notifies('Exec[apt_update]').with({
+    it { is_expected.to contain_apt__setting('list-my_source').with({
       'ensure' => 'present',
     }).with_content(/# my_source\ndeb-src \[arch=x86_64 \]  wheezy main\n/)
     }
@@ -137,7 +137,7 @@ describe 'apt::source', :type => :define do
       }
     end
 
-    it { is_expected.to contain_apt__setting('list-my_source').that_notifies('Exec[apt_update]').with({
+    it { is_expected.to contain_apt__setting('list-my_source').with({
       'ensure' => 'absent'
     })
     }
