@@ -31,6 +31,13 @@ class apt::params {
     }
   }
 
+  $update_defaults = {
+    'always'    => false,
+    'frequency' => 'reluctantly',
+    'timeout'   => undef,
+    'tries'     => undef,
+  }
+
   $proxy_defaults = {
     'host'  => undef,
     'port'  => 8080,

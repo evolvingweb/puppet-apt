@@ -96,11 +96,9 @@ describe 'apt' do
   context 'lots of non-defaults' do
     let :params do
       {
-        :always_apt_update    => true,
-        :purge                => { 'sources.list' => false, 'sources.list.d' => false,
-                                   'preferences' => false, 'preferences.d' => false, },
-        :update_timeout       => '1',
-        :update_tries         => '3',
+        :update => { 'always' => true, 'timeout' => 1, 'tries' => 3 },
+        :purge  => { 'sources.list' => false, 'sources.list.d' => false,
+                     'preferences' => false, 'preferences.d' => false, },
       }
     end
 
@@ -123,9 +121,9 @@ describe 'apt' do
     })}
 
     it { is_expected.to contain_exec('apt_update').with({
-      :refreshonly => 'false',
-      :timeout     => '1',
-      :tries       => '3',
+      :refreshonly => false,
+      :timeout     => 1,
+      :tries       => 3,
     })}
 
   end

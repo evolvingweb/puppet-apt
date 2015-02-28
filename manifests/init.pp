@@ -1,18 +1,33 @@
 #
 class apt(
+  $update               = {},
   $purge                = {},
   $proxy                = {},
-  $always_apt_update    = false,
-  $apt_update_frequency = 'reluctantly',
-  $update_timeout       = undef,
-  $update_tries         = undef,
   $sources              = undef,
 ) inherits ::apt::params {
 
-  include apt::update
 
   $frequency_options = ['always','daily','weekly','reluctantly']
-  validate_re($apt_update_frequency, $frequency_options)
+  validate_hash($update)
+  if $update['frequency'] {
+    validate_re($update['frequency'], $frequency_options)
+  }
+  if $update['always'] {
+    validate_bool($update['always'])
+  }
+  if $update['timeout'] {
+    unless is_integer($update['timeout']) {
+      fail('timeout value for update must be an integer')
+    }
+  }
+  if $update['tries'] {
+    unless is_integer($update['tries']) {
+      fail('tries value for update must be an integer')
+    }
+  }
+
+  $_update = merge($::apt::update_defaults, $update)
+  include apt::update
 
   validate_hash($purge)
   if $purge['sources.list'] {
@@ -62,7 +77,7 @@ class apt(
     true  => absent,
   }
 
-  if $always_apt_update == true {
+  if $_update['always'] {
     Exec <| title=='apt_update' |> {
       refreshonly => false,
     }

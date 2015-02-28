@@ -4,10 +4,10 @@ class apt::update {
   #on the first run, but if it's not run in awhile something is likely borked
   #with apt and we'd want to know about it.
 
-  if $::apt::always_apt_update == false {
+  if $::apt::_update['always'] == false {
     #if always_apt_update is true there's no point in parsing this logic.
 
-    case $apt::apt_update_frequency {
+    case $::apt::_update['frequency'] {
       'always': {
         $_kick_apt = true
       }
@@ -60,8 +60,8 @@ class apt::update {
     command     => "${::apt::provider} update",
     logoutput   => 'on_failure',
     refreshonly => $_refresh,
-    timeout     => $apt::update_timeout,
-    tries       => $apt::update_tries,
+    timeout     => $::apt::_update['timeout'],
+    tries       => $::apt::_update['tries'],
     try_sleep   => 1
   }
 }
