@@ -214,7 +214,7 @@ describe 'apt::ppa' do
       it do
         expect {
           is_expected.to compile
-        }.to raise_error(Puppet::Error, /apt::ppa is currently supported on Ubuntu only./)
+        }.to raise_error(Puppet::Error, /supported on Ubuntu and LinuxMint only/)
       end
     end
   end

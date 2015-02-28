@@ -171,6 +171,63 @@ describe 'apt' do
     it { is_expected.to contain_file('/etc/apt/sources.list.d/puppetlabs.list').with_content(/^deb http:\/\/apt.puppetlabs.com precise main$/) }
   end
 
+  context 'with keys defined on valid osfamily' do
+    let :facts do
+      { :osfamily        => 'Debian',
+        :lsbdistcodename => 'precise',
+        :lsbdistid       => 'Debian',
+      }
+    end
+    let(:params) { { :keys => {
+      '55BE302B' => {
+        'key_server' => 'subkeys.pgp.net',
+      },
+      '4BD6EC30' => {
+        'key_server' => 'pgp.mit.edu',
+      }
+    } } }
+
+    it { is_expected.to contain_apt__key('55BE302B').with({
+        :key_server => 'subkeys.pgp.net',
+    })}
+
+    it { is_expected.to contain_apt__key('4BD6EC30').with({
+        :key_server => 'pgp.mit.edu',
+    })}
+  end
+
+  context 'with ppas defined on valid osfamily' do
+    let :facts do
+      { :osfamily        => 'Debian',
+        :lsbdistcodename => 'precise',
+        :lsbdistid       => 'ubuntu',
+      }
+    end
+    let(:params) { { :ppas => {
+      'ppa:drizzle-developers/ppa' => {},
+      'ppa:nginx/stable' => {},
+    } } }
+
+    it { is_expected.to contain_apt__ppa('ppa:drizzle-developers/ppa')}
+    it { is_expected.to contain_apt__ppa('ppa:nginx/stable')}
+  end
+
+  context 'with settings defined on valid osfamily' do
+    let :facts do
+      { :osfamily        => 'Debian',
+        :lsbdistcodename => 'precise',
+        :lsbdistid       => 'Debian',
+      }
+    end
+    let(:params) { { :settings => {
+      'conf-banana' => { 'content' => 'banana' },
+      'pref-banana' => { 'content' => 'banana' },
+    } } }
+
+    it { is_expected.to contain_apt__setting('conf-banana')}
+    it { is_expected.to contain_apt__setting('pref-banana')}
+  end
+
   describe 'failing tests' do
     context "purge['sources.list']=>'banana'" do
       let(:params) { { :purge => { 'sources.list' => 'banana' }, } }

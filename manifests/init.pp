@@ -1,11 +1,13 @@
 #
 class apt(
-  $update               = {},
-  $purge                = {},
-  $proxy                = {},
-  $sources              = undef,
+  $update   = {},
+  $purge    = {},
+  $proxy    = {},
+  $sources  = {},
+  $keys     = {},
+  $ppas     = {},
+  $settings = {},
 ) inherits ::apt::params {
-
 
   $frequency_options = ['always','daily','weekly','reluctantly']
   validate_hash($update)
@@ -59,6 +61,11 @@ class apt(
   }
 
   $_proxy = merge($apt::proxy_defaults, $proxy)
+
+  validate_hash($sources)
+  validate_hash($keys)
+  validate_hash($settings)
+  validate_hash($ppas)
 
   if $proxy['host'] {
     apt::setting { 'conf-proxy':
@@ -135,8 +142,19 @@ class apt(
   }
 
   # manage sources if present
-  if $sources != undef {
-    validate_hash($sources)
+  if $sources {
     create_resources('apt::source', $sources)
+  }
+  # manage keys if present
+  if $keys {
+    create_resources('apt::key', $keys)
+  }
+  # manage ppas if present
+  if $ppas {
+    create_resources('apt::ppa', $ppas)
+  }
+  # manage settings if present
+  if $settings {
+    create_resources('apt::setting', $settings)
   }
 }
