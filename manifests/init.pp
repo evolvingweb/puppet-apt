@@ -1,12 +1,9 @@
 #
 class apt(
+  $purge                = {},
   $proxy                = {},
   $always_apt_update    = false,
   $apt_update_frequency = 'reluctantly',
-  $purge_sources_list   = false,
-  $purge_sources_list_d = false,
-  $purge_preferences    = false,
-  $purge_preferences_d  = false,
   $update_timeout       = undef,
   $update_tries         = undef,
   $sources              = undef,
@@ -17,8 +14,21 @@ class apt(
   $frequency_options = ['always','daily','weekly','reluctantly']
   validate_re($apt_update_frequency, $frequency_options)
 
-  validate_bool($purge_sources_list, $purge_sources_list_d,
-                $purge_preferences, $purge_preferences_d)
+  validate_hash($purge)
+  if $purge['sources.list'] {
+    validate_bool($purge['sources.list'])
+  }
+  if $purge['sources.list.d'] {
+    validate_bool($purge['sources.list.d'])
+  }
+  if $purge['preferences'] {
+    validate_bool($purge['preferences'])
+  }
+  if $purge['preferences.d'] {
+    validate_bool($purge['preferences.d'])
+  }
+
+  $_purge = merge($::apt::purge_defaults, $purge)
 
   validate_hash($proxy)
   if $proxy['host'] {
@@ -42,9 +52,14 @@ class apt(
     }
   }
 
-  $sources_list_content = $purge_sources_list ? {
+  $sources_list_content = $_purge['sources.list'] ? {
     false => undef,
     true  => "# Repos managed by puppet.\n",
+  }
+
+  $preferences_ensure = $_purge['preferences'] ? {
+    false => file,
+    true  => absent,
   }
 
   if $always_apt_update == true {
@@ -59,7 +74,7 @@ class apt(
   }
 
   file { 'sources.list':
-    ensure  => present,
+    ensure  => file,
     path    => $::apt::sources_list,
     owner   => root,
     group   => root,
@@ -73,16 +88,19 @@ class apt(
     path    => $::apt::sources_list_d,
     owner   => root,
     group   => root,
-    purge   => $purge_sources_list_d,
-    recurse => $purge_sources_list_d,
+    mode    => '0644',
+    purge   => $_purge['sources.list.d'],
+    recurse => $_purge['sources.list.d'],
     notify  => Exec['apt_update'],
   }
 
-  if $purge_preferences {
-    file { 'apt-preferences':
-      ensure => absent,
-      path   => $::apt::preferences,
-    }
+  file { 'preferences':
+    ensure => $preferences_ensure,
+    path   => $::apt::preferences,
+    owner  => root,
+    group  => root,
+    mode   => '0644',
+    notify => Exec['apt_update'],
   }
 
   file { 'preferences.d':
@@ -90,8 +108,10 @@ class apt(
     path    => $::apt::preferences_d,
     owner   => root,
     group   => root,
-    purge   => $purge_preferences_d,
-    recurse => $purge_preferences_d,
+    mode    => '0644',
+    purge   => $_purge['preferences.d'],
+    recurse => $_purge['preferences.d'],
+    notify  => Exec['apt_update'],
   }
 
   # Need anchor to provide containment for dependencies.

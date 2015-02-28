@@ -37,6 +37,13 @@ class apt::params {
     'https' => false,
   }
 
+  $purge_defaults = {
+    'sources.list'   => true,
+    'sources.list.d' => true,
+    'preferences'    => true,
+    'preferences.d'  => true,
+  }
+
   $file_defaults = {
     'owner' => 'root',
     'group' => 'root',

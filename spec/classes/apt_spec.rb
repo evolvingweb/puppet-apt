@@ -4,12 +4,13 @@ describe 'apt' do
 
   context 'defaults' do
     it { is_expected.to contain_file('sources.list').that_notifies('Exec[apt_update]').only_with({
-      :ensure => 'present',
-      :path   => '/etc/apt/sources.list',
-      :owner  => 'root',
-      :group  => 'root',
-      :mode   => '0644',
-      :notify => 'Exec[apt_update]',
+      :ensure  => 'file',
+      :path    => '/etc/apt/sources.list',
+      :owner   => 'root',
+      :group   => 'root',
+      :mode    => '0644',
+      :content => "# Repos managed by puppet.\n",
+      :notify  => 'Exec[apt_update]',
     })}
 
     it { is_expected.to contain_file('sources.list.d').that_notifies('Exec[apt_update]').only_with({
@@ -17,18 +18,30 @@ describe 'apt' do
       :path    => '/etc/apt/sources.list.d',
       :owner   => 'root',
       :group   => 'root',
-      :purge   => false,
-      :recurse => false,
+      :mode    => '0644',
+      :purge   => true,
+      :recurse => true,
       :notify  => 'Exec[apt_update]',
     })}
 
-    it { is_expected.to contain_file('preferences.d').only_with({
+    it { is_expected.to contain_file('preferences').that_notifies('Exec[apt_update]').only_with({
+      :ensure  => 'absent',
+      :path    => '/etc/apt/preferences',
+      :owner   => 'root',
+      :group   => 'root',
+      :mode    => '0644',
+      :notify  => 'Exec[apt_update]',
+    })}
+
+    it { is_expected.to contain_file('preferences.d').that_notifies('Exec[apt_update]').only_with({
       :ensure  => 'directory',
       :path    => '/etc/apt/preferences.d',
       :owner   => 'root',
       :group   => 'root',
-      :purge   => false,
-      :recurse => false,
+      :mode    => '0644',
+      :purge   => true,
+      :recurse => true,
+      :notify  => 'Exec[apt_update]',
     })}
 
     it 'should lay down /etc/apt/apt.conf.d/15update-stamp' do
@@ -84,32 +97,29 @@ describe 'apt' do
     let :params do
       {
         :always_apt_update    => true,
-        :purge_sources_list   => true,
-        :purge_sources_list_d => true,
-        :purge_preferences    => true,
-        :purge_preferences_d  => true,
+        :purge                => { 'sources.list' => false, 'sources.list.d' => false,
+                                   'preferences' => false, 'preferences.d' => false, },
         :update_timeout       => '1',
         :update_tries         => '3',
       }
     end
 
-    it { is_expected.to contain_file('sources.list').with({
-      :content => "# Repos managed by puppet.\n"
+    it { is_expected.to contain_file('sources.list').without({
+      :content => "# Repos managed by puppet.\n",
     })}
 
     it { is_expected.to contain_file('sources.list.d').with({
-      :purge   => 'true',
-      :recurse => 'true',
+      :purge   => false,
+      :recurse => false,
     })}
 
-    it { is_expected.to contain_file('apt-preferences').only_with({
-      :ensure => 'absent',
-      :path   => '/etc/apt/preferences',
+    it { is_expected.to contain_file('preferences').with({
+      :ensure => 'file',
     })}
 
     it { is_expected.to contain_file('preferences.d').with({
-      :purge   => 'true',
-      :recurse => 'true',
+      :purge   => false,
+      :recurse => false,
     })}
 
     it { is_expected.to contain_exec('apt_update').with({
@@ -164,12 +174,8 @@ describe 'apt' do
   end
 
   describe 'failing tests' do
-    context 'bad purge_sources_list' do
-      let :params do
-        {
-          :purge_sources_list => 'foo'
-        }
-      end
+    context "purge['sources.list']=>'banana'" do
+      let(:params) { { :purge => { 'sources.list' => 'banana' }, } }
       it do
         expect {
           is_expected.to compile
@@ -177,12 +183,8 @@ describe 'apt' do
       end
     end
 
-    context 'bad purge_sources_list_d' do
-      let :params do
-        {
-          :purge_sources_list_d => 'foo'
-        }
-      end
+    context "purge['sources.list.d']=>'banana'" do
+      let(:params) { { :purge => { 'sources.list.d' => 'banana' }, } }
       it do
         expect {
           is_expected.to compile
@@ -190,12 +192,8 @@ describe 'apt' do
       end
     end
 
-    context 'bad purge_preferences' do
-      let :params do
-        {
-          :purge_preferences => 'foo'
-        }
-      end
+    context "purge['preferences']=>'banana'" do
+      let(:params) { { :purge => { 'preferences' => 'banana' }, } }
       it do
         expect {
           is_expected.to compile
@@ -203,12 +201,8 @@ describe 'apt' do
       end
     end
 
-    context 'bad purge_preferences_d' do
-      let :params do
-        {
-          :purge_preferences_d => 'foo'
-        }
-      end
+    context "purge['preferences.d']=>'banana'" do
+      let(:params) { { :purge => { 'preferences.d' => 'banana' }, } }
       it do
         expect {
           is_expected.to compile
