@@ -9,18 +9,28 @@ define apt::source(
   $include_src       = false,
   $include_deb       = true,
   $key               = undef,
-  $key_server        = 'keyserver.ubuntu.com',
-  $key_content       = undef,
-  $key_source        = undef,
   $pin               = false,
   $architecture      = undef,
   $trusted_source    = false,
 ) {
-  validate_string($architecture, $comment, $location, $release, $repos, $key_server)
+  validate_string($architecture, $comment, $location, $release, $repos)
   validate_bool($trusted_source, $include_src, $include_deb)
 
   if ! $release {
     fail('lsbdistcodename fact not available: release parameter required')
+  }
+
+  $_before = Apt::Setting["list-${title}"]
+
+  if $key {
+    if is_hash($key) {
+      unless $key['id'] {
+        fail('key hash must contain at least an id entry')
+      }
+      $_key = merge($::apt::source_key_defaults, $key)
+    } else {
+      validate_string($key)
+    }
   }
 
   apt::setting { "list-${name}":
@@ -36,20 +46,29 @@ define apt::source(
     apt::pin { $name:
       ensure   => $ensure,
       priority => $pin,
-      before   => Apt::Setting["list-${name}"],
+      before   => $_before,
       origin   => $host,
     }
   }
 
   # We do not want to remove keys when the source is absent.
   if $key and ($ensure == 'present') {
-    apt::key { "Add key: ${key} from Apt::Source ${title}":
-      ensure  => present,
-      key     => $key,
-      server  => $key_server,
-      content => $key_content,
-      source  => $key_source,
-      before  => Apt::Setting["list-${name}"],
+    if is_hash($_key) {
+      apt::key { "Add key: ${_key['id']} from Apt::Source ${title}":
+        ensure  => present,
+        id      => $_key['id'],
+        server  => $_key['server'],
+        content => $_key['content'],
+        source  => $_key['source'],
+        options => $_key['options'],
+        before  => $_before,
+      }
+    } else {
+      apt::key { "Add key: ${key} from Apt::Source ${title}":
+        ensure => present,
+        id     => $key,
+        before => $_before,
+      }
     }
   }
 }

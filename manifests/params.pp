@@ -51,6 +51,13 @@ class apt::params {
     'preferences.d'  => true,
   }
 
+  $source_key_defaults = {
+    'server'  => $default_keyserver,
+    'options' => undef,
+    'content' => undef,
+    'source'  => undef,
+  }
+
   $file_defaults = {
     'owner' => 'root',
     'group' => 'root',

@@ -140,16 +140,14 @@ describe 'apt' do
         'location'          => 'http://debian.mirror.iweb.ca/debian/',
         'release'           => 'unstable',
         'repos'             => 'main contrib non-free',
-        'key'               => '55BE302B',
-        'key_server'        => 'subkeys.pgp.net',
+        'key'               => { 'id' => '55BE302B', 'server' => 'subkeys.pgp.net' },
         'pin'               => '-10',
         'include_src'       => true,
       },
       'puppetlabs' => {
         'location'   => 'http://apt.puppetlabs.com',
         'repos'      => 'main',
-        'key'        => '4BD6EC30',
-        'key_server' => 'pgp.mit.edu',
+        'key'        => { 'id' => '4BD6EC30', 'server' => 'pgp.mit.edu' },
       }
     } } }
 

@@ -22,18 +22,19 @@ describe 'apt::source' do
 
     let :params do
       {
-        'include_deb' => false,
-        'include_src' => true,
+        :include_deb => false,
+        :include_src => true,
       }
     end
 
     it { is_expected.to contain_apt__setting('list-my_source').with({
-      'ensure' => 'present',
+      :ensure => 'present',
     }).with_content(/# my_source\ndeb-src  wheezy main\n/)
+
     }
   end
 
-  context 'no defaults' do
+  describe 'no defaults' do
     let :facts do
       {
         :lsbdistid       => 'Debian',
@@ -41,43 +42,112 @@ describe 'apt::source' do
         :osfamily        => 'Debian'
       }
     end
-    let :params do
-      {
-        'comment'           => 'foo',
-        'location'          => 'http://debian.mirror.iweb.ca/debian/',
-        'release'           => 'sid',
-        'repos'             => 'testing',
-        'include_src'       => false,
-        'key'               => GPG_KEY_ID,
-        'key_server'        => 'pgp.mit.edu',
-        'key_content'       => 'GPG key content',
-        'key_source'        => 'http://apt.puppetlabs.com/pubkey.gpg',
-        'pin'               => '10',
-        'architecture'      => 'x86_64',
-        'trusted_source'    => true,
+    context 'with simple key' do
+      let :params do
+        {
+          :comment           => 'foo',
+          :location          => 'http://debian.mirror.iweb.ca/debian/',
+          :release           => 'sid',
+          :repos             => 'testing',
+          :include_src       => false,
+          :key               => GPG_KEY_ID,
+          :pin               => '10',
+          :architecture      => 'x86_64',
+          :trusted_source    => true,
+        }
+      end
+
+      it { is_expected.to contain_apt__setting('list-my_source').with({
+        :ensure => 'present',
+      }).with_content(/# foo\ndeb \[arch=x86_64 trusted=yes\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ sid testing\n/).without_content(/deb-src/)
+      }
+
+      it { is_expected.to contain_apt__pin('my_source').that_comes_before('Apt::Setting[list-my_source]').with({
+        :ensure   => 'present',
+        :priority => '10',
+        :origin   => 'debian.mirror.iweb.ca',
+      })
+      }
+
+      it { is_expected.to contain_apt__key("Add key: #{GPG_KEY_ID} from Apt::Source my_source").that_comes_before('Apt::Setting[list-my_source]').with({
+        :ensure  => 'present',
+        :key     => GPG_KEY_ID,
+      })
       }
     end
 
-    it { is_expected.to contain_apt__setting('list-my_source').with({
-      'ensure' => 'present',
-    }).with_content(/# foo\ndeb \[arch=x86_64 trusted=yes\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ sid testing\n/).without_content(/deb-src/)
-    }
+    context 'with complex key' do
+      let :params do
+        {
+          :comment           => 'foo',
+          :location          => 'http://debian.mirror.iweb.ca/debian/',
+          :release           => 'sid',
+          :repos             => 'testing',
+          :include_src       => false,
+          :key               => { 'id' => GPG_KEY_ID, 'server' => 'pgp.mit.edu',
+                                  'content' => 'GPG key content',
+                                  'source'  => 'http://apt.puppetlabs.com/pubkey.gpg',},
+          :pin               => '10',
+          :architecture      => 'x86_64',
+          :trusted_source    => true,
+        }
+      end
 
-    it { is_expected.to contain_apt__pin('my_source').that_comes_before('Apt::Setting[list-my_source]').with({
-      'ensure'   => 'present',
-      'priority' => '10',
-      'origin'   => 'debian.mirror.iweb.ca',
-    })
-    }
+      it { is_expected.to contain_apt__setting('list-my_source').with({
+        :ensure => 'present',
+      }).with_content(/# foo\ndeb \[arch=x86_64 trusted=yes\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ sid testing\n/).without_content(/deb-src/)
+      }
 
-    it { is_expected.to contain_apt__key("Add key: #{GPG_KEY_ID} from Apt::Source my_source").that_comes_before('Apt::Setting[list-my_source]').with({
-      'ensure'  => 'present',
-      'key'     => GPG_KEY_ID,
-      'server'  => 'pgp.mit.edu',
-      'content' => 'GPG key content',
-      'source'  => 'http://apt.puppetlabs.com/pubkey.gpg',
-    })
-    }
+      it { is_expected.to contain_apt__pin('my_source').that_comes_before('Apt::Setting[list-my_source]').with({
+        :ensure   => 'present',
+        :priority => '10',
+        :origin   => 'debian.mirror.iweb.ca',
+      })
+      }
+
+      it { is_expected.to contain_apt__key("Add key: #{GPG_KEY_ID} from Apt::Source my_source").that_comes_before('Apt::Setting[list-my_source]').with({
+        :ensure  => 'present',
+        :key     => GPG_KEY_ID,
+        :server  => 'pgp.mit.edu',
+        :content => 'GPG key content',
+        :source  => 'http://apt.puppetlabs.com/pubkey.gpg',
+      })
+      }
+    end
+
+    context 'with simple key' do
+      let :params do
+        {
+          :comment        => 'foo',
+          :location       => 'http://debian.mirror.iweb.ca/debian/',
+          :release        => 'sid',
+          :repos          => 'testing',
+          :include_src    => false,
+          :key            => GPG_KEY_ID,
+          :pin            => '10',
+          :architecture   => 'x86_64',
+          :trusted_source => true,
+        }
+      end
+
+      it { is_expected.to contain_apt__setting('list-my_source').with({
+        :ensure => 'present',
+      }).with_content(/# foo\ndeb \[arch=x86_64 trusted=yes\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ sid testing\n/).without_content(/deb-src/)
+      }
+
+      it { is_expected.to contain_apt__pin('my_source').that_comes_before('Apt::Setting[list-my_source]').with({
+        :ensure   => 'present',
+        :priority => '10',
+        :origin   => 'debian.mirror.iweb.ca',
+      })
+      }
+
+      it { is_expected.to contain_apt__key("Add key: #{GPG_KEY_ID} from Apt::Source my_source").that_comes_before('Apt::Setting[list-my_source]').with({
+        :ensure  => 'present',
+        :id      => GPG_KEY_ID,
+      })
+      }
+    end
   end
 
   context 'trusted_source true' do
@@ -90,13 +160,13 @@ describe 'apt::source' do
     end
     let :params do
       {
-        'include_src'    => false,
-        'trusted_source' => true,
+        :include_src    => false,
+        :trusted_source => true,
       }
     end
 
     it { is_expected.to contain_apt__setting('list-my_source').with({
-      'ensure' => 'present',
+      :ensure => 'present',
     }).with_content(/# my_source\ndeb \[trusted=yes\]  wheezy main\n/)
     }
   end
@@ -111,14 +181,14 @@ describe 'apt::source' do
     end
     let :params do
       {
-        'include_deb'  => false,
-        'include_src'  => true,
-        'architecture' => 'x86_64',
+        :include_deb  => false,
+        :include_src  => true,
+        :architecture => 'x86_64',
       }
     end
 
     it { is_expected.to contain_apt__setting('list-my_source').with({
-      'ensure' => 'present',
+      :ensure => 'present',
     }).with_content(/# my_source\ndeb-src \[arch=x86_64 \]  wheezy main\n/)
     }
   end
@@ -133,12 +203,12 @@ describe 'apt::source' do
     end
     let :params do
       {
-        'ensure' => 'absent',
+        :ensure => 'absent',
       }
     end
 
     it { is_expected.to contain_apt__setting('list-my_source').with({
-      'ensure' => 'absent'
+      :ensure => 'absent'
     })
     }
   end
