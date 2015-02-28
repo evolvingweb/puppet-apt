@@ -62,7 +62,7 @@ Puppet::Type.newtype(:apt_key) do
     newvalues(/\A((hkp|http|https):\/\/)?([a-z\d])([a-z\d-]{0,61}\.)+[a-z\d]+(:\d{2,5})?$/)
   end
 
-  newparam(:keyserver_options) do
+  newparam(:options) do
     desc 'Additional options to pass to apt-key\'s --keyserver-options.'
   end
 

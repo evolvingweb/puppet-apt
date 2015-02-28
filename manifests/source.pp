@@ -44,12 +44,12 @@ define apt::source(
   # We do not want to remove keys when the source is absent.
   if $key and ($ensure == 'present') {
     apt::key { "Add key: ${key} from Apt::Source ${title}":
-      ensure      => present,
-      key         => $key,
-      key_server  => $key_server,
-      key_content => $key_content,
-      key_source  => $key_source,
-      before      => Apt::Setting["list-${name}"],
+      ensure  => present,
+      key     => $key,
+      server  => $key_server,
+      content => $key_content,
+      source  => $key_source,
+      before  => Apt::Setting["list-${name}"],
     }
   }
 }

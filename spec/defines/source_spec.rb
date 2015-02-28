@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'apt::source', :type => :define do
+describe 'apt::source' do
   GPG_KEY_ID = '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
 
   let :pre_condition do
@@ -71,11 +71,11 @@ describe 'apt::source', :type => :define do
     }
 
     it { is_expected.to contain_apt__key("Add key: #{GPG_KEY_ID} from Apt::Source my_source").that_comes_before('Apt::Setting[list-my_source]').with({
-      'ensure' => 'present',
-        'key'  => GPG_KEY_ID,
-        'key_server' => 'pgp.mit.edu',
-        'key_content' => 'GPG key content',
-        'key_source' => 'http://apt.puppetlabs.com/pubkey.gpg',
+      'ensure'  => 'present',
+      'key'     => GPG_KEY_ID,
+      'server'  => 'pgp.mit.edu',
+      'content' => 'GPG key content',
+      'source'  => 'http://apt.puppetlabs.com/pubkey.gpg',
     })
     }
   end
@@ -122,7 +122,7 @@ describe 'apt::source', :type => :define do
     }).with_content(/# my_source\ndeb-src \[arch=x86_64 \]  wheezy main\n/)
     }
   end
- 
+
   context 'ensure => absent' do
     let :facts do
       {

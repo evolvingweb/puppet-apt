@@ -180,19 +180,19 @@ describe 'apt' do
     end
     let(:params) { { :keys => {
       '55BE302B' => {
-        'key_server' => 'subkeys.pgp.net',
+        'server' => 'subkeys.pgp.net',
       },
       '4BD6EC30' => {
-        'key_server' => 'pgp.mit.edu',
+        'server' => 'pgp.mit.edu',
       }
     } } }
 
     it { is_expected.to contain_apt__key('55BE302B').with({
-        :key_server => 'subkeys.pgp.net',
+        :server => 'subkeys.pgp.net',
     })}
 
     it { is_expected.to contain_apt__key('4BD6EC30').with({
-        :key_server => 'pgp.mit.edu',
+        :server => 'pgp.mit.edu',
     })}
   end
 
