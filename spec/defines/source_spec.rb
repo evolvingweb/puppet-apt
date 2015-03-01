@@ -71,7 +71,7 @@ describe 'apt::source' do
 
       it { is_expected.to contain_apt__key("Add key: #{GPG_KEY_ID} from Apt::Source my_source").that_comes_before('Apt::Setting[list-my_source]').with({
         :ensure  => 'present',
-        :key     => GPG_KEY_ID,
+        :id      => GPG_KEY_ID,
       })
       }
     end
@@ -107,7 +107,7 @@ describe 'apt::source' do
 
       it { is_expected.to contain_apt__key("Add key: #{GPG_KEY_ID} from Apt::Source my_source").that_comes_before('Apt::Setting[list-my_source]').with({
         :ensure  => 'present',
-        :key     => GPG_KEY_ID,
+        :id      => GPG_KEY_ID,
         :server  => 'pgp.mit.edu',
         :content => 'GPG key content',
         :source  => 'http://apt.puppetlabs.com/pubkey.gpg',

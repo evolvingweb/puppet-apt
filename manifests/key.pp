@@ -7,7 +7,7 @@
 #
 # === Parameters
 #
-# [*key*]
+# [*id*]
 #   _default_: +$title+, the title/name of the resource
 #
 #   Is a GPG key ID or full key fingerprint. This value is validated with
@@ -51,7 +51,7 @@
 #
 #   Additional options to pass on to `apt-key adv --keyserver-options`.
 define apt::key (
-  $key     = $title,
+  $id      = $title,
   $ensure  = present,
   $content = undef,
   $source  = undef,
@@ -59,7 +59,7 @@ define apt::key (
   $options = undef,
 ) {
 
-  validate_re($key, ['\A(0x)?[0-9a-fA-F]{8}\Z', '\A(0x)?[0-9a-fA-F]{16}\Z', '\A(0x)?[0-9a-fA-F]{40}\Z'])
+  validate_re($id, ['\A(0x)?[0-9a-fA-F]{8}\Z', '\A(0x)?[0-9a-fA-F]{16}\Z', '\A(0x)?[0-9a-fA-F]{40}\Z'])
   validate_re($ensure, ['\Aabsent|present\Z',])
 
   if $content {
@@ -80,38 +80,38 @@ define apt::key (
 
   case $ensure {
     present: {
-      if defined(Anchor["apt_key ${key} absent"]){
-        fail("key with id ${key} already ensured as absent")
+      if defined(Anchor["apt_key ${id} absent"]){
+        fail("key with id ${id} already ensured as absent")
       }
 
-      if !defined(Anchor["apt_key ${key} present"]) {
+      if !defined(Anchor["apt_key ${id} present"]) {
         apt_key { $title:
           ensure  => $ensure,
-          id      => $key,
+          id      => $id,
           source  => $source,
           content => $content,
           server  => $server,
           options => $options,
         } ->
-        anchor { "apt_key ${key} present": }
+        anchor { "apt_key ${id} present": }
       }
     }
 
     absent: {
-      if defined(Anchor["apt_key ${key} present"]){
-        fail("key with id ${key} already ensured as present")
+      if defined(Anchor["apt_key ${id} present"]){
+        fail("key with id ${id} already ensured as present")
       }
 
-      if !defined(Anchor["apt_key ${key} absent"]){
+      if !defined(Anchor["apt_key ${id} absent"]){
         apt_key { $title:
           ensure  => $ensure,
-          id      => $key,
+          id      => $id,
           source  => $source,
           content => $content,
           server  => $server,
           options => $options,
         } ->
-        anchor { "apt_key ${key} absent": }
+        anchor { "apt_key ${id} absent": }
       }
     }
 

@@ -31,7 +31,7 @@ describe 'apt::key' do
       end
 
       let :params do {
-        :key => GPG_KEY_ID,
+        :id => GPG_KEY_ID,
       } end
 
       it 'contains the apt_key' do
@@ -276,16 +276,16 @@ describe 'apt::key' do
     describe 'duplication' do
       context 'two apt::key resources for same key, different titles' do
         let :pre_condition do
-          "apt::key { 'duplicate': key => '#{title}', }"
+          "apt::key { 'duplicate': id => '#{title}', }"
         end
 
         it 'contains two apt::key resources' do
           is_expected.to contain_apt__key('duplicate').with({
-            :key    => title,
+            :id     => title,
             :ensure => 'present',
           })
           is_expected.to contain_apt__key(title).with({
-            :key    => title,
+            :id     => title,
             :ensure => 'present',
           })
         end
@@ -305,7 +305,7 @@ describe 'apt::key' do
 
       context 'two apt::key resources, different ensure' do
         let :pre_condition do
-          "apt::key { 'duplicate': key => '#{title}', ensure => 'absent', }"
+          "apt::key { 'duplicate': id => '#{title}', ensure => 'absent', }"
         end
         it 'informs the user of the impossibility' do
           expect { subject }.to raise_error(/already ensured as absent/)
