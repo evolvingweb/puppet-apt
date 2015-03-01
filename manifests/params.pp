@@ -11,6 +11,7 @@ class apt::params {
   $conf_d         = "${root}/apt.conf.d"
   $preferences    = "${root}/preferences"
   $preferences_d  = "${root}/preferences.d"
+  $keyserver      = 'keyserver.ubuntu.com'
 
   if $::osfamily != 'Debian' {
     fail('This module only works on Debian or derivatives like Ubuntu')
@@ -52,7 +53,7 @@ class apt::params {
   }
 
   $source_key_defaults = {
-    'server'  => $default_keyserver,
+    'server'  => $keyserver,
     'options' => undef,
     'content' => undef,
     'source'  => undef,

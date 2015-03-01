@@ -42,9 +42,7 @@
 #   _default_: +undef+
 #
 #   The keyserver from where to fetch our GPG key. It can either be a domain
-#   name or url. It defaults to
-#   undef which results in apt_key's default keyserver being used,
-#   currently +keyserver.ubuntu.com+.
+#   name or url. It defaults to +keyserver.ubuntu.com+.
 #
 # [*options*]
 #   _default_: +undef+
@@ -55,7 +53,7 @@ define apt::key (
   $ensure  = present,
   $content = undef,
   $source  = undef,
-  $server  = undef,
+  $server  = $::apt::keyserver,
   $options = undef,
 ) {
 
