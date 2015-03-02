@@ -97,40 +97,4 @@ describe 'apt::setting' do
       :ensure => 'absent',
     })}
   end
-
-  describe 'with file_perms' do
-    context "{'owner' => 'roosevelt'}" do
-      let(:params) { default_params.merge({ :file_perms => {'owner' => 'roosevelt'} }) }
-      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]').with({
-        :owner => 'roosevelt',
-        :group => 'root',
-        :mode  => '0644',
-      })}
-    end
-
-    context "'group' => 'roosevelt'}" do
-      let(:params) { default_params.merge({ :file_perms => {'group' => 'roosevelt'} }) }
-      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]').with({
-        :owner => 'root',
-        :group => 'roosevelt',
-        :mode  => '0644',
-      })}
-    end
-
-    context "'owner' => 'roosevelt'}" do
-      let(:params) { default_params.merge({ :file_perms => {'mode' => '0600'} }) }
-      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]').with({
-        :owner => 'root',
-        :group => 'root',
-        :mode  => '0600',
-      })}
-    end
-
-    context "'notify_update' => false}" do
-      let(:params) { default_params.merge({ :notify_update => false }) }
-      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear') }
-      it { is_expected.not_to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]') }
-    end
-
-  end
 end

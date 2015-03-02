@@ -3,11 +3,8 @@ define apt::setting (
   $ensure        = file,
   $source        = undef,
   $content       = undef,
-  $file_perms    = {},
   $notify_update = true,
 ) {
-
-  $_file = merge($::apt::file_defaults, $file_perms)
 
   if $content and $source {
     fail('apt::setting cannot have both content and source')
@@ -56,9 +53,9 @@ define apt::setting (
 
   file { "${_path}/${_priority}${base_name}${_ext}":
     ensure  => $ensure,
-    owner   => $_file['owner'],
-    group   => $_file['group'],
-    mode    => $_file['mode'],
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
     content => $content,
     source  => $source,
     notify  => $_notify,
