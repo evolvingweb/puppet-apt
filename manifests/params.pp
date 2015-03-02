@@ -11,6 +11,7 @@ class apt::params {
   $conf_d         = "${root}/apt.conf.d"
   $preferences    = "${root}/preferences"
   $preferences_d  = "${root}/preferences.d"
+  $keyserver      = 'keyserver.ubuntu.com'
 
   if $::osfamily != 'Debian' {
     fail('This module only works on Debian or derivatives like Ubuntu')
@@ -31,10 +32,31 @@ class apt::params {
     }
   }
 
+  $update_defaults = {
+    'always'    => false,
+    'frequency' => 'reluctantly',
+    'timeout'   => undef,
+    'tries'     => undef,
+  }
+
   $proxy_defaults = {
     'host'  => undef,
     'port'  => 8080,
     'https' => false,
+  }
+
+  $purge_defaults = {
+    'sources.list'   => true,
+    'sources.list.d' => true,
+    'preferences'    => true,
+    'preferences.d'  => true,
+  }
+
+  $source_key_defaults = {
+    'server'  => $keyserver,
+    'options' => undef,
+    'content' => undef,
+    'source'  => undef,
   }
 
   $file_defaults = {

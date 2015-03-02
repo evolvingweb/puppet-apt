@@ -1,24 +1,51 @@
 #
 class apt(
-  $proxy                = {},
-  $always_apt_update    = false,
-  $apt_update_frequency = 'reluctantly',
-  $purge_sources_list   = false,
-  $purge_sources_list_d = false,
-  $purge_preferences    = false,
-  $purge_preferences_d  = false,
-  $update_timeout       = undef,
-  $update_tries         = undef,
-  $sources              = undef,
+  $update   = {},
+  $purge    = {},
+  $proxy    = {},
+  $sources  = {},
+  $keys     = {},
+  $ppas     = {},
+  $settings = {},
 ) inherits ::apt::params {
 
+  $frequency_options = ['always','daily','weekly','reluctantly']
+  validate_hash($update)
+  if $update['frequency'] {
+    validate_re($update['frequency'], $frequency_options)
+  }
+  if $update['always'] {
+    validate_bool($update['always'])
+  }
+  if $update['timeout'] {
+    unless is_integer($update['timeout']) {
+      fail('timeout value for update must be an integer')
+    }
+  }
+  if $update['tries'] {
+    unless is_integer($update['tries']) {
+      fail('tries value for update must be an integer')
+    }
+  }
+
+  $_update = merge($::apt::update_defaults, $update)
   include apt::update
 
-  $frequency_options = ['always','daily','weekly','reluctantly']
-  validate_re($apt_update_frequency, $frequency_options)
+  validate_hash($purge)
+  if $purge['sources.list'] {
+    validate_bool($purge['sources.list'])
+  }
+  if $purge['sources.list.d'] {
+    validate_bool($purge['sources.list.d'])
+  }
+  if $purge['preferences'] {
+    validate_bool($purge['preferences'])
+  }
+  if $purge['preferences.d'] {
+    validate_bool($purge['preferences.d'])
+  }
 
-  validate_bool($purge_sources_list, $purge_sources_list_d,
-                $purge_preferences, $purge_preferences_d)
+  $_purge = merge($::apt::purge_defaults, $purge)
 
   validate_hash($proxy)
   if $proxy['host'] {
@@ -35,6 +62,11 @@ class apt(
 
   $_proxy = merge($apt::proxy_defaults, $proxy)
 
+  validate_hash($sources)
+  validate_hash($keys)
+  validate_hash($settings)
+  validate_hash($ppas)
+
   if $proxy['host'] {
     apt::setting { 'conf-proxy':
       priority => '01',
@@ -42,12 +74,17 @@ class apt(
     }
   }
 
-  $sources_list_content = $purge_sources_list ? {
+  $sources_list_content = $_purge['sources.list'] ? {
     false => undef,
     true  => "# Repos managed by puppet.\n",
   }
 
-  if $always_apt_update == true {
+  $preferences_ensure = $_purge['preferences'] ? {
+    false => file,
+    true  => absent,
+  }
+
+  if $_update['always'] {
     Exec <| title=='apt_update' |> {
       refreshonly => false,
     }
@@ -59,7 +96,7 @@ class apt(
   }
 
   file { 'sources.list':
-    ensure  => present,
+    ensure  => file,
     path    => $::apt::sources_list,
     owner   => root,
     group   => root,
@@ -73,16 +110,19 @@ class apt(
     path    => $::apt::sources_list_d,
     owner   => root,
     group   => root,
-    purge   => $purge_sources_list_d,
-    recurse => $purge_sources_list_d,
+    mode    => '0644',
+    purge   => $_purge['sources.list.d'],
+    recurse => $_purge['sources.list.d'],
     notify  => Exec['apt_update'],
   }
 
-  if $purge_preferences {
-    file { 'apt-preferences':
-      ensure => absent,
-      path   => $::apt::preferences,
-    }
+  file { 'preferences':
+    ensure => $preferences_ensure,
+    path   => $::apt::preferences,
+    owner  => root,
+    group  => root,
+    mode   => '0644',
+    notify => Exec['apt_update'],
   }
 
   file { 'preferences.d':
@@ -90,8 +130,10 @@ class apt(
     path    => $::apt::preferences_d,
     owner   => root,
     group   => root,
-    purge   => $purge_preferences_d,
-    recurse => $purge_preferences_d,
+    mode    => '0644',
+    purge   => $_purge['preferences.d'],
+    recurse => $_purge['preferences.d'],
+    notify  => Exec['apt_update'],
   }
 
   # Need anchor to provide containment for dependencies.
@@ -100,8 +142,19 @@ class apt(
   }
 
   # manage sources if present
-  if $sources != undef {
-    validate_hash($sources)
+  if $sources {
     create_resources('apt::source', $sources)
+  }
+  # manage keys if present
+  if $keys {
+    create_resources('apt::key', $keys)
+  }
+  # manage ppas if present
+  if $ppas {
+    create_resources('apt::ppa', $ppas)
+  }
+  # manage settings if present
+  if $settings {
+    create_resources('apt::setting', $settings)
   }
 }
