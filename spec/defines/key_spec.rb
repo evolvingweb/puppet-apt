@@ -1,7 +1,12 @@
 require 'spec_helper'
 
 describe 'apt::key' do
-  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian' } }
+  let :pre_condition do
+    'class { "apt": }'
+  end
+
+  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy' } }
+
   GPG_KEY_ID = '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
 
   let :title do
@@ -15,7 +20,7 @@ describe 'apt::key' do
           :id      => title,
           :ensure  => 'present',
           :source  => nil,
-          :server  => nil,
+          :server  => 'keyserver.ubuntu.com',
           :content => nil,
           :options => nil,
         })
@@ -39,7 +44,7 @@ describe 'apt::key' do
           :id      => GPG_KEY_ID,
           :ensure  => 'present',
           :source  => nil,
-          :server  => nil,
+          :server  => 'keyserver.ubuntu.com',
           :content => nil,
           :options => nil,
         })
@@ -59,7 +64,7 @@ describe 'apt::key' do
           :id        => title,
           :ensure    => 'absent',
           :source    => nil,
-          :server    => nil,
+          :server    => 'keyserver.ubuntu.com',
           :content   => nil,
           :keyserver => nil,
         })
@@ -276,7 +281,8 @@ describe 'apt::key' do
     describe 'duplication' do
       context 'two apt::key resources for same key, different titles' do
         let :pre_condition do
-          "apt::key { 'duplicate': id => '#{title}', }"
+          "class { 'apt': }
+          apt::key { 'duplicate': id => '#{title}', }"
         end
 
         it 'contains two apt::key resources' do
@@ -295,7 +301,7 @@ describe 'apt::key' do
             :id      => title,
             :ensure  => 'present',
             :source  => nil,
-            :server  => nil,
+            :server  => 'keyserver.ubuntu.com',
             :content => nil,
             :options => nil,
           })
@@ -305,7 +311,8 @@ describe 'apt::key' do
 
       context 'two apt::key resources, different ensure' do
         let :pre_condition do
-          "apt::key { 'duplicate': id => '#{title}', ensure => 'absent', }"
+          "class { 'apt': }
+          apt::key { 'duplicate': id => '#{title}', ensure => 'absent', }"
         end
         it 'informs the user of the impossibility' do
           expect { subject }.to raise_error(/already ensured as absent/)

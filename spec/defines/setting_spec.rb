@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'apt::setting' do
   let(:pre_condition) { 'class { "apt": }' }
-  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian' } }
+  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy' } }
   let(:title) { 'conf-teddybear' }
 
   let(:default_params) { { :content => 'di' } }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 describe 'apt' do
-  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian' } }
+  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy'} }
 
   context 'defaults' do
     it { is_expected.to contain_file('sources.list').that_notifies('Exec[apt_update]').only_with({

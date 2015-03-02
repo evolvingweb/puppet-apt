@@ -3,7 +3,7 @@
 
 define apt::pin(
   $ensure          = present,
-  $explanation     = "${caller_module_name}: ${name}",
+  $explanation     = undef,
   $order           = undef,
   $packages        = '*',
   $priority        = 0,
@@ -18,6 +18,16 @@ define apt::pin(
 ) {
   if $order and !is_integer($order) {
     fail('Only integers are allowed in the apt::pin order param')
+  }
+
+  if $explanation {
+    $_explanation = $explanation
+  } else {
+    if defined('$caller_module_name') { # strict vars check
+      $_explanation = "${caller_module_name}: ${name}"
+    } else {
+      $_explanation = ": ${name}"
+    }
   }
 
   $pin_release_array = [

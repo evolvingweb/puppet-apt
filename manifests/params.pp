@@ -1,7 +1,18 @@
 class apt::params {
 
-  if $caller_module_name and $caller_module_name != $module_name {
+  if defined('$caller_module_name') and $caller_module_name and $caller_module_name != $module_name {
     fail('apt::params is a private class and cannot be accessed directly')
+  }
+
+  if $::osfamily != 'Debian' {
+    fail('This module only works on Debian or derivatives like Ubuntu')
+  }
+
+  $xfacts = {
+    'lsbdistcodename' => defined('$lsbdistcodename') ? {
+      true    => $::lsbdistcodename,
+      default => undef
+    },
   }
 
   $root           = '/etc/apt'
@@ -12,10 +23,6 @@ class apt::params {
   $preferences    = "${root}/preferences"
   $preferences_d  = "${root}/preferences.d"
   $keyserver      = 'keyserver.ubuntu.com'
-
-  if $::osfamily != 'Debian' {
-    fail('This module only works on Debian or derivatives like Ubuntu')
-  }
 
   $config_files = {
     'conf'   => {
@@ -68,7 +75,7 @@ class apt::params {
   case $::lsbdistid {
     'ubuntu', 'debian': {
       $distid = $::lsbdistid
-      $distcodename = $::lsbdistcodename
+      $distcodename = $xfacts['lsbdistcodename']
     }
     'linuxmint': {
       if $::lsbdistcodename == 'debian' {
@@ -112,6 +119,10 @@ class apt::params {
           $ppa_package        = 'software-properties-common'
         }
       }
+    }
+    '', default: {
+      $ppa_options = undef
+      $ppa_package = undef
     }
   }
 }

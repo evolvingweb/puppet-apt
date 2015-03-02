@@ -1,10 +1,10 @@
 require 'spec_helper'
 describe 'apt::ppa' do
+  let :pre_condition do
+    'class { "apt": }'
+  end
 
   describe 'defaults' do
-    let :pre_condition do
-      'class { "apt": }'
-    end
     let :facts do
       {
         :lsbdistrelease  => '11.04',
@@ -190,6 +190,7 @@ describe 'apt::ppa' do
           :operatingsystem => 'Ubuntu',
           :lsbdistid       => 'Ubuntu',
           :osfamily        => 'Debian',
+          :lsbdistcodeanme => nil,
         }
       end
       let(:title) { 'ppa:foo' }
@@ -203,10 +204,10 @@ describe 'apt::ppa' do
     describe 'not ubuntu' do
       let :facts do
         {
-          :lsbdistrelease  => '14.04',
-          :lsbdistcodename => 'trusty',
+          :lsbdistrelease  => '6.0.7',
+          :lsbdistcodename => 'wheezy',
           :operatingsystem => 'Debian',
-          :lsbdistid       => 'Ubuntu',
+          :lsbdistid       => 'debian',
           :osfamily        => 'Debian',
         }
       end
