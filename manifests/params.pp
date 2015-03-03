@@ -8,10 +8,31 @@ class apt::params {
     fail('This module only works on Debian or derivatives like Ubuntu')
   }
 
+  # Strict variables facts lookup compatibility
   $xfacts = {
     'lsbdistcodename' => defined('$lsbdistcodename') ? {
       true    => $::lsbdistcodename,
-      default => undef
+      default => undef,
+    },
+    'lsbdistrelease' => defined('$lsbdistrelease') ? {
+      true    => $::lsbdistrelease,
+      default => undef,
+    },
+    'lsbmajdistrelease' => defined('$lsbmajdistrelease') ? {
+      true    => $::lsbmajdistrelease,
+      default => undef,
+    },
+    'lsbdistdescription' => defined('$lsbdistdescription') ? {
+      true    => $::lsbdistdescription,
+      default => undef,
+    },
+    'lsbminordistrelease' => defined('$lsbminordistrelease') ? {
+      true    => $::lsbminordistrelease,
+      default => undef,
+    },
+    'lsbdistid' => defined('$lsbdistid') ? {
+      true    => $::lsbdistid,
+      default => undef,
     },
   }
 
@@ -66,24 +87,18 @@ class apt::params {
     'source'  => undef,
   }
 
-  $file_defaults = {
-    'owner' => 'root',
-    'group' => 'root',
-    'mode'  => '0644',
-  }
-
-  case $::lsbdistid {
+  case $xfacts['lsbdistid'] {
     'ubuntu', 'debian': {
-      $distid = $::lsbdistid
+      $distid = $xfacts['lsbdistid']
       $distcodename = $xfacts['lsbdistcodename']
     }
     'linuxmint': {
-      if $::lsbdistcodename == 'debian' {
+      if $xfacts['lsbdistcodename'] == 'debian' {
         $distid = 'debian'
         $distcodename = 'wheezy'
       } else {
         $distid = 'ubuntu'
-        $distcodename = $::lsbdistcodename ? {
+        $distcodename = $xfacts['lsbdistcodename'] ? {
           'qiana'  => 'trusty',
           'petra'  => 'saucy',
           'olivia' => 'raring',
@@ -92,7 +107,7 @@ class apt::params {
         }
       }
     }
-    '': {
+    undef: {
       fail('Unable to determine lsbdistid, is lsb-release installed?')
     }
     default: {
