@@ -1,6 +1,6 @@
 require 'spec_helper'
 describe 'apt::params', :type => :class do
-  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian' } }
+  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy' } }
   let (:title) { 'my_package' }
 
   it { is_expected.to contain_apt__params }
