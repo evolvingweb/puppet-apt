@@ -142,7 +142,7 @@ describe 'apt' do
         'repos'             => 'main contrib non-free',
         'key'               => { 'id' => '55BE302B', 'server' => 'subkeys.pgp.net' },
         'pin'               => '-10',
-        'include_src'       => true,
+        'include'           => {'src' => true,},
       },
       'puppetlabs' => {
         'location'   => 'http://apt.puppetlabs.com',

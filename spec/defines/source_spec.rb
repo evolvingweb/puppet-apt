@@ -11,7 +11,7 @@ describe 'apt::source' do
     'my_source'
   end
 
-  context 'mostly defaults' do
+  context 'defaults' do
     let :facts do
       {
         :lsbdistid       => 'Debian',
@@ -20,17 +20,9 @@ describe 'apt::source' do
       }
     end
 
-    let :params do
-      {
-        :include_deb => false,
-        :include_src => true,
-      }
-    end
-
     it { is_expected.to contain_apt__setting('list-my_source').with({
-      :ensure => 'present',
-    }).with_content(/# my_source\ndeb-src  wheezy main\n/)
-
+      :ensure  => 'present',
+    }).without_content(/# my_source\ndeb-src  wheezy main\n/)
     }
   end
 
@@ -49,7 +41,6 @@ describe 'apt::source' do
           :location          => 'http://debian.mirror.iweb.ca/debian/',
           :release           => 'sid',
           :repos             => 'testing',
-          :include_src       => false,
           :key               => GPG_KEY_ID,
           :pin               => '10',
           :architecture      => 'x86_64',
@@ -83,7 +74,6 @@ describe 'apt::source' do
           :location          => 'http://debian.mirror.iweb.ca/debian/',
           :release           => 'sid',
           :repos             => 'testing',
-          :include_src       => false,
           :key               => { 'id' => GPG_KEY_ID, 'server' => 'pgp.mit.edu',
                                   'content' => 'GPG key content',
                                   'source'  => 'http://apt.puppetlabs.com/pubkey.gpg',},
@@ -122,7 +112,6 @@ describe 'apt::source' do
           :location       => 'http://debian.mirror.iweb.ca/debian/',
           :release        => 'sid',
           :repos          => 'testing',
-          :include_src    => false,
           :key            => GPG_KEY_ID,
           :pin            => '10',
           :architecture   => 'x86_64',
@@ -160,7 +149,6 @@ describe 'apt::source' do
     end
     let :params do
       {
-        :include_src    => false,
         :trusted_source => true,
       }
     end
@@ -181,8 +169,7 @@ describe 'apt::source' do
     end
     let :params do
       {
-        :include_deb  => false,
-        :include_src  => true,
+        :include      => {'deb' => false, 'src' => true,},
         :architecture => 'x86_64',
       }
     end

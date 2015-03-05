@@ -6,21 +6,22 @@ define apt::source(
   $location       = '',
   $release        = $::apt::xfacts['lsbdistcodename'],
   $repos          = 'main',
-  $include_src    = false,
-  $include_deb    = true,
+  $include        = {},
   $key            = undef,
   $pin            = false,
   $architecture   = undef,
   $trusted_source = false,
 ) {
   validate_string($architecture, $comment, $location, $repos)
-  validate_bool($trusted_source, $include_src, $include_deb)
+  validate_bool($trusted_source)
+  validate_hash($include)
 
   unless $release {
     fail('lsbdistcodename fact not available: release parameter required')
   }
 
   $_before = Apt::Setting["list-${title}"]
+  $_include = merge($::apt::include_defaults, $include)
 
   if $key {
     if is_hash($key) {

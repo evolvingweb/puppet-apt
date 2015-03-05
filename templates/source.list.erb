@@ -1,10 +1,10 @@
 # <%= @comment %>
-<%- if @include_deb then -%>
+<%- if @_include['deb'] then -%>
 deb <%- if @architecture or @trusted_source -%>
 [<%- if @architecture %>arch=<%= @architecture %> <% end %><% if @trusted_source %>trusted=yes<% end -%>
 ] <%- end %><%= @location %> <%= @release %> <%= @repos %>
 <%- end -%>
-<%- if @include_src then -%>
+<%- if @_include['src'] then -%>
 deb-src <%- if @architecture or @trusted_source -%>
 [<%- if @architecture %>arch=<%= @architecture %> <% end %><% if @trusted_source %>trusted=yes<% end -%>
 ] <%- end %><%= @location %> <%= @release %> <%= @repos %>

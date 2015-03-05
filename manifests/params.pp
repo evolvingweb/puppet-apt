@@ -87,6 +87,11 @@ class apt::params {
     'source'  => undef,
   }
 
+  $include_defaults = {
+    'deb' => true,
+    'src' => false,
+  }
+
   case $xfacts['lsbdistid'] {
     'ubuntu', 'debian': {
       $distid = $xfacts['lsbdistid']
