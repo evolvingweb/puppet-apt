@@ -10,10 +10,10 @@ define apt::source(
   $key            = undef,
   $pin            = false,
   $architecture   = undef,
-  $trusted_source = false,
+  $allow_unsigned = false,
 ) {
   validate_string($architecture, $comment, $location, $repos)
-  validate_bool($trusted_source)
+  validate_bool($allow_unsigned)
   validate_hash($include)
 
   unless $release {

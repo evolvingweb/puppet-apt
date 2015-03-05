@@ -44,7 +44,7 @@ describe 'apt::source' do
           :key               => GPG_KEY_ID,
           :pin               => '10',
           :architecture      => 'x86_64',
-          :trusted_source    => true,
+          :allow_unsigned    => true,
         }
       end
 
@@ -79,7 +79,7 @@ describe 'apt::source' do
                                   'source'  => 'http://apt.puppetlabs.com/pubkey.gpg',},
           :pin               => '10',
           :architecture      => 'x86_64',
-          :trusted_source    => true,
+          :allow_unsigned    => true,
         }
       end
 
@@ -115,7 +115,7 @@ describe 'apt::source' do
           :key            => GPG_KEY_ID,
           :pin            => '10',
           :architecture   => 'x86_64',
-          :trusted_source => true,
+          :allow_unsigned => true,
         }
       end
 
@@ -139,7 +139,7 @@ describe 'apt::source' do
     end
   end
 
-  context 'trusted_source true' do
+  context 'allow_unsigned true' do
     let :facts do
       {
         :lsbdistid       => 'Debian',
@@ -149,7 +149,7 @@ describe 'apt::source' do
     end
     let :params do
       {
-        :trusted_source => true,
+        :allow_unsigned => true,
       }
     end
 
