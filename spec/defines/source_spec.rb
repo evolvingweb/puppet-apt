@@ -12,18 +12,35 @@ describe 'apt::source' do
   end
 
   context 'defaults' do
-    let :facts do
-      {
-        :lsbdistid       => 'Debian',
-        :lsbdistcodename => 'wheezy',
-        :osfamily        => 'Debian'
+    context 'without location' do
+      let :facts do
+        {
+          :lsbdistid       => 'Debian',
+          :lsbdistcodename => 'wheezy',
+          :osfamily        => 'Debian'
+        }
+      end
+      it do
+        expect {
+          is_expected.to compile
+        }.to raise_error(Puppet::Error, /source entry without specifying a location/)
+      end
+    end
+    context 'with location' do
+      let :facts do
+        {
+          :lsbdistid       => 'Debian',
+          :lsbdistcodename => 'wheezy',
+          :osfamily        => 'Debian'
+        }
+      end
+      let(:params) { { :location => 'hello.there', } }
+
+      it { is_expected.to contain_apt__setting('list-my_source').with({
+        :ensure  => 'present',
+      }).without_content(/# my_source\ndeb-src hello.there wheezy main\n/)
       }
     end
-
-    it { is_expected.to contain_apt__setting('list-my_source').with({
-      :ensure  => 'present',
-    }).without_content(/# my_source\ndeb-src  wheezy main\n/)
-    }
   end
 
   describe 'no defaults' do
@@ -149,13 +166,14 @@ describe 'apt::source' do
     end
     let :params do
       {
+        :location       => 'hello.there',
         :allow_unsigned => true,
       }
     end
 
     it { is_expected.to contain_apt__setting('list-my_source').with({
       :ensure => 'present',
-    }).with_content(/# my_source\ndeb \[trusted=yes\]  wheezy main\n/)
+    }).with_content(/# my_source\ndeb \[trusted=yes\] hello.there wheezy main\n/)
     }
   end
 
@@ -169,6 +187,7 @@ describe 'apt::source' do
     end
     let :params do
       {
+        :location     => 'hello.there',
         :include      => {'deb' => false, 'src' => true,},
         :architecture => 'x86_64',
       }
@@ -176,7 +195,7 @@ describe 'apt::source' do
 
     it { is_expected.to contain_apt__setting('list-my_source').with({
       :ensure => 'present',
-    }).with_content(/# my_source\ndeb-src \[arch=x86_64 \]  wheezy main\n/)
+    }).with_content(/# my_source\ndeb-src \[arch=x86_64 \] hello.there wheezy main\n/)
     }
   end
 
@@ -208,6 +227,7 @@ describe 'apt::source' do
           :osfamily        => 'Debian'
         }
       end
+      let(:params) { { :location => 'hello.there', } }
 
       it do
         expect {
