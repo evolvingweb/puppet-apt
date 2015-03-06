@@ -16,6 +16,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
   confine    :osfamily => :debian
   defaultfor :osfamily => :debian
   commands   :apt_key  => 'apt-key'
+  commands   :gpg      => '/usr/bin/gpg'
 
   def self.instances
     cli_args = ['adv','--list-keys', '--with-colons', '--fingerprint']
@@ -136,6 +137,18 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
     file = Tempfile.new('apt_key')
     file.write content
     file.close
+    #confirm that the fingerprint from the file, matches the long key that is in the manifest
+    if name.size == 40
+      if File.executable? command(:gpg)
+        extracted_key = execute(["#{command(:gpg)} --with-fingerprint --with-colons #{file.path} | awk -F: '/^fpr:/ { print $10 }'"], :failonfail => false)
+        extracted_key = extracted_key.chomp
+        if extracted_key != name
+          fail ("The id in your manifest #{resource[:name]} and the fingerprint from content/source do not match. Please check there is not an error in the id or check the content/source is legitimate.")
+        end
+      else
+        warning ('/usr/bin/gpg cannot be found for verification of the id.')
+      end 
+    end
     file.path
   end
 
