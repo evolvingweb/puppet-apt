@@ -25,6 +25,10 @@ class apt::params {
         }
       }
     }
+    'Cumulus Networks': {
+      $distid = 'debian'
+      $distcodename = $::lsbdistcodename
+    }
     '': {
       fail('Unable to determine lsbdistid, is lsb-release installed?')
     }
