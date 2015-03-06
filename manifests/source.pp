@@ -1,9 +1,9 @@
 # source.pp
 # add an apt source
 define apt::source(
+  $location       = undef,
   $comment        = $name,
   $ensure         = present,
-  $location       = '',
   $release        = $::apt::xfacts['lsbdistcodename'],
   $repos          = 'main',
   $include        = {},
@@ -18,6 +18,10 @@ define apt::source(
 
   unless $release {
     fail('lsbdistcodename fact not available: release parameter required')
+  }
+
+  if $ensure == 'present' and ! $location {
+    fail('cannot create a source entry without specifying a location')
   }
 
   $_before = Apt::Setting["list-${title}"]
