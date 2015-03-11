@@ -1,9 +1,5 @@
 class apt::params {
 
-  if defined('$caller_module_name') and $caller_module_name and $caller_module_name != $module_name {
-    fail('apt::params is a private class and cannot be accessed directly')
-  }
-
   if $::osfamily != 'Debian' {
     fail('This module only works on Debian or derivatives like Ubuntu')
   }
