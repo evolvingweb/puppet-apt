@@ -74,8 +74,6 @@ class { 'apt':
 
   ```
   class { 'apt::unattended_upgrades':
-    legacy_origin => $::apt::params::legacy_origin,
-    origins       => $::apt::params::origins,
     blacklist     => [],
     update        => '1',
     download      => '1',
