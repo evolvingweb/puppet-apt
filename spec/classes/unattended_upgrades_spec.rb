@@ -155,6 +155,7 @@ describe 'apt::unattended_upgrades', :type => :class do
 
     let :params do
       {
+        'legacy_origin'       => true,
         'enable'              => '0',
         'backup_interval'     => '3',
         'backup_level'        => '1',
@@ -181,7 +182,7 @@ describe 'apt::unattended_upgrades', :type => :class do
       }
     end
 
-    it { is_expected.to contain_file("/etc/apt/apt.conf.d/50unattended-upgrades").with_content %r{Unattended-Upgrade::Origins-Pattern \{\n\t"bananas";\n\};} }
+    it { is_expected.to contain_file("/etc/apt/apt.conf.d/50unattended-upgrades").with_content %r{Unattended-Upgrade::Allowed-Origins \{\n\t"bananas";\n\};} }
     it { is_expected.to contain_file("/etc/apt/apt.conf.d/50unattended-upgrades").with_content %r{Unattended-Upgrade::Package-Blacklist \{\n\t"foo";\n\t"bar";\n\};} }
     it { is_expected.to contain_file("/etc/apt/apt.conf.d/50unattended-upgrades").with_content %r{Unattended-Upgrade::AutoFixInterruptedDpkg "false";}}
     it { is_expected.to contain_file("/etc/apt/apt.conf.d/50unattended-upgrades").with_content %r{Unattended-Upgrade::MinimalSteps "true";}}
