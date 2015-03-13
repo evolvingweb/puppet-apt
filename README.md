@@ -74,12 +74,13 @@ class { 'apt':
 
   ```
   class { 'apt::unattended_upgrades':
-    origins     => $::apt::params::origins,
-    blacklist   => [],
-    update      => '1',
-    download    => '1',
-    upgrade     => '1',
-    autoclean   => '7',
+    legacy_origin => $::apt::params::legacy_origin,
+    origins       => $::apt::params::origins,
+    blacklist     => [],
+    update        => '1',
+    download      => '1',
+    upgrade       => '1',
+    autoclean     => '7',
   }
   ```
   
@@ -277,6 +278,7 @@ apt::sources:
 
 ####apt::unattended_upgrades
 
+* `legacy_origin`: If set to true, use the old `Unattended-Upgrade::Allowed-Origins` variable. If false, use `Unattended-Upgrade::Origins-Pattern`. OS-dependent defaults are defined in `apt::params`.
 * `origins`: The repositories from which to automatically upgrade included packages.
 * `blacklist`: A list of packages to **not** automatically upgrade.
 * `update`: How often, in days, to run `apt-get update`.
