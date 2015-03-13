@@ -8,7 +8,7 @@ The apt module provides a simple interface for managing Apt source, key, and def
 
 The apt module automates obtaining and installing software packages on \*nix systems.
 
-**Note**: While this module allows the use of short keys, **we urge you NOT to use short keys**, as they pose a serious security issue by opening you up to collision attacks.
+**Note**: While this module allows the use of short keys, **warnings are thrown if a full fingerprint is not used**, as they pose a serious security issue by opening you up to collision attacks.
 
 ## Setup
 
