@@ -142,11 +142,11 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
         extracted_key = execute(["#{command(:gpg)} --with-fingerprint --with-colons #{file.path} | awk -F: '/^fpr:/ { print $10 }'"], :failonfail => false)
         extracted_key = extracted_key.chomp
         if extracted_key != name
-          fail ("The id in your manifest #{resource[:name]} and the fingerprint from content/source do not match. Please check there is not an error in the id or check the content/source is legitimate.")
+          fail("The id in your manifest #{resource[:name]} and the fingerprint from content/source do not match. Please check there is not an error in the id or check the content/source is legitimate.")
         end
       else
-        warning ('/usr/bin/gpg cannot be found for verification of the id.')
-      end 
+        warning('/usr/bin/gpg cannot be found for verification of the id.')
+      end
     end
     file.path
   end
