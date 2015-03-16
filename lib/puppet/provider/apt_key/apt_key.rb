@@ -1,4 +1,3 @@
-require 'date'
 require 'open-uri'
 require 'net/ftp'
 require 'tempfile'
@@ -19,7 +18,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
   commands   :gpg      => '/usr/bin/gpg'
 
   def self.instances
-    cli_args = ['adv','--list-keys', '--with-colons', '--fingerprint']
+    cli_args = ['adv','--list-keys', '--with-colons', '--fingerprint', '--fixed-list-mode']
 
     if RUBY_VERSION > '1.8.7'
       key_output = apt_key(cli_args).encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '')
@@ -46,7 +45,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
       expired = false
 
       if line_hash[:key_expiry]
-        expired = Date.today > Date.parse(line_hash[:key_expiry])
+        expired = Time.now >= line_hash[:key_expiry]
       end
 
       new(
@@ -57,10 +56,10 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
         :long        => line_hash[:key_long],
         :ensure      => :present,
         :expired     => expired,
-        :expiry      => line_hash[:key_expiry],
+        :expiry      => line_hash[:key_expiry].nil? ? nil : line_hash[:key_expiry].strftime("%Y-%m-%d"),
         :size        => line_hash[:key_size],
         :type        => line_hash[:key_type],
-        :created     => line_hash[:key_created]
+        :created     => line_hash[:key_created].strftime("%Y-%m-%d")
       )
     end
     key_array.compact!
@@ -96,8 +95,8 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
       :key_short       => fingerprint[-8..-1], # last 8 characters of fingerprint
       :key_size        => pub_split[2],
       :key_type        => nil,
-      :key_created     => pub_split[5],
-      :key_expiry      => pub_split[6].empty? ? nil : pub_split[6],
+      :key_created     => Time.at(pub_split[5].to_i),
+      :key_expiry      => pub_split[6].empty? ? nil : Time.at(pub_split[6].to_i),
     }
 
     # set key type based on types defined in /usr/share/doc/gnupg/DETAILS.gz
@@ -143,11 +142,11 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
         extracted_key = execute(["#{command(:gpg)} --with-fingerprint --with-colons #{file.path} | awk -F: '/^fpr:/ { print $10 }'"], :failonfail => false)
         extracted_key = extracted_key.chomp
         if extracted_key != name
-          fail ("The id in your manifest #{resource[:name]} and the fingerprint from content/source do not match. Please check there is not an error in the id or check the content/source is legitimate.")
+          fail("The id in your manifest #{resource[:name]} and the fingerprint from content/source do not match. Please check there is not an error in the id or check the content/source is legitimate.")
         end
       else
-        warning ('/usr/bin/gpg cannot be found for verification of the id.')
-      end 
+        warning('/usr/bin/gpg cannot be found for verification of the id.')
+      end
     end
     file.path
   end
