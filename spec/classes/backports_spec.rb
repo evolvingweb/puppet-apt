@@ -17,7 +17,7 @@ describe 'apt::backports', :type => :class do
           'location'   => 'http://old-releases.ubuntu.com/ubuntu',
           'release'    => 'karmic-backports',
           'repos'      => 'main universe multiverse restricted',
-          'key'        => '437D05B5',
+          'key'        => '630239CC130E1A7FD81A27B140976EAF437D05B5',
           'key_server' => 'pgp.mit.edu',
         })
       }
@@ -51,7 +51,7 @@ describe 'apt::backports', :type => :class do
         'location'   => 'http://old-releases.ubuntu.com/ubuntu',
         'release'    => 'karmic-backports',
         'repos'      => 'main universe multiverse restricted',
-        'key'        => '437D05B5',
+        'key'        => '630239CC130E1A7FD81A27B140976EAF437D05B5',
         'key_server' => 'pgp.mit.edu',
       })
     }
@@ -77,7 +77,7 @@ describe 'apt::backports', :type => :class do
         'location'   => 'http://backports.debian.org/debian-backports',
         'release'    => 'squeeze-backports',
         'repos'      => 'main contrib non-free',
-        'key'        => '46925553',
+        'key'        => 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553',
         'key_server' => 'pgp.mit.edu',
       })
     }
@@ -103,7 +103,7 @@ describe 'apt::backports', :type => :class do
         'location'   => 'http://ftp.debian.org/debian/',
         'release'    => 'wheezy-backports',
         'repos'      => 'main contrib non-free',
-        'key'        => '46925553',
+        'key'        => 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553',
         'key_server' => 'pgp.mit.edu',
       })
     }
@@ -129,7 +129,7 @@ describe 'apt::backports', :type => :class do
         'location'   => 'http://us.archive.ubuntu.com/ubuntu',
         'release'    => 'trusty-backports',
         'repos'      => 'main universe multiverse restricted',
-        'key'        => '437D05B5',
+        'key'        => '630239CC130E1A7FD81A27B140976EAF437D05B5',
         'key_server' => 'pgp.mit.edu',
       })
     }
@@ -163,7 +163,7 @@ describe 'apt::backports', :type => :class do
         'location'   => location,
         'release'    => 'squeeze-backports',
         'repos'      => 'main contrib non-free',
-        'key'        => '46925553',
+        'key'        => 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553',
         'key_server' => 'pgp.mit.edu',
       })
     }

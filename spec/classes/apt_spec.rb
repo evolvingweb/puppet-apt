@@ -155,7 +155,7 @@ describe 'apt', :type => :class do
         'release'           => 'unstable',
         'repos'             => 'main contrib non-free',
         'required_packages' => 'debian-keyring debian-archive-keyring',
-        'key'               => '55BE302B',
+        'key'               => '150C8614919D8446E01E83AF9AA38DCD55BE302B',
         'key_server'        => 'subkeys.pgp.net',
         'pin'               => '-10',
         'include_src'       => true
@@ -163,7 +163,7 @@ describe 'apt', :type => :class do
       'puppetlabs' => {
         'location'   => 'http://apt.puppetlabs.com',
         'repos'      => 'main',
-        'key'        => '4BD6EC30',
+        'key'        => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
         'key_server' => 'pgp.mit.edu',
       }
     } } }
