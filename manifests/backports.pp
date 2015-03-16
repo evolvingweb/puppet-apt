@@ -58,8 +58,8 @@ class apt::backports(
   }
 
   $key = $distid ? {
-    'debian' => '46925553',
-    'ubuntu' => '437D05B5',
+    'debian' => 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553',
+    'ubuntu' => '630239CC130E1A7FD81A27B140976EAF437D05B5',
   }
   $repos = $distid ? {
     'debian' => 'main contrib non-free',
