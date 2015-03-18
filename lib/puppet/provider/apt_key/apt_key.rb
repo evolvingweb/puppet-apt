@@ -149,8 +149,8 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
       # Breaking up the command like this is needed because it blows up
       # if --recv-keys isn't the last argument.
       command.push('adv', '--keyserver', resource[:server])
-      unless resource[:keyserver_options].nil?
-        command.push('--keyserver-options', resource[:keyserver_options])
+      unless resource[:options].nil?
+        command.push('--keyserver-options', resource[:options])
       end
       command.push('--recv-keys', resource[:id])
     elsif resource[:content]
