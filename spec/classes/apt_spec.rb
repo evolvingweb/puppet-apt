@@ -96,7 +96,7 @@ describe 'apt' do
   context 'lots of non-defaults' do
     let :params do
       {
-        :update => { 'always' => true, 'timeout' => 1, 'tries' => 3 },
+        :update => { 'frequency' => 'always', 'timeout' => 1, 'tries' => 3 },
         :purge  => { 'sources.list' => false, 'sources.list.d' => false,
                      'preferences' => false, 'preferences.d' => false, },
       }
