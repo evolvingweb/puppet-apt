@@ -488,14 +488,14 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
     end
   end
 
-  describe 'keyserver_options =>' do
+  describe 'options =>' do
     context 'debug' do
       it 'works' do
         pp = <<-EOS
         apt_key { 'puppetlabs':
-          id                => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
-          ensure            => 'present',
-          keyserver_options => 'debug',
+          id      => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
+          ensure  => 'present',
+          options => 'debug',
         }
         EOS
 
@@ -507,9 +507,9 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
       it 'fails on invalid options' do
         pp = <<-EOS
         apt_key { 'puppetlabs':
-          id                => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
-          ensure            => 'present',
-          keyserver_options => 'this is totally bonkers',
+          id      => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
+          ensure  => 'present',
+          options => 'this is totally bonkers',
         }
         EOS
 
