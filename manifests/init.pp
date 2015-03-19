@@ -14,9 +14,6 @@ class apt(
   if $update['frequency'] {
     validate_re($update['frequency'], $frequency_options)
   }
-  if $update['always'] {
-    validate_bool($update['always'])
-  }
   if $update['timeout'] {
     unless is_integer($update['timeout']) {
       fail('timeout value for update must be an integer')
@@ -84,7 +81,7 @@ class apt(
     true  => absent,
   }
 
-  if $_update['always'] {
+  if $_update['frequency'] == 'always' {
     Exec <| title=='apt_update' |> {
       refreshonly => false,
     }

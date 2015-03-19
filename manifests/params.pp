@@ -57,7 +57,6 @@ class apt::params {
   }
 
   $update_defaults = {
-    'always'    => false,
     'frequency' => 'reluctantly',
     'timeout'   => undef,
     'tries'     => undef,
