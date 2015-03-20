@@ -43,7 +43,7 @@ class { 'apt': }
   
 * `apt::params`: Sets defaults for the apt module parameters.
 
-* `apt::update`: Runs `apt-get update`, updating the list of available packages and their versions without installing or upgrading any packages. The update runs on the first Puppet run after you include the class, then whenever `notify  => Exec['apt_update']` occurs; i.e., whenever config files get updated or other relevant changes occur. If you set `update['frequency']` to `true`, the update runs on every Puppet run.
+* `apt::update`: Runs `apt-get update`, updating the list of available packages and their versions without installing or upgrading any packages. The update runs on the first Puppet run after you include the class, then whenever `notify  => Exec['apt_update']` occurs; i.e., whenever config files get updated or other relevant changes occur. If you set `update['frequency']` to `'always'`, the update runs on every Puppet run.
 
 ### Types
 
