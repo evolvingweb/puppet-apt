@@ -31,7 +31,7 @@ Any Puppet code that uses anything from the apt module requires that the core ap
 
 Using the apt module consists predominantly of declaring classes and defined types that provide the desired functionality and features. This module provides common resources and options that are shared by the various defined types in the apt module, so you **must always** include this class in your manifests.
 
-```
+```puppet
 class { 'apt': }
 ```
 
@@ -43,7 +43,7 @@ class { 'apt': }
   
 * `apt::params`: Sets defaults for the apt module parameters.
 
-* `apt::update`: Runs `apt-get update`, updating the list of available packages and their versions without installing or upgrading any packages. The update runs on the first Puppet run after you include the class, then whenever `notify  => Exec['apt_update']` occurs; i.e., whenever config files get updated or other relevant changes occur. If you set `update['frequency']` to 'always', the update runs on every Puppet run.
+* `apt::update`: Runs `apt-get update`, updating the list of available packages and their versions without installing or upgrading any packages. The update runs on the first Puppet run after you include the class, then whenever `notify  => Exec['apt_update']` occurs; i.e., whenever config files get updated or other relevant changes occur. If you set `update['frequency']` to `true`, the update runs on every Puppet run.
 
 ### Types
 
@@ -51,7 +51,7 @@ class { 'apt': }
 
   A native Puppet type and provider for managing GPG keys for Apt is provided by this module.
 
-  ```
+  ```puppet
   apt_key { 'puppetlabs':
     ensure => 'present',
     id     => '1054B7A24BD6EC30',
@@ -71,7 +71,7 @@ class { 'apt': }
 
 * `apt::key`: Adds a key to the list of keys used by Apt to authenticate packages. This type uses the aforementioned `apt_key` native type. As such, it no longer requires the `wget` command on which the old implementation depended.
 
-  ```
+  ```puppet
   apt::key { 'puppetlabs':
     id     => '1054B7A24BD6EC30',
     server => 'pgp.mit.edu',
@@ -85,7 +85,7 @@ class { 'apt': }
 
 * `apt::pin`: Defined type that adds an Apt pin for a certain release.
 
-  ```
+  ```puppet
   apt::pin { 'karmic': priority => 700 }
   apt::pin { 'karmic-updates': priority => 700 }
   apt::pin { 'karmic-security': priority => 700 }
@@ -93,7 +93,7 @@ class { 'apt': }
 
   Note that you can also specify more complex pins using distribution properties.
 
-  ```
+  ```puppet
   apt::pin { 'stable':
     priority        => -10,
     originator      => 'Debian',
@@ -111,7 +111,7 @@ class { 'apt': }
 
 * `apt::source`: Adds an Apt source to `/etc/apt/sources.list.d/`. For example:
 
-  ```
+  ```puppet
   apt::source { 'debian_unstable':
     comment  => 'This is the iWeb Debian unstable mirror',
     location => 'http://debian.mirror.iweb.ca/debian/',
@@ -131,7 +131,7 @@ class { 'apt': }
 
   For example, to configure your system so the source is the Puppet Labs Apt repository:
 
-  ```
+  ```puppet
   apt::source { 'puppetlabs':
     location => 'http://apt.puppetlabs.com',
     repos    => 'main',
@@ -154,8 +154,7 @@ The apt module includes a few facts to describe the state of the Apt system:
 
 #### Hiera example
 
-```
-<pre>
+```yaml
 apt::sources:
   'debian_unstable':
     location: 'http://debian.mirror.iweb.ca/debian/'
@@ -175,7 +174,6 @@ apt::sources:
     key:
       id:'1054B7A24BD6EC30'
       server: 'pgp.mit.edu'
-</pre>
 ```
 
 ### Parameters
