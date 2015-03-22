@@ -277,13 +277,21 @@ apt::sources:
 ####apt::unattended_upgrades
 
 * `legacy_origin`: If set to true, use the old `Unattended-Upgrade::Allowed-Origins` variable. If false, use `Unattended-Upgrade::Origins-Pattern`. OS-dependent defaults are defined in `apt::params`.
-* `origins`: The repositories from which to automatically upgrade included packages.
-* `blacklist`: A list of packages to **not** automatically upgrade.
-* `update`: How often, in days, to run `apt-get update`.
-* `download`: How often, in days, to run `apt-get upgrade --download-only`.
-* `upgrade`: How often, in days, to upgrade packages included in the origins list.
-* `autoclean`: How often, in days, to run `apt-get autoclean`.
-* `randomsleep`: How long, in seconds, to randomly wait before applying upgrades.
+* `origins`: The repositories from which to automatically upgrade included packages. OS-dependent defaults are defined in `apt::params`. (Usually only security updates are enabled by default)
+* `blacklist`: A list of packages to **not** automatically upgrade. This list is empty by default.
+* `update`: How often, in days, to run `apt-get update`. Defaults to '1'.
+* `download`: How often, in days, to run `apt-get upgrade --download-only`. Defaults to '1'.
+* `upgrade`: How often, in days, to upgrade packages included in the origins list. Defaults to '1'.
+* `autoclean`: How often, in days, to run `apt-get autoclean`. Defaults to '7'.
+* `auto_fix`: Tries to automatically fix interrupted package installations. Defaults to 'true'.
+* `minimal_steps`: Split the upgrade process into sections to allow shutdown during upgrade. Defaults to 'false'.
+* `install_on_shutdown`: Install updates on shutdown instead of in the background. Defaults to 'false'.
+* `mail_to`: Send e-mail to this address about packages upgrades or errors. This is not set by default.
+* `mail_only_on_error`: Send e-mail only in case of error, not on successful upgrade. Defaults to 'false'.
+* `remove_unused`: Removes unused dependencies. Defaults to 'true'.
+* `auto_reboot`: Reboot the system **without confirmation** if an update requires rebooting. Defaults to 'false'.
+* `dl_limit`: Use a bandwidth limit for downloading, specified in kb/sec. This is not set by default.
+* `randomsleep`: How long, in seconds, to randomly wait before applying upgrades. This is not set by default.
 
 ####apt::source
 
