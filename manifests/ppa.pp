@@ -60,9 +60,4 @@ define apt::ppa(
       notify => Exec['apt_update'],
     }
   }
-
-  # Need anchor to provide containment for dependencies.
-  anchor { "apt::ppa::${name}":
-    require => Class['apt::update'],
-  }
 }

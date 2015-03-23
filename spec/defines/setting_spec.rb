@@ -55,6 +55,21 @@ describe 'apt::setting' do
     end
   end
 
+  describe 'settings requiring settings, MODULES-769' do
+    let(:pre_condition) do
+      'class { "apt": }
+      apt::setting { "list-teddybear": content => "foo" }
+      '
+    end
+    let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy' } }
+    let(:title) { 'conf-teddybear' }
+    let(:default_params) { { :content => 'di' } }
+
+    let(:params) { default_params.merge({ :require => 'Apt::Setting[list-teddybear]' }) }
+
+    it { is_expected.to compile.with_all_deps }
+  end
+
   describe 'when trying to pull one over' do
     context 'with source and content' do
       let(:params) { default_params.merge({ :source => 'la' }) }
