@@ -60,10 +60,4 @@ define apt::setting (
     source  => $source,
     notify  => $_notify,
   }
-
-  if $notify_update {
-    anchor { "apt::setting::${name}":
-      require => Class['apt::update']
-    }
-  }
 }

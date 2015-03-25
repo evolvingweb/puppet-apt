@@ -27,9 +27,17 @@ describe 'apt::ppa' do
     }
   end
 
-  describe 'apt included, no proxy' do
+  describe 'ppa depending on ppa, MODULES-1156' do
     let :pre_condition do
       'class { "apt": }'
+    end
+  end
+
+  describe 'apt included, no proxy' do
+    let :pre_condition do
+      'class { "apt": }
+      apt::ppa { "ppa:foo2": }
+      '
     end
     let :facts do
       {
@@ -42,11 +50,13 @@ describe 'apt::ppa' do
     end
     let :params do
       {
-        :options => '',
+        :options        => '',
         :package_manage => true,
+        :require        => 'Apt::Ppa[ppa:foo2]',
       }
     end
     let(:title) { 'ppa:foo' }
+    it { is_expected.to compile.with_all_deps }
     it { is_expected.to contain_package('software-properties-common') }
     it { is_expected.to contain_exec('add-apt-repository-ppa:foo').that_notifies('Exec[apt_update]').with({
       :environment => [],
