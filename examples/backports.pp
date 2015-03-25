@@ -1,7 +1,7 @@
 $location = $::apt::distcodename ? {
   'squeeze' => 'http://backports.debian.org/debian-backports',
   'wheezy'  => 'http://ftp.debian.org/debian/',
-  default   => 'http://us.archive.ubuntu.com/ubuntu',
+  default   => 'http://archive.ubuntu.com/ubuntu',
 }
 
 if $::apt::distid == 'debian' {
@@ -16,7 +16,6 @@ if $::apt::distid == 'debian' {
 
 # set up the actual backports
 apt::pin { 'backports':
-  before   => Apt::Source['backports'],
   release  => "${release}-backports",
   priority => 200,
 }
@@ -26,7 +25,7 @@ apt::source { 'backports':
   release  => "${release}-backports",
   repos    => $repos,
   key      => {
-    id       => $key,
-    server   => 'pgp.mit.edu',
+    id     => $key,
+    server => 'pgp.mit.edu',
   },
 }
