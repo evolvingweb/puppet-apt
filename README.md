@@ -93,7 +93,7 @@ class { 'apt':
   ```
   apt_key { 'puppetlabs':
     ensure => 'present',
-    id     => '1054B7A24BD6EC30',
+    id     => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
   }
   ```
 
@@ -157,12 +157,12 @@ class { 'apt':
 
   ```
   apt::key { 'puppetlabs':
-    key        => '1054B7A24BD6EC30',
+    key        => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
     key_server => 'pgp.mit.edu',
   }
 
   apt::key { 'jenkins':
-    key        => '9B7D32F2D50582E6',
+    key        => '150FDE3F7787E7D11EF4E12A9B7D32F2D50582E6',
     key_source => 'http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key',
   }
   ```
@@ -213,10 +213,10 @@ class { 'apt':
   ```
   apt::source { 'puppetlabs':
     location   => 'http://apt.puppetlabs.com',
-    repos      => 'main',
-    key        => '1054B7A24BD6EC30',
+    repos      => 'main dependencies',
+    key        => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
     key_server => 'pgp.mit.edu',
-    }
+  }
   ```
 
 ### Facts
@@ -248,8 +248,8 @@ apt::sources:
 
   'puppetlabs':
     location: 'http://apt.puppetlabs.com'
-    repos: 'main'
-    key: '1054B7A24BD6EC30'
+    repos: 'main dependencies'
+    key: '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
     key_server: 'pgp.mit.edu'
 </pre>
 ```
@@ -357,10 +357,12 @@ The apt module is mostly a collection of defined resource types, which provide r
 This test sets up a Puppet Labs Apt repository. Start by creating a new smoke test, called puppetlabs-apt.pp, in the apt module's test folder. In this test, declare a single resource representing the Puppet Labs Apt source and GPG key:
 
 ```
+class { 'apt': }
+
 apt::source { 'puppetlabs':
   location   => 'http://apt.puppetlabs.com',
-  repos      => 'main',
-  key        => '1054B7A24BD6EC30',
+  repos      => 'main dependencies',
+  key        => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
   key_server => 'pgp.mit.edu',
 }
 ```    
@@ -380,7 +382,7 @@ info: /Stage[main]//Apt::Source[puppetlabs]/File[puppetlabs.list]: Scheduling re
 notice: /Stage[main]//Apt::Source[puppetlabs]/Exec[puppetlabs apt update]: Triggered 'refresh' from 1 events>
 ```    
 
-The above example uses a smoke test to lay out a resource declaration and apply it on your system. In production, you might want to declare your Apt sources inside the classes where they’re needed.
+The above example uses a smoke test to lay out a resource declaration and apply it on your system. In production, you might want to declare your Apt sources inside the classes where they're needed.
 
 Limitations
 -----------
@@ -390,7 +392,7 @@ This module should work across all versions of Debian/Ubuntu and support all maj
 Development
 ------------
 
-Puppet Labs modules on the Puppet Forge are open projects, and community contributions are essential for keeping them great. We can’t access the huge number of platforms and myriad of hardware, software, and deployment configurations that Puppet is intended to serve.
+Puppet Labs modules on the Puppet Forge are open projects, and community contributions are essential for keeping them great. We can't access the huge number of platforms and myriad of hardware, software, and deployment configurations that Puppet is intended to serve.
 
 We want to keep it as easy as possible to contribute changes so that our modules work in your environment. There are a few guidelines that we need contributors to follow so that we can have a chance of keeping on top of things.
 
