@@ -107,6 +107,10 @@ class apt::params {
         }
       }
     }
+    'Cumulus Networks': {
+      $distid = 'debian'
+      $distcodename = $::lsbdistcodename
+    }
     undef: {
       fail('Unable to determine lsbdistid, is lsb-release installed?')
     }
@@ -131,7 +135,7 @@ class apt::params {
         }
         default: {
           $ppa_options        = '-y'
-          $ppa_package        = 'software-properties-common'
+          $ppa_package        = 'python-software-properties'
         }
       }
     }

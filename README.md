@@ -8,7 +8,7 @@ The apt module provides a simple interface for managing Apt source, key, and def
 
 The apt module automates obtaining and installing software packages on \*nix systems.
 
-**Note**: While this module allows the use of short keys, **we urge you NOT to use short keys**, as they pose a serious security issue by opening you up to collision attacks.
+**Note**: While this module allows the use of short keys, **warnings are thrown if a full fingerprint is not used**, as they pose a serious security issue by opening you up to collision attacks.
 
 ## Setup
 
@@ -54,7 +54,7 @@ class { 'apt': }
   ```puppet
   apt_key { 'puppetlabs':
     ensure => 'present',
-    id     => '1054B7A24BD6EC30',
+    id     => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
   }
   ```
 
@@ -69,16 +69,16 @@ class { 'apt': }
 
 * `apt::conf`: Specifies a custom configuration file. The priority defaults to 50, but you can set the priority parameter to load the file earlier or later. The content parameter passes specified content, if any, into the file resource.
 
-* `apt::key`: Adds a key to the list of keys used by Apt to authenticate packages. This type uses the aforementioned `apt_key` native type. As such, it no longer requires the `wget` command on which the old implementation depended.
+* `apt::key`: Adds a key to the list of keys used by Apt to authenticate packages. This type uses the aforementioned `apt\_key` native type. As such, it no longer requires the `wget` command on which the old implementation depended.
 
   ```puppet
   apt::key { 'puppetlabs':
-    id     => '1054B7A24BD6EC30',
+    id     => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
     server => 'pgp.mit.edu',
   }
 
   apt::key { 'jenkins':
-    id     => '9B7D32F2D50582E6',
+    id     => '150FDE3F7787E7D11EF4E12A9B7D32F2D50582E6',
     source => 'http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key',
   }
   ```
@@ -119,7 +119,7 @@ class { 'apt': }
     repos    => 'main contrib non-free',
     pin      => '-10',
     key      => {
-      'id'     => '8B48AD6246925553',
+      'id'     => 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553',
       'server' => 'subkeys.pgp.net',
     },
     include  => {
@@ -136,7 +136,7 @@ class { 'apt': }
     location => 'http://apt.puppetlabs.com',
     repos    => 'main',
     key      => {
-      'id'     => '1054B7A24BD6EC30',
+      'id'     => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
       'server' => 'pgp.mit.edu',
     },
   ```
@@ -145,10 +145,10 @@ class { 'apt': }
 
 The apt module includes a few facts to describe the state of the Apt system:
 
-* `apt_updates`: The number of updates available on the system
-* `apt_security_updates`: The number of updates which are security updates
-* `apt_package_updates`: The package names that are available for update. In Facter 2.0 and later, this will be a list type; in earlier versions, it is a comma-delimited string.
-* `apt_update_last_success`: The date, in epochtime, of the most recent successful `apt-get update` run. This is determined by reading the mtime of  /var/lib/apt/periodic/update-success-stamp.
+* `apt\_updates`: The number of updates available on the system
+* `apt\_security\_updates`: The number of updates which are security updates
+* `apt\_package\_updates`: The package names that are available for update. In Facter 2.0 and later, this will be a list type; in earlier versions, it is a comma-delimited string.
+* `apt\_update\_last\_success`: The date, in epochtime, of the most recent successful `apt-get update` run. This is determined by reading the mtime of  /var/lib/apt/periodic/update-success-stamp.
 
 **Note:** The facts depend on 'update-notifier' being installed on your system. Though this is a GNOME daemon only the support files are needed so the package 'update-notifier-common' is enough to enable this functionality.
 
@@ -172,7 +172,7 @@ apt::sources:
     location: 'http://apt.puppetlabs.com'
     repos: 'main'
     key:
-      id:'1054B7A24BD6EC30'
+      id: '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
       server: 'pgp.mit.edu'
 ```
 
@@ -183,9 +183,9 @@ apt::sources:
 * `update`: Hash to configure various update settings. Valid keys are:
   * 'frequency': The run frequency for `apt-get update`. Defaults to 'reluctantly'. Accepts the following values:
     * 'always': Runs update at every Puppet run.
-    * 'daily': Runs update daily; that is, `apt-get update` runs if the value of `apt_update_last_success` is less than current epoch time - 86400. If the exec resource `apt_update` is notified, `apt-get update` runs regardless of this value. 
-    * 'weekly': Runs update weekly; that is, `apt-get update` runs if the value of `apt_update_last_success` is less than current epoch time - 604800. If the exec resource `apt_update` is notified, `apt-get update` runs regardless of this value. 
-    * 'reluctantly': Only runs `apt-get update` if the exec resource `apt_update` is notified. This is the default setting.  
+    * 'daily': Runs update daily; that is, `apt-get update` runs if the value of `apt\_update\_last\_success` is less than current epoch time - 86400. If the exec resource `apt\_update` is notified, `apt-get update` runs regardless of this value. 
+    * 'weekly': Runs update weekly; that is, `apt-get update` runs if the value of `apt\_update\_last\_success` is less than current epoch time - 604800. If the exec resource `apt\_update` is notified, `apt-get update` runs regardless of this value. 
+    * 'reluctantly': Only runs `apt-get update` if the exec resource `apt\_update` is notified. This is the default setting.  
   * 'timeout': Overrides the exec timeout in seconds for `apt-get update`. Defaults to exec default (300).
   * 'tries': Sets how many times to attempt running `apt-get update`. Use this to work around transient DNS and HTTP errors. By default, the command runs only once.
 * `purge`: Hash to configure various purge settings. Valid keys are:
@@ -197,10 +197,10 @@ apt::sources:
   * 'host': Configures a proxy host and stores the configuration in /etc/apt/apt.conf.d/01proxy.
   * 'port': Configures a proxy port and stores the configuration in /etc/apt/apt.conf.d/01proxy.
   * 'https': Boolean to configure whether or not to enable https proxies. Defaults to false.
-* `keys`: Passes a hash to create_resource to make new `apt::key` resources.
-* `ppas`: Passes a hash to create_resource to make new `apt::ppa` resources.
-* `settings`: Passes a hash to create_resource to make new `apt::setting` resources.
-* `sources`: Passes a hash to create_resource to make new `apt::source` resources.
+* `keys`: Passes a hash to `create\_resource` to make new `apt::key` resources.
+* `ppas`: Passes a hash to `create\_resource` to make new `apt::ppa` resources.
+* `settings`: Passes a hash to `create\_resource` to make new `apt::setting` resources.
+* `sources`: Passes a hash to `create\_resource` to make new `apt::source` resources.
 
 ####apt::conf
 
@@ -220,7 +220,7 @@ apt::sources:
 ####apt::pin
 
 * `ensure`: The state we want this pin in. Can be 'present' or 'absent'.
-* `explanation`: Add a comment. Defaults to `${caller_module_name}: ${name}`.
+* `explanation`: Add a comment. Defaults to `${caller\_module\_name}: ${name}`.
 * `order`: The order of the file name. Defaults to undef, otherwise must be an integer.
 * `packages`: The list of packages to pin. Defaults to '\*'. Can be an array or string. 
 * `priority`: Several versions of a package may be available for installation when the sources.list(5) file contains references to more than one distribution (for example, stable and testing). APT assigns a priority to each version that is available. Subject to dependency constraints, apt-get selects the version with the highest priority for installation.
@@ -228,7 +228,7 @@ apt::sources:
 * `origin`: Can be used to match a hostname. The following record will assign a high priority to all versions available from the server identified by the hostname. Defaults to ''.
 * `version`: The specific form assigns a priority (a "Pin-Priority") to one or more specified packages with a specified version or version range.
 * `codename`: The distribution (lsbdistcodename) of the apt repository. Defaults to ''.
-* `release_version`: Names the release version. For example, the packages in the tree might belong to Debian release version 7. Defaults to ''.
+* `release\_version`: Names the release version. For example, the packages in the tree might belong to Debian release version 7. Defaults to ''.
 * `component`: Names the licensing component associated with the packages in the directory tree of the Release file. defaults to ''. Typical values can be 'main', 'dependencies' and 'restricted'
 * `originator`: Names the originator of the packages in the directory tree of the Release file. Defaults to ''. Most commonly, this is Debian.
 * `label`: Names the label of the packages in the directory tree of the Release file. Defaults to ''. Most commonly, this is Debian.
@@ -239,11 +239,11 @@ It is recommended to read the manpage 'apt_preferences(5)'
 
 ####apt::ppa
 
-* `ensure`: Whether to add or remove the PPA. Valid values are 'present' or 'absent'. Defaults to 'present'.
-* `options`: Options to pass to `add-apt-repository`. OS-dependent defaults are defined in `apt::params`.
-* `release`: OS-release, used in the filename of the generated sources.list.d file. Defaults to `$::lsbdistcodename`.
-* `package_name`: The package to install `add-apt-repository`. OS-dependent defaults are defined in `apt::params`.
-* `package_manage`: Whether or not to manage the package for `add-apt-repository`. Defaults to false.
+* `ensure`: Whether we are adding or removing the PPA. Can be 'present' or 'absent'. Defaults to 'present'.
+* `release`: The codename for the operating system you're running. Defaults to `$lsbdistcodename`. Required if lsb-release is not installed.
+* `options`: Options to be passed to the `apt-add-repository` command. OS-dependent defaults are set in `apt::params`.
+* `package\_name`: The package that provides the `apt-add-repository` command. OS-dependent defaults are set in `apt::params`.
+* `package\_manage`: Whether or not to manage the package providing `apt-add-repository`. Defaults to true.
 
 ####apt::setting
 
@@ -251,7 +251,7 @@ It is recommended to read the manpage 'apt_preferences(5)'
 * `ensure`: Whether to add or remove the file. Valid values are 'present', 'absent', and 'file'. Defaults to `file`.
 * `source`: The source for the file. Exactly one of `content` and `source` must be specified.
 * `content`: The content for the file. Exactly one of `content` and `source` must be specified.
-* `notify_update`: Boolean for whether or not this `apt::setting` should trigger an `apt-get update`. Defaults to `true`.
+* `notify\_update`: Boolean for whether or not this `apt::setting` should trigger an `apt-get update`. Defaults to `true`.
 
 ####apt::source
 
@@ -271,7 +271,7 @@ It is recommended to read the manpage 'apt_preferences(5)'
   * 'options': See `options` in `apt::key`
 * `pin`: See apt::pin. Defaults to false.
 * `architecture`: can be used to specify for which architectures information should be downloaded. If this option is not set all architectures defined by the APT::Architectures option will be downloaded. Defaults to `undef` which means all. Example values can be 'i386' or 'i386,alpha,powerpc'.
-* `allow_unsigned`: can be set to indicate that packages from this source are always authenticated even if the Release file is not signed or the signature can't be checked. Defaults to `false`. Can be `true` or `false`.
+* `allow\_unsigned`: can be set to indicate that packages from this source are always authenticated even if the Release file is not signed or the signature can't be checked. Defaults to `false`. Can be `true` or `false`.
 
 Limitations
 -----------
@@ -281,7 +281,7 @@ This module should work across all versions of Debian/Ubuntu and support all maj
 Development
 ------------
 
-Puppet Labs modules on the Puppet Forge are open projects, and community contributions are essential for keeping them great. We can’t access the huge number of platforms and myriad of hardware, software, and deployment configurations that Puppet is intended to serve.
+Puppet Labs modules on the Puppet Forge are open projects, and community contributions are essential for keeping them great. We can't access the huge number of platforms and myriad of hardware, software, and deployment configurations that Puppet is intended to serve.
 
 We want to keep it as easy as possible to contribute changes so that our modules work in your environment. There are a few guidelines that we need contributors to follow so that we can have a chance of keeping on top of things.
 
