@@ -140,14 +140,14 @@ describe 'apt' do
         'location'          => 'http://debian.mirror.iweb.ca/debian/',
         'release'           => 'unstable',
         'repos'             => 'main contrib non-free',
-        'key'               => { 'id' => '55BE302B', 'server' => 'subkeys.pgp.net' },
+        'key'               => { 'id' => '150C8614919D8446E01E83AF9AA38DCD55BE302B', 'server' => 'subkeys.pgp.net' },
         'pin'               => '-10',
         'include'           => {'src' => true,},
       },
       'puppetlabs' => {
         'location'   => 'http://apt.puppetlabs.com',
         'repos'      => 'main',
-        'key'        => { 'id' => '4BD6EC30', 'server' => 'pgp.mit.edu' },
+        'key'        => { 'id' => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30', 'server' => 'pgp.mit.edu' },
       }
     } } }
 

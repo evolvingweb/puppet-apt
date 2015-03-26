@@ -520,4 +520,38 @@ ugVIB2pi+8u84f+an4Hml4xlyijgYu05pqNvnLRyJDLd61hviLC8GYU=
       end
     end
   end
+
+  describe 'fingerprint validation against source/content' do
+    context 'fingerprint in id matches fingerprint from remote key' do
+      it 'works' do
+        pp = <<-EOS
+        apt_key { 'puppetlabs':
+          id      => '#{PUPPETLABS_GPG_KEY_FINGERPRINT}',
+          ensure  => 'present',
+          source  => 'https://#{PUPPETLABS_APT_URL}/#{PUPPETLABS_GPG_KEY_FILE}',
+        }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_failures => true)
+      end
+    end
+
+    context 'fingerprint in id does NOT match fingerprint from remote key' do
+      it 'works' do
+        pp = <<-EOS
+        apt_key { 'puppetlabs':
+          id      => '47B320EB4C7C375AA9DAE1A01054B7A24BD6E666',
+          ensure  => 'present',
+          source  => 'https://#{PUPPETLABS_APT_URL}/#{PUPPETLABS_GPG_KEY_FILE}',
+        }
+        EOS
+
+        apply_manifest(pp, :expect_failures => true) do |r|
+          expect(r.stderr).to match(/do not match/)
+        end
+      end
+    end
+  end
+
 end
