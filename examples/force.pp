@@ -22,7 +22,7 @@ $config_missing = '-o Dpkg::Options::="--force-confmiss"'
 #else
 $config_missing = ''
 
-package { $package:
+package { '<package>':
   ensure          => $ensure,
   install_options => "${config_files} ${config_missing} ${rel_string}",
 }
