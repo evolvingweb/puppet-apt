@@ -1,10 +1,10 @@
 #if you need to specify a release
-$rel_string = "-t ${release}"
+$rel_string = '-t <release>'
 #else
 $rel_string = ''
 
 #if you need to specify a version
-$ensure = $version
+$ensure = '<version>'
 #else 
 $ensure = installed
 
@@ -24,5 +24,5 @@ $config_missing = ''
 
 package { $package:
   ensure          => $ensure,
-  install_options => "${config_files} ${config_missing} ${release_string}",
+  install_options => "${config_files} ${config_missing} ${rel_string}",
 }
