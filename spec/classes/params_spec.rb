@@ -12,19 +12,6 @@ describe 'apt::params', :type => :class do
     expect(subject.resources.size).to eq(4)
   end
 
-  describe "With unknown lsbdistid" do
-
-    let(:facts) { { :lsbdistid => 'CentOS', :osfamily => 'Debian' } }
-    let (:title) { 'my_package' }
-
-    it do
-      expect {
-       is_expected.to compile
-      }.to raise_error(Puppet::Error, /Unsupported lsbdistid/)
-    end
-
-  end
-
   describe "With lsb-release not installed" do
     let(:facts) { { :lsbdistid => '', :osfamily => 'Debian' } }
     let (:title) { 'my_package' }

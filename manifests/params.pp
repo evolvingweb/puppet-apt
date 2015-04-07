@@ -88,39 +88,8 @@ class apt::params {
   }
 
   case $xfacts['lsbdistid'] {
-    'ubuntu', 'debian': {
-      $distid = $xfacts['lsbdistid']
-      $distcodename = $xfacts['lsbdistcodename']
-    }
-    'linuxmint': {
-      if $xfacts['lsbdistcodename'] == 'debian' {
-        $distid = 'debian'
-        $distcodename = 'wheezy'
-      } else {
-        $distid = 'ubuntu'
-        $distcodename = $xfacts['lsbdistcodename'] ? {
-          'qiana'  => 'trusty',
-          'petra'  => 'saucy',
-          'olivia' => 'raring',
-          'nadia'  => 'quantal',
-          'maya'   => 'precise',
-        }
-      }
-    }
-    'Cumulus Networks': {
-      $distid = 'debian'
-      $distcodename = $::lsbdistcodename
-    }
-    undef: {
-      fail('Unable to determine lsbdistid, is lsb-release installed?')
-    }
-    default: {
-      fail("Unsupported lsbdistid (${::lsbdistid})")
-    }
-  }
-  case $distid {
     'debian': {
-      case $distcodename {
+      case $xfacts['lsbdistcodename'] {
         'squeeze': {
           $backports = {
             'location' => 'http://backports.debian.org/debian-backports',
@@ -144,7 +113,7 @@ class apt::params {
         'repos'    => 'main universe multiverse restricted',
       }
 
-      case $distcodename {
+      case $xfacts['lsbdistcodename'] {
         'lucid': {
           $ppa_options        = undef
           $ppa_package        = 'python-software-properties'
@@ -163,7 +132,10 @@ class apt::params {
         }
       }
     }
-    '', default: {
+    undef: {
+      fail('Unable to determine lsbdistid, is lsb-release installed?')
+    }
+    default: {
       $ppa_options = undef
       $ppa_package = undef
       $backports   = undef
