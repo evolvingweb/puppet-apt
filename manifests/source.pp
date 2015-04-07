@@ -59,7 +59,7 @@ define apt::source(
     } else {
       fail('Received invalid value for pin parameter')
     }
-    create_resources('apt::pin', { $name => $_pin })
+    create_resources('apt::pin', { "${name}" => $_pin })
   }
 
   # We do not want to remove keys when the source is absent.
