@@ -298,7 +298,7 @@ describe 'apt::ppa' do
       it do
         expect {
           is_expected.to compile
-        }.to raise_error(Puppet::Error, /supported on Ubuntu and LinuxMint only/)
+        }.to raise_error(Puppet::Error, /not currently supported on Debian/)
       end
     end
   end

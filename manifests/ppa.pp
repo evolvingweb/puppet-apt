@@ -10,8 +10,8 @@ define apt::ppa(
     fail('lsbdistcodename fact not available: release parameter required')
   }
 
-  if $::apt::distid != 'ubuntu' {
-    fail('apt::ppa is currently supported on Ubuntu and LinuxMint only.')
+  if $::apt::xfacts['lsbdistid'] == 'Debian' {
+    fail('apt::ppa is not currently supported on Debian.')
   }
 
   $filename_without_slashes = regsubst($name, '/', '-', 'G')
