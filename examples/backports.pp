@@ -1,4 +1,5 @@
 # Set up a backport for linuxmint qiana
+class { 'apt': }
 apt::backports { 'qiana':
   location => 'http://us.archive.ubuntu.com/ubuntu',
   release  => 'trusty-backports',
