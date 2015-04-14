@@ -39,7 +39,7 @@ class { 'apt': }
 
 ### Classes
 
-* `apt`: Main class, provides common resources and options. Allows Puppet to manage your system's sources.list file and sources.list.d directory. By default, it will purge any existing content it finds that wasn't declared with Puppet.
+* `apt`: Main class, provides common resources and options. Allows Puppet to manage your system's sources.list file and sources.list.d directory. By default, it will not purge existing content it finds that wasn't declared with Puppet.
   
   * `apt::backports`: This class adds the necessary components to get backports for Ubuntu and Debian. The release name defaults to "$lsbdistcodename-backports". Setting this manually can cause undefined and potentially serious behavior.
 
@@ -195,10 +195,10 @@ apt::sources:
   * 'timeout': Overrides the exec timeout in seconds for `apt-get update`. Defaults to exec default (300).
   * 'tries': Sets how many times to attempt running `apt-get update`. Use this to work around transient DNS and HTTP errors. By default, the command runs only once.
 * `purge`: Hash to configure various purge settings. Valid keys are:
-  * 'sources.list': If set to 'true', Puppet purges all unmanaged entries from sources.list. Accepts `true` or `false`. Defaults to `true`.
-  * 'sources.list.d': If set to 'true', Puppet purges all unmanaged entries from sources.list.d. Accepts `true` or `false`. Defaults to `true`.
-  * 'preferences.list': If set to 'true', Puppet purges all unmanaged entries from preferences.list. Accepts `true` or `false`. Defaults to `true`.
-  * 'preferences.list.d': If set to 'true', Puppet purges all unmanaged entries from preferences.list.d. Accepts `true` or `false`. Defaults to `true`.
+  * 'sources.list': If set to 'true', Puppet purges all unmanaged entries from sources.list. Accepts `true` or `false`. Defaults to `false`.
+  * 'sources.list.d': If set to 'true', Puppet purges all unmanaged entries from sources.list.d. Accepts `true` or `false`. Defaults to `false`.
+  * 'preferences.list': If set to 'true', Puppet purges all unmanaged entries from preferences.list. Accepts `true` or `false`. Defaults to `false`.
+  * 'preferences.list.d': If set to 'true', Puppet purges all unmanaged entries from preferences.list.d. Accepts `true` or `false`. Defaults to `false`.
 * `proxy`: Hash to configure various proxy settings. Valid keys are:
   * 'host': Configures a proxy host and stores the configuration in /etc/apt/apt.conf.d/01proxy.
   * 'port': Configures a proxy port and stores the configuration in /etc/apt/apt.conf.d/01proxy.
