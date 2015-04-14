@@ -1,8 +1,15 @@
 define apt::conf (
-  $content,
+  $content  = undef,
   $ensure   = present,
   $priority = '50',
 ) {
+
+  unless $ensure == 'absent' {
+    unless $content {
+      fail('Need to pass in content parameter')
+    }
+  }
+
   apt::setting { "conf-${name}":
     ensure   => $ensure,
     priority => $priority,
