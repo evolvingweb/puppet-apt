@@ -30,12 +30,23 @@ describe 'apt::conf', :type => :define do
       }
   end
 
+  describe "when creating a preference without content" do
+    let :params do
+      {
+        :priority => '00',
+      }
+    end
+
+    it 'fails' do
+      expect { subject } .to raise_error(/pass in content/)
+    end
+  end
+
   describe "when removing an apt preference" do
     let :params do
       {
         :ensure   => 'absent',
         :priority => '00',
-        :content  => "Apt::Install-Recommends 0;\nApt::AutoRemove::InstallRecommends 1;\n"
       }
     end
 
@@ -45,7 +56,6 @@ describe 'apt::conf', :type => :define do
 
     it { is_expected.to contain_file(filename).with({
         'ensure'    => 'absent',
-        'content'   => /Apt::Install-Recommends 0;\nApt::AutoRemove::InstallRecommends 1;/,
         'owner'     => 'root',
         'group'     => 'root',
         'mode'      => '0644',
