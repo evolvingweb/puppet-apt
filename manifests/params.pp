@@ -69,10 +69,10 @@ class apt::params {
   }
 
   $purge_defaults = {
-    'sources.list'   => true,
-    'sources.list.d' => true,
-    'preferences'    => true,
-    'preferences.d'  => true,
+    'sources.list'   => false,
+    'sources.list.d' => false,
+    'preferences'    => false,
+    'preferences.d'  => false,
   }
 
   $source_key_defaults = {

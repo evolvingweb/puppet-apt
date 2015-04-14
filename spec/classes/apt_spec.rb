@@ -9,7 +9,6 @@ describe 'apt' do
       :owner   => 'root',
       :group   => 'root',
       :mode    => '0644',
-      :content => "# Repos managed by puppet.\n",
       :notify  => 'Exec[apt_update]',
     })}
 
@@ -19,13 +18,13 @@ describe 'apt' do
       :owner   => 'root',
       :group   => 'root',
       :mode    => '0644',
-      :purge   => true,
-      :recurse => true,
+      :purge   => false,
+      :recurse => false,
       :notify  => 'Exec[apt_update]',
     })}
 
     it { is_expected.to contain_file('preferences').that_notifies('Exec[apt_update]').only_with({
-      :ensure  => 'absent',
+      :ensure  => 'file',
       :path    => '/etc/apt/preferences',
       :owner   => 'root',
       :group   => 'root',
@@ -39,8 +38,8 @@ describe 'apt' do
       :owner   => 'root',
       :group   => 'root',
       :mode    => '0644',
-      :purge   => true,
-      :recurse => true,
+      :purge   => false,
+      :recurse => false,
       :notify  => 'Exec[apt_update]',
     })}
 
