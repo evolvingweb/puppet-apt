@@ -19,8 +19,6 @@ The apt module automates obtaining and installing software packages on \*nix sys
 * System repositories
 * Authentication keys
 
-**Note**: By default, this module will **destroy** any existing content in `sources.list` and `sources.list.d` that was not declared with Puppet.
-
 ### Beginning with apt
 
 To begin using the apt module with default parameters, declare the class with `include apt`.
