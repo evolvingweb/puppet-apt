@@ -142,7 +142,7 @@ describe 'apt::backports', :type => :class do
       end
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key/)
       end
     end
@@ -156,7 +156,7 @@ describe 'apt::backports', :type => :class do
       end
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key/)
       end
     end
@@ -170,7 +170,7 @@ describe 'apt::backports', :type => :class do
       end
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key/)
       end
     end
@@ -184,7 +184,7 @@ describe 'apt::backports', :type => :class do
       end
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key/)
       end
     end
@@ -205,7 +205,7 @@ describe 'apt::backports', :type => :class do
       end
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /is not a string/)
       end
     end
@@ -217,7 +217,7 @@ describe 'apt::backports', :type => :class do
       end
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /is not a string/)
       end
     end
@@ -229,7 +229,7 @@ describe 'apt::backports', :type => :class do
       end
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /is not a string/)
       end
     end
@@ -241,7 +241,7 @@ describe 'apt::backports', :type => :class do
       end
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /is not a string/)
       end
     end
@@ -253,7 +253,7 @@ describe 'apt::backports', :type => :class do
       end
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /pin must be either a string, number or hash/)
       end
     end

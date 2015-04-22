@@ -143,7 +143,7 @@ describe 'apt::key' do
         :server => '-pgp.mit.edu',
       } end
       it 'fails' do
-        expect { subject } .to raise_error(/does not match/)
+        expect { subject.call } .to raise_error(/does not match/)
       end
     end
 
@@ -152,7 +152,7 @@ describe 'apt::key' do
         :server => '.pgp.mit.edu',
       } end
       it 'fails' do
-        expect { subject } .to raise_error(/does not match/)
+        expect { subject.call } .to raise_error(/does not match/)
       end
     end
 
@@ -161,7 +161,7 @@ describe 'apt::key' do
         :server => "pgp.mit.edu.",
       } end
       it 'fails' do
-        expect { subject } .to raise_error(/does not match/)
+        expect { subject.call } .to raise_error(/does not match/)
       end
     end
     context "exceed character url" do
@@ -171,7 +171,7 @@ describe 'apt::key' do
         }
       end
       it 'fails' do
-        expect { subject }.to raise_error(/does not match/)
+        expect { subject.call }.to raise_error(/does not match/)
       end
     end
     context "incorrect port number url" do
@@ -181,7 +181,7 @@ describe 'apt::key' do
         }
       end
       it 'fails' do
-        expect { subject }.to raise_error(/does not match/)
+        expect { subject.call }.to raise_error(/does not match/)
       end
     end
     context "incorrect protocol for  url" do
@@ -191,7 +191,7 @@ describe 'apt::key' do
         }
       end
       it 'fails' do
-        expect { subject }.to raise_error(/does not match/)
+        expect { subject.call }.to raise_error(/does not match/)
       end
     end
     context "missing port number url" do
@@ -201,7 +201,7 @@ describe 'apt::key' do
         }
       end
       it 'fails' do
-        expect { subject }.to raise_error(/does not match/)
+        expect { subject.call }.to raise_error(/does not match/)
       end
     end
     context "url ending with a dot" do
@@ -211,7 +211,7 @@ describe 'apt::key' do
         }
       end
       it 'fails' do
-        expect { subject }.to raise_error(/does not match/)
+        expect { subject.call }.to raise_error(/does not match/)
       end
     end
     context "url begin with a dash" do
@@ -219,7 +219,7 @@ describe 'apt::key' do
         :server => "hkp://-pgp.mit.edu",
       } end
       it 'fails' do
-        expect { subject }.to raise_error(/does not match/)
+        expect { subject.call }.to raise_error(/does not match/)
       end
     end
     context 'invalid key' do
@@ -227,7 +227,7 @@ describe 'apt::key' do
         'Out of rum. Why? Why are we out of rum?'
       end
       it 'fails' do
-        expect { subject }.to raise_error(/does not match/)
+        expect { subject.call }.to raise_error(/does not match/)
       end
     end
 
@@ -236,7 +236,7 @@ describe 'apt::key' do
         :source => 'afp://puppetlabs.com/key.gpg',
       } end
       it 'fails' do
-        expect { subject }.to raise_error(/does not match/)
+        expect { subject.call }.to raise_error(/does not match/)
       end
     end
 
@@ -245,7 +245,7 @@ describe 'apt::key' do
         :content => [],
       } end
       it 'fails' do
-        expect { subject }.to raise_error(/is not a string/)
+        expect { subject.call }.to raise_error(/is not a string/)
       end
     end
 
@@ -254,7 +254,7 @@ describe 'apt::key' do
         :server => 'two bottles of rum',
       } end
       it 'fails' do
-        expect { subject }.to raise_error(/does not match/)
+        expect { subject.call }.to raise_error(/does not match/)
       end
     end
 
@@ -263,7 +263,7 @@ describe 'apt::key' do
         :options => {},
       } end
       it 'fails' do
-        expect { subject }.to raise_error(/is not a string/)
+        expect { subject.call }.to raise_error(/is not a string/)
       end
     end
 
@@ -274,7 +274,7 @@ describe 'apt::key' do
         }
       end
       it 'fails' do
-        expect { subject }.to raise_error(/does not match/)
+        expect { subject.call }.to raise_error(/does not match/)
       end
     end
 
@@ -315,7 +315,7 @@ describe 'apt::key' do
           apt::key { 'duplicate': id => '#{title}', ensure => 'absent', }"
         end
         it 'informs the user of the impossibility' do
-          expect { subject }.to raise_error(/already ensured as absent/)
+          expect { subject.call }.to raise_error(/already ensured as absent/)
         end
       end
     end

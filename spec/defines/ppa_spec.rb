@@ -279,7 +279,7 @@ describe 'apt::ppa' do
       let(:title) { 'ppa:foo' }
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /lsbdistcodename fact not available: release parameter required/)
       end
     end
@@ -297,7 +297,7 @@ describe 'apt::ppa' do
       let(:title) { 'ppa:foo' }
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /not currently supported on Debian/)
       end
     end
