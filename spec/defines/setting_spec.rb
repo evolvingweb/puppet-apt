@@ -10,7 +10,7 @@ describe 'apt::setting' do
   describe 'when using the defaults' do
     context 'without source or content' do
       it do
-        expect { is_expected.to compile }.to raise_error(Puppet::Error, /needs either of /)
+        expect { subject.call }.to raise_error(Puppet::Error, /needs either of /)
       end
     end
 
@@ -74,7 +74,7 @@ describe 'apt::setting' do
     context 'with source and content' do
       let(:params) { default_params.merge({ :source => 'la' }) }
       it do
-        expect { is_expected.to compile }.to raise_error(Puppet::Error, /cannot have both /)
+        expect { subject.call }.to raise_error(Puppet::Error, /cannot have both /)
       end
     end
 
@@ -82,21 +82,21 @@ describe 'apt::setting' do
       let(:title) { 'ext-teddybear' }
       let(:params) { default_params }
       it do
-        expect { is_expected.to compile }.to raise_error(Puppet::Error, /must start with /)
+        expect { subject.call }.to raise_error(Puppet::Error, /must start with /)
       end
     end
 
     context 'with ensure=banana' do
       let(:params) { default_params.merge({ :ensure => 'banana' }) }
       it do
-        expect { is_expected.to compile }.to raise_error(Puppet::Error, /"banana" does not /)
+        expect { subject.call }.to raise_error(Puppet::Error, /"banana" does not /)
       end
     end
 
     context 'with priority=1.2' do
       let(:params) { default_params.merge({ :priority => 1.2 }) }
       it do
-        expect { is_expected.to compile }.to raise_error(Puppet::Error, /be an integer /)
+        expect { subject.call }.to raise_error(Puppet::Error, /be an integer /)
       end
     end
   end
