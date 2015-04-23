@@ -22,7 +22,7 @@ describe 'apt::source' do
       end
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /source entry without specifying a location/)
       end
     end
@@ -256,7 +256,7 @@ describe 'apt::source' do
 
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /lsbdistcodename fact not available: release parameter required/)
       end
     end
@@ -278,7 +278,7 @@ describe 'apt::source' do
 
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /invalid value for pin/)
       end
     end

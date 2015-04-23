@@ -9,16 +9,16 @@ describe 'apt::params', :type => :class do
   # there should not be any more resources because it is a params class
   # The resources are class[apt::params], class[main], class[settings], stage[main]
   it "Should not contain any resources" do
-    expect(subject.resources.size).to eq(4)
+    expect(subject.call.resources.size).to eq(4)
   end
 
   describe "With lsb-release not installed" do
-    let(:facts) { { :lsbdistid => '', :osfamily => 'Debian' } }
+    let(:facts) { { :osfamily => 'Debian' } }
     let (:title) { 'my_package' }
 
     it do
       expect {
-        is_expected.to compile
+        subject.call
       }.to raise_error(Puppet::Error, /Unable to determine lsbdistid, is lsb-release installed/)
     end
   end

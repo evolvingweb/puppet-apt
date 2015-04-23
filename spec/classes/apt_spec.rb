@@ -101,8 +101,8 @@ describe 'apt' do
       }
     end
 
-    it { is_expected.to contain_file('sources.list').without({
-      :content => "# Repos managed by puppet.\n",
+    it { is_expected.to contain_file('sources.list').with({
+      :content => nil,
     })}
 
     it { is_expected.to contain_file('sources.list.d').with({
@@ -230,7 +230,7 @@ describe 'apt' do
       let(:params) { { :purge => { 'sources.list' => 'banana' }, } }
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error)
       end
     end
@@ -239,7 +239,7 @@ describe 'apt' do
       let(:params) { { :purge => { 'sources.list.d' => 'banana' }, } }
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error)
       end
     end
@@ -248,7 +248,7 @@ describe 'apt' do
       let(:params) { { :purge => { 'preferences' => 'banana' }, } }
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error)
       end
     end
@@ -257,7 +257,7 @@ describe 'apt' do
       let(:params) { { :purge => { 'preferences.d' => 'banana' }, } }
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error)
       end
     end
@@ -269,7 +269,7 @@ describe 'apt' do
 
       it do
         expect {
-          is_expected.to compile
+          subject.call
         }.to raise_error(Puppet::Error, /This module only works on Debian or derivatives like Ubuntu/)
       end
     end
