@@ -24,6 +24,8 @@ The apt module lets you use Puppet to manage Apt sources, keys, and other config
 
 Apt (Advanced Package Tool) is a package manager available on Debian, Ubuntu, and several other operating systems. The apt module provides a series of classes, defines, types, and facts to help you automate Apt package management.
 
+**Note**: For this module to be able to correctly auto detect which version of Debian/Ubuntu or derivative you're running you need to make sure the 'lsb-release' package is installed. We highly recommend making this part of your provisioning layer if you run many Debian or derivative systems or ensuring that you have at least Facter 2.2.0 installed which will pull in this dependency for you.
+
 ## Setup
 
 ### What apt affects

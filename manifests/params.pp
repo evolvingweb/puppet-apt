@@ -150,7 +150,7 @@ class apt::params {
       }
     }
     undef: {
-      fail('Unable to determine lsbdistid, is lsb-release installed?')
+      fail('Unable to determine lsbdistid, please install lsb-release first')
     }
     default: {
       $ppa_options = undef
