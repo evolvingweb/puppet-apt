@@ -65,7 +65,7 @@ define apt::source(
   # We do not want to remove keys when the source is absent.
   if $key and ($ensure == 'present') {
     if is_hash($_key) {
-      apt::key { "Add key: ${_key['id']} from Apt::Source ${title}":
+      apt::key { "Add key: ${$_key['id']} from Apt::Source ${title}":
         ensure  => present,
         id      => $_key['id'],
         server  => $_key['server'],
