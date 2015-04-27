@@ -4,32 +4,45 @@ class apt::params {
     fail('This module only works on Debian or derivatives like Ubuntu')
   }
 
-  # Strict variables facts lookup compatibility
-  $xfacts = {
-    'lsbdistcodename' => defined('$lsbdistcodename') ? {
-      true    => $::lsbdistcodename,
-      default => undef,
-    },
-    'lsbdistrelease' => defined('$lsbdistrelease') ? {
-      true    => $::lsbdistrelease,
-      default => undef,
-    },
-    'lsbmajdistrelease' => defined('$lsbmajdistrelease') ? {
-      true    => $::lsbmajdistrelease,
-      default => undef,
-    },
-    'lsbdistdescription' => defined('$lsbdistdescription') ? {
-      true    => $::lsbdistdescription,
-      default => undef,
-    },
-    'lsbminordistrelease' => defined('$lsbminordistrelease') ? {
-      true    => $::lsbminordistrelease,
-      default => undef,
-    },
-    'lsbdistid' => defined('$lsbdistid') ? {
-      true    => $::lsbdistid,
-      default => undef,
-    },
+  # prior to puppet 3.5.0, defined couldn't test if a variable was defined
+  # strict variables wasn't added until 3.5.0, so this should be fine.
+  if versioncmp($::puppetversion, '3.5.0') < 0 {
+    $xfacts = {
+      'lsbdistcodename'     => $::lsbdistcodename,
+      'lsbdistrelease'      => $::lsbdistrelease,
+      'lsbmajdistrelease'   => $::lsbmajdistrelease,
+      'lsbdistdescription'  => $::lsbdistdescription,
+      'lsbminordistrelease' => $::lsbminordistrelease,
+      'lsbdistid'           => $::lsbdistid,
+    }
+  } else {
+    # Strict variables facts lookup compatibility
+    $xfacts = {
+      'lsbdistcodename' => defined('$lsbdistcodename') ? {
+        true    => $::lsbdistcodename,
+        default => undef,
+      },
+      'lsbdistrelease' => defined('$lsbdistrelease') ? {
+        true    => $::lsbdistrelease,
+        default => undef,
+      },
+      'lsbmajdistrelease' => defined('$lsbmajdistrelease') ? {
+        true    => $::lsbmajdistrelease,
+        default => undef,
+      },
+      'lsbdistdescription' => defined('$lsbdistdescription') ? {
+        true    => $::lsbdistdescription,
+        default => undef,
+      },
+      'lsbminordistrelease' => defined('$lsbminordistrelease') ? {
+        true    => $::lsbminordistrelease,
+        default => undef,
+      },
+      'lsbdistid' => defined('$lsbdistid') ? {
+        true    => $::lsbdistid,
+        default => undef,
+      },
+    }
   }
 
   $root           = '/etc/apt'
@@ -105,6 +118,10 @@ class apt::params {
           }
         }
       }
+
+      $ppa_options = undef
+      $ppa_package = undef
+
     }
     'ubuntu': {
       $backports = {

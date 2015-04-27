@@ -133,7 +133,7 @@ class apt(
     notify  => Exec['apt_update'],
   }
 
-  contain 'apt::update'
+  anchor { 'apt_first': } -> Class['apt::update'] -> anchor { 'apt_last': }
 
   # manage sources if present
   if $sources {

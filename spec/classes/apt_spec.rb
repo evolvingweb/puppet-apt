@@ -1,6 +1,6 @@
 require 'spec_helper'
 describe 'apt' do
-  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy'} }
+  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy', :puppetversion   => '3.5.0'} }
 
   context 'defaults' do
     it { is_expected.to contain_file('sources.list').that_notifies('Exec[apt_update]').only_with({
@@ -132,6 +132,7 @@ describe 'apt' do
       { :osfamily        => 'Debian',
         :lsbdistcodename => 'precise',
         :lsbdistid       => 'Debian',
+        :puppetversion   => '3.5.0',
       }
     end
     let(:params) { { :sources => {
@@ -173,6 +174,7 @@ describe 'apt' do
       { :osfamily        => 'Debian',
         :lsbdistcodename => 'precise',
         :lsbdistid       => 'Debian',
+        :puppetversion   => '3.5.0',
       }
     end
     let(:params) { { :keys => {
@@ -198,6 +200,7 @@ describe 'apt' do
       { :osfamily        => 'Debian',
         :lsbdistcodename => 'precise',
         :lsbdistid       => 'ubuntu',
+        :puppetversion   => '3.5.0',
       }
     end
     let(:params) { { :ppas => {
@@ -214,6 +217,7 @@ describe 'apt' do
       { :osfamily        => 'Debian',
         :lsbdistcodename => 'precise',
         :lsbdistid       => 'Debian',
+        :puppetversion   => '3.5.0',
       }
     end
     let(:params) { { :settings => {
@@ -264,7 +268,7 @@ describe 'apt' do
 
     context 'with unsupported osfamily' do
       let :facts do
-        { :osfamily => 'Darwin', }
+        { :osfamily => 'Darwin', :puppetversion   => '3.5.0',}
       end
 
       it do
