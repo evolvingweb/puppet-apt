@@ -4,7 +4,7 @@
 
 1. [Overview](#overview)
 2. [Module Description - What the module does and why it is useful](#module-description)
-3. [Setup - The basics of getting started with [apt]](#setup)
+3. [Setup - The basics of getting started with apt](#setup)
     * [What apt affects](#what-apt-affects)
     * [Beginning with apt](#beginning-with-apt)
 4. [Usage - Configuration options and additional functionality](#usage)
@@ -276,7 +276,7 @@ Manages backports.
 
 * `pin`: *Optional.* Specifies a pin priority for the backports. Valid options: a number or string to be passed to the `id` parameter of the `apt::pin` define, or a hash of `parameter => value` pairs to be passed to `apt::pin`'s corresponding parameters. Default: '200'.
 
-* `release`: Specifies a distribution of the Apt repository containing the backports to manage. Valid options: a string containing the release, used in populating the `source.list` configuration file. Default: on Debian and Ubuntu, ''${lsbdistcodename}-backports'. We recommend keeping this default, except on other operating systems.
+* `release`: Specifies a distribution of the Apt repository containing the backports to manage. Valid options: a string containing the release, used in populating the `source.list` configuration file. Default: on Debian and Ubuntu, '${lsbdistcodename}-backports'. We recommend keeping this default, except on other operating systems.
 
 * `repos`: Specifies a component of the Apt repository containing the backports to manage. Valid options: A string containing the repos to include, used in populating the `source.list` configuration file. Defaults:
 
@@ -305,7 +305,7 @@ The `apt::key` define makes use of the `apt_key` type, but includes extra functi
 
 * `content`: Supplies the entire GPG key. Useful in case the key can't be fetched from a remote location and using a file resource is inconvenient. Valid options: a string. Default: undef.
 
-* `ensure`: Specifies whether the key should exist. Valid options: 'present' and 'absent'. Default: present.
+* `ensure`: Specifies whether the key should exist. Valid options: 'present' and 'absent'. Default: 'present'.
 
 * `id`: Specifies a GPG key to authenticate Apt package signatures. Valid options: a string containing a key ID (8 or 16 hexadecimal characters, optionally prefixed with "0x") or a full key fingerprint (40 hexadecimal characters). Default: $title.
 
@@ -327,7 +327,7 @@ Manages Apt pins.
 
 * `component`: Names the licensing component associated with the packages in the directory tree of the Release file. Valid options: a string. Default: ''.
 
-* `ensure`: Specifies whether the pin should exist. Valid options: 'file', 'present', and 'absent'. Default: present.
+* `ensure`: Specifies whether the pin should exist. Valid options: 'file', 'present', and 'absent'. Default: 'present'.
 
 * `explanation`: Supplies a comment to explain the pin. Valid options: a string. Default: "${caller_module_name}: ${name}".
 
@@ -400,7 +400,7 @@ Manages the Apt sources in `/etc/apt/sources.list.d/`.
 
 * `comment`: Supplies a comment for adding to the Apt source file. Valid options: a string. Default: $name.
 
-* `ensure`: Specifies whether the Apt source file should exist. Valid options: 'present' and 'absent'. Default: present.
+* `ensure`: Specifies whether the Apt source file should exist. Valid options: 'present' and 'absent'. Default: 'present'.
 
 * `key`: Creates a declaration of the apt::key define Valid options: a string to be passed to the `id` parameter of the `apt::key` define, or a hash of `parameter => value` pairs to be passed to `apt::key`'s `id`, `server`, `content`, `source`, and/or `options` parameters. Default: undef.
 
