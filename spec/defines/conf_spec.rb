@@ -3,7 +3,7 @@ describe 'apt::conf', :type => :define do
   let :pre_condition do
     'class { "apt": }'
   end
-  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy' } }
+  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy', :puppetversion   => '3.5.0', } }
   let :title do
     'norecommends'
   end

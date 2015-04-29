@@ -12,6 +12,7 @@ describe 'apt::ppa' do
         :operatingsystem => 'Ubuntu',
         :osfamily        => 'Debian',
         :lsbdistid       => 'Ubuntu',
+        :puppetversion   => '3.5.0',
       }
     end
 
@@ -50,6 +51,7 @@ describe 'apt::ppa' do
         :operatingsystem => 'Ubuntu',
         :osfamily        => 'Debian',
         :lsbdistid       => 'Ubuntu',
+        :puppetversion   => '3.5.0',
       }
     end
 
@@ -81,6 +83,7 @@ describe 'apt::ppa' do
         :operatingsystem => 'Ubuntu',
         :osfamily        => 'Debian',
         :lsbdistid       => 'Ubuntu',
+        :puppetversion   => '3.5.0',
       }
     end
     let :params do
@@ -119,6 +122,7 @@ describe 'apt::ppa' do
         :operatingsystem => 'Ubuntu',
         :lsbdistid       => 'Ubuntu',
         :osfamily        => 'Debian',
+        :puppetversion   => '3.5.0',
       }
     end
     let :params do
@@ -154,6 +158,7 @@ describe 'apt::ppa' do
         :operatingsystem => 'Ubuntu',
         :lsbdistid       => 'Ubuntu',
         :osfamily        => 'Debian',
+        :puppetversion   => '3.5.0',
       }
     end
     let :params do
@@ -187,6 +192,7 @@ describe 'apt::ppa' do
         :operatingsystem => 'Ubuntu',
         :lsbdistid       => 'Ubuntu',
         :osfamily        => 'Debian',
+        :puppetversion   => '3.5.0',
       }
     end
     let :params do
@@ -220,6 +226,7 @@ describe 'apt::ppa' do
         :operatingsystem => 'Ubuntu',
         :lsbdistid       => 'Ubuntu',
         :osfamily        => 'Debian',
+        :puppetversion   => '3.5.0',
       }
     end
     let :params do
@@ -251,6 +258,7 @@ describe 'apt::ppa' do
         :operatingsystem => 'Ubuntu',
         :lsbdistid       => 'Ubuntu',
         :osfamily        => 'Debian',
+        :puppetversion   => '3.5.0',
       }
     end
     let(:title) { 'ppa:foo' }
@@ -274,6 +282,7 @@ describe 'apt::ppa' do
           :lsbdistid       => 'Ubuntu',
           :osfamily        => 'Debian',
           :lsbdistcodeanme => nil,
+          :puppetversion   => '3.5.0',
         }
       end
       let(:title) { 'ppa:foo' }
@@ -292,6 +301,7 @@ describe 'apt::ppa' do
           :operatingsystem => 'Debian',
           :lsbdistid       => 'debian',
           :osfamily        => 'Debian',
+          :puppetversion   => '3.5.0',
         }
       end
       let(:title) { 'ppa:foo' }

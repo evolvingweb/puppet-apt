@@ -1,3 +1,12 @@
+##2015-04-28 - Supported Release 2.0.1
+###Summary
+
+This bug fixes a few compatibility issues that came up with the 2.0.0 release, and includes test and documentation updates.
+
+####Bugfixes
+- Fix incompatibility with keyrings containing multiple keys
+- Fix bugs preventing the module from working with Puppet < 3.5.0
+
 ##2015-04-07 - Supported Release 2.0.0
 ###Summary
 
