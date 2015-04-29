@@ -217,6 +217,8 @@ apt::sources:
 
 * `apt_update_last_success`: The date, in epochtime, of the most recent successful `apt-get update` run (based on the mtime of  /var/lib/apt/periodic/update-success-stamp).
 
+* `apt_reboot_required`: Determines if a reboot is necessary after updates have been installed.
+
 #### Class: `apt`
 
 Main class, includes all other classes.
