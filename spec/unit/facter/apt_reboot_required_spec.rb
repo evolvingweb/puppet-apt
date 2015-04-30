@@ -6,18 +6,20 @@ describe 'apt_reboot_required fact' do
 
   describe 'if a reboot is required' do
     before {
-      Facter.fact(:osfamily).stubs(:value).returns 'Debian'
+      Facter.fact(:osfamily).expects(:value).at_least(1).returns 'Debian'
       File.stubs(:file?).returns true
+      File.expects(:file?).at_least(1).with('/var/run/reboot-required').returns true
     }
-    it { expect(Facter.fact(:apt_reboot_required).value).to eq true }
+    it { is_expected.to eq true }
   end
 
   describe 'if a reboot is not required' do
     before {
-      Facter.fact(:osfamily).stubs(:value).returns 'Debian'
-      File.stubs(:file?).returns false
+      Facter.fact(:osfamily).expects(:value).at_least(1).returns 'Debian'
+      File.stubs(:file?).returns true
+      File.expects(:file?).at_least(1).with('/var/run/reboot-required').returns false
     }
-    it { expect(Facter.fact(:apt_reboot_required).value).to eq false }
+    it { is_expected.to eq false }
   end
 
 end
