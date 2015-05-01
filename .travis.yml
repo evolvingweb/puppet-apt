@@ -23,10 +23,10 @@ matrix:
   - rvm: 2.1
     env: PUPPET_GEM_VERSION="~> 3.0" ORDERING="random" STRICT_VARIABLES="yes" FUTURE_PARSER="yes"
   - rvm: 1.9.3
-    env: PUPPET_GEM_VERSION="~> 4.0" ORDERING="random"
+    env: PUPPET_GEM_VERSION="~> 4.0" ORDERING="random" STRICT_VARIABLES="yes"
   - rvm: 2.0.0
-    env: PUPPET_GEM_VERSION="~> 4.0" ORDERING="random"
+    env: PUPPET_GEM_VERSION="~> 4.0" ORDERING="random" STRICT_VARIABLES="yes"
   - rvm: 2.1
-    env: PUPPET_GEM_VERSION="~> 4.0" ORDERING="random"
+    env: PUPPET_GEM_VERSION="~> 4.0" ORDERING="random" STRICT_VARIABLES="yes"
 notifications:
   email: false
