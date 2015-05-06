@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'apt::setting' do
   let(:pre_condition) { 'class { "apt": }' }
-  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy', :puppetversion   => '3.5.0', } }
+  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy', :puppetversion   => Puppet.version, } }
   let(:title) { 'conf-teddybear' }
 
   let(:default_params) { { :content => 'di' } }
@@ -61,7 +61,7 @@ describe 'apt::setting' do
       apt::setting { "list-teddybear": content => "foo" }
       '
     end
-    let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy', :puppetversion   => '3.5.0', } }
+    let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy', :puppetversion   => Puppet.version, } }
     let(:title) { 'conf-teddybear' }
     let(:default_params) { { :content => 'di' } }
 
