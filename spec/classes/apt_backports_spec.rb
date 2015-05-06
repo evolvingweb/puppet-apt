@@ -10,7 +10,7 @@ describe 'apt::backports', :type => :class do
           :lsbdistid       => 'Debian',
           :osfamily        => 'Debian',
           :lsbdistcodename => 'wheezy',
-          :puppetversion   => '3.5.0',
+          :puppetversion   => Puppet.version,
         }
       end
       it { is_expected.to contain_apt__source('backports').with({
@@ -28,7 +28,7 @@ describe 'apt::backports', :type => :class do
           :lsbdistid       => 'Debian',
           :osfamily        => 'Debian',
           :lsbdistcodename => 'squeeze',
-          :puppetversion   => '3.5.0',
+          :puppetversion   => Puppet.version,
         }
       end
       it { is_expected.to contain_apt__source('backports').with({
@@ -46,7 +46,7 @@ describe 'apt::backports', :type => :class do
           :lsbdistid       => 'Ubuntu',
           :osfamily        => 'Debian',
           :lsbdistcodename => 'trusty',
-          :puppetversion   => '3.5.0',
+          :puppetversion   => Puppet.version,
         }
       end
       it { is_expected.to contain_apt__source('backports').with({
@@ -64,7 +64,7 @@ describe 'apt::backports', :type => :class do
           :lsbdistid       => 'Ubuntu',
           :osfamily        => 'Debian',
           :lsbdistcodename => 'trusty',
-          :puppetversion   => '3.5.0',
+          :puppetversion   => Puppet.version,
         }
       end
       let(:params) do
@@ -91,7 +91,7 @@ describe 'apt::backports', :type => :class do
           :lsbdistid       => 'Ubuntu',
           :osfamily        => 'Debian',
           :lsbdistcodename => 'trusty',
-          :puppetversion   => '3.5.0',
+          :puppetversion   => Puppet.version,
         }
       end
       let(:params) do
@@ -117,7 +117,7 @@ describe 'apt::backports', :type => :class do
         :lsbdistid       => 'linuxmint',
         :osfamily        => 'Debian',
         :lsbdistcodename => 'qiana',
-        :puppetversion   => '3.5.0',
+        :puppetversion   => Puppet.version,
       }
     end
     context 'sets all the needed things' do
@@ -201,7 +201,7 @@ describe 'apt::backports', :type => :class do
         :lsbdistid       => 'Ubuntu',
         :osfamily        => 'Debian',
         :lsbdistcodename => 'trusty',
-        :puppetversion   => '3.5.0',
+        :puppetversion   => Puppet.version,
       }
     end
     context 'invalid location' do
