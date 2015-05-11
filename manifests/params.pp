@@ -6,7 +6,7 @@ class apt::params {
 
   # prior to puppet 3.5.0, defined couldn't test if a variable was defined
   # strict variables wasn't added until 3.5.0, so this should be fine.
-  if versioncmp($::puppetversion, '3.5.0') < 0 {
+  if ! $::settings::strict_variables {
     $xfacts = {
       'lsbdistcodename'     => $::lsbdistcodename,
       'lsbdistrelease'      => $::lsbdistrelease,
