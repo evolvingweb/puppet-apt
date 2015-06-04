@@ -418,11 +418,11 @@ Manages the Apt sources in `/etc/apt/sources.list.d/`.
 
 * `key`: Creates a declaration of the apt::key define Valid options: a string to be passed to the `id` parameter of the `apt::key` define, or a hash of `parameter => value` pairs to be passed to `apt::key`'s `id`, `server`, `content`, `source`, and/or `options` parameters. Default: undef.
 
-* `include`: Configures include options. Valid options: a hash made up from the following keys:
+* `include`: Configures include options. Valid options: a hash made up from the following keys: Default: {}
 
-* 'deb' - Specifies whether to request the distribution's compiled binaries. Valid options: 'true' and 'false. Default: 'true'.
+* 'deb' - Specifies whether to request the distribution's compiled binaries. Valid options: 'true' and 'false'. Default: 'true'.
 
-* 'src' - Specifies whether to request the distribution's uncompiled source code. Valid options: 'true' and 'false'. Default: 'false'. Default: {}.
+* 'src' - Specifies whether to request the distribution's uncompiled source code. Valid options: 'true' and 'false'. Default: 'false'.
 
 * `location`: *Required, unless `ensure` is set to 'absent'.* Specifies an Apt repository. Valid options: a string containing a repository URL. Default: undef.
 
@@ -431,6 +431,20 @@ Manages the Apt sources in `/etc/apt/sources.list.d/`.
 * `release`: Specifies a distribution of the Apt repository. Valid options: a string. Default: "$lsbdistcodename".
 
 * `repos`: Specifies a component of the Apt repository. Valid options: a string. Default: 'main'.
+
+* `include_deb`: Specify whether to request the distrubution's compiled binaries. Valid options: 'true' and 'false'. Default: undef **Note** this parameter is deprecated and will be removed in future versions of the module.
+
+* `include_src`: Specifies whether to request the distribution's uncompiled source code. Valid options: 'true' and 'false'. Default: undef **Note** this parameter is deprecated andd will be removed in future versions of the module.
+
+* `required_packages`: install packages required for this Apt source via an exec. Default: 'false'. **Note** this parameter is deprecated and will be removed in future versions of the module.
+
+* `key_content`: Specify the content to be passed to `apt::key`. Default: undef. **Note** this parameter is deprecated and will be removed in future versions of the module.
+
+* `key_server`: Specify the server to be passed to `apt::key`. Default: undef. **Note** this parameter is deprecated and will be removed in future versions of the module.
+
+* `key_source`: Specify the source to be passed to `apt::key`. Default: undef. **Note** this parameter is deprecated and will be removed in future versions of the module.
+
+* `trusted_source`: Specifies whether to authenticate packages from this release, even if the Release file is not signed or the signature can't be checked. Valid options: 'true' and 'false'. Default: undef. **Note** this parameter is deprecated and will be removed in future versions of the module.
 
 #### Type: `apt_key`
 
