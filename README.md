@@ -319,6 +319,16 @@ The `apt::key` define makes use of the `apt_key` type, but includes extra functi
 
 * `server`: Specifies a keyserver to provide the GPG key. Valid options: a string containing a domain name or a full URL (http://, https://, or hkp://). Default: 'keyserver.ubuntu.com'.
 
+* `key`: Specifies a GPG key to authenticate Apt package signatures. Valid options: a string containing a key ID (8 or 16 hexadecimal characters, optionally prefixed with "0x") or a full key fingerprint (40 hexadecimal characters). Default: undef. **Note** This parameter is deprecated and will be removed in a future release.
+
+* `key_content`: Supplies the entire GPG key. Useful in case the key can't be fetched from a remote location and using a file resource is inconvenient. Valid options: a string. Default: undef. **Note** This parameter is deprecated and will be removed in a future release.
+
+* `key_source`: Specifies the location of an existing GPG key file to copy. Valid options: a string containing a URL (ftp://, http://, or https://) or an absolute path. Default: undef. **Note** This parameter is deprecated and will be removed in a future release.
+
+* `key_server`: Specifies a keyserver to provide the GPG key. Valid options: a string containing a domain name or a full URL (http://, https://, or hkp://). Default: 'keyserver.ubuntu.com' .**Note** This parameter is deprecated and will be removed in a future release.
+
+* `key_options`: Passes additional options to `apt-key adv --keyserver-options`. Valid options: a string. Default: undef. **Note** This parameter is deprecated and will be removed in a future release.
+
 #### Define: `apt::pin`
 
 Manages Apt pins.
