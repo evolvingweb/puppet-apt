@@ -229,6 +229,100 @@ describe 'apt::source' do
     }
   end
 
+  context 'include_src => true' do
+    let :facts do
+      {
+        :lsbdistid       => 'Debian',
+        :lsbdistcodename => 'wheezy',
+        :osfamily        => 'Debian',
+        :puppetversion   => Puppet.version,
+      }
+    end
+    let :params do
+      {
+        :location    => 'hello.there',
+        :include_src => true,
+      }
+    end
+
+    it { is_expected.to contain_apt__setting('list-my_source').with({
+      :ensure => 'present',
+    }).with_content(/# my_source\ndeb hello.there wheezy main\ndeb-src hello.there wheezy main\n/)
+    }
+  end
+
+  context 'include_deb => false' do
+    let :facts do
+      {
+        :lsbdistid       => 'debian',
+        :lsbdistcodename => 'wheezy',
+        :osfamily        => 'debian',
+        :puppetversion   => Puppet.version,
+      }
+    end
+    let :params do
+      {
+        :location    => 'hello.there',
+        :include_deb => false,
+      }
+    end
+
+    it { is_expected.to contain_apt__setting('list-my_source').with({
+      :ensure => 'present',
+    }).without_content(/deb-src hello.there wheezy main\n/)
+    }
+    it { is_expected.to contain_apt__setting('list-my_source').without_content(/deb hello.there wheezy main\n/) }
+  end
+
+  context 'include_src => true and include_deb => false' do
+    let :facts do
+      {
+        :lsbdistid       => 'debian',
+        :lsbdistcodename => 'wheezy',
+        :osfamily        => 'debian',
+        :puppetversion   => Puppet.version,
+      }
+    end
+    let :params do
+      {
+        :location    => 'hello.there',
+        :include_deb => false,
+        :include_src => true,
+      }
+    end
+
+    it { is_expected.to contain_apt__setting('list-my_source').with({
+      :ensure => 'present',
+    }).with_content(/deb-src hello.there wheezy main\n/)
+    }
+    it { is_expected.to contain_apt__setting('list-my_source').without_content(/deb hello.there wheezy main\n/) }
+  end
+
+  context 'include precedence' do
+    let :facts do
+      {
+        :lsbdistid       => 'debian',
+        :lsbdistcodename => 'wheezy',
+        :osfamily        => 'debian',
+        :puppetversion   => Puppet.version,
+      }
+    end
+    let :params do
+      {
+        :location    => 'hello.there',
+        :include_deb => true,
+        :include_src => false,
+        :include     => { 'deb' => false, 'src' => true },
+      }
+    end
+
+    it { is_expected.to contain_apt__setting('list-my_source').with({
+      :ensure => 'present',
+    }).with_content(/deb-src hello.there wheezy main\n/)
+    }
+    it { is_expected.to contain_apt__setting('list-my_source').without_content(/deb hello.there wheezy main\n/) }
+  end
+
   context 'ensure => absent' do
     let :facts do
       {
