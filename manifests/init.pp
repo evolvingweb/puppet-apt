@@ -72,13 +72,13 @@ class apt(
   }
 
   $sources_list_content = $_purge['sources.list'] ? {
-    false => undef,
-    true  => "# Repos managed by puppet.\n",
+    true    => "# Repos managed by puppet.\n",
+    default => undef,
   }
 
   $preferences_ensure = $_purge['preferences'] ? {
-    false => file,
-    true  => absent,
+    true    => absent,
+    default => file,
   }
 
   if $_update['frequency'] == 'always' {
