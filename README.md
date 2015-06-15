@@ -62,17 +62,6 @@ apt::key { 'puppetlabs':
 }
 ~~~
 
-You can make Apt load your key before others by adjusting the `priority` parameter (the default priority is 50).
-
-~~~puppet
-apt::key { 'puppetlabs':
-  id       => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
-  server   => 'pgp.mit.edu',
-  options  => 'http-proxy="http://proxyuser:proxypass@example.org:3128"',
-  priority => '50',
-}
-~~~
-
 ### Prioritize backports
 
 ~~~puppet
