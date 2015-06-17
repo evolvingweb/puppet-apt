@@ -23,7 +23,7 @@ describe 'apt class' do
           'preferences'    => true,
           'preferences.d'  => true,
         },
-        sources => ? $::lsbdiscodename {
+        sources => $::lsbdiscodename ? {
           'lucid' => undef,
           default => { 'puppetlabs' => {
               'ensure'   => present,
