@@ -67,7 +67,7 @@ class apt(
   if $proxy['host'] {
     apt::setting { 'conf-proxy':
       priority => '01',
-      content  => template('apt/_header.erb', 'apt/proxy.erb'),
+      content  => template('apt/_conf_header.erb', 'apt/proxy.erb'),
     }
   }
 
@@ -89,7 +89,7 @@ class apt(
 
   apt::setting { 'conf-update-stamp':
     priority => 15,
-    content  => template('apt/_header.erb', 'apt/15update-stamp.erb'),
+    content  => template('apt/_conf_header.erb', 'apt/15update-stamp.erb'),
   }
 
   file { 'sources.list':
