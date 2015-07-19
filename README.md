@@ -30,11 +30,12 @@ Apt (Advanced Package Tool) is a package manager available on Debian, Ubuntu, an
 
 ### What apt affects
 
+* Your system's `preferences.list` file and `preferences.list.d` directory
 * Your system's `sources.list` file and `sources.list.d` directory
 * System repositories
 * Authentication keys
 
-**Note:** Setting the apt module's `purge_sources_list` and `purge_sources_list_d` parameters to 'true' will destroy any existing content that you haven't declared through Puppet. The default for these parameters is 'false'.
+**Note:** This module offers `purge` parameters which will cause the module to destroy any configuration on the node's `sources.list(.d)` and `preferences.list(.d)` that you haven't declared through Puppet. The default for these parameters is 'false'.
 
 ### Beginning with apt
 
