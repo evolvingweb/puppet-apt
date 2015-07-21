@@ -45,7 +45,7 @@ define apt::ppa(
       unless      => "/usr/bin/test -s ${::apt::sources_list_d}/${sources_list_d_filename}",
       user        => 'root',
       logoutput   => 'on_failure',
-      notify      => Exec['apt_update'],
+      notify      => Class['apt::update'],
       require     => $_require,
     }
 
@@ -57,7 +57,7 @@ define apt::ppa(
   else {
     file { "${::apt::sources_list_d}/${sources_list_d_filename}":
       ensure => 'absent',
-      notify => Exec['apt_update'],
+      notify => Class['apt::update'],
     }
   }
 }

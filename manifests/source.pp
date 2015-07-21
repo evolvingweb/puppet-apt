@@ -23,7 +23,8 @@ define apt::source(
   validate_bool($allow_unsigned)
   validate_hash($include)
 
-  include 'apt::params'
+  # This is needed for compat with 1.8.x
+  include ::apt
 
   $_before = Apt::Setting["list-${title}"]
 
