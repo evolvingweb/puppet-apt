@@ -39,7 +39,7 @@ class apt::update {
       }
     }
     default: {
-      #catches 'recluctantly', and any other value (which should not occur).
+      #catches 'reluctantly', and any other value (which should not occur).
       #do nothing.
       $_kick_apt = false
     }
