@@ -1,17 +1,7 @@
 require 'beaker-rspec'
+require 'beaker/puppet_install_helper'
 
-# Install Puppet
-unless ENV['RS_PROVISION'] == 'no'
-  # This will install the latest available package on el and deb based
-  # systems fail on windows and osx, and install via gem on other *nixes
-  foss_opts = { :default_action => 'gem_install' }
-
-  if default.is_pe?; then install_pe; else install_puppet( foss_opts ); end
-
-  hosts.each do |host|
-    on host, "mkdir -p #{host['distmoduledir']}"
-  end
-end
+run_puppet_install_helper
 
 UNSUPPORTED_PLATFORMS = ['RedHat','Suse','windows','AIX','Solaris']
 

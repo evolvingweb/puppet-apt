@@ -3,16 +3,16 @@ describe 'apt' do
   let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy', :puppetversion   => Puppet.version} }
 
   context 'defaults' do
-    it { is_expected.to contain_file('sources.list').that_notifies('Exec[apt_update]').only_with({
+    it { is_expected.to contain_file('sources.list').that_notifies('Class[Apt::Update]').only_with({
       :ensure  => 'file',
       :path    => '/etc/apt/sources.list',
       :owner   => 'root',
       :group   => 'root',
       :mode    => '0644',
-      :notify  => 'Exec[apt_update]',
+      :notify  => 'Class[Apt::Update]',
     })}
 
-    it { is_expected.to contain_file('sources.list.d').that_notifies('Exec[apt_update]').only_with({
+    it { is_expected.to contain_file('sources.list.d').that_notifies('Class[Apt::Update]').only_with({
       :ensure  => 'directory',
       :path    => '/etc/apt/sources.list.d',
       :owner   => 'root',
@@ -20,19 +20,19 @@ describe 'apt' do
       :mode    => '0644',
       :purge   => false,
       :recurse => false,
-      :notify  => 'Exec[apt_update]',
+      :notify  => 'Class[Apt::Update]',
     })}
 
-    it { is_expected.to contain_file('preferences').that_notifies('Exec[apt_update]').only_with({
+    it { is_expected.to contain_file('preferences').that_notifies('Class[Apt::Update]').only_with({
       :ensure  => 'file',
       :path    => '/etc/apt/preferences',
       :owner   => 'root',
       :group   => 'root',
       :mode    => '0644',
-      :notify  => 'Exec[apt_update]',
+      :notify  => 'Class[Apt::Update]',
     })}
 
-    it { is_expected.to contain_file('preferences.d').that_notifies('Exec[apt_update]').only_with({
+    it { is_expected.to contain_file('preferences.d').that_notifies('Class[Apt::Update]').only_with({
       :ensure  => 'directory',
       :path    => '/etc/apt/preferences.d',
       :owner   => 'root',
@@ -40,7 +40,7 @@ describe 'apt' do
       :mode    => '0644',
       :purge   => false,
       :recurse => false,
-      :notify  => 'Exec[apt_update]',
+      :notify  => 'Class[Apt::Update]',
     })}
 
     it 'should lay down /etc/apt/apt.conf.d/15update-stamp' do

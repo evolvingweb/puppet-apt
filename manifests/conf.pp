@@ -13,6 +13,6 @@ define apt::conf (
   apt::setting { "conf-${name}":
     ensure   => $ensure,
     priority => $priority,
-    content  => template('apt/_header.erb', 'apt/conf.erb'),
+    content  => template('apt/_conf_header.erb', 'apt/conf.erb'),
   }
 }

@@ -47,7 +47,7 @@ define apt::setting (
   $_ext  = $::apt::params::config_files[$setting_type]['ext']
 
   if $notify_update {
-    $_notify = Exec['apt_update']
+    $_notify = Class['apt::update']
   } else {
     $_notify = undef
   }

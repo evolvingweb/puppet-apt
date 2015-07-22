@@ -16,25 +16,25 @@ describe 'apt::setting' do
 
     context 'with title=conf-teddybear ' do
       let(:params) { default_params }
-      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]') }
+      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Class[Apt::Update]') }
     end
 
     context 'with title=pref-teddybear' do
       let(:title) { 'pref-teddybear' }
       let(:params) { default_params }
-      it { is_expected.to contain_file('/etc/apt/preferences.d/50teddybear').that_notifies('Exec[apt_update]') }
+      it { is_expected.to contain_file('/etc/apt/preferences.d/50teddybear').that_notifies('Class[Apt::Update]') }
     end
 
     context 'with title=list-teddybear' do
       let(:title) { 'list-teddybear' }
       let(:params) { default_params }
-      it { is_expected.to contain_file('/etc/apt/sources.list.d/teddybear.list').that_notifies('Exec[apt_update]') }
+      it { is_expected.to contain_file('/etc/apt/sources.list.d/teddybear.list').that_notifies('Class[Apt::Update]') }
     end
 
     context 'with source' do
       let(:params) { { :source => 'puppet:///la/die/dah' } }
       it {
-        is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]').with({
+        is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Class[Apt::Update]').with({
         :ensure => 'file',
         :owner  => 'root',
         :group  => 'root',
@@ -45,7 +45,7 @@ describe 'apt::setting' do
 
     context 'with content' do
       let(:params) { default_params }
-      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]').with({
+      it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Class[Apt::Update]').with({
         :ensure  => 'file',
         :owner   => 'root',
         :group   => 'root',
@@ -103,12 +103,12 @@ describe 'apt::setting' do
 
   describe 'with priority=100' do
     let(:params) { default_params.merge({ :priority => 100 }) }
-    it { is_expected.to contain_file('/etc/apt/apt.conf.d/100teddybear').that_notifies('Exec[apt_update]') }
+    it { is_expected.to contain_file('/etc/apt/apt.conf.d/100teddybear').that_notifies('Class[Apt::Update]') }
   end
 
   describe 'with ensure=absent' do
     let(:params) { default_params.merge({ :ensure => 'absent' }) }
-    it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Exec[apt_update]').with({
+    it { is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Class[Apt::Update]').with({
       :ensure => 'absent',
     })}
   end

@@ -11,6 +11,21 @@ describe 'apt class' do
   context 'all the things' do
     it 'should work with no errors' do
       pp = <<-EOS
+      if $::lsbdistcodename == 'lucid' {
+        $sources = undef
+      } else {
+        $sources = {
+          'puppetlabs' => {
+            'ensure'   => present,
+            'location' => 'http://apt.puppetlabs.com',
+            'repos'    => 'main',
+            'key'      => {
+              'id'     => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
+              'server' => 'pgp.mit.edu',
+            },
+          },
+        }
+      }
       class { 'apt':
         update => {
           'frequency' => 'always',
@@ -23,17 +38,7 @@ describe 'apt class' do
           'preferences'    => true,
           'preferences.d'  => true,
         },
-        sources => {
-          'puppetlabs' => {
-            'ensure'   => present,
-            'location' => 'http://apt.puppetlabs.com',
-            'repos'    => 'main',
-            'key'      => {
-              'id'     => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
-              'server' => 'pgp.mit.edu',
-            },
-          },
-        },
+        sources => $sources,
       }
       EOS
 
