@@ -1,3 +1,14 @@
+##2015-07-28 - Supported Release 2.1.1
+###Summary
+
+This release includes a few bugfixes.
+
+####Bugfixes
+- Fix incorrect use of anchoring (MODULES-2190)
+- Use correct comment type for apt.conf files
+- Test fixes
+- Documentation fixes
+
 ##2015-06-16 - Supported Release 2.1.0
 ###Summary
 
