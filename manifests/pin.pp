@@ -72,8 +72,9 @@ define apt::pin(
   $file_name = regsubst($title, '[^0-9a-z\-_\.]', '_', 'IG')
 
   apt::setting { "pref-${file_name}":
-    ensure   => $ensure,
-    priority => $order,
-    content  => template('apt/_header.erb', 'apt/pin.pref.erb'),
+    ensure        => $ensure,
+    priority      => $order,
+    content       => template('apt/_header.erb', 'apt/pin.pref.erb'),
+    notify_update => false,
   }
 }
