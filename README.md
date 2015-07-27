@@ -35,7 +35,7 @@ Apt (Advanced Package Tool) is a package manager available on Debian, Ubuntu, an
 * System repositories
 * Authentication keys
 
-**Note:** This module offers `purge` parameters which will cause the module to destroy any configuration on the node's `sources.list(.d)` and `preferences.list(.d)` that you haven't declared through Puppet. The default for these parameters is 'false'.
+**Note:** This module offers `purge` parameters which, if set to 'true', **destroy** any configuration on the node's `sources.list(.d)` and `preferences.list(.d)` that you haven't declared through Puppet. The default for these parameters is 'false'.
 
 ### Beginning with apt
 
@@ -458,7 +458,7 @@ This module is tested and officially supported on Debian 6 and 7 and Ubuntu 10.0
 
 ### Adding new sources or PPAs
 
-If you are adding a new source or PPA and trying to install packages from the new source or PPA on the same puppet run, in addition to depending on the `Apt::Source` or the `Apt::Ppa`, your `package` resource should depend on `Class['apt::update']`. You can also add [collectors](https://docs.puppetlabs.com/puppet/latest/reference/lang_collectors.html) to ensure all packages happen after `apt::update`, but this can lead to dependency cycles and has implications for [virtual resources](https://docs.puppetlabs.com/puppet/latest/reference/lang_collectors.html#behavior)
+If you are adding a new source or PPA and trying to install packages from the new source or PPA on the same Puppet run, your `package` resource should depend on `Class['apt::update']`, in addition to depending on the `Apt::Source` or the `Apt::Ppa`. You can also add [collectors](https://docs.puppetlabs.com/puppet/latest/reference/lang_collectors.html) to ensure that all packages happen after `apt::update`, but this can lead to dependency cycles and has implications for [virtual resources](https://docs.puppetlabs.com/puppet/latest/reference/lang_collectors.html#behavior).
 
 ~~~puppet
 Class['apt::update'] -> Package<| |>
