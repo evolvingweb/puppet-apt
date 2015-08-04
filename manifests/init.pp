@@ -45,6 +45,9 @@ class apt(
   $_purge = merge($::apt::purge_defaults, $purge)
 
   validate_hash($proxy)
+  if $proxy['ensure'] {
+    validate_re($proxy['ensure'], ['file', 'present', 'absent'])
+  }
   if $proxy['host'] {
     validate_string($proxy['host'])
   }
@@ -64,8 +67,9 @@ class apt(
   validate_hash($settings)
   validate_hash($ppas)
 
-  if $proxy['host'] {
+  if $_proxy['ensure'] == 'absent' or $_proxy['host'] {
     apt::setting { 'conf-proxy':
+      ensure   => $_proxy['ensure'],
       priority => '01',
       content  => template('apt/_conf_header.erb', 'apt/proxy.erb'),
     }
