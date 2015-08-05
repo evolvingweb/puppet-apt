@@ -91,6 +91,14 @@ describe 'apt' do
         /Acquire::https::proxy "https:\/\/localhost:8080\/";/
       )}
     end
+
+    context 'ensure=absent' do
+      let(:params) { { :proxy => { 'ensure' => 'absent'} } }
+      it { is_expected.to contain_apt__setting('conf-proxy').with({
+        :ensure   => 'absent',
+        :priority => '01',
+      })}
+    end
   end
   context 'lots of non-defaults' do
     let :params do

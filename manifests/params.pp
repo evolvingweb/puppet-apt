@@ -76,9 +76,10 @@ class apt::params {
   }
 
   $proxy_defaults = {
-    'host'  => undef,
-    'port'  => 8080,
-    'https' => false,
+    'ensure' => undef,
+    'host'   => undef,
+    'port'   => 8080,
+    'https'  => false,
   }
 
   $purge_defaults = {
