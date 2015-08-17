@@ -291,6 +291,8 @@ Specifies a custom Apt configuration file.
 
 * `priority`: *Optional.* Determines the order in which Apt processes the configuration file. Files with lower priority numbers are loaded first. Valid options: a string containing an integer. Default: '50'.
 
+* `notify_update`: *Optional.* Specifies whether to trigger an `apt-get update` run. Valid options: 'true' and 'false'. Default: 'true'.
+
 #### Define: `apt::key`
 
 Manages the GPG keys that Apt uses to authenticate packages.
@@ -323,7 +325,7 @@ The `apt::key` define makes use of the `apt_key` type, but includes extra functi
 
 #### Define: `apt::pin`
 
-Manages Apt pins.
+Manages Apt pins. Does not trigger an `apt-get update` run.
 
 **Note:** For context on these parameters, we recommend reading the man page ['apt_preferences(5)'](http://linux.die.net/man/5/apt_preferences)
 

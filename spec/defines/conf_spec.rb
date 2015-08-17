@@ -9,11 +9,14 @@ describe 'apt::conf', :type => :define do
   end
 
   describe "when creating an apt preference" do
-    let :params do
+    let :default_params do
       {
         :priority => '00',
         :content  => "Apt::Install-Recommends 0;\nApt::AutoRemove::InstallRecommends 1;\n"
       }
+    end
+    let :params do
+      default_params
     end
 
     let :filename do
@@ -28,6 +31,22 @@ describe 'apt::conf', :type => :define do
           'mode'      => '0644',
         })
       }
+
+    context "with notify_update = true (default)" do
+      let :params do
+        default_params
+      end
+      it { is_expected.to contain_apt__setting("conf-#{title}").with_notify_update(true) }
+    end
+
+    context "with notify_update = false" do
+      let :params do
+        default_params.merge({
+          :notify_update => false
+        })
+      end
+      it { is_expected.to contain_apt__setting("conf-#{title}").with_notify_update(false) }
+    end
   end
 
   describe "when creating a preference without content" do
