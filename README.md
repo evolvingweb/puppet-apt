@@ -30,12 +30,12 @@ Apt (Advanced Package Tool) is a package manager available on Debian, Ubuntu, an
 
 ### What apt affects
 
-* Your system's `preferences.list` file and `preferences.list.d` directory
+* Your system's `preferences` file and `preferences.d` directory
 * Your system's `sources.list` file and `sources.list.d` directory
 * System repositories
 * Authentication keys
 
-**Note:** This module offers `purge` parameters which, if set to 'true', **destroy** any configuration on the node's `sources.list(.d)` and `preferences.list(.d)` that you haven't declared through Puppet. The default for these parameters is 'false'.
+**Note:** This module offers `purge` parameters which, if set to 'true', **destroy** any configuration on the node's `sources.list(.d)` and `preferences(.d)` that you haven't declared through Puppet. The default for these parameters is 'false'.
 
 ### Beginning with apt
 
@@ -237,9 +237,9 @@ Main class, includes all other classes.
 
   * 'sources.list.d': Specifies whether to purge any unmanaged entries from `sources.list.d`. Valid options: 'true' and 'false'. Default: 'false'.
 
-  * 'preferences.list': Specifies whether to purge any unmanaged entries from `preferences.list`. Valid options: 'true' and 'false'. Default: 'false'.
+  * 'preferences': Specifies whether to purge any unmanaged entries from `preferences`. Valid options: 'true' and 'false'. Default: 'false'.
 
-  * 'preferences.list.d': Specifies whether to purge any unmanaged entries from `preferences.list.d`. Valid options: 'true' and 'false'. Default: 'false'.
+  * 'preferences.d': Specifies whether to purge any unmanaged entries from `preferences.d`. Valid options: 'true' and 'false'. Default: 'false'.
 
 * `settings`: Creates new `apt::setting` resources. Valid options: a hash to be passed to the [`create_resources` function](https://docs.puppetlabs.com/references/latest/function.html#createresources). Default: {}.
 
