@@ -23,12 +23,6 @@ class apt::backports (
     }
     $_key = $key
   }
-  unless is_hash($pin) {
-    unless (is_numeric($pin) or is_string($pin)) {
-      fail('pin must be either a string, number or hash')
-    }
-  }
-
   if ($::apt::xfacts['lsbdistid'] == 'debian' or $::apt::xfacts['lsbdistid'] == 'ubuntu') {
     unless $location {
       $_location = $::apt::backports['location']
@@ -48,12 +42,24 @@ class apt::backports (
     }
   }
 
+  if is_hash($pin) {
+    $_pin = $pin
+  } elsif is_numeric($pin) or is_string($pin) {
+    # apt::source defaults to pinning to origin, but we should pin to release
+    # for backports
+    $_pin = {
+      'priority' => $pin,
+      'release'  => $_release,
+    }
+  } else {
+    fail('pin must be either a string, number or hash')
+  }
+
   apt::source { 'backports':
     location => $_location,
     release  => $_release,
     repos    => $_repos,
     key      => $_key,
-    pin      => $pin,
+    pin      => $_pin,
   }
-
 }
