@@ -150,16 +150,21 @@ apt::source { 'puppetlabs':
 
 ### Configure Apt from Hiera
 
+Instead of specifying your sources directly as resources, you can instead just
+include the `apt` class, which will pick up the values automatically from
+hiera.
+
 ~~~yaml
 apt::sources:
   'debian_unstable':
+    comment: 'This is the iWeb Debian unstable mirror'
     location: 'http://debian.mirror.iweb.ca/debian/'
     release: 'unstable'
     repos: 'main contrib non-free'
-    key:
-      id: '9AA38DCD55BE302B'
-      server: 'subkeys.pgp.net'
     pin: '-10'
+    key:
+      id: 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553'
+      server: 'subkeys.pgp.net'
     include:
       src: true
       deb: true
