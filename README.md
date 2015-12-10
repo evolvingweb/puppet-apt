@@ -467,12 +467,14 @@ Manages the GPG keys that Apt uses to authenticate packages.
 
 This module is tested and officially supported on Debian 6 and 7 and Ubuntu 10.04, 12.04, and 14.04. Testing on other platforms has been light and cannot be guaranteed.
 
+This module is not designed to be split across [run stages](https://docs.puppetlabs.com/puppet/latest/reference/lang_run_stages.html).
+
 ### Adding new sources or PPAs
 
 If you are adding a new source or PPA and trying to install packages from the new source or PPA on the same Puppet run, your `package` resource should depend on `Class['apt::update']`, in addition to depending on the `Apt::Source` or the `Apt::Ppa`. You can also add [collectors](https://docs.puppetlabs.com/puppet/latest/reference/lang_collectors.html) to ensure that all packages happen after `apt::update`, but this can lead to dependency cycles and has implications for [virtual resources](https://docs.puppetlabs.com/puppet/latest/reference/lang_collectors.html#behavior).
 
 ~~~puppet
-Class['apt::update'] -> Package<| |>
+Class['apt::update'] -> Package <| provider == 'apt' |>
 ~~~
 
 ## Development
