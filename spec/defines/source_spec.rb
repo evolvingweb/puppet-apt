@@ -227,7 +227,7 @@ describe 'apt::source' do
 
     it { is_expected.to contain_apt__setting('list-my_source').with({
       :ensure => 'present',
-    }).with_content(/# my_source\ndeb-src \[arch=x86_64 \] hello.there wheezy main\n/)
+    }).with_content(/# my_source\ndeb-src \[arch=x86_64\] hello.there wheezy main\n/)
     }
   end
 
