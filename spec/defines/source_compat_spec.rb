@@ -117,7 +117,7 @@ describe 'apt::source', :type => :define do
       }
     end
 
-    it { is_expected.to contain_apt__setting('list-my_source').with_content(/# my_source\ndeb \[arch=x86_64 \] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ wheezy main\n/)
+    it { is_expected.to contain_apt__setting('list-my_source').with_content(/# my_source\ndeb \[arch=x86_64\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ wheezy main\n/)
     }
   end
 
