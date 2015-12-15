@@ -140,7 +140,7 @@ class apt::params {
           $ppa_options        = '-y'
           $ppa_package        = 'python-software-properties'
         }
-        'trusty', 'utopic', 'vivid': {
+        'trusty', 'utopic', 'vivid', 'wily': {
           $ppa_options        = '-y'
           $ppa_package        = 'software-properties-common'
         }
