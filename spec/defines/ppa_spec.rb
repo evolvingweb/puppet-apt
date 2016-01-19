@@ -16,12 +16,12 @@ describe 'apt::ppa' do
       }
     end
 
-    let(:title) { 'ppa:needs/such.substitution/wow' }
+    let(:title) { 'ppa:needs/such.substitution/wow+type' }
     it { is_expected.to_not contain_package('python-software-properties') }
-    it { is_expected.to contain_exec('add-apt-repository-ppa:needs/such.substitution/wow').that_notifies('Class[Apt::Update]').with({
+    it { is_expected.to contain_exec('add-apt-repository-ppa:needs/such.substitution/wow+type').that_notifies('Class[Apt::Update]').with({
       :environment => [],
-      :command     => '/usr/bin/add-apt-repository -y ppa:needs/such.substitution/wow',
-      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/needs-such_substitution-wow-natty.list',
+      :command     => '/usr/bin/add-apt-repository -y ppa:needs/such.substitution/wow+type',
+      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/needs-such_substitution-wow_type-natty.list',
       :user        => 'root',
       :logoutput   => 'on_failure',
     })
