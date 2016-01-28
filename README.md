@@ -2,25 +2,30 @@
 
 #### Table of Contents
 
-1. [Overview](#overview)
+
 2. [Module Description - What the module does and why it is useful](#module-description)
 3. [Setup - The basics of getting started with apt](#setup)
     * [What apt affects](#what-apt-affects)
     * [Beginning with apt](#beginning-with-apt)
 4. [Usage - Configuration options and additional functionality](#usage)
+    * [Add GPG keys](#add-gpg-keys)
+    * [Prioritize backports](#prioritize-backports)
+    * [Update the list of packages](#update-the-list-of-packages)
+    * [Pin a specific release](#pin-a-specific-release)
+    * [Add a Personal Package Archive repository](#add-a-personal-package-archive-repository)
+    * [Configure Apt from Hiera](#configure-apt-from-hiera)
+    * [Replace the default sources.list file](#replace-the-default-sourceslist-file)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
     * [Classes](#classes)
-    * [Defines](#defines)
+    * [Defined Types](#defined-types)
     * [Types](#types)
     * [Facts](#facts)
 6. [Limitations - OS compatibility, etc.](#limitations)
 7. [Development - Guide for contributing to the module](#development)
 
-## Overview
+## Module Description
 
 The apt module lets you use Puppet to manage Apt sources, keys, and other configuration options.
-
-## Module Description
 
 Apt (Advanced Package Tool) is a package manager available on Debian, Ubuntu, and several other operating systems. The apt module provides a series of classes, defines, types, and facts to help you automate Apt package management.
 
@@ -41,11 +46,11 @@ Apt (Advanced Package Tool) is a package manager available on Debian, Ubuntu, an
 
 To use the apt module with default parameters, declare the `apt` class.
 
-~~~puppet
+```puppet
 include apt
-~~~
+```
 
-**Note:** The main `apt` class is required by all other classes, types, and defines in this module. You must declare it whenever you use the module.
+**Note:** The main `apt` class is required by all other classes, types, and defined types in this module. You must declare it whenever you use the module.
 
 ## Usage
 
@@ -55,21 +60,21 @@ include apt
 
 Declare the `apt::key` class:
 
-~~~puppet
+```puppet
 apt::key { 'puppetlabs':
   id      => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
   server  => 'pgp.mit.edu',
   options => 'http-proxy="http://proxyuser:proxypass@example.org:3128"',
 }
-~~~
+```
 
 ### Prioritize backports
 
-~~~puppet
+```puppet
 class { 'apt::backports':
   pin => 500,
 }
-~~~
+```
 
 By default, the `apt::backports` class drops a pin file for backports, pinning it to a priority of 200. This is lower than the normal default of 500, so packages with `ensure => latest` don't get upgraded from backports without your explicit permission.
 
@@ -79,25 +84,25 @@ If you raise the priority through the `pin` parameter to 500, normal policy goes
 
 By default, Puppet runs `apt-get update` on the first Puppet run after you include the `apt` class, and anytime `notify  => Exec['apt_update']` occurs; i.e., whenever config files get updated or other relevant changes occur. If you set `update['frequency']` to 'always', the update runs on every Puppet run. You can also set `update['frequency']` to 'daily' or 'weekly':
 
-~~~puppet
+```puppet
 class { 'apt':
   update => {
     frequency => 'daily',
   },
 }
-~~~
+```
 
 ### Pin a specific release
 
-~~~puppet
+```puppet
 apt::pin { 'karmic': priority => 700 }
 apt::pin { 'karmic-updates': priority => 700 }
 apt::pin { 'karmic-security': priority => 700 }
-~~~
+```
 
 You can also specify more complex pins using distribution properties:
 
-~~~puppet
+```puppet
 apt::pin { 'stable':
   priority        => -10,
   originator      => 'Debian',
@@ -105,19 +110,19 @@ apt::pin { 'stable':
   component       => 'main',
   label           => 'Debian'
 }
-~~~
+```
 
 To pin multiple packages, pass them to the `packages` parameter as an array or a space-delimited string.
 
-### Add a PPA (Personal Package Archive) repository
+### Add a Personal Package Archive repository
 
-~~~puppet
+```puppet
 apt::ppa { 'ppa:drizzle-developers/ppa': }
-~~~
+```
 
 ### Add an Apt source to `/etc/apt/sources.list.d/`
 
-~~~puppet
+```puppet
 apt::source { 'debian_unstable':
   comment  => 'This is the iWeb Debian unstable mirror',
   location => 'http://debian.mirror.iweb.ca/debian/',
@@ -133,11 +138,11 @@ apt::source { 'debian_unstable':
     'deb' => true,
   },
 }
-~~~
+```
 
 To use the Puppet Labs Apt repository as a source:
 
-~~~puppet
+```puppet
 apt::source { 'puppetlabs':
   location => 'http://apt.puppetlabs.com',
   repos    => 'main',
@@ -146,7 +151,7 @@ apt::source { 'puppetlabs':
     'server' => 'pgp.mit.edu',
   },
 },
-~~~
+```
 
 ### Configure Apt from Hiera
 
@@ -154,7 +159,7 @@ Instead of specifying your sources directly as resources, you can instead just
 include the `apt` class, which will pick up the values automatically from
 hiera.
 
-~~~yaml
+```yaml
 apt::sources:
   'debian_unstable':
     comment: 'This is the iWeb Debian unstable mirror'
@@ -175,7 +180,40 @@ apt::sources:
     key:
       id: '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
       server: 'pgp.mit.edu'
-~~~
+```
+
+### Replace the default sources.list file
+
+To replace the default `/etc/apt/sources.list` file on standard Ubuntu machines:
+
+```puppet
+apt::source { "archive.ubuntu.com-${lsbdistcodename}":
+  location => 'http://archive.ubuntu.com/ubuntu',
+  key      => '630239CC130E1A7FD81A27B140976EAF437D05B5',
+  repos    => 'main universe multiverse restricted',
+}
+ 
+apt::source { "archive.ubuntu.com-${lsbdistcodename}-security":
+  location => 'http://archive.ubuntu.com/ubuntu',
+  key      => '630239CC130E1A7FD81A27B140976EAF437D05B5',
+  repos    => 'main universe multiverse restricted',
+  release  => "${lsbdistcodename}-security"
+}
+ 
+apt::source { "archive.ubuntu.com-${lsbdistcodename}-updates":
+  location => 'http://archive.ubuntu.com/ubuntu',
+  key      => '630239CC130E1A7FD81A27B140976EAF437D05B5',
+  repos    => 'main universe multiverse restricted',
+  release  => "${lsbdistcodename}-updates"
+}
+ 
+apt::source { "archive.ubuntu.com-${lsbdistcodename}-backports":
+ location => 'http://archive.ubuntu.com/ubuntu',
+ key      => '630239CC130E1A7FD81A27B140976EAF437D05B5',
+ repos    => 'main universe multiverse restricted',
+ release  => "${lsbdistcodename}-backports"
+}
+```
 
 ## Reference
 
@@ -191,14 +229,14 @@ apt::sources:
 * `apt::params`: Provides defaults for the apt module parameters.
 * `apt::update`: Updates the list of available packages using `apt-get update`.
 
-### Defines
+### Defined Types
 
-* [`apt::conf`](#define-aptconf)
-* [`apt::key`](#define-aptkey)
-* [`apt::pin`](#define-aptpin)
-* [`apt::ppa`](#define-aptppa)
-* [`apt::setting`](#define-aptsetting)
-* [`apt::source`](#define-aptsource)
+* [`apt::conf`](#defined-type-aptconf)
+* [`apt::key`](#defined-type-aptkey)
+* [`apt::pin`](#defined-type-aptpin)
+* [`apt::ppa`](#defined-type-aptppa)
+* [`apt::setting`](#defined-type-aptsetting)
+* [`apt::source`](#defined-type-aptsource)
 
 ### Types
 
@@ -266,7 +304,7 @@ Manages backports.
 
 ##### Parameters (all optional on Debian and Ubuntu; all required on other operating systems, except where specified)
 
-* `key`: Specifies a key to authenticate the backports. Valid options: a string to be passed to the `id` parameter of the `apt::key` define, or a hash of `parameter => value` pairs to be passed to `apt::key`'s `id`, `server`, `content`, `source`, and/or `options` parameters. Defaults:
+* `key`: Specifies a key to authenticate the backports. Valid options: a string to be passed to the `id` parameter of the `apt::key` defined type, or a hash of `parameter => value` pairs to be passed to `apt::key`'s `id`, `server`, `content`, `source`, and/or `options` parameters. Defaults:
 
   * Debian: 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553'
   * Ubuntu: '630239CC130E1A7FD81A27B140976EAF437D05B5'
@@ -277,7 +315,7 @@ Manages backports.
   * Debian (other): 'http://httpredir.debian.org/debian'
   * Ubuntu: 'http://archive.ubuntu.com/ubuntu'
 
-* `pin`: *Optional.* Specifies a pin priority for the backports. Valid options: a number or string to be passed to the `id` parameter of the `apt::pin` define, or a hash of `parameter => value` pairs to be passed to `apt::pin`'s corresponding parameters. Default: '200'.
+* `pin`: *Optional.* Specifies a pin priority for the backports. Valid options: a number or string to be passed to the `id` parameter of the `apt::pin` defined type, or a hash of `parameter => value` pairs to be passed to `apt::pin`'s corresponding parameters. Default: '200'.
 
 * `release`: Specifies a distribution of the Apt repository containing the backports to manage. Valid options: a string containing the release, used in populating the `source.list` configuration file. Default: on Debian and Ubuntu, '${lsbdistcodename}-backports'. We recommend keeping this default, except on other operating systems.
 
@@ -286,7 +324,7 @@ Manages backports.
   * Debian: 'main contrib non-free'
   * Ubuntu: 'main universe multiverse restricted'
 
-#### Define: `apt::conf`
+#### Defined Type: `apt::conf`
 
 Specifies a custom Apt configuration file.
 
@@ -300,11 +338,11 @@ Specifies a custom Apt configuration file.
 
 * `notify_update`: *Optional.* Specifies whether to trigger an `apt-get update` run. Valid options: 'true' and 'false'. Default: 'true'.
 
-#### Define: `apt::key`
+#### Defined Type: `apt::key`
 
 Manages the GPG keys that Apt uses to authenticate packages.
 
-The `apt::key` define makes use of the `apt_key` type, but includes extra functionality to help prevent duplicate keys.
+The `apt::key` defined type makes use of the `apt_key` type, but includes extra functionality to help prevent duplicate keys.
 
 ##### Parameters (all optional)
 
@@ -330,7 +368,7 @@ The `apt::key` define makes use of the `apt_key` type, but includes extra functi
 
 * `key_options`: Passes additional options to `apt-key adv --keyserver-options`. Valid options: a string. Default: undef. **Note** This parameter is deprecated and will be removed in a future release.
 
-#### Define: `apt::pin`
+#### Defined Type: `apt::pin`
 
 Manages Apt pins. Does not trigger an `apt-get update` run.
 
@@ -364,7 +402,7 @@ Manages Apt pins. Does not trigger an `apt-get update` run.
 
 * `version`: Tells Apt to prefer a specified package version or version range. Valid options: a string. Default: ''.
 
-#### Define: `apt::ppa`
+#### Defined Type: `apt::ppa`
 
 Manages PPA repositories using `add-apt-repository`. Not supported on Debian.
 
@@ -387,7 +425,7 @@ Manages PPA repositories using `add-apt-repository`. Not supported on Debian.
 
 * `release`: *Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint).* Specifies the operating system of your node. Valid options: a string containing a valid LSB distribution codename. Default: "$lsbdistcodename".
 
-#### Define: `apt:setting`
+#### Defined Type: `apt:setting`
 
 Manages Apt configuration files.
 
@@ -403,7 +441,7 @@ Manages Apt configuration files.
 
 * `source`: *Required, unless `content` is set.* Specifies a source file to supply the content of the configuration file. Cannot be used in combination with `content`. Valid options: see the `source` attribute of [Puppet's native `file` type](https://docs.puppetlabs.com/references/latest/type.html#file-attribute-source). Default: undef.
 
-#### Define: `apt::source`
+#### Defined Type: `apt::source`
 
 Manages the Apt sources in `/etc/apt/sources.list.d/`.
 
@@ -417,7 +455,7 @@ Manages the Apt sources in `/etc/apt/sources.list.d/`.
 
 * `ensure`: Specifies whether the Apt source file should exist. Valid options: 'present' and 'absent'. Default: 'present'.
 
-* `key`: Creates a declaration of the apt::key define Valid options: a string to be passed to the `id` parameter of the `apt::key` define, or a hash of `parameter => value` pairs to be passed to `apt::key`'s `id`, `server`, `content`, `source`, and/or `options` parameters. Default: undef.
+* `key`: Creates a declaration of the apt::key defined type. Valid options: a string to be passed to the `id` parameter of the `apt::key` defined type, or a hash of `parameter => value` pairs to be passed to `apt::key`'s `id`, `server`, `content`, `source`, and/or `options` parameters. Default: undef.
 
 * `include`: Configures include options. Valid options: a hash of available keys. Default: {}. Available keys are:
 
@@ -427,7 +465,7 @@ Manages the Apt sources in `/etc/apt/sources.list.d/`.
 
 * `location`: *Required, unless `ensure` is set to 'absent'.* Specifies an Apt repository. Valid options: a string containing a repository URL. Default: undef.
 
-* `pin`: Creates a declaration of the apt::pin define Valid options: a number or string to be passed to the `id` parameter of the `apt::pin` define, or a hash of `parameter => value` pairs to be passed to `apt::pin`'s corresponding parameters. Default: undef.
+* `pin`: Creates a declaration of the apt::pin defined type. Valid options: a number or string to be passed to the `id` parameter of the `apt::pin` defined type, or a hash of `parameter => value` pairs to be passed to `apt::pin`'s corresponding parameters. Default: undef.
 
 * `release`: Specifies a distribution of the Apt repository. Valid options: a string. Default: "$lsbdistcodename".
 
@@ -451,7 +489,7 @@ Manages the Apt sources in `/etc/apt/sources.list.d/`.
 
 Manages the GPG keys that Apt uses to authenticate packages.
 
-**Note:** In most cases, we recommend using the `apt::key` define. It makes use of the `apt_key` type, but includes extra functionality to help prevent duplicate keys.
+**Note:** In most cases, we recommend using the `apt::key` defined type. It makes use of the `apt_key` type, but includes extra functionality to help prevent duplicate keys.
 
 ##### Parameters (all optional)
 
@@ -473,9 +511,9 @@ This module is not designed to be split across [run stages](https://docs.puppetl
 
 If you are adding a new source or PPA and trying to install packages from the new source or PPA on the same Puppet run, your `package` resource should depend on `Class['apt::update']`, in addition to depending on the `Apt::Source` or the `Apt::Ppa`. You can also add [collectors](https://docs.puppetlabs.com/puppet/latest/reference/lang_collectors.html) to ensure that all packages happen after `apt::update`, but this can lead to dependency cycles and has implications for [virtual resources](https://docs.puppetlabs.com/puppet/latest/reference/lang_collectors.html#behavior).
 
-~~~puppet
+```puppet
 Class['apt::update'] -> Package <| provider == 'apt' |>
-~~~
+```
 
 ## Development
 Puppet Labs modules on the Puppet Forge are open projects, and community contributions are essential for keeping them great. We can't access the huge number of platforms and myriad hardware, software, and deployment configurations that Puppet is intended to serve. We want to keep it as easy as possible to contribute changes so that our modules work in your environment. There are a few guidelines that we need contributors to follow so that we can have a chance of keeping on top of things.
