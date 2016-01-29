@@ -184,7 +184,7 @@ apt::sources:
 
 ### Replace the default sources.list file
 
-To replace the default `/etc/apt/sources.list` file on standard Ubuntu machines:
+The following example replaces the default `/etc/apt/sources.list`. Along with this code, be sure to use the `purge` parameter, or you might get duplicate source warnings when running Apt.
 
 ```puppet
 apt::source { "archive.ubuntu.com-${lsbdistcodename}":
