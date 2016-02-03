@@ -75,7 +75,7 @@ describe 'apt::ppa' do
   describe 'package_manage => true, multiple ppas, MODULES-2873' do
     let :pre_condition do
       'class { "apt": }
-       apt::ppa {"ppa:foo":
+       apt::ppa {"ppa:user/foo":
          package_manage => true
        }'
     end
@@ -95,18 +95,18 @@ describe 'apt::ppa' do
       }
     end
 
-    let(:title) { 'ppa:bar' }
+    let(:title) { 'ppa:user/bar' }
     it { is_expected.to contain_package('python-software-properties') }
-    it { is_expected.to contain_exec('add-apt-repository-ppa:bar').that_notifies('Class[Apt::Update]').with({
+    it { is_expected.to contain_exec('add-apt-repository-ppa:user/bar').that_notifies('Class[Apt::Update]').with({
       'environment' => [],
-      'command'     => '/usr/bin/add-apt-repository -y ppa:bar',
-      'unless'      => '/usr/bin/test -s /etc/apt/sources.list.d/bar-natty.list',
+      'command'     => '/usr/bin/add-apt-repository -y ppa:user/bar',
+      'unless'      => '/usr/bin/test -s /etc/apt/sources.list.d/user-bar-natty.list',
       'user'        => 'root',
       'logoutput'   => 'on_failure',
     })
     }
 
-    it { is_expected.to contain_file('/etc/apt/sources.list.d/bar-natty.list').that_requires('Exec[add-apt-repository-ppa:bar]').with({
+    it { is_expected.to contain_file('/etc/apt/sources.list.d/user-bar-natty.list').that_requires('Exec[add-apt-repository-ppa:user/bar]').with({
       'ensure' => 'file',
     })
     }
@@ -152,7 +152,7 @@ describe 'apt::ppa' do
   describe 'apt included, no proxy' do
     let :pre_condition do
       'class { "apt": }
-      apt::ppa { "ppa:foo2": }
+      apt::ppa { "ppa:user/foo2": }
       '
     end
     let :facts do
@@ -169,16 +169,16 @@ describe 'apt::ppa' do
       {
         :options        => '',
         :package_manage => true,
-        :require        => 'Apt::Ppa[ppa:foo2]',
+        :require        => 'Apt::Ppa[ppa:user/foo2]',
       }
     end
-    let(:title) { 'ppa:foo' }
+    let(:title) { 'ppa:user/foo' }
     it { is_expected.to compile.with_all_deps }
     it { is_expected.to contain_package('software-properties-common') }
-    it { is_expected.to contain_exec('add-apt-repository-ppa:foo').that_notifies('Class[Apt::Update]').with({
+    it { is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with({
       :environment => [],
-      :command     => '/usr/bin/add-apt-repository  ppa:foo',
-      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/foo-trusty.list',
+      :command     => '/usr/bin/add-apt-repository  ppa:user/foo',
+      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/user-foo-trusty.list',
       :user        => 'root',
       :logoutput   => 'on_failure',
     })
@@ -207,12 +207,12 @@ describe 'apt::ppa' do
         'package_manage' => true,
       }
     end
-    let(:title) { 'ppa:foo' }
+    let(:title) { 'ppa:user/foo' }
     it { is_expected.to contain_package('software-properties-common') }
-    it { is_expected.to contain_exec('add-apt-repository-ppa:foo').that_notifies('Class[Apt::Update]').with({
+    it { is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with({
       :environment => ['http_proxy=http://localhost:8080'],
-      :command     => '/usr/bin/add-apt-repository  ppa:foo',
-      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/foo-trusty.list',
+      :command     => '/usr/bin/add-apt-repository  ppa:user/foo',
+      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/user-foo-trusty.list',
       :user        => 'root',
       :logoutput   => 'on_failure',
     })
@@ -241,12 +241,12 @@ describe 'apt::ppa' do
         :package_manage => true,
       }
     end
-    let(:title) { 'ppa:foo' }
+    let(:title) { 'ppa:user/foo' }
     it { is_expected.to contain_package('software-properties-common') }
-    it { is_expected.to contain_exec('add-apt-repository-ppa:foo').that_notifies('Class[Apt::Update]').with({
+    it { is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with({
       :environment => ['http_proxy=http://localhost:8180'],
-      :command     => '/usr/bin/add-apt-repository  ppa:foo',
-      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/foo-trusty.list',
+      :command     => '/usr/bin/add-apt-repository  ppa:user/foo',
+      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/user-foo-trusty.list',
       :user        => 'root',
       :logoutput   => 'on_failure',
     })
@@ -275,12 +275,12 @@ describe 'apt::ppa' do
         :package_manage => true,
       }
     end
-    let(:title) { 'ppa:foo' }
+    let(:title) { 'ppa:user/foo' }
     it { is_expected.to contain_package('software-properties-common') }
-    it { is_expected.to contain_exec('add-apt-repository-ppa:foo').that_notifies('Class[Apt::Update]').with({
+    it { is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with({
       :environment => ['http_proxy=http://localhost:8180', 'https_proxy=https://localhost:8180'],
-      :command     => '/usr/bin/add-apt-repository  ppa:foo',
-      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/foo-trusty.list',
+      :command     => '/usr/bin/add-apt-repository  ppa:user/foo',
+      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/user-foo-trusty.list',
       :user        => 'root',
       :logoutput   => 'on_failure',
     })
@@ -301,13 +301,13 @@ describe 'apt::ppa' do
         :puppetversion   => Puppet.version,
       }
     end
-    let(:title) { 'ppa:foo' }
+    let(:title) { 'ppa:user/foo' }
     let :params do
       {
         :ensure => 'absent'
       }
     end
-    it { is_expected.to contain_file('/etc/apt/sources.list.d/foo-trusty.list').that_notifies('Class[Apt::Update]').with({
+    it { is_expected.to contain_file('/etc/apt/sources.list.d/user-foo-trusty.list').that_notifies('Class[Apt::Update]').with({
       :ensure => 'absent',
     })
     }
@@ -325,7 +325,7 @@ describe 'apt::ppa' do
           :puppetversion   => Puppet.version,
         }
       end
-      let(:title) { 'ppa:foo' }
+      let(:title) { 'ppa:user/foo' }
       it do
         expect {
           subject.call
@@ -344,7 +344,7 @@ describe 'apt::ppa' do
           :puppetversion   => Puppet.version,
         }
       end
-      let(:title) { 'ppa:foo' }
+      let(:title) { 'ppa:user/foo' }
       it do
         expect {
           subject.call
