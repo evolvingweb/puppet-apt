@@ -208,6 +208,7 @@ describe 'apt' do
       { :osfamily        => 'Debian',
         :lsbdistcodename => 'precise',
         :lsbdistid       => 'ubuntu',
+        :lsbdistrelease  => '12.04',
         :puppetversion   => Puppet.version,
       }
     end

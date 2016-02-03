@@ -28,6 +28,29 @@ describe 'apt::ppa' do
     }
   end
 
+  describe 'Ubuntu 15.10 sources.list filename' do
+    let :facts do
+      {
+        :lsbdistrelease  => '15.10',
+        :lsbdistcodename => 'wily',
+        :operatingsystem => 'Ubuntu',
+        :osfamily        => 'Debian',
+        :lsbdistid       => 'Ubuntu',
+        :puppetversion   => Puppet.version,
+      }
+    end
+
+    let(:title) { 'ppa:user/foo' }
+    it { is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with({
+      :environment => [],
+      :command     => '/usr/bin/add-apt-repository -y ppa:user/foo',
+      :unless      => '/usr/bin/test -s /etc/apt/sources.list.d/user-ubuntu-foo-wily.list',
+      :user        => 'root',
+      :logoutput   => 'on_failure',
+    })
+    }
+  end
+
   describe 'ppa depending on ppa, MODULES-1156' do
     let :pre_condition do
       'class { "apt": }'

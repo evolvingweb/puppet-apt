@@ -14,11 +14,19 @@ define apt::ppa(
     fail('apt::ppa is not currently supported on Debian.')
   }
 
-  $filename_without_slashes = regsubst($name, '/', '-', 'G')
-  $filename_without_dots    = regsubst($filename_without_slashes, '\.', '_', 'G')
-  $filename_without_pluses  = regsubst($filename_without_dots, '\+', '_', 'G')
-  $filename_without_ppa     = regsubst($filename_without_pluses, '^ppa:', '', 'G')
-  $sources_list_d_filename  = "${filename_without_ppa}-${release}.list"
+  $ubuntu_release_year  = regsubst($::apt::xfacts['lsbdistrelease'], '\.\d+$', '', 'G') + 0
+  $ubuntu_release_month = regsubst($::apt::xfacts['lsbdistrelease'], '^\d+\.', '', 'G') + 0
+
+  if $ubuntu_release_year >= 15 and $ubuntu_release_month >= 10 {
+    $distid = downcase($::apt::xfacts['lsbdistid'])
+    $filename = regsubst($name, '^ppa:([^/]+)/(.+)$', "\\1-${distid}-\\2-${release}")
+  } else {
+    $filename = regsubst($name, '^ppa:([^/]+)/(.+)$', "\\1-\\2-${release}")
+  }
+
+  $filename_no_slashes      = regsubst($filename, '/', '-', 'G')
+  $filename_no_specialchars = regsubst($filename_no_slashes, '[\.\+]', '_', 'G')
+  $sources_list_d_filename  = "${filename_no_specialchars}.list"
 
   if $ensure == 'present' {
     if $package_manage {
