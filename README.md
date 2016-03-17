@@ -425,7 +425,7 @@ Manages PPA repositories using `add-apt-repository`. Not supported on Debian.
 
 * `release`: *Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint).* Specifies the operating system of your node. Valid options: a string containing a valid LSB distribution codename. Default: "$lsbdistcodename".
 
-#### Defined Type: `apt:setting`
+#### Defined Type: `apt::setting`
 
 Manages Apt configuration files.
 
