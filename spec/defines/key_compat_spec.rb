@@ -1,11 +1,18 @@
 require 'spec_helper'
 
 describe 'apt::key', :type => :define do
-  let(:facts) { { :lsbdistid => 'Debian' } }
+  let(:facts) { {
+    :lsbdistid => 'Debian',
+    :osfamily => 'Debian',
+  } }
   GPG_KEY_ID = '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
 
   let :title do
     GPG_KEY_ID
+  end
+
+  let :pre_condition do
+    'include apt'
   end
 
   describe 'normal operation' do
@@ -15,7 +22,7 @@ describe 'apt::key', :type => :define do
           :id                => title,
           :ensure            => 'present',
           :source            => nil,
-          :server            => nil,
+          :server            => 'keyserver.ubuntu.com',
           :content           => nil,
           :keyserver_options => nil,
         })
@@ -39,7 +46,7 @@ describe 'apt::key', :type => :define do
           :id                => GPG_KEY_ID,
           :ensure            => 'present',
           :source            => nil,
-          :server            => nil,
+          :server            => 'keyserver.ubuntu.com',
           :content           => nil,
           :keyserver_options => nil,
         })
@@ -59,7 +66,7 @@ describe 'apt::key', :type => :define do
           :id                => title,
           :ensure            => 'absent',
           :source            => nil,
-          :server            => nil,
+          :server            => 'keyserver.ubuntu.com',
           :content           => nil,
           :keyserver_options => nil,
         })
@@ -276,7 +283,7 @@ describe 'apt::key', :type => :define do
     describe 'duplication' do
       context 'two apt::key resources for same key, different titles' do
         let :pre_condition do
-          "apt::key { 'duplicate': key => '#{title}', }"
+          "#{super()}\napt::key { 'duplicate': key => '#{title}', }"
         end
 
         it 'contains two apt::key resources' do
@@ -295,7 +302,7 @@ describe 'apt::key', :type => :define do
             :id                => title,
             :ensure            => 'present',
             :source            => nil,
-            :server            => nil,
+            :server            => 'keyserver.ubuntu.com',
             :content           => nil,
             :keyserver_options => nil,
           })
@@ -305,7 +312,7 @@ describe 'apt::key', :type => :define do
 
       context 'two apt::key resources, different ensure' do
         let :pre_condition do
-          "apt::key { 'duplicate': key => '#{title}', ensure => 'absent', }"
+          "#{super()}\napt::key { 'duplicate': key => '#{title}', ensure => 'absent', }"
         end
         it 'informs the user of the impossibility' do
           expect { subject.call }.to raise_error(/already ensured as absent/)
