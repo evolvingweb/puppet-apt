@@ -485,6 +485,8 @@ Manages the Apt sources in `/etc/apt/sources.list.d/`.
 
 * `trusted_source`: Specifies whether to authenticate packages from this release, even if the Release file is not signed or the signature can't be checked. Valid options: 'true' and 'false'. Default: undef. This parameter is **deprecated** and will be removed in a future version of the module.
 
+* `notify_update`: *Optional.* Specifies whether to trigger an `apt-get update` run. Valid options: 'true' and 'false'. Default: 'true'.
+
 #### Type: `apt_key`
 
 Manages the GPG keys that Apt uses to authenticate packages.

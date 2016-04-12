@@ -387,5 +387,58 @@ describe 'apt::source' do
       end
     end
 
+    context "with notify_update = undef (default)" do
+      let :facts do
+        {
+          :lsbdistid       => 'Debian',
+          :lsbdistcodename => 'wheezy',
+          :osfamily        => 'Debian',
+          :puppetversion   => Puppet.version,
+        }
+      end
+      let :params do
+        {
+          :location      => 'hello.there',
+        }
+      end
+      it { is_expected.to contain_apt__setting("list-#{title}").with_notify_update(true) }
+    end
+
+    context "with notify_update = true" do
+      let :facts do
+        {
+          :lsbdistid       => 'Debian',
+          :lsbdistcodename => 'wheezy',
+          :osfamily        => 'Debian',
+          :puppetversion   => Puppet.version,
+        }
+      end
+      let :params do
+        {
+          :location      => 'hello.there',
+          :notify_update => true,
+        }
+      end
+      it { is_expected.to contain_apt__setting("list-#{title}").with_notify_update(true) }
+    end
+
+    context "with notify_update = false" do
+      let :facts do
+        {
+          :lsbdistid       => 'Debian',
+          :lsbdistcodename => 'wheezy',
+          :osfamily        => 'Debian',
+          :puppetversion   => Puppet.version,
+        }
+      end
+      let :params do
+        {
+          :location      => 'hello.there',
+          :notify_update => false,
+        }
+      end
+      it { is_expected.to contain_apt__setting("list-#{title}").with_notify_update(false) }
+    end
+
   end
 end
