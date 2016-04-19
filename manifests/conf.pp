@@ -1,7 +1,7 @@
 define apt::conf (
   $content       = undef,
   $ensure        = present,
-  $priority      = '50',
+  $priority      = 50,
   $notify_update = undef,
 ) {
 
