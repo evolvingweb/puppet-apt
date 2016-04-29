@@ -131,23 +131,18 @@ class apt::params {
         'repos'    => 'main universe multiverse restricted',
       }
 
-      case $xfacts['lsbdistcodename'] {
-        'lucid': {
+      if $xfacts['lsbdistcodename'] == 'lucid' {
           $ppa_options        = undef
           $ppa_package        = 'python-software-properties'
-        }
-        'precise': {
+      } elsif $xfacts['lsbdistcodename'] == 'precise' {
           $ppa_options        = '-y'
           $ppa_package        = 'python-software-properties'
-        }
-        'trusty', 'utopic', 'vivid', 'wily': {
+      } elsif versioncmp($xfacts['lsbdistrelease'], '14.04') >= 0 {
           $ppa_options        = '-y'
           $ppa_package        = 'software-properties-common'
-        }
-        default: {
+      } else {
           $ppa_options        = '-y'
           $ppa_package        = 'python-software-properties'
-        }
       }
     }
     undef: {

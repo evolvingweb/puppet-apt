@@ -420,8 +420,8 @@ Manages PPA repositories using `add-apt-repository`. Not supported on Debian.
 * `package_name`: Names the package that provides the `apt-add-repository` command. Valid options: a string. Defaults:
 
   * Lucid and Precise: 'python-software-properties'
-  * Trusty, Utopic, and Vivid: 'software-properties-common'
-  * All others: undef
+  * Trusty and newer: 'software-properties-common'
+  * All others: 'python-software-properties'
 
 * `release`: *Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint).* Specifies the operating system of your node. Valid options: a string containing a valid LSB distribution codename. Default: "$lsbdistcodename".
 
