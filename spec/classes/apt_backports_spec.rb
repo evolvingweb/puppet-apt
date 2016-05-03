@@ -46,6 +46,7 @@ describe 'apt::backports', :type => :class do
           :lsbdistid       => 'Ubuntu',
           :osfamily        => 'Debian',
           :lsbdistcodename => 'trusty',
+          :lsbdistrelease  => '14.04',
           :puppetversion   => Puppet.version,
         }
       end
@@ -64,6 +65,7 @@ describe 'apt::backports', :type => :class do
           :lsbdistid       => 'Ubuntu',
           :osfamily        => 'Debian',
           :lsbdistcodename => 'trusty',
+          :lsbdistrelease  => '14.04',
           :puppetversion   => Puppet.version,
         }
       end
@@ -91,6 +93,7 @@ describe 'apt::backports', :type => :class do
           :lsbdistid       => 'Ubuntu',
           :osfamily        => 'Debian',
           :lsbdistcodename => 'trusty',
+          :lsbdistrelease  => '14.04',
           :puppetversion   => Puppet.version,
         }
       end
@@ -201,6 +204,7 @@ describe 'apt::backports', :type => :class do
         :lsbdistid       => 'Ubuntu',
         :osfamily        => 'Debian',
         :lsbdistcodename => 'trusty',
+        :lsbdistrelease  => '14.04',
         :puppetversion   => Puppet.version,
       }
     end
