@@ -401,13 +401,13 @@ ZTQcCD53HcBLvKX6RJ4ByYawKaQqMa27WK/YWVmFXqVDVk12iKrQW6zktDdGInnD
   end
 
   describe 'server =>' do
-    context 'pgp.mit.edu' do
+    context 'hkps.pool.sks-keyservers.net' do
       it 'works' do
         pp = <<-EOS
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
-          server => 'pgp.mit.edu',
+          server => 'hkps.pool.sks-keyservers.net',
         }
         EOS
 
@@ -417,13 +417,13 @@ ZTQcCD53HcBLvKX6RJ4ByYawKaQqMa27WK/YWVmFXqVDVk12iKrQW6zktDdGInnD
       end
     end
 
-    context 'hkp://pgp.mit.edu:80' do
+    context 'hkp://hkps.pool.sks-keyservers.net:80' do
       it 'works' do
         pp = <<-EOS
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_FINGERPRINT}',
           ensure => 'present',
-          server => 'hkp://pgp.mit.edu:80',
+          server => 'hkp://hkps.pool.sks-keyservers.net:80',
         }
         EOS
 
