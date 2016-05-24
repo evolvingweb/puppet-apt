@@ -86,7 +86,7 @@ describe 'apt_key' do
         EOS
 
         # Install the key first
-        shell("apt-key adv --keyserver keyserver.ubuntu.com \
+        shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net \
               --recv-keys #{CENTOS_GPG_KEY_FINGERPRINT}")
         shell(CENTOS_KEY_CHECK_COMMAND)
 
@@ -97,7 +97,7 @@ describe 'apt_key' do
         shell(CENTOS_KEY_CHECK_COMMAND,
               :acceptable_exit_codes => [1])
 
-        shell("apt-key adv --keyserver keyserver.ubuntu.com \
+        shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net \
               --recv-keys #{CENTOS_GPG_KEY_FINGERPRINT}")
       end
     end
@@ -112,7 +112,7 @@ describe 'apt_key' do
         EOS
 
         # Install the key first
-        shell("apt-key adv --keyserver keyserver.ubuntu.com \
+        shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net \
               --recv-keys #{PUPPETLABS_GPG_KEY_LONG_ID}")
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
 
