@@ -268,13 +268,15 @@ describe 'apt::key' do
     end
 
     context 'invalid ensure' do
-      let :params do
-        {
-          :ensure => 'foo',
-        }
-      end
-      it 'fails' do
-        expect { subject.call }.to raise_error(/does not match/)
+      %w(foo aabsent absenta apresent presenta).each do |param|
+        let :params do
+          {
+            :ensure => param,
+          }
+          end
+        it 'fails' do
+          expect { subject.call }.to raise_error(/does not match/)
+        end
       end
     end
 
