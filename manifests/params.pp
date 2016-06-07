@@ -10,9 +10,6 @@ class apt::params {
     $xfacts = {
       'lsbdistcodename'     => $::lsbdistcodename,
       'lsbdistrelease'      => $::lsbdistrelease,
-      'lsbmajdistrelease'   => $::lsbmajdistrelease,
-      'lsbdistdescription'  => $::lsbdistdescription,
-      'lsbminordistrelease' => $::lsbminordistrelease,
       'lsbdistid'           => $::lsbdistid,
     }
   } else {
@@ -24,18 +21,6 @@ class apt::params {
       },
       'lsbdistrelease' => defined('$lsbdistrelease') ? {
         true    => $::lsbdistrelease,
-        default => undef,
-      },
-      'lsbmajdistrelease' => defined('$lsbmajdistrelease') ? {
-        true    => $::lsbmajdistrelease,
-        default => undef,
-      },
-      'lsbdistdescription' => defined('$lsbdistdescription') ? {
-        true    => $::lsbdistdescription,
-        default => undef,
-      },
-      'lsbminordistrelease' => defined('$lsbminordistrelease') ? {
-        true    => $::lsbminordistrelease,
         default => undef,
       },
       'lsbdistid' => defined('$lsbdistid') ? {
