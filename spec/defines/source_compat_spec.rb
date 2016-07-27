@@ -34,7 +34,7 @@ describe 'apt::source', :type => :define do
       {
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
-        :osfamily        => 'Debian'
+        :osfamily        => 'Debian',
         :puppetversion   => Puppet.version,
       }
     end
