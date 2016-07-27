@@ -13,6 +13,7 @@ describe 'apt::source', :type => :define do
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
         :osfamily        => 'Debian',
+        :puppetversion   => Puppet.version,
       }
     end
 
@@ -34,6 +35,7 @@ describe 'apt::source', :type => :define do
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
         :osfamily        => 'Debian'
+        :puppetversion   => Puppet.version,
       }
     end
     let :params do
@@ -88,7 +90,8 @@ describe 'apt::source', :type => :define do
       {
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
-        :osfamily        => 'Debian'
+        :osfamily        => 'Debian',
+        :puppetversion   => Puppet.version,
       }
     end
     let :params do
@@ -107,7 +110,8 @@ describe 'apt::source', :type => :define do
       {
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
-        :osfamily        => 'Debian'
+        :osfamily        => 'Debian',
+        :puppetversion   => Puppet.version,
       }
     end
     let :params do
@@ -126,7 +130,8 @@ describe 'apt::source', :type => :define do
       {
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
-        :osfamily        => 'Debian'
+        :osfamily        => 'Debian',
+        :puppetversion   => Puppet.version,
       }
     end
     let :params do
@@ -146,7 +151,8 @@ describe 'apt::source', :type => :define do
       let :facts do
         {
           :lsbdistid       => 'Debian',
-          :osfamily        => 'Debian'
+          :osfamily        => 'Debian',
+          :puppetversion   => Puppet.version,
         }
       end
 
