@@ -177,6 +177,32 @@ describe 'apt' do
     it { is_expected.to contain_file('/etc/apt/sources.list.d/puppetlabs.list').with_content(/^deb http:\/\/apt.puppetlabs.com precise main$/) }
   end
 
+  context 'with confs defined on valid osfamily' do
+    let :facts do
+      { :osfamily        => 'Debian',
+        :lsbdistcodename => 'precise',
+        :lsbdistid       => 'Debian',
+        :puppetversion   => Puppet.version,
+      }
+    end
+    let(:params) { { :confs => {
+      'foo' => {
+        'content' => 'foo',
+      },
+      'bar' => {
+        'content' => 'bar',
+      }
+    } } }
+
+    it { is_expected.to contain_apt__conf('foo').with({
+        :content => 'foo',
+    })}
+
+    it { is_expected.to contain_apt__conf('bar').with({
+        :content => 'bar',
+    })}
+  end
+
   context 'with keys defined on valid osfamily' do
     let :facts do
       { :osfamily        => 'Debian',

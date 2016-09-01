@@ -1,5 +1,9 @@
+# == Class: apt
 #
-class apt(
+# Manage APT (Advanced Packaging Tool)
+#
+class apt (
+  $confs    = {},
   $update   = {},
   $purge    = {},
   $proxy    = {},
@@ -63,6 +67,7 @@ class apt(
 
   $_proxy = merge($apt::proxy_defaults, $proxy)
 
+  validate_hash($confs)
   validate_hash($sources)
   validate_hash($keys)
   validate_hash($settings)
@@ -139,6 +144,9 @@ class apt(
     notify  => Class['apt::update'],
   }
 
+  if $confs {
+    create_resources('apt::conf', $confs)
+  }
   # manage sources if present
   if $sources {
     create_resources('apt::source', $sources)
