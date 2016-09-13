@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-apt",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "author": "Puppet Labs",
   "summary": "Provides an interface for managing Apt source, key, and definitions with Puppet",
   "license": "Apache-2.0",
@@ -24,15 +24,12 @@
       "operatingsystemrelease": [
         "10.04",
         "12.04",
-        "14.04"
+        "14.04",
+        "16.04"
       ]
     }
   ],
   "requirements": [
-    {
-      "name": "pe",
-      "version_requirement": ">= 3.3.0 < 2015.4.0"
-    },
     {
       "name": "puppet",
       "version_requirement": ">= 3.0.0 < 5.0.0"
