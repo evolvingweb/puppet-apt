@@ -136,6 +136,13 @@ describe Puppet::Type::type(:apt_key) do
       )}.to_not raise_error
     end
 
+    it 'allows the http URI with username and password' do
+      expect { Puppet::Type.type(:apt_key).new(
+          :id      => '4BD6EC30',
+          :source  => 'http://testme:Password2@pgp.mit.edu'
+      )}.to_not raise_error
+    end
+
     it 'allows the https URI scheme in source' do
       expect { Puppet::Type.type(:apt_key).new(
         :id      => '4BD6EC30',
