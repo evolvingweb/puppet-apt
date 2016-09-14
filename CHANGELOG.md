@@ -1,3 +1,26 @@
+## Supported Release 2.3.0
+### Summary
+A release containing many bugfixes with additional features.
+
+#### Features
+- Apt_updates facts now use /usr/bin/apt-get.
+- Addition of notify update to apt::source.
+- Update to newest modulesync_configs.
+- Installs software-properties-common for Xenial.
+- Modulesync updates.
+- Add ability to specify a hash of apt::conf defines.
+
+#### Bugfixes
+- A clean up of spec/defines/key_compat_specs, also now runs under STRICT_VARIABLES.
+- Apt::setting expects priority to be an integer, set defaults accordingly.
+- Fixed version check for Ubuntu on 16.04.
+- Now uses hkps.pool.sks-keyservers.net instead of pgp.mit.edu.
+- Updates and fixes to tests. General cleanup.
+- Fixed regexp for $ensure params.
+- Apt/params: Remove unused LSB facts.
+- Replaced `-s` with `-f` in ppa rspec tests - After the repository is added, the "${::apt::sources_list_d}/${sources_list_d_filename}" file is created as an empty file. The unless condition of Exec["add-apt-repository-${name}"] calls test -s, which returns 1 if the file is empty. Because the file is empty, the unless condition is never true and the repository is added on every execution. This change replaces the -s test condition with -f, which is true if the file exists or false otherwise.
+- Limit non-strict parsing to pre-3.5.0 only - Puppet 3.5.0 introduced strict variables and the module handles strict variables by using the defined() function. This does not work on prior versions of puppet so we now gate based on that version. Puppet 4 series has a new setting `strict` that may be set to enforce strict variables while `strict_variables` remains unset (see PUP-6358) which causes the conditional in manifests/params.pp to erroniously use non-strict 3.5-era parsing and fail. This new conditional corrects the cases such that strict variable behavior happens on versions 3.5.0 and later.
+
 ##Supported Release 2.2.2
 ###Summary
 
