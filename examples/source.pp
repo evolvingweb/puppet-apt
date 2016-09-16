@@ -7,7 +7,7 @@ apt::source { 'puppetlabs':
   location => 'http://apt.puppetlabs.com',
   repos    => 'main',
   key      => {
-    id     => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
+    id     => '6F6B15509CF8E59E6E469F327F438280EF8D349F',
     server => 'hkps.pool.sks-keyservers.net',
   },
 }

@@ -4,14 +4,14 @@ require 'puppet'
 describe Puppet::Type::type(:apt_key) do
   context 'only namevar 32bit key id' do
     let(:resource) { Puppet::Type.type(:apt_key).new(
-      :id => '4BD6EC30'
+      :id => 'EF8D349F'
     )}
     it 'id is set' do
-      expect(resource[:id]).to eq '4BD6EC30'
+      expect(resource[:id]).to eq 'EF8D349F'
     end
 
     it 'name is set to id' do
-      expect(resource[:name]).to eq '4BD6EC30'
+      expect(resource[:name]).to eq 'EF8D349F'
     end
 
     it 'keyserver is default' do
@@ -29,52 +29,52 @@ describe Puppet::Type::type(:apt_key) do
 
   context 'with a lowercase 32bit key id' do
     let(:resource) { Puppet::Type.type(:apt_key).new(
-      :id => '4bd6ec30'
+      :id => 'ef8d349f'
     )}
     it 'id is set' do
-      expect(resource[:id]).to eq '4BD6EC30'
+      expect(resource[:id]).to eq 'EF8D349F'
     end
   end
 
   context 'with a 64bit key id' do
     let(:resource) { Puppet::Type.type(:apt_key).new(
-      :id => 'FFFFFFFF4BD6EC30'
+      :id => 'FFFFFFFFEF8D349F'
     )}
     it 'id is set' do
-      expect(resource[:id]).to eq 'FFFFFFFF4BD6EC30'
+      expect(resource[:id]).to eq 'FFFFFFFFEF8D349F'
     end
   end
 
   context 'with a 0x formatted key id' do
     let(:resource) { Puppet::Type.type(:apt_key).new(
-      :id => '0x4BD6EC30'
+      :id => '0xEF8D349F'
     )}
     it 'id is set' do
-      expect(resource[:id]).to eq '4BD6EC30'
+      expect(resource[:id]).to eq 'EF8D349F'
     end
   end
 
   context 'with a 0x formatted lowercase key id' do
     let(:resource) { Puppet::Type.type(:apt_key).new(
-      :id => '0x4bd6ec30'
+      :id => '0xef8d349f'
     )}
     it 'id is set' do
-      expect(resource[:id]).to eq '4BD6EC30'
+      expect(resource[:id]).to eq 'EF8D349F'
     end
   end
 
   context 'with a 0x formatted 64bit key id' do
     let(:resource) { Puppet::Type.type(:apt_key).new(
-      :id => '0xFFFFFFFF4BD6EC30'
+      :id => '0xFFFFFFFFEF8D349F'
     )}
     it 'id is set' do
-      expect(resource[:id]).to eq 'FFFFFFFF4BD6EC30'
+      expect(resource[:id]).to eq 'FFFFFFFFEF8D349F'
     end
   end
 
   context 'with source' do
     let(:resource) { Puppet::Type.type(:apt_key).new(
-      :id => '4BD6EC30',
+      :id => 'EF8D349F',
       :source => 'http://apt.puppetlabs.com/pubkey.gpg'
     )}
 
@@ -85,7 +85,7 @@ describe Puppet::Type::type(:apt_key) do
 
   context 'with content' do
     let(:resource) { Puppet::Type.type(:apt_key).new(
-      :id => '4BD6EC30',
+      :id => 'EF8D349F',
       :content => 'http://apt.puppetlabs.com/pubkey.gpg'
     )}
 
@@ -96,7 +96,7 @@ describe Puppet::Type::type(:apt_key) do
 
   context 'with keyserver' do
     let(:resource) { Puppet::Type.type(:apt_key).new(
-      :id => '4BD6EC30',
+      :id => 'EF8D349F',
       :server => 'http://keyring.debian.org'
     )}
 
@@ -108,7 +108,7 @@ describe Puppet::Type::type(:apt_key) do
   context 'validation' do
     it 'raises an error if content and source are set' do
       expect { Puppet::Type.type(:apt_key).new(
-        :id      => '4BD6EC30',
+        :id      => 'EF8D349F',
         :source  => 'http://apt.puppetlabs.com/pubkey.gpg',
         :content => 'Completely invalid as a GPG key'
       )}.to raise_error(/content and source are mutually exclusive/)
@@ -116,7 +116,7 @@ describe Puppet::Type::type(:apt_key) do
 
     it 'raises an error if a weird length key is used' do
       expect { Puppet::Type.type(:apt_key).new(
-        :id      => 'F4BD6EC30',
+        :id      => 'FEF8D349F',
         :source  => 'http://apt.puppetlabs.com/pubkey.gpg',
         :content => 'Completely invalid as a GPG key'
       )}.to raise_error(/Valid values match/)
@@ -124,56 +124,56 @@ describe Puppet::Type::type(:apt_key) do
 
     it 'raises an error when an invalid URI scheme is used in source' do
       expect { Puppet::Type.type(:apt_key).new(
-        :id      => '4BD6EC30',
+        :id      => 'EF8D349F',
         :source  => 'hkp://pgp.mit.edu'
       )}.to raise_error(/Valid values match/)
     end
 
     it 'allows the http URI scheme in source' do
       expect { Puppet::Type.type(:apt_key).new(
-        :id      => '4BD6EC30',
+        :id      => 'EF8D349F',
         :source  => 'http://pgp.mit.edu'
       )}.to_not raise_error
     end
 
     it 'allows the https URI scheme in source' do
       expect { Puppet::Type.type(:apt_key).new(
-        :id      => '4BD6EC30',
+        :id      => 'EF8D349F',
         :source  => 'https://pgp.mit.edu'
       )}.to_not raise_error
     end
 
     it 'allows the https URI with username and password' do
       expect { Puppet::Type.type(:apt_key).new(
-          :id      => '4BD6EC30',
+          :id      => 'EF8D349F',
           :source  => 'https://testme:Password2@pgp.mit.edu'
       )}.to_not raise_error
     end
 
     it 'allows the ftp URI scheme in source' do
       expect { Puppet::Type.type(:apt_key).new(
-        :id      => '4BD6EC30',
+        :id      => 'EF8D349F',
         :source  => 'ftp://pgp.mit.edu'
       )}.to_not raise_error
     end
 
     it 'allows an absolute path in source' do
       expect { Puppet::Type.type(:apt_key).new(
-        :id      => '4BD6EC30',
+        :id      => 'EF8D349F',
         :source  => '/path/to/a/file'
       )}.to_not raise_error
     end
 
     it 'allows 5-digit ports' do
       expect { Puppet::Type.type(:apt_key).new(
-        :id      => '4BD6EC30',
+        :id      => 'EF8D349F',
         :source  => 'http://pgp.mit.edu:12345/key'
       )}.to_not raise_error
     end
 
     it 'allows 5-digit ports when using key servers' do
       expect { Puppet::Type.type(:apt_key).new(
-        :id      => '4BD6EC30',
+        :id      => 'EF8D349F',
         :server  => 'http://pgp.mit.edu:12345'
       )}.to_not raise_error
     end
