@@ -155,7 +155,7 @@ describe 'apt' do
       'puppetlabs' => {
         'location'   => 'http://apt.puppetlabs.com',
         'repos'      => 'main',
-        'key'        => { 'id' => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30', 'server' => 'pgp.mit.edu' },
+        'key'        => { 'id' => '6F6B15509CF8E59E6E469F327F438280EF8D349F', 'server' => 'pgp.mit.edu' },
       }
     } } }
 
@@ -215,7 +215,7 @@ describe 'apt' do
       '55BE302B' => {
         'server' => 'subkeys.pgp.net',
       },
-      '4BD6EC30' => {
+      'EF8D349F' => {
         'server' => 'pgp.mit.edu',
       }
     } } }
@@ -224,7 +224,7 @@ describe 'apt' do
         :server => 'subkeys.pgp.net',
     })}
 
-    it { is_expected.to contain_apt__key('4BD6EC30').with({
+    it { is_expected.to contain_apt__key('EF8D349F').with({
         :server => 'pgp.mit.edu',
     })}
   end

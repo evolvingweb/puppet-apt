@@ -6,7 +6,7 @@ describe 'apt::key', :type => :define do
     :osfamily => 'Debian',
     :puppetversion => Puppet.version,
   } }
-  GPG_KEY_ID = '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
+  GPG_KEY_ID = '6F6B15509CF8E59E6E469F327F438280EF8D349F'
 
   let :title do
     GPG_KEY_ID
