@@ -553,6 +553,20 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
+      it 'works with userinfo' do
+        pp = <<-EOS
+        apt_key { 'puppetlabs':
+          id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
+          ensure => 'present',
+          source => 'http://dummyuser:dummypassword@#{PUPPETLABS_APT_URL}/#{PUPPETLABS_GPG_KEY_FILE}',
+        }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_failures => true)
+        shell(PUPPETLABS_KEY_CHECK_COMMAND)
+      end
+
       it 'fails with a 404' do
         pp = <<-EOS
         apt_key { 'puppetlabs':
@@ -638,6 +652,20 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
           source => 'https://#{PUPPETLABS_APT_URL}/#{PUPPETLABS_GPG_KEY_FILE}',
+        }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_failures => true)
+        shell(PUPPETLABS_KEY_CHECK_COMMAND)
+      end
+
+      it 'works with userinfo' do
+        pp = <<-EOS
+        apt_key { 'puppetlabs':
+          id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
+          ensure => 'present',
+          source => 'https://dummyuser:dummypassword@#{PUPPETLABS_APT_URL}/#{PUPPETLABS_GPG_KEY_FILE}',
         }
         EOS
 

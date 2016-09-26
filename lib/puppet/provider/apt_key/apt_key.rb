@@ -127,7 +127,9 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
       f
     else
       begin
-        key = parsedValue.read
+        user_pass = parsedValue.userinfo.nil? ? nil : parsedValue.userinfo.split(':')
+        parsedValue.userinfo = ''
+        key = open(parsedValue, :http_basic_authentication => user_pass).read
       rescue OpenURI::HTTPError, Net::FTPPermError => e
         fail("#{e.message} for #{resource[:source]}")
       rescue SocketError
