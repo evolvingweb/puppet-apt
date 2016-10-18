@@ -92,7 +92,7 @@ describe 'apt_key' do
 
         # Time to remove it using Puppet
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
 
         shell(CENTOS_KEY_CHECK_COMMAND,
               :acceptable_exit_codes => [1])
@@ -118,7 +118,7 @@ describe 'apt_key' do
 
         # Time to remove it using Puppet
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
 
         shell(PUPPETLABS_KEY_CHECK_COMMAND,
               :acceptable_exit_codes => [1])
@@ -189,7 +189,7 @@ zGioYMWgVePywFGaTV51/0uF9ymHHC7BDIcLgUWHdg/1B67jR5YQfzPJUqLhnylt
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -449,7 +449,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
           }
         EOS
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -483,7 +483,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -499,7 +499,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -549,7 +549,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
@@ -563,7 +563,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
@@ -612,7 +612,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(CENTOS_KEY_CHECK_COMMAND)
       end
 
@@ -656,7 +656,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
@@ -670,7 +670,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
@@ -723,7 +723,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -780,7 +780,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -798,7 +798,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
       end
     end
 

@@ -43,7 +43,7 @@ describe 'apt class' do
       EOS
 
       apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_changes => true)
     end
     it 'should still work' do
       shell('apt-get update')
