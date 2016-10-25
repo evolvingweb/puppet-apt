@@ -17,6 +17,10 @@ KEY_CHECK_COMMAND              = "apt-key adv --list-keys --with-colons --finger
 PUPPETLABS_KEY_CHECK_COMMAND   = "#{KEY_CHECK_COMMAND} #{PUPPETLABS_GPG_KEY_FINGERPRINT}"
 CENTOS_KEY_CHECK_COMMAND       = "#{KEY_CHECK_COMMAND} #{CENTOS_GPG_KEY_FINGERPRINT}"
 
+MAX_TIMEOUT_RETRY              = 3
+TIMEOUT_RETRY_WAIT             = 5
+TIMEOUT_ERROR_MATCHER    = /no valid OpenPGP data found/
+
 describe 'apt_key' do
   before(:each) do
     # Delete twice to make sure everything is cleaned
@@ -85,20 +89,25 @@ describe 'apt_key' do
         }
         EOS
 
-        # Install the key first
-        shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net \
+        # Install the key first (retry because key pool may timeout)
+        retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
+          shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net \
               --recv-keys #{CENTOS_GPG_KEY_FINGERPRINT}")
+        end
         shell(CENTOS_KEY_CHECK_COMMAND)
 
         # Time to remove it using Puppet
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
 
         shell(CENTOS_KEY_CHECK_COMMAND,
               :acceptable_exit_codes => [1])
 
-        shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net \
-              --recv-keys #{CENTOS_GPG_KEY_FINGERPRINT}")
+        # Re-Install the key (retry because key pool may timeout)
+        retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
+          shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net \
+                --recv-keys #{CENTOS_GPG_KEY_FINGERPRINT}")
+        end
       end
     end
 
@@ -111,14 +120,17 @@ describe 'apt_key' do
         }
         EOS
 
-        # Install the key first
-        shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net \
-              --recv-keys #{PUPPETLABS_GPG_KEY_LONG_ID}")
+        # Install the key first (retry because key pool may timeout)
+        retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
+          shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net \
+                --recv-keys #{PUPPETLABS_GPG_KEY_LONG_ID}")
+        end
+
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
 
         # Time to remove it using Puppet
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
 
         shell(PUPPETLABS_KEY_CHECK_COMMAND,
               :acceptable_exit_codes => [1])
@@ -188,11 +200,16 @@ zGioYMWgVePywFGaTV51/0uF9ymHHC7BDIcLgUWHdg/1B67jR5YQfzPJUqLhnylt
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        #Apply the manifest (Retry if timeout error is received from key pool)
+        retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
+          apply_manifest(pp, :catch_failures => true)
+        end
+
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
+
 
     context 'multiple keys' do
       it 'runs without errors' do
@@ -448,8 +465,9 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
 -----END PGP PUBLIC KEY BLOCK----- ",
           }
         EOS
+
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -482,8 +500,12 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        #Apply the manifest (Retry if timeout error is received from key pool)
+        retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
+          apply_manifest(pp, :catch_failures => true)
+        end
+
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -498,8 +520,11 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
+          apply_manifest(pp, :catch_failures => true)
+        end
+
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -549,7 +574,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
@@ -563,7 +588,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
@@ -612,7 +637,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(CENTOS_KEY_CHECK_COMMAND)
       end
 
@@ -656,7 +681,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
@@ -670,7 +695,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
@@ -723,7 +748,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -780,7 +805,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -798,7 +823,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
       end
     end
 

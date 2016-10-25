@@ -1,5 +1,9 @@
 require 'spec_helper_acceptance'
 
+MAX_TIMEOUT_RETRY              = 3
+TIMEOUT_RETRY_WAIT             = 5
+TIMEOUT_ERROR_MATCHER    = /no valid OpenPGP data found/
+
 describe 'apt class' do
 
   context 'reset' do
@@ -42,7 +46,11 @@ describe 'apt class' do
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
+      #Apply the manifest (Retry if timeout error is received from key pool)
+      retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
+        apply_manifest(pp, :catch_failures => true)
+      end
+
       apply_manifest(pp, :catch_failures => true)
     end
     it 'should still work' do
