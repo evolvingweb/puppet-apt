@@ -124,8 +124,8 @@ define apt::source(
     if is_hash($pin) {
       $_pin = merge($pin, { 'ensure' => $ensure, 'before' => $_before })
     } elsif (is_numeric($pin) or is_string($pin)) {
-      $url_split = split($location, '/')
-      $host      = $url_split[2]
+      $url_split = split($location, '[:\/]+')
+      $host      = $url_split[1]
       $_pin = {
         'ensure'   => $ensure,
         'priority' => $pin,
