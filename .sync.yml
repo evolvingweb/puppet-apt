@@ -4,3 +4,6 @@
   docker_sets:
   - set: docker/ubuntu-14.04
   - set: docker/debian-8
+
+spec/spec_helper.rb:
+  allow_deprecations: true

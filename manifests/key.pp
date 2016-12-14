@@ -14,35 +14,35 @@ define apt::key (
 ) {
 
   if $key != undef {
-    warning('$key is deprecated and will be removed in the next major release. Please use $id instead.')
+    deprecation('apt $key', '$key is deprecated and will be removed in the next major release. Please use $id instead.')
     $_id = $key
   } else {
     $_id = $id
   }
 
   if $key_content != undef {
-    warning('$key_content is deprecated and will be removed in the next major release. Please use $content instead.')
+    deprecation('apt $key_content', '$key_content is deprecated and will be removed in the next major release. Please use $content instead.')
     $_content = $key_content
   } else {
     $_content = $content
   }
 
   if $key_source != undef {
-    warning('$key_source is deprecated and will be removed in the next major release. Please use $source instead.')
+    deprecation('apt $key_source', '$key_source is deprecated and will be removed in the next major release. Please use $source instead.')
     $_source = $key_source
   } else {
     $_source = $source
   }
 
   if $key_server != undef {
-    warning('$key_server is deprecated and will be removed in the next major release. Please use $server instead.')
+    deprecation('apt $key_server', '$key_server is deprecated and will be removed in the next major release. Please use $server instead.')
     $_server = $key_server
   } else {
     $_server = $server
   }
 
   if $key_options != undef {
-    warning('$key_options is deprecated and will be removed in the next major release. Please use $options instead.')
+    deprecation('apt $key_options', '$key_options is deprecated and will be removed in the next major release. Please use $options instead.')
     $_options = $key_options
   } else {
     $_options = $options
