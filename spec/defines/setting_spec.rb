@@ -95,7 +95,11 @@ describe 'apt::setting' do
 
     context 'with priority=1.2' do
       let(:params) { default_params.merge({ :priority => 1.2 }) }
-      it { is_expected.to compile.and_raise_error(/input needs to be a String/) }
+      if Puppet.version.to_f >= 4.0 || ENV["FUTURE_PARSER"] == 'yes'
+        it { is_expected.to compile.and_raise_error(/input needs to be a String/) }
+      else
+        it { is_expected.to compile.and_raise_error(/priority must be an integer or a zero-padded integer/) }
+      end
     end
   end
 
