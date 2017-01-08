@@ -17,18 +17,44 @@ describe 'apt_package_security_updates fact' do
       File.stubs(:executable?) # Stub all other calls
       Facter::Util::Resolution.stubs(:exec) # Catch all other calls
       File.expects(:executable?).with('/usr/bin/apt-get').returns true
-      Facter::Util::Resolution.expects(:exec).with('/usr/bin/apt-get -s -o Debug::NoLocking=true upgrade 2>&1').returns ""+
+      Facter::Util::Resolution.expects(:exec).with('/usr/bin/apt-get -s -o Debug::NoLocking=true upgrade 2>&1').returns apt_get_upgrade_output
+    }
+
+    describe 'on Debian' do
+      let(:apt_get_upgrade_output) do
         "Inst tzdata [2015f-0+deb8u1] (2015g-0+deb8u1 Debian:stable-updates [all])\n"+
         "Conf tzdata (2015g-0+deb8u1 Debian:stable-updates [all])\n"+
         "Inst unhide.rb [13-1.1] (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n"+
         "Conf unhide.rb (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n"
-    }
-    it {
-      if Facter.version < '2.0.0'
-        is_expected.to eq('tzdata')
-      else
-        is_expected.to eq(['tzdata'])
       end
-    }
+
+      it {
+        if Facter.version < '2.0.0'
+          is_expected.to eq('tzdata')
+        else
+          is_expected.to eq(['tzdata'])
+        end
+      }
+    end
+
+    describe 'on Ubuntu' do
+      let(:apt_get_upgrade_output) do
+        "Inst tzdata [2016f-0ubuntu0.16.04] (2016j-0ubuntu0.16.04 Ubuntu:16.04/xenial-security, Ubuntu:16.04/xenial-updates [all])\n"+
+        "Conf tzdata (2016j-0ubuntu0.16.04 Ubuntu:16.04/xenial-security, Ubuntu:16.04/xenial-updates [all])\n"+
+        "Inst curl [7.47.0-1ubuntu2] (7.47.0-1ubuntu2.2 Ubuntu:16.04/xenial-security [amd64]) []\n"+
+        "Conf curl (7.47.0-1ubuntu2.2 Ubuntu:16.04/xenial-security [amd64])\n"+
+        "Inst procps [2:3.3.10-4ubuntu2] (2:3.3.10-4ubuntu2.3 Ubuntu:16.04/xenial-updates [amd64])\n"+
+        "Conf procps (2:3.3.10-4ubuntu2.3 Ubuntu:16.04/xenial-updates [amd64])\n"
+      end
+
+      it {
+        if Facter.version < '2.0.0'
+          is_expected.to eq('tzdata,curl')
+        else
+          is_expected.to eq(['tzdata', 'curl'])
+        end
+      }
+    end
+
   end
 end
