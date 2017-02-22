@@ -58,7 +58,7 @@ include apt
 
 **Warning:** Using short key IDs presents a serious security issue, potentially leaving you open to collision attacks. We recommend you always use full fingerprints to identify your GPG keys. This module allows short keys, but issues a security warning if you use them.
 
-Declare the `apt::key` class:
+Declare the `apt::key` defined type:
 
 ```puppet
 apt::key { 'puppetlabs':
