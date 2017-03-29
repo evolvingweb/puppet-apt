@@ -81,8 +81,8 @@ define apt::key (
           content => $_content,
           server  => $_server,
           options => $_options,
-        } ->
-        anchor { "apt_key ${_id} present": }
+        }
+        -> anchor { "apt_key ${_id} present": }
       }
     }
 
@@ -99,8 +99,8 @@ define apt::key (
           content => $_content,
           server  => $_server,
           options => $_options,
-        } ->
-        anchor { "apt_key ${_id} absent": }
+        }
+        -> anchor { "apt_key ${_id} absent": }
       }
     }
 
