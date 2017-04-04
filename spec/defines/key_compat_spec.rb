@@ -26,7 +26,6 @@ describe 'apt::key', :type => :define do
           :source            => nil,
           :server            => 'keyserver.ubuntu.com',
           :content           => nil,
-          :keyserver_options => nil,
         })
       }
       it 'contains the apt_key present anchor' do
@@ -50,7 +49,6 @@ describe 'apt::key', :type => :define do
           :source            => nil,
           :server            => 'keyserver.ubuntu.com',
           :content           => nil,
-          :keyserver_options => nil,
         })
       end
       it 'contains the apt_key present anchor' do
@@ -70,7 +68,6 @@ describe 'apt::key', :type => :define do
           :source            => nil,
           :server            => 'keyserver.ubuntu.com',
           :content           => nil,
-          :keyserver_options => nil,
         })
       end
       it 'contains the apt_key absent anchor' do
@@ -81,9 +78,9 @@ describe 'apt::key', :type => :define do
     describe 'set a bunch of things!' do
       let :params do {
         :content => 'GPG key content',
-        :key_source => 'http://apt.puppetlabs.com/pubkey.gpg',
-        :key_server => 'pgp.mit.edu',
-        :key_options => 'debug',
+        :source => 'http://apt.puppetlabs.com/pubkey.gpg',
+        :server => 'pgp.mit.edu',
+        :options => 'debug',
       } end
 
       it 'contains the apt_key' do
@@ -103,7 +100,7 @@ describe 'apt::key', :type => :define do
 
     context "domain with dash" do
       let(:params) do{
-        :key_server => 'p-gp.m-it.edu',
+        :server => 'p-gp.m-it.edu',
       } end
       it 'contains the apt_key' do
         is_expected.to contain_apt_key(title).with({
@@ -116,7 +113,7 @@ describe 'apt::key', :type => :define do
     context "url" do
       let :params do
         {
-          :key_server => 'hkp://pgp.mit.edu',
+          :server => 'hkp://pgp.mit.edu',
         }
       end
       it 'contains the apt_key' do
@@ -129,7 +126,7 @@ describe 'apt::key', :type => :define do
     context "url with port number" do
       let :params do
         {
-          :key_server => 'hkp://pgp.mit.edu:80',
+          :server => 'hkp://pgp.mit.edu:80',
         }
       end
       it 'contains the apt_key' do
@@ -144,7 +141,7 @@ describe 'apt::key', :type => :define do
   describe 'validation' do
     context "domain begin with dash" do
       let(:params) do{
-        :key_server => '-pgp.mit.edu',
+        :server => '-pgp.mit.edu',
       } end
       it 'fails' do
         expect { subject.call } .to raise_error(/does not match/)
@@ -153,7 +150,7 @@ describe 'apt::key', :type => :define do
 
     context "domain begin with dot" do
       let(:params) do{
-        :key_server => '.pgp.mit.edu',
+        :server => '.pgp.mit.edu',
       } end
       it 'fails' do
         expect { subject.call } .to raise_error(/does not match/)
@@ -162,7 +159,7 @@ describe 'apt::key', :type => :define do
 
     context "domain end with dot" do
       let(:params) do{
-        :key_server => "pgp.mit.edu.",
+        :server => "pgp.mit.edu.",
       } end
       it 'fails' do
         expect { subject.call } .to raise_error(/does not match/)
@@ -171,7 +168,7 @@ describe 'apt::key', :type => :define do
     context "exceed character url" do
       let :params do
         {
-          :key_server => 'hkp://pgpiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.mit.edu'
+          :server => 'hkp://pgpiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.mit.edu'
         }
       end
       it 'fails' do
@@ -181,7 +178,7 @@ describe 'apt::key', :type => :define do
     context "incorrect port number url" do
       let :params do
         {
-          :key_server => 'hkp://pgp.mit.edu:8008080'
+          :server => 'hkp://pgp.mit.edu:8008080'
         }
       end
       it 'fails' do
@@ -191,7 +188,7 @@ describe 'apt::key', :type => :define do
     context "incorrect protocol for  url" do
       let :params do
         {
-          :key_server => 'abc://pgp.mit.edu:80'
+          :server => 'abc://pgp.mit.edu:80'
         }
       end
       it 'fails' do
@@ -201,7 +198,7 @@ describe 'apt::key', :type => :define do
     context "missing port number url" do
       let :params do
         {
-          :key_server => 'hkp://pgp.mit.edu:'
+          :server => 'hkp://pgp.mit.edu:'
         }
       end
       it 'fails' do
@@ -211,7 +208,7 @@ describe 'apt::key', :type => :define do
     context "url ending with a dot" do
       let :params do
         {
-          :key_server => 'hkp://pgp.mit.edu.'
+          :server => 'hkp://pgp.mit.edu.'
         }
       end
       it 'fails' do
@@ -220,7 +217,7 @@ describe 'apt::key', :type => :define do
     end
     context "url begin with a dash" do
       let(:params) do{
-        :key_server => "hkp://-pgp.mit.edu",
+        :server => "hkp://-pgp.mit.edu",
       } end
       it 'fails' do
         expect { subject.call }.to raise_error(/does not match/)
@@ -237,7 +234,7 @@ describe 'apt::key', :type => :define do
 
     context 'invalid source' do
       let :params do {
-        :key_source => 'afp://puppetlabs.com/key.gpg',
+        :source => 'afp://puppetlabs.com/key.gpg',
       } end
       it 'fails' do
         expect { subject.call }.to raise_error(/does not match/)
@@ -255,7 +252,7 @@ describe 'apt::key', :type => :define do
 
     context 'invalid server' do
       let :params do {
-        :key_server => 'two bottles of rum',
+        :server => 'two bottles of rum',
       } end
       it 'fails' do
         expect { subject.call }.to raise_error(/does not match/)
@@ -264,7 +261,7 @@ describe 'apt::key', :type => :define do
 
     context 'invalid keyserver_options' do
       let :params do {
-        :key_options => {},
+        :options => {},
       } end
       it 'fails' do
         expect { subject.call }.to raise_error(/expects a String value/)
