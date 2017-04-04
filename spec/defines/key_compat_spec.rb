@@ -40,7 +40,7 @@ describe 'apt::key', :type => :define do
       end
 
       let :params do {
-        :key => GPG_KEY_ID,
+        :id => GPG_KEY_ID,
       } end
 
       it 'contains the apt_key' do
@@ -80,7 +80,7 @@ describe 'apt::key', :type => :define do
 
     describe 'set a bunch of things!' do
       let :params do {
-        :key_content => 'GPG key content',
+        :content => 'GPG key content',
         :key_source => 'http://apt.puppetlabs.com/pubkey.gpg',
         :key_server => 'pgp.mit.edu',
         :key_options => 'debug',
@@ -92,7 +92,7 @@ describe 'apt::key', :type => :define do
           :ensure  => 'present',
           :source  => 'http://apt.puppetlabs.com/pubkey.gpg',
           :server  => 'pgp.mit.edu',
-          :content => params[:key_content],
+          :content => params[:content],
           :options => 'debug',
         })
       end
@@ -246,7 +246,7 @@ describe 'apt::key', :type => :define do
 
     context 'invalid content' do
       let :params do {
-        :key_content => [],
+        :content => [],
       } end
       it 'fails' do
         expect { subject.call }.to raise_error(/expects a String value/)
@@ -285,12 +285,12 @@ describe 'apt::key', :type => :define do
     describe 'duplication' do
       context 'two apt::key resources for same key, different titles' do
         let :pre_condition do
-          "#{super()}\napt::key { 'duplicate': key => '#{title}', }"
+          "#{super()}\napt::key { 'duplicate': id => '#{title}', }"
         end
 
         it 'contains the duplicate apt::key resource' do
           is_expected.to contain_apt__key('duplicate').with({
-            :key    => title,
+            :id    => title,
             :ensure => 'present',
           })
         end
@@ -320,7 +320,7 @@ describe 'apt::key', :type => :define do
 
       context 'two apt::key resources, different ensure' do
         let :pre_condition do
-          "#{super()}\napt::key { 'duplicate': key => '#{title}', ensure => 'absent', }"
+          "#{super()}\napt::key { 'duplicate': id => '#{title}', ensure => 'absent', }"
         end
         it 'informs the user of the impossibility' do
           expect { subject.call }.to raise_error(/already ensured as absent/)
