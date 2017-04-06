@@ -1,3 +1,22 @@
+## Supported Release 2.4.0
+### Summary
+A release that includes only a couple of additional features, but includes several cleanups and bugfixes around existing issues.
+
+#### Features
+- Tests updated to check for idempotency.
+- (MODULES-4224) Implementation of beaker-module_install_helper.
+- Deprecation warnings are now handled by the deprecation function in stdlib.
+
+#### Bugfixes
+- Now http and https sources fixed for apt_key and can take a userinfo.
+- GPG key update.
+- Notify_update param now defaults to true to avoid validation errors.
+- Implement retry on tests which pull key from a key server which sometimes times out (transient error).
+- String comparison error now comphensated for in update.pp.
+- (MODULES-4104) Removal of the port number from repository location in order to get the host name of the repository.
+- Puppet lint warnings addressed.
+- A few small readme issues addressed.
+
 ## Supported Release 2.3.0
 ### Summary
 A release containing many bugfixes with additional features.
