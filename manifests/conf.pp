@@ -1,8 +1,8 @@
 define apt::conf (
-  $content       = undef,
-  $ensure        = present,
-  $priority      = 50,
-  $notify_update = undef,
+  Optional[Variant[String, Stdlib::Compat::String]] $content                          = undef,
+  Enum['present', 'absent'] $ensure                                                   = present,
+  Variant[String, Stdlib::Compat::String, Integer, Stdlib::Compat::Integer] $priority = 50,
+  Optional[Boolean] $notify_update                                                    = undef,
 ) {
 
   unless $ensure == 'absent' {
@@ -11,10 +11,11 @@ define apt::conf (
     }
   }
 
+  $confheadertmp = epp('apt/_conf_header.epp')
   apt::setting { "conf-${name}":
     ensure        => $ensure,
     priority      => $priority,
-    content       => template('apt/_conf_header.erb', 'apt/conf.erb'),
+    content       => "${confheadertmp}${content}",
     notify_update => $notify_update,
   }
 }
