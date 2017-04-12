@@ -278,7 +278,7 @@ describe 'apt::key', :type => :define do
         }
       end
       it 'fails' do
-        expect { subject.call }.to raise_error(/a match for Enum\['absent', 'present'\], got 'foo'/)
+        expect { subject.call }.to raise_error(/Enum\['absent', 'present'\]/)
       end
     end
 

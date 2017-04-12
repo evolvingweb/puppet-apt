@@ -105,7 +105,7 @@ describe 'apt::setting' do
     context 'with ensure=banana' do
       let(:params) { default_params.merge({ :ensure => 'banana' }) }
       it do
-        expect { subject.call }.to raise_error(Puppet::Error, /Enum\['absent', 'file', 'present'\], got 'banana'/)
+        expect { subject.call }.to raise_error(Puppet::Error, /Enum\['absent', 'file', 'present'\]/)
       end
     end
 
