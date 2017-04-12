@@ -71,7 +71,13 @@ describe 'apt::setting' do
       apt::setting { "list-teddybear": content => "foo" }
       '
     end
-    let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy', :puppetversion   => Puppet.version, } }
+    let(:facts) { {
+      :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
+      :lsbdistid       => 'Debian',
+      :osfamily        => 'Debian',
+      :lsbdistcodename => 'wheezy',
+      :puppetversion   => Puppet.version,
+    } }
     let(:title) { 'conf-teddybear' }
     let(:default_params) { { :content => 'di' } }
 

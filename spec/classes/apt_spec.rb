@@ -1,7 +1,9 @@
 require 'spec_helper'
 describe 'apt' do
   let(:facts) do
-  { :lsbdistid       => 'Debian',
+  {
+    :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
+    :lsbdistid       => 'Debian',
     :osfamily        => 'Debian',
     :lsbdistcodename => 'wheezy',
     :puppetversion   => Puppet.version,
@@ -186,7 +188,9 @@ describe 'apt' do
 
   context 'with confs defined on valid osfamily' do
     let :facts do
-      { :osfamily        => 'Debian',
+      {
+        :os => { :family => 'Debian', :name => 'Ubuntu', :release => { :major => '12', :full => '12.04.5' }},
+        :osfamily        => 'Debian',
         :lsbdistcodename => 'precise',
         :lsbdistid       => 'Debian',
         :puppetversion   => Puppet.version,
@@ -212,7 +216,9 @@ describe 'apt' do
 
   context 'with keys defined on valid osfamily' do
     let :facts do
-      { :osfamily        => 'Debian',
+      {
+        :os => { :family => 'Debian', :name => 'Ubuntu', :release => { :major => '12', :full => '12.04.5' }},
+        :osfamily        => 'Debian',
         :lsbdistcodename => 'precise',
         :lsbdistid       => 'Debian',
         :puppetversion   => Puppet.version,
@@ -238,7 +244,9 @@ describe 'apt' do
 
   context 'with ppas defined on valid osfamily' do
     let :facts do
-      { :osfamily        => 'Debian',
+      {
+        :os => { :family => 'Debian', :name => 'Ubuntu', :release => { :major => '12', :full => '12.04.5' }},
+        :osfamily        => 'Debian',
         :lsbdistcodename => 'precise',
         :lsbdistid       => 'ubuntu',
         :lsbdistrelease  => '12.04',
@@ -256,7 +264,9 @@ describe 'apt' do
 
   context 'with settings defined on valid osfamily' do
     let :facts do
-      { :osfamily        => 'Debian',
+      {
+        :os => { :family => 'Debian', :name => 'Ubuntu', :release => { :major => '12', :full => '12.04.5' }},
+        :osfamily        => 'Debian',
         :lsbdistcodename => 'precise',
         :lsbdistid       => 'Debian',
         :puppetversion   => Puppet.version,
@@ -273,7 +283,9 @@ describe 'apt' do
 
   context 'with pins defined on valid osfamily' do
     let :facts do
-      { :osfamily        => 'Debian',
+      {
+        :os => { :family => 'Debian', :name => 'Ubuntu', :release => { :major => '12', :full => '12.04.5' }},
+        :osfamily        => 'Debian',
         :lsbdistcodename => 'precise',
         :lsbdistid       => 'Debian',
         :puppetversion   => Puppet.version,
@@ -322,18 +334,6 @@ describe 'apt' do
         expect {
           subject.call
         }.to raise_error(Puppet::Error)
-      end
-    end
-
-    context 'with unsupported osfamily' do
-      let :facts do
-        { :osfamily => 'Darwin', :puppetversion   => Puppet.version,}
-      end
-
-      it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, /This module only works on Debian or derivatives like Ubuntu/)
       end
     end
   end
