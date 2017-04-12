@@ -325,6 +325,7 @@ describe 'apt::ppa' do
     end
     let :facts do
       {
+        :os => { :family => 'Debian', :name => 'Ubuntu', :release => { :major => '14', :full => '14.04' }},
         :lsbdistrelease  => '14.04',
         :lsbdistcodename => 'trusty',
         :operatingsystem => 'Ubuntu',
@@ -349,6 +350,7 @@ describe 'apt::ppa' do
     describe 'no release' do
       let :facts do
         {
+          :os => { :family => 'Debian', :name => 'Ubuntu', :release => { :major => '14', :full => '14.04' }},
           :lsbdistrelease  => '14.04',
           :operatingsystem => 'Ubuntu',
           :lsbdistid       => 'Ubuntu',
@@ -368,6 +370,7 @@ describe 'apt::ppa' do
     describe 'not ubuntu' do
       let :facts do
         {
+          :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '6', :full => '6.0.7' }},
           :lsbdistrelease  => '6.0.7',
           :lsbdistcodename => 'wheezy',
           :operatingsystem => 'Debian',

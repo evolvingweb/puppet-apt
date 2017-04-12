@@ -65,6 +65,7 @@ describe 'apt::backports', :type => :class do
     context 'set everything' do
       let(:facts) do
         {
+          :os => { :family => 'Debian', :name => 'Ubuntu', :release => { :major => '14', :full => '14.04' }},
           :lsbdistid       => 'Ubuntu',
           :osfamily        => 'Debian',
           :lsbdistcodename => 'trusty',
@@ -121,6 +122,7 @@ describe 'apt::backports', :type => :class do
   describe 'mint tests' do
     let(:facts) do
       {
+        :os => { :family => 'Debian', :name => 'Linuxmint', :release => { :major => '17', :full => '17' }},
         :lsbdistid       => 'linuxmint',
         :osfamily        => 'Debian',
         :lsbdistcodename => 'qiana',
@@ -205,6 +207,7 @@ describe 'apt::backports', :type => :class do
   describe 'validation' do
     let(:facts) do
       {
+        :os => { :family => 'Debian', :name => 'Ubuntu', :release => { :major => '14', :full => '14.04' }},
         :lsbdistid       => 'Ubuntu',
         :osfamily        => 'Debian',
         :lsbdistcodename => 'trusty',

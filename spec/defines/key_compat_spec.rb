@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe 'apt::key', :type => :define do
   let(:facts) { {
-    :lsbdistid => 'Debian',
-    :osfamily => 'Debian',
+    :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
+    :lsbdistid     => 'Debian',
+    :osfamily      => 'Debian',
     :puppetversion => Puppet.version,
   } }
   GPG_KEY_ID = '6F6B15509CF8E59E6E469F327F438280EF8D349F'
