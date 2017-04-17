@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'apt_update_last_success fact' do
   subject { Facter.fact(:apt_update_last_success).value }
+  before(:each) { Facter.clear }
   after(:each) { Facter.clear }
 
   describe 'on Debian based distro which has not yet created the update-success-stamp file' do
