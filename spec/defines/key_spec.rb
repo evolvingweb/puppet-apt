@@ -5,7 +5,13 @@ describe 'apt::key' do
     'class { "apt": }'
   end
 
-  let(:facts) { { :lsbdistid => 'Debian', :osfamily => 'Debian', :lsbdistcodename => 'wheezy', :puppetversion   => Puppet.version, } }
+  let(:facts) { {
+    :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
+    :lsbdistid       => 'Debian',
+    :osfamily        => 'Debian',
+    :lsbdistcodename => 'wheezy',
+    :puppetversion   => Puppet.version,
+  } }
 
   GPG_KEY_ID = '6F6B15509CF8E59E6E469F327F438280EF8D349F'
 
@@ -245,7 +251,7 @@ describe 'apt::key' do
         :content => [],
       } end
       it 'fails' do
-        expect { subject.call }.to raise_error(/is not a string/)
+        expect { subject.call }.to raise_error(/expects a String value/)
       end
     end
 
@@ -263,7 +269,7 @@ describe 'apt::key' do
         :options => {},
       } end
       it 'fails' do
-        expect { subject.call }.to raise_error(/is not a string/)
+        expect { subject.call }.to raise_error(/expects a String value/)
       end
     end
 
@@ -275,7 +281,7 @@ describe 'apt::key' do
           }
           end
         it 'fails' do
-          expect { subject.call }.to raise_error(/does not match/)
+          expect { subject.call }.to raise_error(/for Enum\['absent', 'present'\], got/)
         end
       end
     end

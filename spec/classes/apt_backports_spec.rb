@@ -7,6 +7,7 @@ describe 'apt::backports', :type => :class do
     context 'defaults on deb' do
       let(:facts) do
         {
+          :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
           :lsbdistid       => 'Debian',
           :osfamily        => 'Debian',
           :lsbdistcodename => 'wheezy',
@@ -25,6 +26,7 @@ describe 'apt::backports', :type => :class do
     context 'defaults on squeeze' do
       let(:facts) do
         {
+          :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '6', :full => '6.0' }},
           :lsbdistid       => 'Debian',
           :osfamily        => 'Debian',
           :lsbdistcodename => 'squeeze',
@@ -43,6 +45,7 @@ describe 'apt::backports', :type => :class do
     context 'defaults on ubuntu' do
       let(:facts) do
         {
+          :os => { :family => 'Debian', :name => 'Ubuntu', :release => { :major => '14', :full => '14.04' }},
           :lsbdistid       => 'Ubuntu',
           :osfamily        => 'Debian',
           :lsbdistcodename => 'trusty',
@@ -62,6 +65,7 @@ describe 'apt::backports', :type => :class do
     context 'set everything' do
       let(:facts) do
         {
+          :os => { :family => 'Debian', :name => 'Ubuntu', :release => { :major => '14', :full => '14.04' }},
           :lsbdistid       => 'Ubuntu',
           :osfamily        => 'Debian',
           :lsbdistcodename => 'trusty',
@@ -90,6 +94,7 @@ describe 'apt::backports', :type => :class do
     context 'set things with hashes' do
       let(:facts) do
         {
+          :os => { :family => 'Debian', :name => 'Ubuntu', :release => { :major => '14', :full => '14.04' }},
           :lsbdistid       => 'Ubuntu',
           :osfamily        => 'Debian',
           :lsbdistcodename => 'trusty',
@@ -117,6 +122,7 @@ describe 'apt::backports', :type => :class do
   describe 'mint tests' do
     let(:facts) do
       {
+        :os => { :family => 'Debian', :name => 'Linuxmint', :release => { :major => '17', :full => '17' }},
         :lsbdistid       => 'linuxmint',
         :osfamily        => 'Debian',
         :lsbdistcodename => 'qiana',
@@ -201,6 +207,7 @@ describe 'apt::backports', :type => :class do
   describe 'validation' do
     let(:facts) do
       {
+        :os => { :family => 'Debian', :name => 'Ubuntu', :release => { :major => '14', :full => '14.04' }},
         :lsbdistid       => 'Ubuntu',
         :osfamily        => 'Debian',
         :lsbdistcodename => 'trusty',
@@ -217,7 +224,7 @@ describe 'apt::backports', :type => :class do
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /is not a string/)
+        }.to raise_error(Puppet::Error, /expects a String value/)
       end
     end
     context 'invalid release' do
@@ -229,7 +236,7 @@ describe 'apt::backports', :type => :class do
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /is not a string/)
+        }.to raise_error(Puppet::Error, /expects a String value/)
       end
     end
     context 'invalid repos' do
@@ -241,7 +248,7 @@ describe 'apt::backports', :type => :class do
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /is not a string/)
+        }.to raise_error(Puppet::Error, /expects a String value/)
       end
     end
     context 'invalid key' do
@@ -253,7 +260,7 @@ describe 'apt::backports', :type => :class do
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /is not a string/)
+        }.to raise_error(Puppet::Error, /expects a value of type String, Hash,/)
       end
     end
     context 'invalid pin' do
@@ -265,7 +272,7 @@ describe 'apt::backports', :type => :class do
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /pin must be either a string, number or hash/)
+        }.to raise_error(Puppet::Error, /parameter 'pin' expects a value of type Integer, Pattern/)
       end
     end
   end

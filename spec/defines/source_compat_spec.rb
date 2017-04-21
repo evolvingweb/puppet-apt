@@ -10,6 +10,7 @@ describe 'apt::source', :type => :define do
   context 'mostly defaults' do
     let :facts do
       {
+        :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
         :osfamily        => 'Debian',
@@ -32,6 +33,7 @@ describe 'apt::source', :type => :define do
   context 'no defaults' do
     let :facts do
       {
+        :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
         :osfamily        => 'Debian',
@@ -88,6 +90,7 @@ describe 'apt::source', :type => :define do
   context 'trusted_source true' do
     let :facts do
       {
+        :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
         :osfamily        => 'Debian',
@@ -108,6 +111,7 @@ describe 'apt::source', :type => :define do
   context 'architecture equals x86_64' do
     let :facts do
       {
+        :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
         :osfamily        => 'Debian',
@@ -128,6 +132,7 @@ describe 'apt::source', :type => :define do
   context 'ensure => absent' do
     let :facts do
       {
+        :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
         :lsbdistid       => 'Debian',
         :lsbdistcodename => 'wheezy',
         :osfamily        => 'Debian',
@@ -150,6 +155,7 @@ describe 'apt::source', :type => :define do
     context 'no release' do
       let :facts do
         {
+          :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
           :lsbdistid       => 'Debian',
           :osfamily        => 'Debian',
           :puppetversion   => Puppet.version,
