@@ -250,7 +250,7 @@ describe 'apt::source' do
     let :params do
       {
         :location    => 'hello.there',
-        :include      => {'src' => true},
+        :include     => {'src' => true},
       }
     end
 

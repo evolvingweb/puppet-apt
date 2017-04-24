@@ -41,14 +41,14 @@ describe 'apt::source', :type => :define do
     end
     let :params do
       {
-        'comment'           => 'foo',
-        'location'          => 'http://debian.mirror.iweb.ca/debian/',
-        'release'           => 'sid',
-        'repos'             => 'testing',
-        'include'           => { 'src' => false },
-        'key'               => GPG_KEY_ID,
-        'pin'               => '10',
-        'architecture'      => 'x86_64',
+        'comment'        => 'foo',
+        'location'       => 'http://debian.mirror.iweb.ca/debian/',
+        'release'        => 'sid',
+        'repos'          => 'testing',
+        'include'        => { 'src' => false },
+        'key'            => GPG_KEY_ID,
+        'pin'            => '10',
+        'architecture'   => 'x86_64',
         'allow_unsigned' => true,
       }
     end
