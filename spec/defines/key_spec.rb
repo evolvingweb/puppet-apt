@@ -251,7 +251,7 @@ describe 'apt::key' do
         :content => [],
       } end
       it 'fails' do
-        expect { subject.call }.to raise_error(/expects a value of type Undef or String/)
+        expect { subject.call }.to raise_error(/expects a/)
       end
     end
 
@@ -269,7 +269,7 @@ describe 'apt::key' do
         :options => {},
       } end
       it 'fails' do
-        expect { subject.call }.to raise_error(/expects a value of type Undef or String/)
+        expect { subject.call }.to raise_error(/expects a/)
       end
     end
 
