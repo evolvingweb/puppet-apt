@@ -99,13 +99,13 @@ define apt::source(
   $header = epp('apt/_header.epp')
 
   $sourcelist = epp('apt/source.list.epp', {
-    'comment'        => $comment,
-    'includes'       => $includes,
-    'architecture'   => $architecture,
-    'allow_unsigned' => $_allow_unsigned,
-    'location'       => $location,
-    'release'        => $_release,
-    'repos'          => $repos,
+    'comment'          => $comment,
+    'includes'         => $includes,
+    'opt_architecture' => $architecture,
+    'allow_unsigned'   => $_allow_unsigned,
+    'location'         => $location,
+    'release'          => $_release,
+    'repos'            => $repos,
   })
 
   apt::setting { "list-${name}":
