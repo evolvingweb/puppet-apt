@@ -237,6 +237,30 @@ describe 'apt::source' do
     }
   end
 
+  context 'with architecture fact and unset architecture parameter' do
+    let :facts do
+      {
+        :architecture    => 'amd64',
+        :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
+        :lsbdistid       => 'Debian',
+        :lsbdistcodename => 'wheezy',
+        :osfamily        => 'Debian',
+        :puppetversion   => Puppet.version,
+      }
+    end
+    let :params do
+      {
+        :location => 'hello.there',
+        :include  => {'deb' => false, 'src' => true,},
+      }
+    end
+
+    it { is_expected.to contain_apt__setting('list-my_source').with({
+      :ensure => 'present',
+    }).with_content(/# my_source\ndeb-src hello.there wheezy main\n/)
+    }
+  end
+
   context 'include_src => true' do
     let :facts do
       {
