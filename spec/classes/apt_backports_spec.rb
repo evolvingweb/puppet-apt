@@ -224,7 +224,7 @@ describe 'apt::backports', :type => :class do
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /expects a String value/)
+        }.to raise_error(Puppet::Error, /expects a/)
       end
     end
     context 'invalid release' do
@@ -236,7 +236,7 @@ describe 'apt::backports', :type => :class do
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /expects a String value/)
+        }.to raise_error(Puppet::Error, /expects a/)
       end
     end
     context 'invalid repos' do
@@ -248,7 +248,7 @@ describe 'apt::backports', :type => :class do
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /expects a String value/)
+        }.to raise_error(Puppet::Error, /expects a/)
       end
     end
     context 'invalid key' do
@@ -260,7 +260,7 @@ describe 'apt::backports', :type => :class do
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /expects a value of type String, Hash,/)
+        }.to raise_error(Puppet::Error, /expects a/)
       end
     end
     context 'invalid pin' do
@@ -272,7 +272,7 @@ describe 'apt::backports', :type => :class do
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /parameter 'pin' expects a value of type Integer, Pattern/)
+        }.to raise_error(Puppet::Error, /expects a/)
       end
     end
   end
