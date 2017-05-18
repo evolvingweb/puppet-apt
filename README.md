@@ -160,7 +160,7 @@ include the `apt` class, which will pick up the values automatically from
 hiera.
 
 ```yaml
-apt::sources:
+apt::source:
   'debian_unstable':
     comment: 'This is the iWeb Debian unstable mirror'
     location: 'http://debian.mirror.iweb.ca/debian/'
