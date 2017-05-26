@@ -119,7 +119,7 @@ class apt::params {
       }
     }
     undef: {
-      fail('Unable to determine full release number')
+      fail('Unable to determine value for fact os["name"]')
     }
     default: {
       $ppa_options = undef
