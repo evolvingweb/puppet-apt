@@ -19,7 +19,7 @@ define apt::source(
 
   $_before = Apt::Setting["list-${title}"]
 
-  if ! $release {
+  if !$release {
     if $facts['lsbdistcodename'] {
       $_release = $facts['lsbdistcodename']
     } else {
