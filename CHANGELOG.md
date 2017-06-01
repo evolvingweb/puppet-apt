@@ -1,3 +1,17 @@
+## Supported Release 4.1.0
+### Summary
+
+This release removes Data in Modules due to current compatibility issues and reinstates the params.pp file. Also includes a couple of bug fixes.
+
+#### Features
+- (MODULES-4973) Data in Modules which was introduced in the last release has now been reverted due to compatibility issues.
+
+#### Bugfixes
+- Now apt_key only sends the auth basic header when userinfo can be parsed from the URL.
+- Reverted the removal of Evolving Web's attribution in NOTICE file.
+- Test added to ensure empty string allowed for $release in apt::source.
+
+
 ## Supported Release 3.0.0 and 4.0.0
 ###Summary
 
