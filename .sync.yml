@@ -7,5 +7,8 @@ appveyor.yml:
   - set: docker/ubuntu-14.04
   - set: docker/debian-8
 
+NOTICE:
+  unmanaged: true
+
 spec/spec_helper.rb:
   allow_deprecations: true
