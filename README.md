@@ -279,7 +279,7 @@ Main class, includes all other classes.
 
   * 'host': Specifies a proxy host to be stored in `/etc/apt/apt.conf.d/01proxy`. Valid options: a string containing a hostname. Default: undef.
 
-  * 'port': Specifies a proxy port to be stored in `/etc/apt/apt.conf.d/01proxy`. Valid options: a string containing a port number. Default: '8080'.
+  * 'port': Specifies a proxy port to be stored in `/etc/apt/apt.conf.d/01proxy`. Valid options: an integer containing a port number. Default: 8080.
 
   * 'https': Specifies whether to enable https proxies. Valid options: 'true' and 'false'. Default: 'false'.
 
