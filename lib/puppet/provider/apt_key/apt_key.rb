@@ -26,15 +26,23 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
       key_output = apt_key(cli_args)
     end
 
-    pub_line, fpr_line = nil
+    pub_line, sub_line, fpr_line = nil
 
     key_array = key_output.split("\n").collect do |line|
       if line.start_with?('pub')
           pub_line = line
           # reset fpr_line, to skip any previous subkeys which were collected
           fpr_line = nil
+          sub_line = nil
+      elsif line.start_with?('sub')
+          sub_line = line
       elsif line.start_with?('fpr')
           fpr_line = line
+      end
+
+      if (sub_line and fpr_line)
+        sub_line, fpr_line = nil
+        next
       end
 
       next unless (pub_line and fpr_line)
