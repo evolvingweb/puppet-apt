@@ -72,7 +72,7 @@ describe 'apt' do
         is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
           /Acquire::http::proxy "http:\/\/localhost:8080\/";/,
         ).without_content(
-          %r{Acquire::https::proxy},
+          %r{Acquire::https::proxy "DIRECT"},
         )
       }
     end
@@ -84,7 +84,7 @@ describe 'apt' do
         is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
           /Acquire::http::proxy "http:\/\/localhost:8180\/";/,
         ).without_content(
-          %r{Acquire::https::proxy},
+          %r{Acquire::https::proxy "DIRECT"},
         )
       }
     end
