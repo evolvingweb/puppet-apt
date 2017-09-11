@@ -49,4 +49,14 @@ define apt::setting (
     source  => $source,
     notify  => $_notify,
   }
+
+  case $::operatingsystem {
+    'Debian': {
+      if versioncmp($facts['os']['release']['full'], '9.0') >= 0 {
+        # require for adding apt GPG keys
+        ensure_packages(['dirmngr'])
+      }
+    }
+  }
+
 }
