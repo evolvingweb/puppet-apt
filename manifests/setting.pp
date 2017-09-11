@@ -50,13 +50,19 @@ define apt::setting (
     notify  => $_notify,
   }
 
-  case $::operatingsystem {
+  # required for adding apt GPG keys
+  case $facts['os']['name'] {
     'Debian': {
       if versioncmp($facts['os']['release']['full'], '9.0') >= 0 {
-        # require for adding apt GPG keys
         ensure_packages(['dirmngr'])
       }
     }
+    'Ubuntu': {
+      if versioncmp($facts['os']['release']['full'], '17.04') >= 0 {
+        ensure_packages(['dirmngr'])
+      }
+    }
+    default: { }
   }
 
 }
