@@ -33,6 +33,24 @@ define apt::key (
           server  => $server,
           options => $options,
         } -> anchor { "apt_key ${id} present": }
+
+        case $facts['os']['name'] {
+          'Debian': {
+            if versioncmp($facts['os']['release']['full'], '9.0') >= 0 {
+              AptKey<| title == $title |> {
+                require => Package['dirmngr']
+              }
+            }
+          }
+          'Ubuntu': {
+            if versioncmp($facts['os']['release']['full'], '17.04') >= 0 {
+              AptKey<| title == $title |> {
+                require => Package['dirmngr']
+              }
+            }
+          }
+          default: { }
+        }
       }
     }
 
