@@ -49,5 +49,4 @@ define apt::setting (
     source  => $source,
     notify  => $_notify,
   }
-
 }
