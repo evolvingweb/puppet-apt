@@ -178,4 +178,19 @@ class apt (
   if $pins {
     create_resources('apt::pin', $pins)
   }
+
+  # required for adding GPG keys on Debian 9 (and derivatives)
+  case $facts['os']['name'] {
+    'Debian': {
+      if versioncmp($facts['os']['release']['full'], '9.0') >= 0 {
+        ensure_packages(['dirmngr'])
+      }
+    }
+    'Ubuntu': {
+      if versioncmp($facts['os']['release']['full'], '17.04') >= 0 {
+        ensure_packages(['dirmngr'])
+      }
+    }
+    default: { }
+  }
 }
