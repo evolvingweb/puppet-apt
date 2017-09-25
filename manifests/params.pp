@@ -73,16 +73,9 @@ class apt::params {
   case $facts['os']['name']{
     'Debian': {
       case $facts['os']['release']['full'] {
-        '6.0': {
-          $backports = {
-            'location' => 'http://httpredir.debian.org/debian-backports',
-            'key'      => 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553',
-            'repos'    => 'main contrib non-free',
-          }
-        }
         default: {
           $backports = {
-            'location' => 'http://httpredir.debian.org/debian',
+            'location' => 'http://deb.debian.org/debian',
             'key'      => 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553',
             'repos'    => 'main contrib non-free',
           }
