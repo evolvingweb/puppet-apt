@@ -1,29 +1,32 @@
 require 'spec_helper'
-describe 'apt::pin', :type => :define do
+describe 'apt::pin', type: :define do
   let :pre_condition do
     'class { "apt": }'
   end
-  let(:facts) { {
-    :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
-    :lsbdistid       => 'Debian',
-    :osfamily        => 'Debian',
-    :lsbdistcodename => 'wheezy',
-    :puppetversion   => Puppet.version,
-  } }
+  let(:facts) do
+    {
+      os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+      lsbdistid: 'Debian',
+      osfamily: 'Debian',
+      lsbdistcodename: 'wheezy',
+      puppetversion: Puppet.version,
+    }
+  end
   let(:title) { 'my_pin' }
 
   context 'defaults' do
-    it { is_expected.to contain_apt__setting("pref-my_pin").with_content(/Explanation: : my_pin\nPackage: \*\nPin: release a=my_pin\nPin-Priority: 0\n/)}
+    it { is_expected.to contain_apt__setting('pref-my_pin').with_content(%r{Explanation: : my_pin\nPackage: \*\nPin: release a=my_pin\nPin-Priority: 0\n}) }
   end
 
   context 'set version' do
     let :params do
       {
         'packages' => 'vim',
-        'version'  => "1",
+        'version'  => '1',
       }
     end
-    it { is_expected.to contain_apt__setting("pref-my_pin").with_content(/Explanation: : my_pin\nPackage: vim\nPin: version 1\nPin-Priority: 0\n/)}
+
+    it { is_expected.to contain_apt__setting('pref-my_pin').with_content(%r{Explanation: : my_pin\nPackage: vim\nPin: version 1\nPin-Priority: 0\n}) }
   end
 
   context 'set origin' do
@@ -33,7 +36,8 @@ describe 'apt::pin', :type => :define do
         'origin'   => 'test',
       }
     end
-    it { is_expected.to contain_apt__setting("pref-my_pin").with_content(/Explanation: : my_pin\nPackage: vim\nPin: origin test\nPin-Priority: 0\n/)}
+
+    it { is_expected.to contain_apt__setting('pref-my_pin').with_content(%r{Explanation: : my_pin\nPackage: vim\nPin: origin test\nPin-Priority: 0\n}) }
   end
 
   context 'not defaults' do
@@ -50,28 +54,29 @@ describe 'apt::pin', :type => :define do
         'priority'        => 10,
       }
     end
-    it { is_expected.to contain_apt__setting("pref-my_pin").with_content(/Explanation: foo\nPackage: \*\nPin: release a=1, n=bar, v=2, c=baz, o=foobar, l=foobaz\nPin-Priority: 10\n/) }
-    it { is_expected.to contain_apt__setting("pref-my_pin").with({
-      'priority'     => 99,
-    })
+
+    it { is_expected.to contain_apt__setting('pref-my_pin').with_content(%r{Explanation: foo\nPackage: \*\nPin: release a=1, n=bar, v=2, c=baz, o=foobar, l=foobaz\nPin-Priority: 10\n}) }
+    it {
+      is_expected.to contain_apt__setting('pref-my_pin').with('priority' => 99)
     }
   end
 
   context 'ensure absent' do
     let :params do
       {
-        'ensure' => 'absent'
+        'ensure' => 'absent',
       }
     end
-    it { is_expected.to contain_apt__setting("pref-my_pin").with({
-      'ensure' => 'absent',
-    })
+
+    it {
+      is_expected.to contain_apt__setting('pref-my_pin').with('ensure' => 'absent')
     }
   end
 
   context 'bad characters' do
     let(:title) { 'such  bad && wow!' }
-    it { is_expected.to contain_apt__setting("pref-such__bad____wow_") }
+
+    it { is_expected.to contain_apt__setting('pref-such__bad____wow_') }
   end
 
   describe 'validation' do
@@ -81,10 +86,11 @@ describe 'apt::pin', :type => :define do
           'order' => 'foo',
         }
       end
+
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /expects an Integer value, got String/)
+        }.to raise_error(Puppet::Error, %r{expects an Integer value, got String})
       end
     end
 
@@ -94,10 +100,11 @@ describe 'apt::pin', :type => :define do
           'version' => '1',
         }
       end
+
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /parameter version cannot be used in general form/)
+        }.to raise_error(Puppet::Error, %r{parameter version cannot be used in general form})
       end
     end
 
@@ -108,10 +115,11 @@ describe 'apt::pin', :type => :define do
           'release' => 'foo',
         }
       end
+
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /parameters release and origin are mutually exclusive/)
+        }.to raise_error(Puppet::Error, %r{parameters release and origin are mutually exclusive})
       end
     end
 
@@ -123,10 +131,11 @@ describe 'apt::pin', :type => :define do
           'packages' => 'vim',
         }
       end
+
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /parameters release, origin, and version are mutually exclusive/)
+        }.to raise_error(Puppet::Error, %r{parameters release, origin, and version are mutually exclusive})
       end
     end
 
@@ -138,10 +147,11 @@ describe 'apt::pin', :type => :define do
           'packages' => 'vim',
         }
       end
+
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, /parameters release, origin, and version are mutually exclusive/)
+        }.to raise_error(Puppet::Error, %r{parameters release, origin, and version are mutually exclusive})
       end
     end
   end

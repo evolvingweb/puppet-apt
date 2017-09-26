@@ -6,7 +6,7 @@ run_puppet_install_helper
 install_module_on(hosts)
 install_module_dependencies_on(hosts)
 
-UNSUPPORTED_PLATFORMS = ['RedHat','Suse','windows','AIX','Solaris']
+UNSUPPORTED_PLATFORMS = %w[RedHat Suse windows AIX Solaris].freeze
 
 # This method allows a block to be passed in and if an exception is raised
 # that matches the 'error_matcher' matcher, the block will wait a set number
@@ -25,7 +25,7 @@ def retry_on_error_matching(max_retry_count = 3, retry_wait_interval_secs = 5, e
     try += 1
     yield
   rescue Exception => e
-    if try < max_retry_count && (error_matcher == nil || e.message =~ error_matcher)
+    if try < max_retry_count && (error_matcher.nil? || e.message =~ error_matcher)
       sleep retry_wait_interval_secs
       retry
     else

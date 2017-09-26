@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe 'apt::source', :type => :define do
-  GPG_KEY_ID = '6F6B15509CF8E59E6E469F327F438280EF8D349F'
+describe 'apt::source', type: :define do
+  GPG_KEY_ID = '6F6B15509CF8E59E6E469F327F438280EF8D349F'.freeze
 
   let :title do
     'my_source'
@@ -10,33 +10,34 @@ describe 'apt::source', :type => :define do
   context 'mostly defaults' do
     let :facts do
       {
-        :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
-        :lsbdistid       => 'Debian',
-        :lsbdistcodename => 'wheezy',
-        :osfamily        => 'Debian',
-        :puppetversion   => Puppet.version,
+        os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+        lsbdistid: 'Debian',
+        lsbdistcodename: 'wheezy',
+        osfamily: 'Debian',
+        puppetversion: Puppet.version,
       }
     end
 
     let :params do
       {
         'include' => { 'deb' => false, 'src' => true },
-        'location'    => 'http://debian.mirror.iweb.ca/debian/',
+        'location' => 'http://debian.mirror.iweb.ca/debian/',
       }
     end
 
-    it { is_expected.to contain_apt__setting('list-my_source').with_content(/# my_source\ndeb-src http:\/\/debian\.mirror\.iweb\.ca\/debian\/ wheezy main\n/)
+    it {
+      is_expected.to contain_apt__setting('list-my_source').with_content(/# my_source\ndeb-src http:\/\/debian\.mirror\.iweb\.ca\/debian\/ wheezy main\n/)
     }
   end
 
   context 'no defaults' do
     let :facts do
       {
-        :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
-        :lsbdistid       => 'Debian',
-        :lsbdistcodename => 'wheezy',
-        :osfamily        => 'Debian',
-        :puppetversion   => Puppet.version,
+        os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+        lsbdistid: 'Debian',
+        lsbdistcodename: 'wheezy',
+        osfamily: 'Debian',
+        puppetversion: Puppet.version,
       }
     end
     let :params do
@@ -53,36 +54,35 @@ describe 'apt::source', :type => :define do
       }
     end
 
-    it { is_expected.to contain_apt__setting('list-my_source').with_content(/# foo\ndeb \[arch=x86_64 trusted=yes\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ sid testing\n/).without_content(/deb-src/)
+    it {
+      is_expected.to contain_apt__setting('list-my_source').with_content(/# foo\ndeb \[arch=x86_64 trusted=yes\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ sid testing\n/).without_content(%r{deb-src}) # rubocop:disable Metrics/LineLength
     }
 
-    it { is_expected.to contain_apt__pin('my_source').that_comes_before('Apt::Setting[list-my_source]').with({
-      'ensure'   => 'present',
-      'priority' => '10',
-      'origin'   => 'debian.mirror.iweb.ca',
-    })
+    it {
+      is_expected.to contain_apt__pin('my_source').that_comes_before('Apt::Setting[list-my_source]').with('ensure' => 'present',
+                                                                                                          'priority' => '10',
+                                                                                                          'origin'   => 'debian.mirror.iweb.ca')
     }
 
-    it { is_expected.to contain_apt__key("Add key: #{GPG_KEY_ID} from Apt::Source my_source").that_comes_before('Apt::Setting[list-my_source]').with({
-      'ensure' => 'present',
-      'id'  => GPG_KEY_ID,
-    })
+    it {
+      is_expected.to contain_apt__key("Add key: #{GPG_KEY_ID} from Apt::Source my_source").that_comes_before('Apt::Setting[list-my_source]').with('ensure' => 'present',
+                                                                                                                                                  'id' => GPG_KEY_ID)
     }
   end
 
   context 'allow_unsigned true' do
     let :facts do
       {
-        :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
-        :lsbdistid       => 'Debian',
-        :lsbdistcodename => 'wheezy',
-        :osfamily        => 'Debian',
-        :puppetversion   => Puppet.version,
+        os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+        lsbdistid: 'Debian',
+        lsbdistcodename: 'wheezy',
+        osfamily: 'Debian',
+        puppetversion: Puppet.version,
       }
     end
     let :params do
       {
-        'include'        => {'src' => false},
+        'include'        => { 'src' => false },
         'location'       => 'http://debian.mirror.iweb.ca/debian/',
         'allow_unsigned' => true,
       }
@@ -94,11 +94,11 @@ describe 'apt::source', :type => :define do
   context 'architecture equals x86_64' do
     let :facts do
       {
-        :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
-        :lsbdistid       => 'Debian',
-        :lsbdistcodename => 'wheezy',
-        :osfamily        => 'Debian',
-        :puppetversion   => Puppet.version,
+        os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+        lsbdistid: 'Debian',
+        lsbdistcodename: 'wheezy',
+        osfamily: 'Debian',
+        puppetversion: Puppet.version,
       }
     end
     let :params do
@@ -108,18 +108,19 @@ describe 'apt::source', :type => :define do
       }
     end
 
-    it { is_expected.to contain_apt__setting('list-my_source').with_content(/# my_source\ndeb \[arch=x86_64\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ wheezy main\n/)
+    it {
+      is_expected.to contain_apt__setting('list-my_source').with_content(/# my_source\ndeb \[arch=x86_64\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ wheezy main\n/)
     }
   end
 
   context 'ensure => absent' do
     let :facts do
       {
-        :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
-        :lsbdistid       => 'Debian',
-        :lsbdistcodename => 'wheezy',
-        :osfamily        => 'Debian',
-        :puppetversion   => Puppet.version,
+        os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+        lsbdistid: 'Debian',
+        lsbdistcodename: 'wheezy',
+        osfamily: 'Debian',
+        puppetversion: Puppet.version,
       }
     end
     let :params do
@@ -128,9 +129,8 @@ describe 'apt::source', :type => :define do
       }
     end
 
-    it { is_expected.to contain_apt__setting('list-my_source').with({
-      'ensure' => 'absent'
-    })
+    it {
+      is_expected.to contain_apt__setting('list-my_source').with('ensure' => 'absent')
     }
   end
 
@@ -138,15 +138,15 @@ describe 'apt::source', :type => :define do
     context 'no release' do
       let :facts do
         {
-          :os => { :family => 'Debian', :name => 'Debian', :release => { :major => '7', :full => '7.0' }},
-          :lsbdistid       => 'Debian',
-          :osfamily        => 'Debian',
-          :puppetversion   => Puppet.version,
+          os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+          lsbdistid: 'Debian',
+          osfamily: 'Debian',
+          puppetversion: Puppet.version,
         }
       end
 
       it do
-        expect { subject.call }.to raise_error(Puppet::Error, /lsbdistcodename fact not available: release parameter required/)
+        expect { subject.call }.to raise_error(Puppet::Error, %r{lsbdistcodename fact not available: release parameter required})
       end
     end
   end

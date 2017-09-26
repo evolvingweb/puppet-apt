@@ -1,44 +1,44 @@
 require 'spec_helper_acceptance'
 
-PUPPETLABS_GPG_KEY_SHORT_ID    = 'EF8D349F'
-PUPPETLABS_GPG_KEY_LONG_ID     = '7F438280EF8D349F'
-PUPPETLABS_GPG_KEY_FINGERPRINT = '6F6B15509CF8E59E6E469F327F438280EF8D349F'
-PUPPETLABS_APT_URL             = 'apt.puppetlabs.com'
-PUPPETLABS_GPG_KEY_FILE        = 'DEB-GPG-KEY-puppet'
-CENTOS_GPG_KEY_SHORT_ID        = 'C105B9DE'
-CENTOS_GPG_KEY_LONG_ID         = '0946FCA2C105B9DE'
-CENTOS_GPG_KEY_FINGERPRINT     = 'C1DAC52D1664E8A4386DBA430946FCA2C105B9DE'
-CENTOS_REPO_URL                = 'ftp.cvut.cz/centos'
-CENTOS_GPG_KEY_FILE            = 'RPM-GPG-KEY-CentOS-6'
+PUPPETLABS_GPG_KEY_SHORT_ID    = 'EF8D349F'.freeze
+PUPPETLABS_GPG_KEY_LONG_ID     = '7F438280EF8D349F'.freeze
+PUPPETLABS_GPG_KEY_FINGERPRINT = '6F6B15509CF8E59E6E469F327F438280EF8D349F'.freeze
+PUPPETLABS_APT_URL             = 'apt.puppetlabs.com'.freeze
+PUPPETLABS_GPG_KEY_FILE        = 'DEB-GPG-KEY-puppet'.freeze
+CENTOS_GPG_KEY_SHORT_ID        = 'C105B9DE'.freeze
+CENTOS_GPG_KEY_LONG_ID         = '0946FCA2C105B9DE'.freeze
+CENTOS_GPG_KEY_FINGERPRINT     = 'C1DAC52D1664E8A4386DBA430946FCA2C105B9DE'.freeze
+CENTOS_REPO_URL                = 'ftp.cvut.cz/centos'.freeze
+CENTOS_GPG_KEY_FILE            = 'RPM-GPG-KEY-CentOS-6'.freeze
 
-SHOULD_NEVER_EXIST_ID          = 'EF8D349F'
+SHOULD_NEVER_EXIST_ID          = 'EF8D349F'.freeze
 
-KEY_CHECK_COMMAND              = "apt-key adv --list-keys --with-colons --fingerprint | grep "
-PUPPETLABS_KEY_CHECK_COMMAND   = "#{KEY_CHECK_COMMAND} #{PUPPETLABS_GPG_KEY_FINGERPRINT}"
-CENTOS_KEY_CHECK_COMMAND       = "#{KEY_CHECK_COMMAND} #{CENTOS_GPG_KEY_FINGERPRINT}"
+KEY_CHECK_COMMAND              = 'apt-key adv --list-keys --with-colons --fingerprint | grep '.freeze
+PUPPETLABS_KEY_CHECK_COMMAND   = "#{KEY_CHECK_COMMAND} #{PUPPETLABS_GPG_KEY_FINGERPRINT}".freeze
+CENTOS_KEY_CHECK_COMMAND       = "#{KEY_CHECK_COMMAND} #{CENTOS_GPG_KEY_FINGERPRINT}".freeze
 
 MAX_TIMEOUT_RETRY              = 3
 TIMEOUT_RETRY_WAIT             = 5
-TIMEOUT_ERROR_MATCHER    = /no valid OpenPGP data found/
+TIMEOUT_ERROR_MATCHER = %r{no valid OpenPGP data found}
 
 describe 'apt_key' do
   before(:each) do
     # Delete twice to make sure everything is cleaned
     # up after the short key collision
     shell("apt-key del #{PUPPETLABS_GPG_KEY_SHORT_ID}",
-          :acceptable_exit_codes => [0,1,2])
+          acceptable_exit_codes: [0, 1, 2])
     shell("apt-key del #{PUPPETLABS_GPG_KEY_SHORT_ID}",
-          :acceptable_exit_codes => [0,1,2])
+          acceptable_exit_codes: [0, 1, 2])
   end
 
   describe 'default options' do
     key_versions = {
-      '32bit key id'                        => "#{PUPPETLABS_GPG_KEY_SHORT_ID}",
-      '64bit key id'                        => "#{PUPPETLABS_GPG_KEY_LONG_ID}",
-      '160bit key fingerprint'              => "#{PUPPETLABS_GPG_KEY_FINGERPRINT}",
-      '32bit lowercase key id'              => "#{PUPPETLABS_GPG_KEY_SHORT_ID.downcase}",
-      '64bit lowercase key id'              => "#{PUPPETLABS_GPG_KEY_LONG_ID.downcase}",
-      '160bit lowercase key fingerprint'    => "#{PUPPETLABS_GPG_KEY_FINGERPRINT.downcase}",
+      '32bit key id'                        => PUPPETLABS_GPG_KEY_SHORT_ID.to_s,
+      '64bit key id'                        => PUPPETLABS_GPG_KEY_LONG_ID.to_s,
+      '160bit key fingerprint'              => PUPPETLABS_GPG_KEY_FINGERPRINT.to_s,
+      '32bit lowercase key id'              => PUPPETLABS_GPG_KEY_SHORT_ID.downcase.to_s,
+      '64bit lowercase key id'              => PUPPETLABS_GPG_KEY_LONG_ID.downcase.to_s,
+      '160bit lowercase key fingerprint'    => PUPPETLABS_GPG_KEY_FINGERPRINT.downcase.to_s,
       '0x formatted 32bit key id'           => "0x#{PUPPETLABS_GPG_KEY_SHORT_ID}",
       '0x formatted 64bit key id'           => "0x#{PUPPETLABS_GPG_KEY_LONG_ID}",
       '0x formatted 160bit key fingerprint' => "0x#{PUPPETLABS_GPG_KEY_FINGERPRINT}",
@@ -48,7 +48,7 @@ describe 'apt_key' do
     }
 
     key_versions.each do |key, value|
-      context "#{key}" do
+      context key.to_s do
         it 'works' do
           pp = <<-EOS
           apt_key { 'puppetlabs':
@@ -57,8 +57,8 @@ describe 'apt_key' do
           }
           EOS
 
-          apply_manifest(pp, :catch_failures => true)
-          apply_manifest(pp, :catch_changes => true)
+          apply_manifest(pp, catch_failures: true)
+          apply_manifest(pp, catch_changes: true)
           shell(PUPPETLABS_KEY_CHECK_COMMAND)
         end
       end
@@ -72,8 +72,8 @@ describe 'apt_key' do
         }
         EOS
 
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/Valid values match/)
+        apply_manifest(pp, expect_failures: true) do |r|
+          expect(r.stderr).to match(%r{Valid values match})
         end
       end
     end
@@ -97,11 +97,11 @@ describe 'apt_key' do
         shell(CENTOS_KEY_CHECK_COMMAND)
 
         # Time to remove it using Puppet
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
 
         shell(CENTOS_KEY_CHECK_COMMAND,
-              :acceptable_exit_codes => [1])
+              acceptable_exit_codes: [1])
 
         # Re-Install the key (retry because key pool may timeout)
         retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
@@ -111,7 +111,7 @@ describe 'apt_key' do
       end
     end
 
-    context 'absent, added with long key', :unless => (fact('operatingsystem') == 'Debian' and fact('operatingsystemmajrelease') == '6') do
+    context 'absent, added with long key', unless: (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '6') do
       it 'is removed' do
         pp = <<-EOS
         apt_key { 'puppetlabs':
@@ -129,11 +129,11 @@ describe 'apt_key' do
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
 
         # Time to remove it using Puppet
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
 
         shell(PUPPETLABS_KEY_CHECK_COMMAND,
-              :acceptable_exit_codes => [1])
+              acceptable_exit_codes: [1])
       end
     end
   end
@@ -200,16 +200,15 @@ zGioYMWgVePywFGaTV51/0uF9ymHHC7BDIcLgUWHdg/1B67jR5YQfzPJUqLhnylt
           }
         EOS
 
-        #Apply the manifest (Retry if timeout error is received from key pool)
+        # Apply the manifest (Retry if timeout error is received from key pool)
         retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
-          apply_manifest(pp, :catch_failures => true)
+          apply_manifest(pp, catch_failures: true)
         end
 
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_changes: true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
-
 
     context 'multiple keys' do
       it 'runs without errors' do
@@ -466,8 +465,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -482,8 +481,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/no valid OpenPGP data found/)
+        apply_manifest(pp, expect_failures: true) do |r|
+          expect(r.stderr).to match(%r{no valid OpenPGP data found})
         end
       end
     end
@@ -500,12 +499,12 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        #Apply the manifest (Retry if timeout error is received from key pool)
+        # Apply the manifest (Retry if timeout error is received from key pool)
         retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
-          apply_manifest(pp, :catch_failures => true)
+          apply_manifest(pp, catch_failures: true)
         end
 
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_changes: true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -521,10 +520,10 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         EOS
 
         retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
-          apply_manifest(pp, :catch_failures => true)
+          apply_manifest(pp, catch_failures: true)
         end
 
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_changes: true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -539,8 +538,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/(Host not found|Couldn't resolve host)/)
+        apply_manifest(pp, expect_failures: true) do |r|
+          expect(r.stderr).to match(%r{(Host not found|Couldn't resolve host)})
         end
       end
     end
@@ -555,8 +554,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/Invalid value \".pgp.key.server\"/)
+        apply_manifest(pp, expect_failures: true) do |r|
+          expect(r.stderr).to match(%r{Invalid value \".pgp.key.server\"})
         end
       end
     end
@@ -573,8 +572,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
@@ -587,8 +586,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
@@ -601,8 +600,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/404 Not Found/)
+        apply_manifest(pp, expect_failures: true) do |r|
+          expect(r.stderr).to match(%r{404 Not Found})
         end
       end
 
@@ -615,8 +614,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/could not resolve/)
+        apply_manifest(pp, expect_failures: true) do |r|
+          expect(r.stderr).to match(%r{could not resolve})
         end
       end
     end
@@ -624,7 +623,7 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
     context 'ftp://' do
       before(:each) do
         shell("apt-key del #{CENTOS_GPG_KEY_LONG_ID}",
-              :acceptable_exit_codes => [0,1,2])
+              acceptable_exit_codes: [0, 1, 2])
       end
 
       it 'works' do
@@ -636,8 +635,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
         shell(CENTOS_KEY_CHECK_COMMAND)
       end
 
@@ -650,8 +649,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/550 Failed to open/)
+        apply_manifest(pp, expect_failures: true) do |r|
+          expect(r.stderr).to match(%r{550 Failed to open})
         end
       end
 
@@ -664,8 +663,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/could not resolve/)
+        apply_manifest(pp, expect_failures: true) do |r|
+          expect(r.stderr).to match(%r{could not resolve})
         end
       end
     end
@@ -680,8 +679,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
@@ -694,8 +693,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
@@ -708,8 +707,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/404 Not Found/)
+        apply_manifest(pp, expect_failures: true) do |r|
+          expect(r.stderr).to match(%r{404 Not Found})
         end
       end
 
@@ -722,8 +721,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/could not resolve/)
+        apply_manifest(pp, expect_failures: true) do |r|
+          expect(r.stderr).to match(%r{could not resolve})
         end
       end
     end
@@ -747,8 +746,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -763,8 +762,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/does not exist/)
+        apply_manifest(pp, expect_failures: true) do |r|
+          expect(r.stderr).to match(%r{does not exist})
         end
       end
     end
@@ -786,8 +785,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/no valid OpenPGP data found/)
+        apply_manifest(pp, expect_failures: true) do |r|
+          expect(r.stderr).to match(%r{no valid OpenPGP data found})
         end
       end
     end
@@ -804,8 +803,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
@@ -822,8 +821,8 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
       end
     end
 
@@ -837,11 +836,10 @@ FPfZDNCu/TXoqyJk7434jJrcHgPryzrHFBLfEmc=
         }
         EOS
 
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/do not match/)
+        apply_manifest(pp, expect_failures: true) do |r|
+          expect(r.stderr).to match(%r{don't match})
         end
       end
     end
   end
-
 end
