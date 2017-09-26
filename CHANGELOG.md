@@ -17,8 +17,7 @@ This release is primarily to fix an error around GPG keys in Debian 9, but inclu
 - Ubuntu 16.04 now uses `software-priorities-common`
 
 #### Removed
-- Debian 6 support
-- Ubuntu 10.04 and 12.04 support
+- Debian 6, Ubuntu 10.04 and 12.04 support. Existing compatibility remains intact but bugs will not be prioritized for these OSes.
 
 #### Fixed
 - **[(MODULES-4686)](https://tickets.puppetlabs.com/browse/MODULES-4686) an error that was causing GPG keyserver imports to fail on Debian 9**
