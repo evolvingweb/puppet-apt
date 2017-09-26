@@ -1,3 +1,27 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org).
+
+## Supported Release [4.2.0]
+### Summary
+
+This release is primarily to fix an error around GPG keys in Debian 9, but includes some other small features and fixes as well.
+
+#### Added
+- `apt_package_security_updates` fact
+- The ability to modify the loglevel of `Exec['apt_update'}`
+- Puppet 5 support
+
+#### Changed
+- Ubuntu 16.04 now uses `software-priorities-common`
+
+#### Removed
+- Debian 6, Ubuntu 10.04 and 12.04 support. Existing compatibility remains intact but bugs will not be prioritized for these OSes.
+
+#### Fixed
+- **[(MODULES-4686)](https://tickets.puppetlabs.com/browse/MODULES-4686) an error that was causing GPG keyserver imports to fail on Debian 9**
+
 ## Supported Release 4.1.0
 ### Summary
 
@@ -572,3 +596,6 @@ This release includes Ubuntu 12.10 (Quantal) support for PPAs.
 * 71796e3 Heading fix in README
 * 87777d8 Typo in README
 * f848bac First commit
+
+
+[4.2.0]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.1.0...4.2.0
