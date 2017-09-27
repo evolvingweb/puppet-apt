@@ -10,10 +10,10 @@ Facter.add("apt_has_updates") do
           package = line.gsub(/^Inst\s([^\s]+)\s.*/, '\1').strip
           apt_package_updates[0].push(package)
           security_matches = [
-            / Debian[^\s]+-updates /,
+            / Debian[^\s]+-updates[, ]/,
             / Debian-Security:/,
-            / Ubuntu[^\s]+-security /,
-            / gNewSense[^\s]+-security /
+            / Ubuntu[^\s]+-security[, ]/,
+            / gNewSense[^\s]+-security[, ]/
           ]
           re = Regexp.union(security_matches)
           if line.match(re)
