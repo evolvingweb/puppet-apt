@@ -6,6 +6,9 @@ appveyor.yml:
   docker_sets:
   - set: docker/ubuntu-14.04
   - set: docker/debian-8
+  extras:
+  - rvm: 2.1.9
+    script: bundle exec rake rubocop
 
 NOTICE:
   unmanaged: true
