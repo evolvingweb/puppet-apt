@@ -182,7 +182,7 @@ class apt (
   # required for adding GPG keys on Debian 9 (and derivatives)
   case $facts['os']['name'] {
     'Debian': {
-      if versioncmp($facts['os']['release']['full'], '9.0') >= 0 {
+      if versioncmp($facts['os']['release']['major'], '9') >= 0 {
         ensure_packages(['dirmngr'])
       }
     }
