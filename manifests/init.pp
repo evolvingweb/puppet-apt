@@ -35,10 +35,11 @@ class apt (
     fail('This module only works on Debian or derivatives like Ubuntu')
   }
 
-  $frequency_options = ['always','daily','weekly','reluctantly']
-
   if $update['frequency'] {
-    validate_re($update['frequency'], $frequency_options)
+    assert_type(
+      Enum['always','daily','weekly','reluctantly'],
+      $update['frequency'],
+    )
   }
   if $update['timeout'] {
     assert_type(Integer, $update['timeout'])
@@ -66,7 +67,7 @@ class apt (
   $_purge = merge($::apt::purge_defaults, $purge)
 
   if $proxy['ensure'] {
-    validate_re($proxy['ensure'], ['file', 'present', 'absent'])
+    assert_type(Enum['file', 'present', 'absent'], $proxy['ensure'])
   }
   if $proxy['host'] {
     assert_type(String, $proxy['host'])

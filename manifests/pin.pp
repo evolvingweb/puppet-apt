@@ -40,7 +40,7 @@ define apt::pin(
   # Read the manpage 'apt_preferences(5)', especially the chapter
   # 'The Effect of APT Preferences' to understand the following logic
   # and the difference between specific and general form
-  if is_array($packages) {
+  if $packages =~ Array {
     $packages_string = join($packages, ' ')
   } else {
     $packages_string = $packages
