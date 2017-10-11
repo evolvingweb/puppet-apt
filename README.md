@@ -20,6 +20,7 @@
     * [Defined Types](#defined-types)
     * [Types](#types)
     * [Facts](#facts)
+    * [Tasks](#tasks)
 6. [Limitations - OS compatibility, etc.](#limitations)
 7. [Development - Guide for contributing to the module](#development)
 
@@ -263,6 +264,10 @@ apt::source { "archive.ubuntu.com-${lsbdistcodename}-backports":
 * `apt_update_last_success`: The date, in epochtime, of the most recent successful `apt-get update` run (based on the mtime of  /var/lib/apt/periodic/update-success-stamp).
 
 * `apt_reboot_required`: Determines if a reboot is necessary after updates have been installed.
+
+### Tasks
+
+The Apt module has an example task that allows a user to run apt-get update or upgrade. Please refer to to the [PE documentation](https://puppet.com/docs/pe/2017.3/orchestrator/running_tasks.html) or [Bolt documentation](https://puppet.com/docs/bolt/latest/bolt.html) on how to execute a task.
 
 #### Class: `apt`
 
