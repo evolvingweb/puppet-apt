@@ -389,7 +389,7 @@ describe 'apt::source' do
       it do
         expect {
           subject.call
-        }.to raise_error(Puppet::Error, %r{invalid value for pin})
+        }.to raise_error(Puppet::Error, %r{expects a value})
       end
     end
 

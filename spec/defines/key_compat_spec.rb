@@ -146,7 +146,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call } .to raise_error(%r{does not match})
+        expect { subject.call } .to raise_error(%r{expects a match})
       end
     end
 
@@ -158,7 +158,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call } .to raise_error(%r{does not match})
+        expect { subject.call } .to raise_error(%r{expects a match})
       end
     end
 
@@ -170,7 +170,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call } .to raise_error(%r{does not match})
+        expect { subject.call } .to raise_error(%r{expects a match})
       end
     end
     context 'exceed character url' do
@@ -181,7 +181,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{does not match})
+        expect { subject.call }.to raise_error(%r{expects a match})
       end
     end
     context 'incorrect port number url' do
@@ -192,7 +192,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{does not match})
+        expect { subject.call }.to raise_error(%r{expects a match})
       end
     end
     context 'incorrect protocol for  url' do
@@ -203,7 +203,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{does not match})
+        expect { subject.call }.to raise_error(%r{expects a match})
       end
     end
     context 'missing port number url' do
@@ -214,7 +214,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{does not match})
+        expect { subject.call }.to raise_error(%r{expects a match})
       end
     end
     context 'url ending with a dot' do
@@ -225,7 +225,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{does not match})
+        expect { subject.call }.to raise_error(%r{expects a match})
       end
     end
     context 'url begin with a dash' do
@@ -236,7 +236,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{does not match})
+        expect { subject.call }.to raise_error(%r{expects a match})
       end
     end
     context 'invalid key' do
@@ -245,7 +245,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{does not match})
+        expect { subject.call }.to raise_error(%r{expects a match})
       end
     end
 
@@ -257,7 +257,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{does not match})
+        expect { subject.call }.to raise_error(%r{expects a match})
       end
     end
 
@@ -281,7 +281,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{does not match})
+        expect { subject.call }.to raise_error(%r{expects a match})
       end
     end
 

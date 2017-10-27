@@ -36,9 +36,9 @@ class apt::backports (
     }
   }
 
-  if is_hash($pin) {
+  if $pin =~ Hash {
     $_pin = $pin
-  } elsif is_numeric($pin) or is_string($pin) {
+  } elsif $pin =~ Numeric or $pin =~ String {
     # apt::source defaults to pinning to origin, but we should pin to release
     # for backports
     $_pin = {

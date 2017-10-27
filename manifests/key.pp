@@ -8,14 +8,19 @@ define apt::key (
     Optional[String] $options            = undef,
     ) {
 
-  validate_re($id, ['\A(0x)?[0-9a-fA-F]{8}\Z', '\A(0x)?[0-9a-fA-F]{16}\Z', '\A(0x)?[0-9a-fA-F]{40}\Z'])
+  assert_type(
+    Pattern[
+      /\A(0x)?[0-9a-fA-F]{8}\Z/,
+      /\A(0x)?[0-9a-fA-F]{16}\Z/,
+      /\A(0x)?[0-9a-fA-F]{40}\Z/,
+    ], $id)
 
   if $source {
-    validate_re($source, ['\Ahttps?:\/\/', '\Aftp:\/\/', '\A\/\w+'])
+    assert_type(Pattern[/\Ahttps?:\/\//, /\Aftp:\/\//, /\A\/\w+/], $source)
   }
 
   if $server {
-    validate_re($server,['\A((hkp|http|https):\/\/)?([a-z\d])([a-z\d-]{0,61}\.)+[a-z\d]+(:\d{2,5})?$'])
+    assert_type(Pattern[/\A((hkp|http|https):\/\/)?([a-z\d])([a-z\d-]{0,61}\.)+[a-z\d]+(:\d{2,5})?$/], $server)
   }
 
   case $ensure {
