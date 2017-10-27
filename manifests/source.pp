@@ -29,8 +29,15 @@ define apt::source(
     $_release = $release
   }
 
-  if $ensure == 'present' and ! $location {
-    fail('cannot create a source entry without specifying a location')
+  if $ensure == 'present' {
+    if ! $location {
+      fail('cannot create a source entry without specifying a location')
+    } elsif $_release == 'jessie' {
+      $method = split($location, '[:\/]+')[0]
+      if $method == 'https' {
+        ensure_packages('apt-transport-https')
+      }
+    }
   }
 
   $includes = merge($::apt::include_defaults, $include)
