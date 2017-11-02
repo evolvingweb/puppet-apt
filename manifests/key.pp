@@ -41,17 +41,15 @@ define apt::key (
 
         case $facts['os']['name'] {
           'Debian': {
-            if versioncmp($facts['os']['release']['full'], '9.0') >= 0 {
-              Apt::Key<| title == $title |> {
-                require => Package['dirmngr']
-              }
+            if versioncmp($facts['os']['release']['major'], '9') >= 0 {
+              ensure_packages(['dirmngr'])
+              Apt::Key<| title == $title |>
             }
           }
           'Ubuntu': {
             if versioncmp($facts['os']['release']['full'], '17.04') >= 0 {
-              Apt::Key<| title == $title |> {
-                require => Package['dirmngr']
-              }
+              ensure_packages(['dirmngr'])
+              Apt::Key<| title == $title |>
             }
           }
           default: { }
