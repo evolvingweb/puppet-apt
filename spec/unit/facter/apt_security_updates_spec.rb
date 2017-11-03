@@ -26,7 +26,9 @@ describe 'apt_security_updates fact' do
         "Inst tzdata [2015f-0+deb8u1] (2015g-0+deb8u1 Debian:stable-updates [all])\n" \
           "Conf tzdata (2015g-0+deb8u1 Debian:stable-updates [all])\n" \
           "Inst unhide.rb [13-1.1] (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n" \
-          "Conf unhide.rb (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n"
+          "Conf unhide.rb (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n" \
+          "Inst curl [7.52.1-5] (7.52.1-5+deb9u2 Debian-Security:9/stable [amd64]) []\n" \
+          "Conf curl (7.52.1-5+deb9u2 Debian-Security:9/stable [amd64])\n" \
       end
 
       it { is_expected.to eq(1) }
