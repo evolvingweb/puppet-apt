@@ -54,7 +54,7 @@ describe 'apt' do
     it 'lays down /etc/apt/apt.conf.d/15update-stamp' do
       is_expected.to contain_file('/etc/apt/apt.conf.d/15update-stamp').with(group: 'root',
                                                                              mode: '0644',
-                                                                             owner: 'root').with_content(/APT::Update::Post-Invoke-Success \{"touch \/var\/lib\/apt\/periodic\/update-success-stamp 2>\/dev\/null \|\| true";\};/) # rubocop:disable Metrics/LineLength
+                                                                             owner: 'root').with_content(%r{APT::Update::Post-Invoke-Success {"touch /var/lib/apt/periodic/update-success-stamp 2>/dev/null || true";};}) # rubocop:disable Metrics/LineLength
     end
 
     it {
@@ -70,9 +70,9 @@ describe 'apt' do
 
       it {
         is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
-          /Acquire::http::proxy "http:\/\/localhost:8080\/";/,
+          %r{Acquire::http::proxy "http://localhost:8080/";},
         ).without_content(
-          %r{Acquire::https::proxy "DIRECT"},
+          %r{Acquire::https::proxy},
         )
       }
     end
@@ -82,9 +82,9 @@ describe 'apt' do
 
       it {
         is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
-          /Acquire::http::proxy "http:\/\/localhost:8180\/";/,
+          %r{Acquire::http::proxy "http://localhost:8180/";},
         ).without_content(
-          %r{Acquire::https::proxy "DIRECT"},
+          %r{Acquire::https::proxy},
         )
       }
     end
@@ -94,9 +94,40 @@ describe 'apt' do
 
       it {
         is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
-          /Acquire::http::proxy "http:\/\/localhost:8080\/";/,
+          %r{Acquire::http::proxy "http://localhost:8080/";},
         ).with_content(
-          /Acquire::https::proxy "https:\/\/localhost:8080\/";/,
+          %r{Acquire::https::proxy "https://localhost:8080/";},
+        )
+      }
+    end
+
+    context 'host=localhost and direct=true' do
+      let(:params) { { proxy: { 'host' => 'localhost', 'direct' => true } } }
+
+      it {
+        is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
+          %r{Acquire::http::proxy "http://localhost:8080/";},
+        ).with_content(
+          %r{Acquire::https::proxy "DIRECT";},
+        )
+      }
+    end
+
+    context 'host=localhost and https=true and direct=true' do
+      let(:params) { { proxy: { 'host' => 'localhost', 'https' => true, 'direct' => true } } }
+
+      it {
+        is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
+          %r{Acquire::http::proxy "http://localhost:8080/";},
+        ).with_content(
+          %r{Acquire::https::proxy "https://localhost:8080/";},
+        )
+      }
+      it {
+        is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
+          %r{Acquire::http::proxy "http://localhost:8080/";},
+        ).without_content(
+          %r{Acquire::https::proxy "DIRECT";},
         )
       }
     end
@@ -175,14 +206,14 @@ describe 'apt' do
       is_expected.to contain_apt__setting('list-debian_unstable').with(ensure: 'present')
     }
 
-    it { is_expected.to contain_file('/etc/apt/sources.list.d/debian_unstable.list').with_content(/^deb http:\/\/debian.mirror.iweb.ca\/debian\/ unstable main contrib non-free$/) }
-    it { is_expected.to contain_file('/etc/apt/sources.list.d/debian_unstable.list').with_content(/^deb-src http:\/\/debian.mirror.iweb.ca\/debian\/ unstable main contrib non-free$/) }
+    it { is_expected.to contain_file('/etc/apt/sources.list.d/debian_unstable.list').with_content(%r{^deb http://debian.mirror.iweb.ca/debian/ unstable main contrib non-free$}) }
+    it { is_expected.to contain_file('/etc/apt/sources.list.d/debian_unstable.list').with_content(%r{^deb-src http://debian.mirror.iweb.ca/debian/ unstable main contrib non-free$}) }
 
     it {
       is_expected.to contain_apt__setting('list-puppetlabs').with(ensure: 'present')
     }
 
-    it { is_expected.to contain_file('/etc/apt/sources.list.d/puppetlabs.list').with_content(/^deb http:\/\/apt.puppetlabs.com precise main$/) }
+    it { is_expected.to contain_file('/etc/apt/sources.list.d/puppetlabs.list').with_content(%r{^deb http://apt.puppetlabs.com precise main$}) }
   end
 
   context 'with confs defined on valid osfamily' do

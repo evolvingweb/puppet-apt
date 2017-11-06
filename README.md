@@ -290,6 +290,8 @@ Main class, includes all other classes.
   * 'https': Specifies whether to enable https proxies. Valid options: 'true' and 'false'. Default: 'false'.
 
   * 'ensure': Optional parameter. Valid options: 'file', 'present', and 'absent'. Default: 'undef'. Prefer 'file' over 'present'.
+  
+  * 'direct': Specifies whether or not to use a 'DIRECT' https proxy if http proxy is used but https is not. Valid options: 'true' and 'false'. Default: 'false'.
 
 * `purge`: Specifies whether to purge any existing settings that aren't managed by Puppet. Valid options: a hash made up from the following keys:
 
