@@ -29,10 +29,13 @@ define apt::source(
     $_release = $release
   }
 
+  # Some releases do not support https transport with default installation
+  $_transport_https_releases = [ 'jessie', 'stretch', 'trusty', 'xenial' ]
+
   if $ensure == 'present' {
     if ! $location {
       fail('cannot create a source entry without specifying a location')
-    } elsif $_release == 'jessie' {
+    } elsif $_release in $_transport_https_releases {
       $method = split($location, '[:\/]+')[0]
       if $method == 'https' {
         ensure_packages('apt-transport-https')
