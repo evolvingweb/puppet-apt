@@ -49,6 +49,7 @@ class apt::params {
     'host'   => undef,
     'port'   => 8080,
     'https'  => false,
+    'direct' => false,
   }
 
   $purge_defaults = {
