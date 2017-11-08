@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'apt::backports', type: :class do
-  let (:pre_condition) { "class{ '::apt': }" }
+  let(:pre_condition) { "class{ '::apt': }" }
 
   describe 'debian/ubuntu tests' do
     context 'defaults on deb' do
@@ -139,9 +139,7 @@ describe 'apt::backports', type: :class do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key})
+        is_expected.to raise_error(Puppet::Error, %r{If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key})
       end
     end
     context 'missing release' do
@@ -154,9 +152,7 @@ describe 'apt::backports', type: :class do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key})
+        is_expected.to raise_error(Puppet::Error, %r{If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key})
       end
     end
     context 'missing repos' do
@@ -169,9 +165,7 @@ describe 'apt::backports', type: :class do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key})
+        is_expected.to raise_error(Puppet::Error, %r{If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key})
       end
     end
     context 'missing key' do
@@ -184,9 +178,7 @@ describe 'apt::backports', type: :class do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key})
+        is_expected.to raise_error(Puppet::Error, %r{If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key})
       end
     end
   end
@@ -210,9 +202,7 @@ describe 'apt::backports', type: :class do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{expects a})
+        is_expected.to raise_error(Puppet::Error, %r{expects a})
       end
     end
     context 'invalid release' do
@@ -223,9 +213,7 @@ describe 'apt::backports', type: :class do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{expects a})
+        is_expected.to raise_error(Puppet::Error, %r{expects a})
       end
     end
     context 'invalid repos' do
@@ -236,9 +224,7 @@ describe 'apt::backports', type: :class do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{expects a})
+        is_expected.to raise_error(Puppet::Error, %r{expects a})
       end
     end
     context 'invalid key' do
@@ -249,9 +235,7 @@ describe 'apt::backports', type: :class do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{expects a})
+        is_expected.to raise_error(Puppet::Error, %r{expects a})
       end
     end
     context 'invalid pin' do
@@ -262,9 +246,7 @@ describe 'apt::backports', type: :class do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{expects a})
+        is_expected.to raise_error(Puppet::Error, %r{expects a})
       end
     end
   end

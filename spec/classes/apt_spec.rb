@@ -1,4 +1,37 @@
 require 'spec_helper'
+
+sources_list = {  ensure: 'file',
+                  path: '/etc/apt/sources.list',
+                  owner: 'root',
+                  group: 'root',
+                  mode: '0644',
+                  notify: 'Class[Apt::Update]' }
+
+sources_list_d = { ensure: 'directory',
+                   path: '/etc/apt/sources.list.d',
+                   owner: 'root',
+                   group: 'root',
+                   mode: '0644',
+                   purge: false,
+                   recurse: false,
+                   notify: 'Class[Apt::Update]' }
+
+preferences = { ensure: 'file',
+                path: '/etc/apt/preferences',
+                owner: 'root',
+                group: 'root',
+                mode: '0644',
+                notify: 'Class[Apt::Update]' }
+
+preferences_d = { ensure: 'directory',
+                  path: '/etc/apt/preferences.d',
+                  owner: 'root',
+                  group: 'root',
+                  mode: '0644',
+                  purge: false,
+                  recurse: false,
+                  notify: 'Class[Apt::Update]' }
+
 describe 'apt' do
   let(:facts) do
     {
@@ -12,49 +45,27 @@ describe 'apt' do
 
   context 'defaults' do
     it {
-      is_expected.to contain_file('sources.list').that_notifies('Class[Apt::Update]').only_with(ensure: 'file',
-                                                                                                path: '/etc/apt/sources.list',
-                                                                                                owner: 'root',
-                                                                                                group: 'root',
-                                                                                                mode: '0644',
-                                                                                                notify: 'Class[Apt::Update]')
+      is_expected.to contain_file('sources.list').that_notifies('Class[Apt::Update]').only_with(sources_list)
     }
 
     it {
-      is_expected.to contain_file('sources.list.d').that_notifies('Class[Apt::Update]').only_with(ensure: 'directory',
-                                                                                                  path: '/etc/apt/sources.list.d',
-                                                                                                  owner: 'root',
-                                                                                                  group: 'root',
-                                                                                                  mode: '0644',
-                                                                                                  purge: false,
-                                                                                                  recurse: false,
-                                                                                                  notify: 'Class[Apt::Update]')
+      is_expected.to contain_file('sources.list.d').that_notifies('Class[Apt::Update]').only_with(sources_list_d)
     }
 
     it {
-      is_expected.to contain_file('preferences').that_notifies('Class[Apt::Update]').only_with(ensure: 'file',
-                                                                                               path: '/etc/apt/preferences',
-                                                                                               owner: 'root',
-                                                                                               group: 'root',
-                                                                                               mode: '0644',
-                                                                                               notify: 'Class[Apt::Update]')
+      is_expected.to contain_file('preferences').that_notifies('Class[Apt::Update]').only_with(preferences)
     }
 
     it {
-      is_expected.to contain_file('preferences.d').that_notifies('Class[Apt::Update]').only_with(ensure: 'directory',
-                                                                                                 path: '/etc/apt/preferences.d',
-                                                                                                 owner: 'root',
-                                                                                                 group: 'root',
-                                                                                                 mode: '0644',
-                                                                                                 purge: false,
-                                                                                                 recurse: false,
-                                                                                                 notify: 'Class[Apt::Update]')
+      is_expected.to contain_file('preferences.d').that_notifies('Class[Apt::Update]').only_with(preferences_d)
     }
 
     it 'lays down /etc/apt/apt.conf.d/15update-stamp' do
       is_expected.to contain_file('/etc/apt/apt.conf.d/15update-stamp').with(group: 'root',
                                                                              mode: '0644',
-                                                                             owner: 'root').with_content(%r{APT::Update::Post-Invoke-Success {"touch /var/lib/apt/periodic/update-success-stamp 2>/dev/null || true";};}) # rubocop:disable Metrics/LineLength
+                                                                             owner: 'root').with_content(
+                                                                               %r{APT::Update::Post-Invoke-Success {"touch /var/lib/apt/periodic/update-success-stamp 2>/dev/null || true";};},
+                                                                             )
     end
 
     it {
@@ -345,9 +356,7 @@ describe 'apt' do
       let(:params) { { purge: { 'sources.list' => 'banana' } } }
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error)
+        is_expected.to raise_error(Puppet::Error)
       end
     end
 
@@ -355,9 +364,7 @@ describe 'apt' do
       let(:params) { { purge: { 'sources.list.d' => 'banana' } } }
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error)
+        is_expected.to raise_error(Puppet::Error)
       end
     end
 
@@ -365,9 +372,7 @@ describe 'apt' do
       let(:params) { { purge: { 'preferences' => 'banana' } } }
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error)
+        is_expected.to raise_error(Puppet::Error)
       end
     end
 
@@ -375,9 +380,7 @@ describe 'apt' do
       let(:params) { { purge: { 'preferences.d' => 'banana' } } }
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error)
+        is_expected.to raise_error(Puppet::Error)
       end
     end
   end

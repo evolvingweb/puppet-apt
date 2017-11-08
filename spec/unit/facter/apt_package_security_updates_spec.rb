@@ -31,13 +31,11 @@ describe 'apt_package_security_updates fact' do
           "Conf curl (7.52.1-5+deb9u2 Debian-Security:9/stable [amd64])\n" \
       end
 
-      it {
-        if Facter.version < '2.0.0'
-          is_expected.to eq('curl')
-        else
-          is_expected.to eq(['curl'])
-        end
-      }
+      if Facter.version < '2.0.0'
+        it { is_expected.to eq('curl') }
+      else
+        it { is_expected.to eq(['curl']) }
+      end
     end
 
     describe 'on Ubuntu' do
@@ -50,13 +48,11 @@ describe 'apt_package_security_updates fact' do
           "Conf procps (2:3.3.10-4ubuntu2.3 Ubuntu:16.04/xenial-updates [amd64])\n"
       end
 
-      it {
-        if Facter.version < '2.0.0'
-          is_expected.to eq('tzdata,curl')
-        else
-          is_expected.to eq(%w[tzdata curl])
-        end
-      }
+      if Facter.version < '2.0.0'
+        it { is_expected.to eq('tzdata,curl') }
+      else
+        it { is_expected.to eq(%w[tzdata curl]) }
+      end
     end
   end
 end

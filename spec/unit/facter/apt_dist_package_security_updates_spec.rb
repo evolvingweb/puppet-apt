@@ -33,13 +33,11 @@ describe 'apt_package_security_dist_updates fact' do
           "Conf vim (7.52.1-5+deb9u2 Debian-Security:9/stable [amd64])\n" \
       end
 
-      it {
-        if Facter.version < '2.0.0'
-          is_expected.to eq('vim')
-        else
-          is_expected.to eq(['vim'])
-        end
-      }
+      if Facter.version < '2.0.0'
+        it { is_expected.to eq('vim') }
+      else
+        it { is_expected.to eq(['vim']) }
+      end
     end
 
     describe 'on Ubuntu' do
@@ -52,13 +50,11 @@ describe 'apt_package_security_dist_updates fact' do
           "Conf onioncircuits (2:3.3.10-4ubuntu2.3 Ubuntu:16.04/xenial-updates [amd64])\n"
       end
 
-      it {
-        if Facter.version < '2.0.0'
-          is_expected.to eq('extremetuxracer,vim')
-        else
-          is_expected.to eq(%w[extremetuxracer vim])
-        end
-      }
+      if Facter.version < '2.0.0'
+        it { is_expected.to eq('extremetuxracer,vim') }
+      else
+        it { is_expected.to eq(%w[extremetuxracer vim]) }
+      end
     end
   end
 end

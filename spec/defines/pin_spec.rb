@@ -88,9 +88,7 @@ describe 'apt::pin', type: :define do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{expects an Integer value, got String})
+        is_expected.to raise_error(Puppet::Error, %r{expects an Integer value, got String})
       end
     end
 
@@ -102,9 +100,7 @@ describe 'apt::pin', type: :define do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{parameter version cannot be used in general form})
+        is_expected.to raise_error(Puppet::Error, %r{parameter version cannot be used in general form})
       end
     end
 
@@ -117,9 +113,7 @@ describe 'apt::pin', type: :define do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{parameters release and origin are mutually exclusive})
+        is_expected.to raise_error(Puppet::Error, %r{parameters release and origin are mutually exclusive})
       end
     end
 
@@ -133,9 +127,7 @@ describe 'apt::pin', type: :define do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{parameters release, origin, and version are mutually exclusive})
+        is_expected.to raise_error(Puppet::Error, %r{parameters release, origin, and version are mutually exclusive})
       end
     end
 
@@ -149,9 +141,7 @@ describe 'apt::pin', type: :define do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{parameters release, origin, and version are mutually exclusive})
+        is_expected.to raise_error(Puppet::Error, %r{parameters release, origin, and version are mutually exclusive})
       end
     end
   end

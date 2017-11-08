@@ -1,4 +1,3 @@
-#!/usr/bin/env rspec
 require 'spec_helper'
 
 describe 'apt::update', type: :class do
@@ -19,7 +18,7 @@ describe 'apt::update', type: :class do
             puppetversion: Puppet.version,
           }
         end
-        let (:pre_condition) do
+        let(:pre_condition) do
           "class{'::apt': update => {'frequency' => 'always' },}"
         end
 
@@ -39,7 +38,7 @@ describe 'apt::update', type: :class do
           puppetversion: Puppet.version,
         }
       end
-      let (:pre_condition) { "class{ '::apt': update => {'frequency' => 'always' },}" }
+      let(:pre_condition) { "class{ '::apt': update => {'frequency' => 'always' },}" }
 
       it 'triggers an apt-get update run' do
         # set the apt_update exec\'s refreshonly attribute to false
@@ -64,7 +63,7 @@ describe 'apt::update', type: :class do
             puppetversion: Puppet.version,
           }
         end
-        let (:pre_condition) { "class{ '::apt': update => {'frequency' => 'reluctantly' },}" }
+        let(:pre_condition) { "class{ '::apt': update => {'frequency' => 'reluctantly' },}" }
 
         it 'does not trigger an apt-get update run' do
           # don't change the apt_update exec's refreshonly attribute. (it should be true)
@@ -82,7 +81,7 @@ describe 'apt::update', type: :class do
           puppetversion: Puppet.version,
         }
       end
-      let (:pre_condition) { "class{ '::apt': update => {'frequency' => 'reluctantly' },}" }
+      let(:pre_condition) { "class{ '::apt': update => {'frequency' => 'reluctantly' },}" }
 
       it 'does not trigger an apt-get update run' do
         # don't change the apt_update exec's refreshonly attribute. (it should be true)
@@ -104,7 +103,7 @@ describe 'apt::update', type: :class do
               puppetversion: Puppet.version,
             }
           end
-          let (:pre_condition) { "class{ '::apt': update => {'frequency' => '#{update_frequency}',} }" }
+          let(:pre_condition) { "class{ '::apt': update => {'frequency' => '#{update_frequency}',} }" }
 
           it 'triggers an apt-get update run' do
             # set the apt_update exec\'s refreshonly attribute to false
@@ -123,7 +122,7 @@ describe 'apt::update', type: :class do
             puppetversion: Puppet.version,
           }
         end
-        let (:pre_condition) { "class{ '::apt': update => {'frequency' => '#{update_frequency}',} }" }
+        let(:pre_condition) { "class{ '::apt': update => {'frequency' => '#{update_frequency}',} }" }
 
         it 'does not trigger an apt-get update run' do
           # don't change the apt_update exec\'s refreshonly attribute. (it should be true)
@@ -141,7 +140,7 @@ describe 'apt::update', type: :class do
             puppetversion: Puppet.version,
           }
         end
-        let (:pre_condition) { "class{ '::apt': update => {'frequency' => '#{update_frequency}',} }" }
+        let(:pre_condition) { "class{ '::apt': update => {'frequency' => '#{update_frequency}',} }" }
 
         it 'triggers an apt-get update run' do
           # set the apt_update exec\'s refreshonly attribute to false
