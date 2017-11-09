@@ -255,11 +255,17 @@ apt::source { "archive.ubuntu.com-${lsbdistcodename}-backports":
 
 ### Facts
 
-* `apt_updates`: The number of installed packages with available updates.
+* `apt_updates`: The number of installed packages with available updates from `upgrade`.
 
-* `apt_security_updates`: The number of installed packages with available security updates.
+* `apt_dist_updates`: The number of installed packages with available updates from `dist-upgrade`.
 
-* `apt_package_updates`: The names of all installed packages with available updates. In Facter 2.0 and later this data is formatted as an array; in earlier versions it is a comma-delimited string.
+* `apt_security_updates`: The number of installed packages with available security updates from `upgrade`.
+
+* `apt_security_dist_updates`: The number of installed packages with available security updates from `dist-upgrade`.
+
+* `apt_package_updates`: The names of all installed packages with available updates from `upgrade`. In Facter 2.0 and later this data is formatted as an array; in earlier versions it is a comma-delimited string.
+
+* `apt_package_dist_updates`: The names of all installed packages with available updates from `dist-upgrade`. In Facter 2.0 and later this data is formatted as an array; in earlier versions it is a comma-delimited string.
 
 * `apt_update_last_success`: The date, in epochtime, of the most recent successful `apt-get update` run (based on the mtime of  /var/lib/apt/periodic/update-success-stamp).
 
