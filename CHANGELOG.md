@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org).
 
+## Supported Release [4.4.0]
+### Summary
+
+This release is a rollup of new features and fixes.
+
+#### Added
+- Install `apt-transport-https` if using Debian 7, 8, 9 or Ubuntu 14.04, 16.04.
+- Adds a boolean option `direct` to proxy settings to bypass `https_proxy` if not set.
+- Adds facter facts for `dist-upgrade` apt updates.
+
+#### Changed
+- Update class is now private.
+- Some tidyup of ruby code from Rubocop.
+- Fixed circular dependency for package dirmngr.
+- Debian updates are no longer treated as security updates.
+- Legacy functions have been removed.
+- Updates to tests.
+
+#### Fixed
+- [(MODULES-4265)](https://tickets.puppetlabs.com/browse/MODULES-4265) Detect security updates from multiple sources.
+
 ## Supported Release [4.3.0]
 ### Summary
 
@@ -606,5 +627,6 @@ This release includes Ubuntu 12.10 (Quantal) support for PPAs.
 * f848bac First commit
 
 
+[4.4.0]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.3.0...4.4.0
 [4.3.0]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.2.0...4.3.0
 [4.2.0]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.1.0...4.2.0
