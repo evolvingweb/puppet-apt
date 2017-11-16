@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org).
 
+## Supported Release [4.4.1]
+### Summary
+This release is to update the formatting of the module, Rubocop having been run for all ruby files and been set to run automatically on all future commits.
+
+### Changed
+- Rubocop has been implemented.
+
 ## Supported Release [4.4.0]
 ### Summary
 
@@ -627,6 +634,7 @@ This release includes Ubuntu 12.10 (Quantal) support for PPAs.
 * f848bac First commit
 
 
+[4.4.1]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.4.0...4.4.1
 [4.4.0]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.3.0...4.4.0
 [4.3.0]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.2.0...4.3.0
 [4.2.0]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.1.0...4.2.0
