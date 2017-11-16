@@ -23,9 +23,7 @@ describe 'apt::source' do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{source entry without specifying a location})
+        is_expected.to raise_error(Puppet::Error, %r{source entry without specifying a location})
       end
     end
     context 'with location' do
@@ -98,7 +96,8 @@ describe 'apt::source' do
       end
 
       it {
-        is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(/# foo\ndeb \[arch=x86_64 trusted=yes\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ sid testing\n/).without_content(%r{deb-src}) # rubocop:disable Metrics/LineLength
+        is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{# foo\ndeb \[arch=x86_64 trusted=yes\] http://debian.mirror.iweb.ca/debian/ sid testing\n})
+                                                             .without_content(%r{deb-src})
       }
 
       it {
@@ -130,7 +129,8 @@ describe 'apt::source' do
       end
 
       it {
-        is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(/# foo\ndeb \[arch=x86_64 trusted=yes\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ sid testing\n/).without_content(%r{deb-src}) # rubocop:disable Metrics/LineLength
+        is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{# foo\ndeb \[arch=x86_64 trusted=yes\] http://debian.mirror.iweb.ca/debian/ sid testing\n})
+                                                             .without_content(%r{deb-src})
       }
 
       it {
@@ -163,7 +163,8 @@ describe 'apt::source' do
       end
 
       it {
-        is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(/# foo\ndeb \[arch=x86_64 trusted=yes\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ sid testing\n/).without_content(%r{deb-src}) # rubocop:disable Metrics/LineLength
+        is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{# foo\ndeb \[arch=x86_64 trusted=yes\] http://debian.mirror.iweb.ca/debian/ sid testing\n})
+                                                             .without_content(%r{deb-src})
       }
 
       it {
@@ -349,9 +350,7 @@ describe 'apt::source' do
       let(:params) { { location: 'hello.there' } }
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{lsbdistcodename fact not available: release parameter required})
+        is_expected.to raise_error(Puppet::Error, %r{lsbdistcodename fact not available: release parameter required})
       end
     end
 
@@ -387,9 +386,7 @@ describe 'apt::source' do
       end
 
       it do
-        expect {
-          subject.call
-        }.to raise_error(Puppet::Error, %r{expects a value})
+        is_expected.to raise_error(Puppet::Error, %r{expects a value})
       end
     end
 

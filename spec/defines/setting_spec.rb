@@ -20,7 +20,7 @@ describe 'apt::setting' do
   describe 'when using the defaults' do
     context 'without source or content' do
       it do
-        expect { subject.call }.to raise_error(Puppet::Error, %r{needs either of })
+        is_expected.to raise_error(Puppet::Error, %r{needs either of })
       end
     end
 
@@ -97,7 +97,7 @@ describe 'apt::setting' do
       let(:params) { default_params.merge(source: 'la') }
 
       it do
-        expect { subject.call }.to raise_error(Puppet::Error, %r{cannot have both })
+        is_expected.to raise_error(Puppet::Error, %r{cannot have both })
       end
     end
 
@@ -106,7 +106,7 @@ describe 'apt::setting' do
       let(:params) { default_params }
 
       it do
-        expect { subject.call }.to raise_error(Puppet::Error, %r{must start with either})
+        is_expected.to raise_error(Puppet::Error, %r{must start with either})
       end
     end
 
@@ -114,7 +114,7 @@ describe 'apt::setting' do
       let(:params) { default_params.merge(ensure: 'banana') }
 
       it do
-        expect { subject.call }.to raise_error(Puppet::Error, %r{Enum\['absent', 'file', 'present'\]})
+        is_expected.to raise_error(Puppet::Error, %r{Enum\['absent', 'file', 'present'\]})
       end
     end
 

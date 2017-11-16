@@ -64,7 +64,7 @@ describe 'apt::conf', type: :define do
     end
 
     it 'fails' do
-      expect { subject.call } .to raise_error(%r{pass in content})
+      is_expected.to raise_error(%r{pass in content})
     end
   end
 

@@ -1,6 +1,26 @@
 require 'spec_helper'
 
+def contains_apt_key_example(title)
+  { id: title,
+    ensure: 'present',
+    source: 'http://apt.puppetlabs.com/pubkey.gpg',
+    server: 'pgp.mit.edu',
+    content: params[:content],
+    options: 'debug' }
+end
+
+def apt_key_example(title)
+  { id: title,
+    ensure: 'present',
+    source: nil,
+    server: 'keyserver.ubuntu.com',
+    content: nil,
+    keyserver_options: nil }
+end
+
 describe 'apt::key', type: :define do
+  GPG_KEY_ID = '6F6B15509CF8E59E6E469F327F438280EF8D349F'.freeze
+
   let(:facts) do
     {
       os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
@@ -9,7 +29,6 @@ describe 'apt::key', type: :define do
       puppetversion: Puppet.version,
     }
   end
-  GPG_KEY_ID = '6F6B15509CF8E59E6E469F327F438280EF8D349F'.freeze
 
   let :title do
     GPG_KEY_ID
@@ -86,12 +105,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'contains the apt_key' do
-        is_expected.to contain_apt_key(title).with(id: title,
-                                                   ensure: 'present',
-                                                   source: 'http://apt.puppetlabs.com/pubkey.gpg',
-                                                   server: 'pgp.mit.edu',
-                                                   content: params[:content],
-                                                   options: 'debug')
+        is_expected.to contain_apt_key(title).with(contains_apt_key_example(title))
       end
       it 'contains the apt_key present anchor' do
         is_expected.to contain_anchor("apt_key #{title} present")
@@ -146,7 +160,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call } .to raise_error(%r{expects a match})
+        is_expected .to raise_error(%r{expects a match})
       end
     end
 
@@ -158,7 +172,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call } .to raise_error(%r{expects a match})
+        is_expected .to raise_error(%r{expects a match})
       end
     end
 
@@ -170,7 +184,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call } .to raise_error(%r{expects a match})
+        is_expected .to raise_error(%r{expects a match})
       end
     end
     context 'exceed character url' do
@@ -181,7 +195,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{expects a match})
+        is_expected.to raise_error(%r{expects a match})
       end
     end
     context 'incorrect port number url' do
@@ -192,7 +206,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{expects a match})
+        is_expected.to raise_error(%r{expects a match})
       end
     end
     context 'incorrect protocol for  url' do
@@ -203,7 +217,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{expects a match})
+        is_expected.to raise_error(%r{expects a match})
       end
     end
     context 'missing port number url' do
@@ -214,7 +228,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{expects a match})
+        is_expected.to raise_error(%r{expects a match})
       end
     end
     context 'url ending with a dot' do
@@ -225,7 +239,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{expects a match})
+        is_expected.to raise_error(%r{expects a match})
       end
     end
     context 'url begin with a dash' do
@@ -236,7 +250,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{expects a match})
+        is_expected.to raise_error(%r{expects a match})
       end
     end
     context 'invalid key' do
@@ -245,7 +259,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{expects a match})
+        is_expected.to raise_error(%r{expects a match})
       end
     end
 
@@ -257,7 +271,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{expects a match})
+        is_expected.to raise_error(%r{expects a match})
       end
     end
 
@@ -269,7 +283,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{expects a})
+        is_expected.to raise_error(%r{expects a})
       end
     end
 
@@ -281,7 +295,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{expects a match})
+        is_expected.to raise_error(%r{expects a match})
       end
     end
 
@@ -293,7 +307,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{expects a})
+        is_expected.to raise_error(%r{expects a})
       end
     end
 
@@ -305,48 +319,41 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        expect { subject.call }.to raise_error(%r{Enum\['absent', 'present'\]})
+        is_expected.to raise_error(%r{Enum\['absent', 'present'\]})
       end
     end
 
-    describe 'duplication' do
-      context 'two apt::key resources for same key, different titles' do
-        let :pre_condition do
-          "#{super()}\napt::key { 'duplicate': id => '#{title}', }"
-        end
-
-        it 'contains the duplicate apt::key resource' do
-          is_expected.to contain_apt__key('duplicate').with(id: title,
-                                                            ensure: 'present')
-        end
-
-        it 'contains the original apt::key resource' do
-          is_expected.to contain_apt__key(title).with(id: title,
-                                                      ensure: 'present')
-        end
-
-        it 'contains the native apt_key' do
-          is_expected.to contain_apt_key('duplicate').with(id: title,
-                                                           ensure: 'present',
-                                                           source: nil,
-                                                           server: 'keyserver.ubuntu.com',
-                                                           content: nil,
-                                                           keyserver_options: nil)
-        end
-
-        it 'does not contain the original apt_key' do
-          is_expected.not_to contain_apt_key(title)
-        end
+    describe 'duplication - two apt::key resources for same key, different titles' do
+      let :pre_condition do
+        "#{super()}\napt::key { 'duplicate': id => '#{title}', }"
       end
 
-      context 'two apt::key resources, different ensure' do
-        let :pre_condition do
-          "#{super()}\napt::key { 'duplicate': id => '#{title}', ensure => 'absent', }"
-        end
+      it 'contains the duplicate apt::key resource' do
+        is_expected.to contain_apt__key('duplicate').with(id: title,
+                                                          ensure: 'present')
+      end
 
-        it 'informs the user of the impossibility' do
-          expect { subject.call }.to raise_error(%r{already ensured as absent})
-        end
+      it 'contains the original apt::key resource' do
+        is_expected.to contain_apt__key(title).with(id: title,
+                                                    ensure: 'present')
+      end
+
+      it 'contains the native apt_key' do
+        is_expected.to contain_apt_key('duplicate').with(apt_key_example(title))
+      end
+
+      it 'does not contain the original apt_key' do
+        is_expected.not_to contain_apt_key(title)
+      end
+    end
+
+    describe 'duplication - two apt::key resources, different ensure' do
+      let :pre_condition do
+        "#{super()}\napt::key { 'duplicate': id => '#{title}', ensure => 'absent', }"
+      end
+
+      it 'informs the user of the impossibility' do
+        is_expected.to raise_error(%r{already ensured as absent})
       end
     end
   end

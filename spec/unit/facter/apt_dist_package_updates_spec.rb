@@ -26,12 +26,10 @@ describe 'apt_package_dist_updates fact' do
                    "Conf planet.rb (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n"
       Facter::Util::Resolution.expects(:exec).with('/usr/bin/apt-get -s -o Debug::NoLocking=true dist-upgrade 2>&1').returns apt_output
     end
-    it {
-      if Facter.version < '2.0.0'
-        is_expected.to eq('extremetuxracer,planet.rb')
-      else
-        is_expected.to eq(['extremetuxracer', 'planet.rb'])
-      end
-    }
+    if Facter.version < '2.0.0'
+      it { is_expected.to eq('extremetuxracer,planet.rb') }
+    else
+      it { is_expected.to eq(['extremetuxracer', 'planet.rb']) }
+    end
   end
 end

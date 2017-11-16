@@ -24,12 +24,10 @@ describe 'apt_package_updates fact' do
                    "Conf unhide.rb (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n"
       Facter::Util::Resolution.expects(:exec).with('/usr/bin/apt-get -s -o Debug::NoLocking=true upgrade 2>&1').returns apt_output
     end
-    it {
-      if Facter.version < '2.0.0'
-        is_expected.to eq('tzdata,unhide.rb')
-      else
-        is_expected.to eq(['tzdata', 'unhide.rb'])
-      end
-    }
+    if Facter.version < '2.0.0'
+      it { is_expected.to eq('tzdata,unhide.rb') }
+    else
+      it { is_expected.to eq(['tzdata', 'unhide.rb']) }
+    end
   end
 end

@@ -26,7 +26,7 @@ describe 'apt::source', type: :define do
     end
 
     it {
-      is_expected.to contain_apt__setting('list-my_source').with_content(/# my_source\ndeb-src http:\/\/debian\.mirror\.iweb\.ca\/debian\/ wheezy main\n/)
+      is_expected.to contain_apt__setting('list-my_source').with_content(%r{# my_source\ndeb-src http://debian.mirror.iweb.ca/debian/ wheezy main\n})
     }
   end
 
@@ -55,7 +55,8 @@ describe 'apt::source', type: :define do
     end
 
     it {
-      is_expected.to contain_apt__setting('list-my_source').with_content(/# foo\ndeb \[arch=x86_64 trusted=yes\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ sid testing\n/).without_content(%r{deb-src}) # rubocop:disable Metrics/LineLength
+      is_expected.to contain_apt__setting('list-my_source').with_content(%r{# foo\ndeb \[arch=x86_64 trusted=yes\] http://debian.mirror.iweb.ca/debian/ sid testing\n})
+                                                           .without_content(%r{deb-src})
     }
 
     it {
@@ -88,7 +89,7 @@ describe 'apt::source', type: :define do
       }
     end
 
-    it { is_expected.to contain_apt__setting('list-my_source').with_content(/# my_source\ndeb \[trusted=yes\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ wheezy main\n/) }
+    it { is_expected.to contain_apt__setting('list-my_source').with_content(%r{# my_source\ndeb \[trusted=yes\] http://debian.mirror.iweb.ca/debian/ wheezy main\n}) }
   end
 
   context 'architecture equals x86_64' do
@@ -109,7 +110,7 @@ describe 'apt::source', type: :define do
     end
 
     it {
-      is_expected.to contain_apt__setting('list-my_source').with_content(/# my_source\ndeb \[arch=x86_64\] http:\/\/debian\.mirror\.iweb\.ca\/debian\/ wheezy main\n/)
+      is_expected.to contain_apt__setting('list-my_source').with_content(%r{# my_source\ndeb \[arch=x86_64\] http://debian.mirror.iweb.ca/debian/ wheezy main\n})
     }
   end
 
@@ -146,7 +147,7 @@ describe 'apt::source', type: :define do
       end
 
       it do
-        expect { subject.call }.to raise_error(Puppet::Error, %r{lsbdistcodename fact not available: release parameter required})
+        is_expected.to raise_error(Puppet::Error, %r{lsbdistcodename fact not available: release parameter required})
       end
     end
   end
