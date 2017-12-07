@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'puppet'
 
 describe Puppet::Type.type(:apt_key) do
-  context 'only namevar 32bit key id' do
+  context 'with only namevar 32bit key id' do
     let(:resource) do
       Puppet::Type.type(:apt_key).new(
         id: 'EF8D349F',
@@ -129,7 +129,7 @@ describe Puppet::Type.type(:apt_key) do
     end
   end
 
-  context 'validation' do
+  context 'with validation' do
     it 'raises an error if content and source are set' do
       expect {
         Puppet::Type.type(:apt_key).new(id: 'EF8D349F',

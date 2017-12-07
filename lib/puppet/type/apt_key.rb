@@ -1,7 +1,7 @@
 require 'pathname'
 
 Puppet::Type.newtype(:apt_key) do
-  @doc = <<-EOS
+  @doc = <<-MANIFEST
     This type provides Puppet with the capabilities to manage GPG keys needed
     by apt to perform package validation. Apt has it's own GPG keyring that can
     be manipulated through the `apt-key` command.
@@ -14,7 +14,7 @@ Puppet::Type.newtype(:apt_key) do
 
     If Puppet is given the location of a key file which looks like an absolute
     path this type will autorequire that file.
-  EOS
+  MANIFEST
 
   ensurable
 
@@ -69,66 +69,66 @@ Puppet::Type.newtype(:apt_key) do
   end
 
   newproperty(:fingerprint) do
-    desc <<-EOS
+    desc <<-MANIFEST
       The 40-digit hexadecimal fingerprint of the specified GPG key.
 
       This property is read-only.
-    EOS
+    MANIFEST
   end
 
   newproperty(:long) do
-    desc <<-EOS
+    desc <<-MANIFEST
       The 16-digit hexadecimal id of the specified GPG key.
 
       This property is read-only.
-    EOS
+    MANIFEST
   end
 
   newproperty(:short) do
-    desc <<-EOS
+    desc <<-MANIFEST
       The 8-digit hexadecimal id of the specified GPG key.
 
       This property is read-only.
-    EOS
+    MANIFEST
   end
 
   newproperty(:expired) do
-    desc <<-EOS
+    desc <<-MANIFEST
       Indicates if the key has expired.
 
       This property is read-only.
-    EOS
+    MANIFEST
   end
 
   newproperty(:expiry) do
-    desc <<-EOS
+    desc <<-MANIFEST
       The date the key will expire, or nil if it has no expiry date.
 
       This property is read-only.
-    EOS
+    MANIFEST
   end
 
   newproperty(:size) do
-    desc <<-EOS
+    desc <<-MANIFEST
       The key size, usually a multiple of 1024.
 
       This property is read-only.
-    EOS
+    MANIFEST
   end
 
   newproperty(:type) do
-    desc <<-EOS
+    desc <<-MANIFEST
       The key type, one of: rsa, dsa, ecc, ecdsa
 
       This property is read-only.
-    EOS
+    MANIFEST
   end
 
   newproperty(:created) do
-    desc <<-EOS
+    desc <<-MANIFEST
       Date the key was created.
 
       This property is read-only.
-    EOS
+    MANIFEST
   end
 end

@@ -7,7 +7,7 @@ describe 'apt::source', type: :define do
     'my_source'
   end
 
-  context 'mostly defaults' do
+  context 'with mostly defaults' do
     let :facts do
       {
         os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
@@ -30,7 +30,7 @@ describe 'apt::source', type: :define do
     }
   end
 
-  context 'no defaults' do
+  context 'with no defaults' do
     let :facts do
       {
         os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
@@ -71,7 +71,7 @@ describe 'apt::source', type: :define do
     }
   end
 
-  context 'allow_unsigned true' do
+  context 'when allow_unsigned true' do
     let :facts do
       {
         os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
@@ -92,7 +92,7 @@ describe 'apt::source', type: :define do
     it { is_expected.to contain_apt__setting('list-my_source').with_content(%r{# my_source\ndeb \[trusted=yes\] http://debian.mirror.iweb.ca/debian/ wheezy main\n}) }
   end
 
-  context 'architecture equals x86_64' do
+  context 'with architecture equals x86_64' do
     let :facts do
       {
         os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
@@ -114,7 +114,7 @@ describe 'apt::source', type: :define do
     }
   end
 
-  context 'ensure => absent' do
+  context 'with ensure => absent' do
     let :facts do
       {
         os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
@@ -136,7 +136,7 @@ describe 'apt::source', type: :define do
   end
 
   describe 'validation' do
-    context 'no release' do
+    context 'with no release' do
       let :facts do
         {
           os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },

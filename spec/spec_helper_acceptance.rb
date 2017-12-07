@@ -27,7 +27,8 @@ def puppet_version
   (on default, puppet('--version')).output.chomp
 end
 
-def run_puppet_access_login(user:, password: '~!@#$%^*-/ aZ', lifetime: '5y')
+def run_puppet_access_login(user:, password:
+                            '~!@#$%^*-/ aZ', lifetime: '5y')
   on(master, puppet('access', 'login', '--username', user, '--lifetime', lifetime), stdin: password)
 end
 

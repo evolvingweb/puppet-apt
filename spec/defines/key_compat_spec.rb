@@ -112,7 +112,7 @@ describe 'apt::key', type: :define do
       end
     end
 
-    context 'domain with dash' do
+    context 'when domain has dash' do
       let(:params) do
         {
           server: 'p-gp.m-it.edu',
@@ -125,7 +125,7 @@ describe 'apt::key', type: :define do
       end
     end
 
-    context 'url' do
+    context 'with url' do
       let :params do
         {
           server: 'hkp://pgp.mit.edu',
@@ -137,7 +137,7 @@ describe 'apt::key', type: :define do
                                                    server: 'hkp://pgp.mit.edu')
       end
     end
-    context 'url with port number' do
+    context 'with url and port number' do
       let :params do
         {
           server: 'hkp://pgp.mit.edu:80',
@@ -152,7 +152,7 @@ describe 'apt::key', type: :define do
   end
 
   describe 'validation' do
-    context 'domain begin with dash' do
+    context 'when domain begins with a dash' do
       let(:params) do
         {
           server: '-pgp.mit.edu',
@@ -164,7 +164,7 @@ describe 'apt::key', type: :define do
       end
     end
 
-    context 'domain begin with dot' do
+    context 'when domain begins with dot' do
       let(:params) do
         {
           server: '.pgp.mit.edu',
@@ -176,7 +176,7 @@ describe 'apt::key', type: :define do
       end
     end
 
-    context 'domain end with dot' do
+    context 'when domain ends with dot' do
       let(:params) do
         {
           server: 'pgp.mit.edu.',
@@ -187,7 +187,7 @@ describe 'apt::key', type: :define do
         is_expected .to raise_error(%r{expects a match})
       end
     end
-    context 'exceed character url' do
+    context 'when url character limit is exceeded' do
       let :params do
         {
           server: 'hkp://pgpiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.mit.edu',
@@ -198,7 +198,7 @@ describe 'apt::key', type: :define do
         is_expected.to raise_error(%r{expects a match})
       end
     end
-    context 'incorrect port number url' do
+    context 'with incorrect port number url' do
       let :params do
         {
           server: 'hkp://pgp.mit.edu:8008080',
@@ -209,7 +209,7 @@ describe 'apt::key', type: :define do
         is_expected.to raise_error(%r{expects a match})
       end
     end
-    context 'incorrect protocol for  url' do
+    context 'with incorrect protocol for  url' do
       let :params do
         {
           server: 'abc://pgp.mit.edu:80',
@@ -220,7 +220,7 @@ describe 'apt::key', type: :define do
         is_expected.to raise_error(%r{expects a match})
       end
     end
-    context 'missing port number url' do
+    context 'with missing port number url' do
       let :params do
         {
           server: 'hkp://pgp.mit.edu:',
@@ -231,7 +231,7 @@ describe 'apt::key', type: :define do
         is_expected.to raise_error(%r{expects a match})
       end
     end
-    context 'url ending with a dot' do
+    context 'with url ending with a dot' do
       let :params do
         {
           server: 'hkp://pgp.mit.edu.',
@@ -242,7 +242,7 @@ describe 'apt::key', type: :define do
         is_expected.to raise_error(%r{expects a match})
       end
     end
-    context 'url begin with a dash' do
+    context 'with url begin with a dash' do
       let(:params) do
         {
           server: 'hkp://-pgp.mit.edu',
@@ -253,7 +253,7 @@ describe 'apt::key', type: :define do
         is_expected.to raise_error(%r{expects a match})
       end
     end
-    context 'invalid key' do
+    context 'with invalid key' do
       let :title do
         'Out of rum. Why? Why are we out of rum?'
       end
@@ -263,7 +263,7 @@ describe 'apt::key', type: :define do
       end
     end
 
-    context 'invalid source' do
+    context 'with invalid source' do
       let :params do
         {
           source: 'afp://puppetlabs.com/key.gpg',
@@ -275,7 +275,7 @@ describe 'apt::key', type: :define do
       end
     end
 
-    context 'invalid content' do
+    context 'with invalid content' do
       let :params do
         {
           content: [],
@@ -287,7 +287,7 @@ describe 'apt::key', type: :define do
       end
     end
 
-    context 'invalid server' do
+    context 'with invalid server' do
       let :params do
         {
           server: 'two bottles of rum',
@@ -299,7 +299,7 @@ describe 'apt::key', type: :define do
       end
     end
 
-    context 'invalid keyserver_options' do
+    context 'with invalid keyserver_options' do
       let :params do
         {
           options: {},
@@ -311,7 +311,7 @@ describe 'apt::key', type: :define do
       end
     end
 
-    context 'invalid ensure' do
+    context 'with invalid ensure' do
       let :params do
         {
           ensure: 'foo',

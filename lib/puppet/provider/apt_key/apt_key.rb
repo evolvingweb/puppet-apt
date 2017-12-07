@@ -72,7 +72,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
 
   def self.prefetch(resources)
     apt_keys = instances
-    resources.keys.each do |name|
+    resources.each_key do |name|
       if name.length == 40
         provider = apt_keys.find { |key| key.fingerprint == name }
         resources[name].provider = provider if provider
