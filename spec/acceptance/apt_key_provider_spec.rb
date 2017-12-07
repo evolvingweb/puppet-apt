@@ -22,12 +22,12 @@ TIMEOUT_RETRY_WAIT             = 5
 TIMEOUT_ERROR_MATCHER = %r{no valid OpenPGP data found}
 
 def populate_default_options_pp(value)
-  default_options_pp = <<-EOS
+  default_options_pp = <<-MANIFEST
           apt_key { 'puppetlabs':
             id     => '#{value}',
             ensure => 'present',
           }
-  EOS
+  MANIFEST
   default_options_pp
 end
 
@@ -43,27 +43,27 @@ def apply_manifest_twice(manifest_pp)
   apply_manifest(manifest_pp, catch_changes: true)
 end
 
-invalid_key_length_pp = <<-EOS
+invalid_key_length_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id => '8280EF8D349F',
         }
-  EOS
+  MANIFEST
 
-ensure_absent_pp = <<-EOS
+ensure_absent_pp = <<-MANIFEST
         apt_key { 'centos':
           id     => '#{CENTOS_GPG_KEY_LONG_ID}',
           ensure => 'absent',
         }
-  EOS
+  MANIFEST
 
-ensure_absent_long_key_pp = <<-EOS
+ensure_absent_long_key_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'absent',
         }
-  EOS
+  MANIFEST
 
-gpg_key_pp = <<-EOS
+gpg_key_pp = <<-MANIFEST
           apt_key { 'puppetlabs':
             id      => '#{PUPPETLABS_GPG_KEY_FINGERPRINT}',
             ensure  => 'present',
@@ -120,9 +120,9 @@ gpg_key_pp = <<-EOS
   =mMjt
   -----END PGP PUBLIC KEY BLOCK-----",
             }
-  EOS
+  MANIFEST
 
-multiple_keys_pp = <<-EOS
+multiple_keys_pp = <<-MANIFEST
           apt_key { 'puppetlabs':
             id      => '#{PUPPETLABS_GPG_KEY_FINGERPRINT}',
             ensure  => 'present',
@@ -373,183 +373,183 @@ multiple_keys_pp = <<-EOS
   =TREp
   -----END PGP PUBLIC KEY BLOCK----- ",
             }
-  EOS
+  MANIFEST
 
-bogus_key_pp = <<-EOS
+bogus_key_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id      => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure  => 'present',
           content => 'For posterity: such content, much bogus, wow',
         }
-  EOS
+  MANIFEST
 
-hkps_pool_pp = <<-EOS
+hkps_pool_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
           server => 'hkps.pool.sks-keyservers.net',
         }
-  EOS
+  MANIFEST
 
-hkp_pool_pp = <<-EOS
+hkp_pool_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_FINGERPRINT}',
           ensure => 'present',
           server => 'hkp://hkps.pool.sks-keyservers.net:80',
         }
-  EOS
+  MANIFEST
 
-nonexistant_key_server_pp = <<-EOS
+nonexistant_key_server_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
           server => 'nonexistant.key.server',
         }
-  EOS
+  MANIFEST
 
-dot_server_pp = <<-EOS
+dot_server_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
           server => '.pgp.key.server',
         }
-  EOS
+  MANIFEST
 
-http_works_pp = <<-EOS
+http_works_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
           source => 'http://#{PUPPETLABS_APT_URL}/#{PUPPETLABS_GPG_KEY_FILE}',
         }
-  EOS
+  MANIFEST
 
-http_works_userinfo_pp = <<-EOS
+http_works_userinfo_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
           source => 'http://dummyuser:dummypassword@#{PUPPETLABS_APT_URL}/#{PUPPETLABS_GPG_KEY_FILE}',
         }
-  EOS
+  MANIFEST
 
-four_oh_four_pp = <<-EOS
+four_oh_four_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
           source => 'http://#{PUPPETLABS_APT_URL}/herpderp.gpg',
         }
-  EOS
+  MANIFEST
 
-socket_error_pp = <<-EOS
+socket_error_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
           source => 'http://apt.puppetlabss.com/herpderp.gpg',
         }
-  EOS
+  MANIFEST
 
-ftp_works_pp = <<-EOS
+ftp_works_pp = <<-MANIFEST
         apt_key { 'CentOS 6':
           id     => '#{CENTOS_GPG_KEY_LONG_ID}',
           ensure => 'present',
           source => 'ftp://#{CENTOS_REPO_URL}/#{CENTOS_GPG_KEY_FILE}',
         }
-  EOS
+  MANIFEST
 
-ftp_550_pp = <<-EOS
+ftp_550_pp = <<-MANIFEST
         apt_key { 'CentOS 6':
           id     => '#{SHOULD_NEVER_EXIST_ID}',
           ensure => 'present',
           source => 'ftp://#{CENTOS_REPO_URL}/herpderp.gpg',
         }
-  EOS
+  MANIFEST
 
-ftp_socket_error_pp = <<-EOS
+ftp_socket_error_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
           source => 'ftp://apt.puppetlabss.com/herpderp.gpg',
         }
-  EOS
+  MANIFEST
 
-https_works_pp = <<-EOS
+https_works_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
           source => 'https://#{PUPPETLABS_APT_URL}/#{PUPPETLABS_GPG_KEY_FILE}',
         }
-  EOS
+  MANIFEST
 
-https_userinfo_pp = <<-EOS
+https_userinfo_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
           source => 'https://dummyuser:dummypassword@#{PUPPETLABS_APT_URL}/#{PUPPETLABS_GPG_KEY_FILE}',
         }
-  EOS
+  MANIFEST
 
-https_404_pp = <<-EOS
+https_404_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{SHOULD_NEVER_EXIST_ID}',
           ensure => 'present',
           source => 'https://#{PUPPETLABS_APT_URL}/herpderp.gpg',
         }
-  EOS
+  MANIFEST
 
-https_socket_error_pp = <<-EOS
+https_socket_error_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{SHOULD_NEVER_EXIST_ID}',
           ensure => 'present',
           source => 'https://apt.puppetlabss.com/herpderp.gpg',
         }
-  EOS
+  MANIFEST
 
-path_exists_pp = <<-EOS
+path_exists_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => 'EF8D349F',
           ensure => 'present',
           source => '/tmp/puppetlabs-pubkey.gpg',
         }
-  EOS
+  MANIFEST
 
-path_does_not_exist_pp = <<-EOS
+path_does_not_exist_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
           source => '/tmp/totally_bogus.file',
         }
-  EOS
+  MANIFEST
 
-path_bogus_content_pp = <<-EOS
+path_bogus_content_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
           source => '/tmp/fake-key.gpg',
         }
-  EOS
+  MANIFEST
 
-debug_works_pp = <<-EOS
+debug_works_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id      => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure  => 'present',
           options => 'debug',
         }
-  EOS
+  MANIFEST
 
-fingerprint_match_pp = <<-EOS
+fingerprint_match_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id      => '#{PUPPETLABS_GPG_KEY_FINGERPRINT}',
           ensure  => 'present',
           source  => 'https://#{PUPPETLABS_APT_URL}/#{PUPPETLABS_GPG_KEY_FILE}',
         }
-  EOS
+  MANIFEST
 
-fingerprint_does_not_match_pp = <<-EOS
+fingerprint_does_not_match_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id      => '6F6B15509CF8E59E6E469F327F438280EF8D9999',
           ensure  => 'present',
           source  => 'https://#{PUPPETLABS_APT_URL}/#{PUPPETLABS_GPG_KEY_FILE}',
         }
-  EOS
+  MANIFEST
 
 describe 'apt_key' do
   before(:each) do
@@ -577,8 +577,8 @@ describe 'apt_key' do
       '0x formatted 160bit lowercase key fingerprint' => "0x#{PUPPETLABS_GPG_KEY_FINGERPRINT.downcase}",
     }
 
-    key_versions.each do |key, value|
-      context key.to_s do
+    key_versions.each do |key, value| # rubocop:disable Lint/UnusedBlockArgument, Performance/HashEachMethods
+      context 'when key.to_s' do
         it 'works' do
           apply_manifest_twice(populate_default_options_pp(value))
           shell(PUPPETLABS_KEY_CHECK_COMMAND)
@@ -586,7 +586,7 @@ describe 'apt_key' do
       end
     end
 
-    context 'invalid length key id' do
+    context 'with invalid length key id' do
       it 'fails' do
         apply_manifest(invalid_key_length_pp, expect_failures: true) do |r|
           expect(r.stderr).to match(%r{Valid values match})
@@ -596,7 +596,7 @@ describe 'apt_key' do
   end
 
   describe 'ensure =>' do
-    context 'absent' do
+    context 'when absent' do
       it 'is removed' do
         # Install the key first (retry because key pool may timeout)
         install_key(CENTOS_GPG_KEY_FINGERPRINT)
@@ -612,7 +612,7 @@ describe 'apt_key' do
       end
     end
 
-    context 'absent, added with long key', unless: (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '6') do
+    context 'when absent, added with long key', unless: (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '6') do
       it 'is removed' do
         # Install the key first (retry because key pool may timeout)
         install_key(PUPPETLABS_GPG_KEY_LONG_ID)
@@ -627,7 +627,7 @@ describe 'apt_key' do
   end
 
   describe 'content =>' do
-    context 'puppetlabs gpg key' do
+    context 'with puppetlabs gpg key' do
       it 'works' do
         # Apply the manifest (Retry if timeout error is received from key pool)
         retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
@@ -639,14 +639,14 @@ describe 'apt_key' do
       end
     end
 
-    context 'multiple keys' do
+    context 'with multiple keys' do
       it 'runs without errors' do
         apply_manifest_twice(multiple_keys_pp)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
 
-    context 'bogus key' do
+    context 'with bogus key' do
       it 'fails' do
         apply_manifest(bogus_key_pp, expect_failures: true) do |r|
           expect(r.stderr).to match(%r{no valid OpenPGP data found})
@@ -656,7 +656,7 @@ describe 'apt_key' do
   end
 
   describe 'server =>' do
-    context 'hkps.pool.sks-keyservers.net' do
+    context 'with hkps.pool.sks-keyservers.net' do
       it 'works' do
         # Apply the manifest (Retry if timeout error is received from key pool)
         retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
@@ -668,7 +668,7 @@ describe 'apt_key' do
       end
     end
 
-    context 'hkp://hkps.pool.sks-keyservers.net:80' do
+    context 'with hkp://hkps.pool.sks-keyservers.net:80' do
       it 'works' do
         retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
           apply_manifest(hkp_pool_pp, catch_failures: true)
@@ -679,7 +679,7 @@ describe 'apt_key' do
       end
     end
 
-    context 'nonexistant.key.server' do
+    context 'with nonexistant.key.server' do
       it 'fails' do
         apply_manifest(nonexistant_key_server_pp, expect_failures: true) do |r|
           expect(r.stderr).to match(%r{(Host not found|Couldn't resolve host)})
@@ -687,7 +687,7 @@ describe 'apt_key' do
       end
     end
 
-    context 'key server start with dot' do
+    context 'with key server start with dot' do
       it 'fails' do
         apply_manifest(dot_server_pp, expect_failures: true) do |r|
           expect(r.stderr).to match(%r{Invalid value ".pgp.key.server"})
@@ -697,7 +697,7 @@ describe 'apt_key' do
   end
 
   describe 'source =>' do
-    context 'http://' do
+    context 'with http://' do
       it 'works' do
         apply_manifest_twice(http_works_pp)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
@@ -721,7 +721,7 @@ describe 'apt_key' do
       end
     end
 
-    context 'ftp://' do
+    context 'with ftp://' do
       before(:each) do
         shell("apt-key del #{CENTOS_GPG_KEY_LONG_ID}",
               acceptable_exit_codes: [0, 1, 2])
@@ -745,7 +745,7 @@ describe 'apt_key' do
       end
     end
 
-    context 'https://' do
+    context 'with https://' do
       it 'works' do
         apply_manifest_twice(https_works_pp)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
@@ -769,7 +769,7 @@ describe 'apt_key' do
       end
     end
 
-    context '/path/that/exists' do
+    context 'with /path/that/exists' do
       before(:each) do
         shell("curl -o /tmp/puppetlabs-pubkey.gpg \
               http://#{PUPPETLABS_APT_URL}/#{PUPPETLABS_GPG_KEY_FILE}")
@@ -785,7 +785,7 @@ describe 'apt_key' do
       end
     end
 
-    context '/path/that/does/not/exist' do
+    context 'with /path/that/does/not/exist' do
       it 'fails' do
         apply_manifest(path_does_not_exist_pp, expect_failures: true) do |r|
           expect(r.stderr).to match(%r{does not exist})
@@ -793,7 +793,7 @@ describe 'apt_key' do
       end
     end
 
-    context '/path/that/exists/with/bogus/content' do
+    context 'with /path/that/exists/with/bogus/content' do
       before(:each) do
         shell('echo "here be dragons" > /tmp/fake-key.gpg')
       end
@@ -810,7 +810,7 @@ describe 'apt_key' do
   end
 
   describe 'options =>' do
-    context 'debug' do
+    context 'with debug' do
       it 'works' do
         apply_manifest_twice(debug_works_pp)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
@@ -819,13 +819,13 @@ describe 'apt_key' do
   end
 
   describe 'fingerprint validation against source/content' do
-    context 'fingerprint in id matches fingerprint from remote key' do
+    context 'with fingerprint in id matches fingerprint from remote key' do
       it 'works' do
         apply_manifest_twice(fingerprint_match_pp)
       end
     end
 
-    context 'fingerprint in id does NOT match fingerprint from remote key' do
+    context 'with fingerprint in id does NOT match fingerprint from remote key' do
       it 'works' do
         apply_manifest(fingerprint_does_not_match_pp, expect_failures: true) do |r|
           expect(r.stderr).to match(%r{don't match})

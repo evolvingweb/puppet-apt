@@ -4,7 +4,7 @@ describe 'apt::backports', type: :class do
   let(:pre_condition) { "class{ '::apt': }" }
 
   describe 'debian/ubuntu tests' do
-    context 'defaults on deb' do
+    context 'with defaults on deb' do
       let(:facts) do
         {
           os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
@@ -23,7 +23,7 @@ describe 'apt::backports', type: :class do
                                                              pin: { 'priority' => 200, 'release' => 'wheezy-backports' })
       }
     end
-    context 'defaults on ubuntu' do
+    context 'with defaults on ubuntu' do
       let(:facts) do
         {
           os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
@@ -43,7 +43,7 @@ describe 'apt::backports', type: :class do
                                                              pin: { 'priority' => 200, 'release' => 'trusty-backports' })
       }
     end
-    context 'set everything' do
+    context 'with everything set' do
       let(:facts) do
         {
           os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
@@ -72,7 +72,7 @@ describe 'apt::backports', type: :class do
                                                              pin: { 'priority' => 90, 'release' => 'vivid' })
       }
     end
-    context 'set things with hashes' do
+    context 'when set things with hashes' do
       let(:facts) do
         {
           os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
@@ -111,7 +111,7 @@ describe 'apt::backports', type: :class do
       }
     end
 
-    context 'sets all the needed things' do
+    context 'with all the needed things set' do
       let(:params) do
         {
           location: 'http://archive.ubuntu.com/ubuntu',
@@ -129,7 +129,7 @@ describe 'apt::backports', type: :class do
                                                              pin: { 'priority' => 200, 'release' => 'trusty-backports' })
       }
     end
-    context 'missing location' do
+    context 'with missing location' do
       let(:params) do
         {
           release: 'trusty-backports',
@@ -142,7 +142,7 @@ describe 'apt::backports', type: :class do
         is_expected.to raise_error(Puppet::Error, %r{If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key})
       end
     end
-    context 'missing release' do
+    context 'with missing release' do
       let(:params) do
         {
           location: 'http://archive.ubuntu.com/ubuntu',
@@ -155,7 +155,7 @@ describe 'apt::backports', type: :class do
         is_expected.to raise_error(Puppet::Error, %r{If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key})
       end
     end
-    context 'missing repos' do
+    context 'with missing repos' do
       let(:params) do
         {
           location: 'http://archive.ubuntu.com/ubuntu',
@@ -168,7 +168,7 @@ describe 'apt::backports', type: :class do
         is_expected.to raise_error(Puppet::Error, %r{If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key})
       end
     end
-    context 'missing key' do
+    context 'with missing key' do
       let(:params) do
         {
           location: 'http://archive.ubuntu.com/ubuntu',
@@ -194,7 +194,7 @@ describe 'apt::backports', type: :class do
       }
     end
 
-    context 'invalid location' do
+    context 'with invalid location' do
       let(:params) do
         {
           location: true,
@@ -205,7 +205,7 @@ describe 'apt::backports', type: :class do
         is_expected.to raise_error(Puppet::Error, %r{expects a})
       end
     end
-    context 'invalid release' do
+    context 'with invalid release' do
       let(:params) do
         {
           release: true,
@@ -216,7 +216,7 @@ describe 'apt::backports', type: :class do
         is_expected.to raise_error(Puppet::Error, %r{expects a})
       end
     end
-    context 'invalid repos' do
+    context 'with invalid repos' do
       let(:params) do
         {
           repos: true,
@@ -227,7 +227,7 @@ describe 'apt::backports', type: :class do
         is_expected.to raise_error(Puppet::Error, %r{expects a})
       end
     end
-    context 'invalid key' do
+    context 'with invalid key' do
       let(:params) do
         {
           key: true,
@@ -238,7 +238,7 @@ describe 'apt::backports', type: :class do
         is_expected.to raise_error(Puppet::Error, %r{expects a})
       end
     end
-    context 'invalid pin' do
+    context 'with invalid pin' do
       let(:params) do
         {
           pin: true,

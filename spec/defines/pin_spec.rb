@@ -14,11 +14,11 @@ describe 'apt::pin', type: :define do
   end
   let(:title) { 'my_pin' }
 
-  context 'defaults' do
+  context 'with defaults' do
     it { is_expected.to contain_apt__setting('pref-my_pin').with_content(%r{Explanation: : my_pin\nPackage: \*\nPin: release a=my_pin\nPin-Priority: 0\n}) }
   end
 
-  context 'set version' do
+  context 'with set version' do
     let :params do
       {
         'packages' => 'vim',
@@ -29,7 +29,7 @@ describe 'apt::pin', type: :define do
     it { is_expected.to contain_apt__setting('pref-my_pin').with_content(%r{Explanation: : my_pin\nPackage: vim\nPin: version 1\nPin-Priority: 0\n}) }
   end
 
-  context 'set origin' do
+  context 'with set origin' do
     let :params do
       {
         'packages' => 'vim',
@@ -40,7 +40,7 @@ describe 'apt::pin', type: :define do
     it { is_expected.to contain_apt__setting('pref-my_pin').with_content(%r{Explanation: : my_pin\nPackage: vim\nPin: origin test\nPin-Priority: 0\n}) }
   end
 
-  context 'not defaults' do
+  context 'without defaults' do
     let :params do
       {
         'explanation'     => 'foo',
@@ -61,7 +61,7 @@ describe 'apt::pin', type: :define do
     }
   end
 
-  context 'ensure absent' do
+  context 'with ensure absent' do
     let :params do
       {
         'ensure' => 'absent',
@@ -73,14 +73,14 @@ describe 'apt::pin', type: :define do
     }
   end
 
-  context 'bad characters' do
+  context 'with bad characters' do
     let(:title) { 'such  bad && wow!' }
 
     it { is_expected.to contain_apt__setting('pref-such__bad____wow_') }
   end
 
   describe 'validation' do
-    context 'invalid order' do
+    context 'with invalid order' do
       let :params do
         {
           'order' => 'foo',
@@ -92,7 +92,7 @@ describe 'apt::pin', type: :define do
       end
     end
 
-    context 'packages == * and version' do
+    context 'with packages == * and version' do
       let :params do
         {
           'version' => '1',
@@ -104,7 +104,7 @@ describe 'apt::pin', type: :define do
       end
     end
 
-    context 'packages == * and release and origin' do
+    context 'with packages == * and release and origin' do
       let :params do
         {
           'origin'  => 'test',
@@ -117,7 +117,7 @@ describe 'apt::pin', type: :define do
       end
     end
 
-    context 'specific form with release and origin' do
+    context 'with specific release and origin' do
       let :params do
         {
           'release'  => 'foo',
@@ -131,7 +131,7 @@ describe 'apt::pin', type: :define do
       end
     end
 
-    context 'specific form with version and origin' do
+    context 'with specific version and origin' do
       let :params do
         {
           'version'  => '1',

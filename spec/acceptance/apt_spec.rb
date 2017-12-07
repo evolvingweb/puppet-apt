@@ -4,7 +4,7 @@ MAX_TIMEOUT_RETRY              = 3
 TIMEOUT_RETRY_WAIT             = 5
 TIMEOUT_ERROR_MATCHER = %r{no valid OpenPGP data found}
 
-everything_everything_pp = <<-EOS
+everything_everything_pp = <<-MANIFEST
       if $::lsbdistcodename == 'lucid' {
         $sources = undef
       } else {
@@ -34,16 +34,16 @@ everything_everything_pp = <<-EOS
         },
         sources => $sources,
       }
-  EOS
+  MANIFEST
 
 describe 'apt class' do
-  context 'reset' do
+  context 'with reset' do
     it 'fixes the sources.list' do
       shell('cp /etc/apt/sources.list /tmp')
     end
   end
 
-  context 'all the things' do
+  context 'with all the things' do
     it 'works with no errors' do
       # Apply the manifest (Retry if timeout error is received from key pool)
       retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
@@ -58,7 +58,7 @@ describe 'apt class' do
     end
   end
 
-  context 'reset' do
+  context 'with reset' do
     it 'fixes the sources.list' do
       shell('cp /tmp/sources.list /etc/apt')
     end

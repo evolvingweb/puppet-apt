@@ -337,7 +337,7 @@ describe 'apt::ppa' do
     }
   end
 
-  context 'validation' do
+  context 'with validation' do
     describe 'no release' do
       let :facts do
         {

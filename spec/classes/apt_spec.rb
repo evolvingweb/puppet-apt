@@ -43,7 +43,7 @@ describe 'apt' do
     }
   end
 
-  context 'defaults' do
+  context 'with defaults' do
     it {
       is_expected.to contain_file('sources.list').that_notifies('Class[Apt::Update]').only_with(sources_list)
     }
@@ -76,7 +76,7 @@ describe 'apt' do
   end
 
   describe 'proxy=' do
-    context 'host=localhost' do
+    context 'when host=localhost' do
       let(:params) { { proxy: { 'host' => 'localhost' } } }
 
       it {
@@ -88,7 +88,7 @@ describe 'apt' do
       }
     end
 
-    context 'host=localhost and port=8180' do
+    context 'when host=localhost and port=8180' do
       let(:params) { { proxy: { 'host' => 'localhost', 'port' => 8180 } } }
 
       it {
@@ -100,7 +100,7 @@ describe 'apt' do
       }
     end
 
-    context 'host=localhost and https=true' do
+    context 'when host=localhost and https=true' do
       let(:params) { { proxy: { 'host' => 'localhost', 'https' => true } } }
 
       it {
@@ -112,7 +112,7 @@ describe 'apt' do
       }
     end
 
-    context 'host=localhost and direct=true' do
+    context 'when host=localhost and direct=true' do
       let(:params) { { proxy: { 'host' => 'localhost', 'direct' => true } } }
 
       it {
@@ -124,7 +124,7 @@ describe 'apt' do
       }
     end
 
-    context 'host=localhost and https=true and direct=true' do
+    context 'when host=localhost and https=true and direct=true' do
       let(:params) { { proxy: { 'host' => 'localhost', 'https' => true, 'direct' => true } } }
 
       it {
@@ -143,7 +143,7 @@ describe 'apt' do
       }
     end
 
-    context 'ensure=absent' do
+    context 'when ensure=absent' do
       let(:params) { { proxy: { 'ensure' => 'absent' } } }
 
       it {
@@ -152,7 +152,7 @@ describe 'apt' do
       }
     end
   end
-  context 'lots of non-defaults' do
+  context 'with lots of non-defaults' do
     let :params do
       {
         update: { 'frequency' => 'always', 'timeout' => 1, 'tries' => 3 },
@@ -352,7 +352,7 @@ describe 'apt' do
   end
 
   describe 'failing tests' do
-    context "purge['sources.list']=>'banana'" do
+    context "with purge['sources.list']=>'banana'" do
       let(:params) { { purge: { 'sources.list' => 'banana' } } }
 
       it do
@@ -360,7 +360,7 @@ describe 'apt' do
       end
     end
 
-    context "purge['sources.list.d']=>'banana'" do
+    context "with purge['sources.list.d']=>'banana'" do
       let(:params) { { purge: { 'sources.list.d' => 'banana' } } }
 
       it do
@@ -368,7 +368,7 @@ describe 'apt' do
       end
     end
 
-    context "purge['preferences']=>'banana'" do
+    context "with purge['preferences']=>'banana'" do
       let(:params) { { purge: { 'preferences' => 'banana' } } }
 
       it do
@@ -376,7 +376,7 @@ describe 'apt' do
       end
     end
 
-    context "purge['preferences.d']=>'banana'" do
+    context "with purge['preferences.d']=>'banana'" do
       let(:params) { { purge: { 'preferences.d' => 'banana' } } }
 
       it do
