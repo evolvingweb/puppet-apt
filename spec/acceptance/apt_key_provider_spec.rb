@@ -577,7 +577,7 @@ describe 'apt_key' do
       '0x formatted 160bit lowercase key fingerprint' => "0x#{PUPPETLABS_GPG_KEY_FINGERPRINT.downcase}",
     }
 
-    key_versions.each do |key, value| # rubocop:disable Lint/UnusedBlockArgument, Performance/HashEachMethods
+    key_versions.each do |key, value| # rubocop:disable Lint/UnusedBlockArgument
       context 'when key.to_s' do
         it 'works' do
           apply_manifest_twice(populate_default_options_pp(value))
