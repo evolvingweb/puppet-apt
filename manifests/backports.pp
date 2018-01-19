@@ -1,3 +1,4 @@
+# Defining backports for the apt class
 class apt::backports (
   Optional[String] $location                    = undef,
   Optional[String] $release                     = undef,

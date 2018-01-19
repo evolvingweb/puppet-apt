@@ -1,3 +1,4 @@
+# Defining apt settings
 define apt::setting (
   Variant[String, Integer, Array] $priority           = 50,
   Optional[Enum['file', 'present', 'absent']] $ensure = file,
