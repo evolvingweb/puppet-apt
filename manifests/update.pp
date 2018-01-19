@@ -1,3 +1,4 @@
+# Defining apt update
 class apt::update {
   assert_private()
 

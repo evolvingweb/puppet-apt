@@ -1,3 +1,4 @@
+# Defining apt config
 define apt::conf (
   Optional[String] $content          = undef,
   Enum['present', 'absent'] $ensure  = present,
