@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org).
 
+## Supported Release [4.5.0]
+### Summary
+This release uses the PDK convert functionality which in return makes the module PDK compliant. It also includes a roll up of maintenance changes.
+
+### Added
+- PDK convert apt ([MODULES-6452](https://tickets.puppet.com/browse/MODULES-6452)).
+- Testing on Travis using rvm 2.4.1.
+- Modulesync updates.
+
+### Fixed
+- Changes to address additional Rubocop failures.
+- (maint) Addressing puppet-lint doc warnings.
+
+### Removed
+- `gem update bundler` command in .travis.yml due to ([MODULES-6339](https://tickets.puppet.com/browse/MODULES-6339)).
+
 ## Supported Release [4.4.1]
 ### Summary
 This release is to update the formatting of the module, Rubocop having been run for all ruby files and been set to run automatically on all future commits.
@@ -276,7 +292,7 @@ As this is a major rewrite of the module there are a great number of backwards i
 #### Changes to default behavior
 - By default purge unmanaged files in 'sources.list', 'sources.list.d', 'preferences', and 'preferences.d'.
 - Changed default for `package_manage` in `apt::ppa` to `false`. Set to `true` in a single PPA if you need the package to be managed.
-- `apt::source` will no longer include the `src` entries by default. 
+- `apt::source` will no longer include the `src` entries by default.
 - `pin` in `apt::source` now defaults to `undef` instead of `false`
 
 #### Features
@@ -387,7 +403,7 @@ This release has added tests to ensure graceful failure on OSX.
 ## 2014-06-04 - Release 1.5.0
 ### Summary
 
-This release adds support for Ubuntu 14.04.  It also includes many new features 
+This release adds support for Ubuntu 14.04.  It also includes many new features
 and important bugfixes.  One huge change is that apt::key was replaced with
 apt_key, which allows you to use puppet resource apt_key to inventory keys on
 your system.
@@ -550,7 +566,7 @@ This release includes Ubuntu 12.10 (Quantal) support for PPAs.
 
 ## 2012-05-04 - Puppet Labs <info@puppetlabs.com> - Release 0.0.3
 ### Summary
- 
+
  * only invoke apt-get update once
  * only install python-software-properties if a ppa is added
  * support 'ensure => absent' for all defined types
@@ -633,7 +649,7 @@ This release includes Ubuntu 12.10 (Quantal) support for PPAs.
 * 87777d8 Typo in README
 * f848bac First commit
 
-
+[4.5.0]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.4.1...4.5.0
 [4.4.1]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.4.0...4.4.1
 [4.4.0]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.3.0...4.4.0
 [4.3.0]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.2.0...4.3.0
