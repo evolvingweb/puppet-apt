@@ -4,9 +4,9 @@ require 'open3'
 require 'puppet'
 
 def apt_get(action)
-  cmd_string = "apt-get #{action}"
-  cmd_string << ' -y' if  action == 'upgrade'
-  stdout, stderr, status = Open3.capture3(cmd_string)
+  cmd = ['apt-get', action]
+  cmd << ' -y' if action == 'upgrade'
+  stdout, stderr, status = Open3.capture3(*cmd)
   raise Puppet::Error, stderr if status != 0
   { status: stdout.strip }
 end

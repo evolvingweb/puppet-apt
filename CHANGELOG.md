@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org).
 
+## Supported Release [4.5.1]
+### Summary
+This release fixes CVE-2018-6508 which is a potential arbitrary code execution via tasks.
+
+### Fixed
+- Fix init task for arbitrary remote code
+
 ## Supported Release [4.5.0]
 ### Summary
 This release uses the PDK convert functionality which in return makes the module PDK compliant. It also includes a roll up of maintenance changes.
