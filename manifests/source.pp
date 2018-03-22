@@ -29,7 +29,7 @@ define apt::source(
     $_release = $release
   }
 
-  # Some releases do not support https transport with default installation
+  # Some releases do not support https transport with default installation
   $_transport_https_releases = [ 'wheezy', 'jessie', 'stretch', 'trusty', 'xenial' ]
 
   if $ensure == 'present' {
