@@ -22,6 +22,7 @@ class apt::params {
   $ppas           = {}
   $pins           = {}
   $settings       = {}
+  $auth_conf_entries = []
 
   $config_files = {
     'conf'   => {

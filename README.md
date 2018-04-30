@@ -226,6 +226,38 @@ apt::source { "archive.ubuntu.com-${lsbdistcodename}-backports":
 }
 ```
 
+### Manage login configuration settings for an APT source or proxy in `/etc/apt/auth.conf`
+
+Starting with APT version 1.5 you can define login configuration settings (like
+username and password) for APT sources or proxies that require authentication
+in the file `/etc/apt/auth.conf`. This is preferable to embedding login
+information directly in `source.list` entries which are usually world-readable.
+
+The file `/etc/apt/auth.conf` follows the format of netrc (as used by ftp or
+curl) and has restrictive file permissions. See
+https://manpages.debian.org/testing/apt/apt_auth.conf.5.en.html for details.
+
+Use the optional `apt::auth_conf_entries` parameter to specify an array of
+hashes containing login configuration settings. These hashes may only contain
+the keys `machine`, `login` and `password`.
+
+```puppet
+class { 'apt':
+  auth_conf_entries => [
+    {
+      'machine'  => 'apt-proxy.example.net',
+      'login'    => 'proxylogin',
+      'password' => 'proxypassword',
+    },
+    {
+      'machine'  => 'apt.example.com/ubuntu',
+      'login'    => 'reader',
+      'password' => 'supersecret',
+    },
+  ],
+}
+```
+
 ## Reference
 
 ### Classes
@@ -298,7 +330,7 @@ All parameters are optional unless specified.
   * `https`: Specifies whether to enable https proxies. Valid options: `true` and `false`. Default: `false`.
 
   * `ensure`: Optional parameter. Valid options: 'file', 'present', and 'absent'. Default: `undef`. Prefer 'file' over 'present'.
-  
+
   * `direct`: Specifies whether or not to use a 'DIRECT' https proxy if http proxy is used but https is not. Valid options: `true` and `false`. Default: `false`.
 
 * `purge`: Specifies whether to purge any existing settings that aren't managed by Puppet. Valid options: a hash made up from the following keys:
@@ -312,6 +344,8 @@ All parameters are optional unless specified.
   * `preferences.d`: Specifies whether to purge any unmanaged entries from `preferences.d`. Valid options: `true` and `false`. Default: `false`.
 
 * `settings`: Creates new `apt::setting` resources. Valid options: a hash to be passed to the [`create_resources` function](https://docs.puppetlabs.com/references/latest/function.html#createresources). Default: {}.
+
+* `auth_conf_entries`: An optional array of login configuration settings (hashes) that will be recorded in the file `/etc/apt/auth.conf`. This file has a netrc-like format (similar to what curl uses) and contains the login configuration for APT sources and proxies that require authentication. See https://manpages.debian.org/testing/apt/apt_auth.conf.5.en.html for details. If specified each hash must contain the keys `machine`, `login` and `password` and no others. Default: [].
 
 * `sources`: Creates new `apt::source` resources. Valid options: a hash to be passed to the [`create_resources` function](https://docs.puppetlabs.com/references/latest/function.html#createresources). Default: {}.
 
