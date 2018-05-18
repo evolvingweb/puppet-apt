@@ -53,7 +53,7 @@ describe 'apt_package_security_dist_updates fact' do
       if Facter.version < '2.0.0'
         it { is_expected.to eq('extremetuxracer,vim') }
       else
-        it { is_expected.to eq(%w[extremetuxracer vim]) }
+        it { is_expected.to eq(['extremetuxracer', 'vim']) }
       end
     end
   end
