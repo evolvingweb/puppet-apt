@@ -317,7 +317,7 @@ describe 'apt::key' do
     end
 
     context 'with invalid ensure' do
-      %w[foo aabsent absenta apresent presenta].each do |param|
+      ['foo', 'aabsent', 'absenta', 'apresent', 'presenta'].each do |param|
         let :params do
           {
             ensure: param,

@@ -51,7 +51,7 @@ describe 'apt_package_security_updates fact' do
       if Facter.version < '2.0.0'
         it { is_expected.to eq('tzdata,curl') }
       else
-        it { is_expected.to eq(%w[tzdata curl]) }
+        it { is_expected.to eq(['tzdata', 'curl']) }
       end
     end
   end

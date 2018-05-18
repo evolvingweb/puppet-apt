@@ -15,7 +15,7 @@ install_bolt_on(hosts) unless pe_install?
 install_module_on(hosts)
 install_module_dependencies_on(hosts)
 
-UNSUPPORTED_PLATFORMS = %w[RedHat Suse windows AIX Solaris].freeze
+UNSUPPORTED_PLATFORMS = ['RedHat', 'Suse', 'windows', 'AIX', 'Solaris'].freeze
 
 DEFAULT_PASSWORD = if default[:hypervisor] == 'vagrant'
                      'vagrant'
