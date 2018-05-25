@@ -4,9 +4,9 @@ describe 'apt::setting' do
   let(:pre_condition) { 'class { "apt": }' }
   let :facts do
     {
-      os: { distro: { codename: 'wheezy' }, family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
-      lsbdistrelease: '7.0',
-      lsbdistcodename: 'wheezy',
+      os: { distro: { codename: 'wheezy' }, family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
+      lsbdistrelease: '8.0',
+      lsbdistcodename: 'jessie',
       operatingsystem: 'Debian',
       osfamily: 'Debian',
       lsbdistid: 'Debian',
@@ -77,10 +77,10 @@ describe 'apt::setting' do
     end
     let(:facts) do
       {
-        os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
         lsbdistid: 'Debian',
         osfamily: 'Debian',
-        lsbdistcodename: 'wheezy',
+        lsbdistcodename: 'jessie',
         puppetversion: Puppet.version,
       }
     end

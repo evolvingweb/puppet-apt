@@ -7,10 +7,10 @@ describe 'apt::backports', type: :class do
     context 'with defaults on deb' do
       let(:facts) do
         {
-          os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+          os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
           lsbdistid: 'Debian',
           osfamily: 'Debian',
-          lsbdistcodename: 'wheezy',
+          lsbdistcodename: 'jessie',
           puppetversion: Puppet.version,
         }
       end
@@ -19,18 +19,18 @@ describe 'apt::backports', type: :class do
         is_expected.to contain_apt__source('backports').with(location: 'http://deb.debian.org/debian',
                                                              key: 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553',
                                                              repos: 'main contrib non-free',
-                                                             release: 'wheezy-backports',
-                                                             pin: { 'priority' => 200, 'release' => 'wheezy-backports' })
+                                                             release: 'jessie-backports',
+                                                             pin: { 'priority' => 200, 'release' => 'jessie-backports' })
       }
     end
     context 'with defaults on ubuntu' do
       let(:facts) do
         {
-          os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
+          os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
           lsbdistid: 'Ubuntu',
           osfamily: 'Debian',
-          lsbdistcodename: 'trusty',
-          lsbdistrelease: '14.04',
+          lsbdistcodename: 'xenial',
+          lsbdistrelease: '16.04',
           puppetversion: Puppet.version,
         }
       end
@@ -39,18 +39,18 @@ describe 'apt::backports', type: :class do
         is_expected.to contain_apt__source('backports').with(location: 'http://archive.ubuntu.com/ubuntu',
                                                              key: '630239CC130E1A7FD81A27B140976EAF437D05B5',
                                                              repos: 'main universe multiverse restricted',
-                                                             release: 'trusty-backports',
-                                                             pin: { 'priority' => 200, 'release' => 'trusty-backports' })
+                                                             release: 'xenial-backports',
+                                                             pin: { 'priority' => 200, 'release' => 'xenial-backports' })
       }
     end
     context 'with everything set' do
       let(:facts) do
         {
-          os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
+          os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
           lsbdistid: 'Ubuntu',
           osfamily: 'Debian',
-          lsbdistcodename: 'trusty',
-          lsbdistrelease: '14.04',
+          lsbdistcodename: 'xenial',
+          lsbdistrelease: '16.04',
           puppetversion: Puppet.version,
         }
       end
@@ -75,11 +75,11 @@ describe 'apt::backports', type: :class do
     context 'when set things with hashes' do
       let(:facts) do
         {
-          os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
+          os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
           lsbdistid: 'Ubuntu',
           osfamily: 'Debian',
-          lsbdistcodename: 'trusty',
-          lsbdistrelease: '14.04',
+          lsbdistcodename: 'xenial',
+          lsbdistrelease: '16.04',
           puppetversion: Puppet.version,
         }
       end
@@ -185,11 +185,11 @@ describe 'apt::backports', type: :class do
   describe 'validation' do
     let(:facts) do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
+        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
         lsbdistid: 'Ubuntu',
         osfamily: 'Debian',
-        lsbdistcodename: 'trusty',
-        lsbdistrelease: '14.04',
+        lsbdistcodename: 'xenial',
+        lsbdistrelease: '16.04',
         puppetversion: Puppet.version,
       }
     end

@@ -5,10 +5,10 @@ describe 'apt::conf', type: :define do
   end
   let(:facts) do
     {
-      os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+      os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
       lsbdistid: 'Debian',
       osfamily: 'Debian',
-      lsbdistcodename: 'wheezy',
+      lsbdistcodename: 'jessie',
       puppetversion: Puppet.version,
     }
   end
