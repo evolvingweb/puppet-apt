@@ -188,11 +188,11 @@ describe 'apt' do
 
   context 'with sources defined on valid osfamily' do
     let :facts do
-      { os: { family: 'Debian', name: 'Ubuntu', release: { major: '12', full: '12.04' } },
+      { os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
         osfamily: 'Debian',
-        lsbdistcodename: 'precise',
+        lsbdistcodename: 'xenial',
         lsbdistid: 'Ubuntu',
-        lsbdistrelease: '12.04',
+        lsbdistrelease: '16.04',
         puppetversion: Puppet.version }
     end
     let(:params) do
@@ -224,15 +224,15 @@ describe 'apt' do
       is_expected.to contain_apt__setting('list-puppetlabs').with(ensure: 'present')
     }
 
-    it { is_expected.to contain_file('/etc/apt/sources.list.d/puppetlabs.list').with_content(%r{^deb http://apt.puppetlabs.com precise main$}) }
+    it { is_expected.to contain_file('/etc/apt/sources.list.d/puppetlabs.list').with_content(%r{^deb http://apt.puppetlabs.com xenial main$}) }
   end
 
   context 'with confs defined on valid osfamily' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '12', full: '12.04.5' } },
+        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
         osfamily: 'Debian',
-        lsbdistcodename: 'precise',
+        lsbdistcodename: 'xenial',
         lsbdistid: 'Debian',
         puppetversion: Puppet.version,
       }
@@ -260,9 +260,9 @@ describe 'apt' do
   context 'with keys defined on valid osfamily' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '12', full: '12.04.5' } },
+        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
         osfamily: 'Debian',
-        lsbdistcodename: 'precise',
+        lsbdistcodename: 'xenial',
         lsbdistid: 'Debian',
         puppetversion: Puppet.version,
       }
@@ -290,11 +290,11 @@ describe 'apt' do
   context 'with ppas defined on valid osfamily' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '12', full: '12.04.5' } },
+        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
         osfamily: 'Debian',
-        lsbdistcodename: 'precise',
+        lsbdistcodename: 'xenial',
         lsbdistid: 'ubuntu',
-        lsbdistrelease: '12.04',
+        lsbdistrelease: '16.04',
         puppetversion: Puppet.version,
       }
     end
@@ -312,9 +312,9 @@ describe 'apt' do
   context 'with settings defined on valid osfamily' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '12', full: '12.04.5' } },
+        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
         osfamily: 'Debian',
-        lsbdistcodename: 'precise',
+        lsbdistcodename: 'xenial',
         lsbdistid: 'Debian',
         puppetversion: Puppet.version,
       }
@@ -333,9 +333,9 @@ describe 'apt' do
   context 'with pins defined on valid osfamily' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '12', full: '12.04.5' } },
+        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
         osfamily: 'Debian',
-        lsbdistcodename: 'precise',
+        lsbdistcodename: 'xenial',
         lsbdistid: 'Debian',
         puppetversion: Puppet.version,
       }

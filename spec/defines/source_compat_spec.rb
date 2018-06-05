@@ -10,9 +10,9 @@ describe 'apt::source', type: :define do
   context 'with mostly defaults' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
         lsbdistid: 'Debian',
-        lsbdistcodename: 'wheezy',
+        lsbdistcodename: 'jessie',
         osfamily: 'Debian',
         puppetversion: Puppet.version,
       }
@@ -26,16 +26,16 @@ describe 'apt::source', type: :define do
     end
 
     it {
-      is_expected.to contain_apt__setting('list-my_source').with_content(%r{# my_source\ndeb-src http://debian.mirror.iweb.ca/debian/ wheezy main\n})
+      is_expected.to contain_apt__setting('list-my_source').with_content(%r{# my_source\ndeb-src http://debian.mirror.iweb.ca/debian/ jessie main\n})
     }
   end
 
   context 'with no defaults' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
         lsbdistid: 'Debian',
-        lsbdistcodename: 'wheezy',
+        lsbdistcodename: 'jessie',
         osfamily: 'Debian',
         puppetversion: Puppet.version,
       }
@@ -74,9 +74,9 @@ describe 'apt::source', type: :define do
   context 'when allow_unsigned true' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
         lsbdistid: 'Debian',
-        lsbdistcodename: 'wheezy',
+        lsbdistcodename: 'jessie',
         osfamily: 'Debian',
         puppetversion: Puppet.version,
       }
@@ -89,15 +89,15 @@ describe 'apt::source', type: :define do
       }
     end
 
-    it { is_expected.to contain_apt__setting('list-my_source').with_content(%r{# my_source\ndeb \[trusted=yes\] http://debian.mirror.iweb.ca/debian/ wheezy main\n}) }
+    it { is_expected.to contain_apt__setting('list-my_source').with_content(%r{# my_source\ndeb \[trusted=yes\] http://debian.mirror.iweb.ca/debian/ jessie main\n}) }
   end
 
   context 'with architecture equals x86_64' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
         lsbdistid: 'Debian',
-        lsbdistcodename: 'wheezy',
+        lsbdistcodename: 'jessie',
         osfamily: 'Debian',
         puppetversion: Puppet.version,
       }
@@ -110,16 +110,16 @@ describe 'apt::source', type: :define do
     end
 
     it {
-      is_expected.to contain_apt__setting('list-my_source').with_content(%r{# my_source\ndeb \[arch=x86_64\] http://debian.mirror.iweb.ca/debian/ wheezy main\n})
+      is_expected.to contain_apt__setting('list-my_source').with_content(%r{# my_source\ndeb \[arch=x86_64\] http://debian.mirror.iweb.ca/debian/ jessie main\n})
     }
   end
 
   context 'with ensure => absent' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
         lsbdistid: 'Debian',
-        lsbdistcodename: 'wheezy',
+        lsbdistcodename: 'jessie',
         osfamily: 'Debian',
         puppetversion: Puppet.version,
       }
@@ -139,7 +139,7 @@ describe 'apt::source', type: :define do
     context 'with no release' do
       let :facts do
         {
-          os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+          os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
           lsbdistid: 'Debian',
           osfamily: 'Debian',
           puppetversion: Puppet.version,

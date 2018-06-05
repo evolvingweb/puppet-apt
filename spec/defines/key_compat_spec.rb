@@ -23,7 +23,7 @@ describe 'apt::key', type: :define do
 
   let(:facts) do
     {
-      os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
+      os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
       lsbdistid: 'Debian',
       osfamily: 'Debian',
       puppetversion: Puppet.version,
