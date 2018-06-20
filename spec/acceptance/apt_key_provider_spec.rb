@@ -10,16 +10,10 @@ CENTOS_GPG_KEY_LONG_ID         = '0946FCA2C105B9DE'.freeze
 CENTOS_GPG_KEY_FINGERPRINT     = 'C1DAC52D1664E8A4386DBA430946FCA2C105B9DE'.freeze
 CENTOS_REPO_URL                = 'ftp.cvut.cz/centos'.freeze
 CENTOS_GPG_KEY_FILE            = 'RPM-GPG-KEY-CentOS-6'.freeze
-
 SHOULD_NEVER_EXIST_ID          = 'EF8D349F'.freeze
-
 KEY_CHECK_COMMAND              = 'apt-key adv --list-keys --with-colons --fingerprint | grep '.freeze
 PUPPETLABS_KEY_CHECK_COMMAND   = "#{KEY_CHECK_COMMAND} #{PUPPETLABS_GPG_KEY_FINGERPRINT}".freeze
 CENTOS_KEY_CHECK_COMMAND       = "#{KEY_CHECK_COMMAND} #{CENTOS_GPG_KEY_FINGERPRINT}".freeze
-
-MAX_TIMEOUT_RETRY              = 3
-TIMEOUT_RETRY_WAIT             = 5
-TIMEOUT_ERROR_MATCHER = %r{no valid OpenPGP data found}
 
 def populate_default_options_pp(value)
   default_options_pp = <<-MANIFEST
@@ -32,15 +26,18 @@ def populate_default_options_pp(value)
 end
 
 def install_key(key)
-  retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
-    shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net \
-              --recv-keys #{key}")
+  retry_on_error_matching do
+    shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net --recv-keys #{key}")
   end
 end
 
 def apply_manifest_twice(manifest_pp)
-  apply_manifest(manifest_pp, catch_failures: true)
-  apply_manifest(manifest_pp, catch_changes: true)
+  retry_on_error_matching do
+    apply_manifest(manifest_pp, catch_failures: true)
+  end
+  retry_on_error_matching do
+    apply_manifest(manifest_pp, catch_changes: true)
+  end
 end
 
 invalid_key_length_pp = <<-MANIFEST
@@ -612,7 +609,7 @@ describe 'apt_key' do
       end
     end
 
-    context 'when absent, added with long key', unless: (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '6') do
+    context 'when absent, added with long key' do
       it 'is removed' do
         # Install the key first (retry because key pool may timeout)
         install_key(PUPPETLABS_GPG_KEY_LONG_ID)
@@ -630,7 +627,7 @@ describe 'apt_key' do
     context 'with puppetlabs gpg key' do
       it 'works' do
         # Apply the manifest (Retry if timeout error is received from key pool)
-        retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
+        retry_on_error_matching do
           apply_manifest(gpg_key_pp, catch_failures: true)
         end
 
@@ -659,7 +656,7 @@ describe 'apt_key' do
     context 'with hkps.pool.sks-keyservers.net' do
       it 'works' do
         # Apply the manifest (Retry if timeout error is received from key pool)
-        retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
+        retry_on_error_matching do
           apply_manifest(hkps_pool_pp, catch_failures: true)
         end
 
@@ -670,7 +667,7 @@ describe 'apt_key' do
 
     context 'with hkp://hkps.pool.sks-keyservers.net:80' do
       it 'works' do
-        retry_on_error_matching(MAX_TIMEOUT_RETRY, TIMEOUT_RETRY_WAIT, TIMEOUT_ERROR_MATCHER) do
+        retry_on_error_matching do
           apply_manifest(hkp_pool_pp, catch_failures: true)
         end
 
@@ -682,7 +679,7 @@ describe 'apt_key' do
     context 'with nonexistant.key.server' do
       it 'fails' do
         apply_manifest(nonexistant_key_server_pp, expect_failures: true) do |r|
-          expect(r.stderr).to match(%r{(Host not found|Couldn't resolve host)})
+          expect(r.stderr).to match(%r{(Host not found|Couldn't resolve host|No name)})
         end
       end
     end

@@ -74,19 +74,13 @@ class apt::params {
 
   case $facts['os']['name']{
     'Debian': {
-      case $facts['os']['release']['full'] {
-        default: {
           $backports = {
             'location' => 'http://deb.debian.org/debian',
             'key'      => 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553',
             'repos'    => 'main contrib non-free',
           }
-        }
-      }
-
       $ppa_options = undef
       $ppa_package = undef
-
     }
     'Ubuntu': {
       $backports = {
@@ -94,25 +88,8 @@ class apt::params {
         'key'      => '630239CC130E1A7FD81A27B140976EAF437D05B5',
         'repos'    => 'main universe multiverse restricted',
       }
-
-      case $facts['os']['release']['full'] {
-        '10.04': {
-          $ppa_options        = undef
-          $ppa_package        = 'python-software-properties'
-        }
-        '12.04': {
-          $ppa_options        = '-y'
-          $ppa_package        = 'python-software-properties'
-        }
-        '14.04', '14.10', '15.04', '15.10', '16.04': {
-          $ppa_options        = '-y'
-          $ppa_package        = 'software-properties-common'
-        }
-        default: {
-          $ppa_options        = '-y'
-          $ppa_package        = 'python-software-properties'
-        }
-      }
+      $ppa_options        = '-y'
+      $ppa_package        = 'software-properties-common'
     }
     undef: {
       fail('Unable to determine value for fact os["name"]')

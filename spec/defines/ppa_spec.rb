@@ -91,46 +91,6 @@ describe 'apt::ppa' do
     }
   end
 
-  describe 'package_manage => true, multiple ppas, MODULES-2873' do
-    let :pre_condition do
-      'class { "apt": }
-       apt::ppa {"ppa:user/foo":
-         package_manage => true
-       }'
-    end
-    let :facts do
-      {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '11', full: '11.04' } },
-        lsbdistrelease: '11.04',
-        lsbdistcodename: 'natty',
-        operatingsystem: 'Ubuntu',
-        osfamily: 'Debian',
-        lsbdistid: 'Ubuntu',
-        puppetversion: Puppet.version,
-      }
-    end
-    let :params do
-      {
-        package_manage: true,
-      }
-    end
-
-    let(:title) { 'ppa:user/bar' }
-
-    it { is_expected.to contain_package('python-software-properties') }
-    it {
-      is_expected.to contain_exec('add-apt-repository-ppa:user/bar').that_notifies('Class[Apt::Update]').with('environment' => [],
-                                                                                                              'command'     => '/usr/bin/add-apt-repository -y ppa:user/bar',
-                                                                                                              'unless'      => '/usr/bin/test -f /etc/apt/sources.list.d/user-bar-natty.list',
-                                                                                                              'user'        => 'root',
-                                                                                                              'logoutput'   => 'on_failure')
-    }
-
-    it {
-      is_expected.to contain_file('/etc/apt/sources.list.d/user-bar-natty.list').that_requires('Exec[add-apt-repository-ppa:user/bar]').with('ensure' => 'file')
-    }
-  end
-
   describe 'package_manage => false' do
     let :pre_condition do
       'class { "apt": }'
