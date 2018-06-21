@@ -1,14 +1,14 @@
 <%- | $name, $pin_release, $release, $codename, $release_version, $component, $originator, $label, $version, $origin, $explanation, $packages_string, $priority | -%>
 <%-
 $pin =
-if $pin_release.length > 0 {
+if $pin_release != '' {
   $options = [
-    if $release         { "a=${release}" },
-    if $codename        { "n=${codename}" },
-    if $release_version { "v=${release_version}"},
-    if $component       { "c=${component}" },
-    if $originator      { "o=${originator}" },
-    if $label           { "l=${label}" },
+    if $release != ''         { "a=${release}" },
+    if $codename != ''        { "n=${codename}" },
+    if $release_version != '' { "v=${release_version}"},
+    if $component != ''       { "c=${component}" },
+    if $originator != ''      { "o=${originator}" },
+    if $label != ''           { "l=${label}" },
     ].filter |$x| { $x != undef }
    "release ${options.join(', ')}" }
 
