@@ -718,7 +718,8 @@ describe 'apt_key' do
       end
     end
 
-    context 'with ftp://' do
+    # disabled when running in travis, security issues prevent FTP
+    context 'with ftp://', unless: (ENV['TRAVIS'] == 'true') do
       before(:each) do
         shell("apt-key del #{CENTOS_GPG_KEY_LONG_ID}",
               acceptable_exit_codes: [0, 1, 2])
