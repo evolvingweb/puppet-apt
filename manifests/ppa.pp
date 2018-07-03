@@ -46,7 +46,7 @@ define apt::ppa(
 
     exec { "add-apt-repository-${name}":
       environment => $_proxy_env,
-      command     => "/usr/bin/add-apt-repository ${options} ${name}",
+      command     => "/usr/bin/add-apt-repository ${options} ${name} || rm ${::apt::sources_list_d}/${sources_list_d_filename} && false",
       unless      => "/usr/bin/test -f ${::apt::sources_list_d}/${sources_list_d_filename}",
       user        => 'root',
       logoutput   => 'on_failure',
