@@ -46,7 +46,7 @@ describe 'apt::ppa' do
 
     it {
       is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with(environment: [],
-                                                                                                              command: '/usr/bin/add-apt-repository -y ppa:user/foo || rm /etc/apt/sources.list.d/user-ubuntu-foo-wily.list && false',
+                                                                                                              command: '/usr/bin/add-apt-repository -y ppa:user/foo || rm /etc/apt/sources.list.d/user-ubuntu-foo-wily.list && false', # rubocop:disable Metrics/LineLength
                                                                                                               unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-ubuntu-foo-wily.list',
                                                                                                               user: 'root',
                                                                                                               logoutput: 'on_failure')
@@ -158,7 +158,7 @@ describe 'apt::ppa' do
     it { is_expected.to contain_package('software-properties-common') }
     it {
       is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with(environment: [],
-                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || rm /etc/apt/sources.list.d/user-foo-trusty.list && false',
+                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || rm /etc/apt/sources.list.d/user-foo-trusty.list && false', # rubocop:disable Metrics/LineLength
                                                                                                               unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-foo-trusty.list',
                                                                                                               user: 'root',
                                                                                                               logoutput: 'on_failure')
@@ -193,7 +193,7 @@ describe 'apt::ppa' do
     it { is_expected.to contain_package('software-properties-common') }
     it {
       is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with(environment: ['http_proxy=http://localhost:8080'],
-                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || rm /etc/apt/sources.list.d/user-foo-trusty.list && false',
+                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || rm /etc/apt/sources.list.d/user-foo-trusty.list && false', # rubocop:disable Metrics/LineLength
                                                                                                               unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-foo-trusty.list',
                                                                                                               user: 'root',
                                                                                                               logoutput: 'on_failure')
@@ -228,7 +228,7 @@ describe 'apt::ppa' do
     it { is_expected.to contain_package('software-properties-common') }
     it {
       is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with(environment: ['http_proxy=http://localhost:8180'],
-                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || rm /etc/apt/sources.list.d/user-foo-trusty.list && false',
+                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || rm /etc/apt/sources.list.d/user-foo-trusty.list && false', # rubocop:disable Metrics/LineLength
                                                                                                               unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-foo-trusty.list',
                                                                                                               user: 'root',
                                                                                                               logoutput: 'on_failure')
@@ -263,7 +263,7 @@ describe 'apt::ppa' do
     it { is_expected.to contain_package('software-properties-common') }
     it {
       is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with(environment: ['http_proxy=http://localhost:8180', 'https_proxy=https://localhost:8180'],
-                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || rm /etc/apt/sources.list.d/user-foo-trusty.list && false',
+                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || rm /etc/apt/sources.list.d/user-foo-trusty.list && false', # rubocop:disable Metrics/LineLength
                                                                                                               unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-foo-trusty.list',
                                                                                                               user: 'root',
                                                                                                               logoutput: 'on_failure')
