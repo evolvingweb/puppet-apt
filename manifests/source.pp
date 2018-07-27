@@ -32,6 +32,11 @@ define apt::source(
     if ! $location {
       fail('cannot create a source entry without specifying a location')
     }
+    # Newer oses, do not need the package for HTTPS transport.
+    $_transport_https_releases = [ 'wheezy', 'jessie', 'stretch', 'trusty', 'xenial' ]
+    if $_release in $_transport_https_releases and $location =~ /(?i:^https:\/\/)/ {
+      ensure_packages('apt-transport-https')
+    }
   }
 
   $includes = merge($::apt::include_defaults, $include)
