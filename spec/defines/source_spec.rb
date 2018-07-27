@@ -40,6 +40,7 @@ describe 'apt::source' do
 
       it {
         is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').without_content(%r{# my_source\ndeb-src hello.there wheezy main\n})
+        is_expected.not_to contain_package('apt-transport-https')
       }
     end
   end
@@ -199,6 +200,50 @@ describe 'apt::source' do
 
     it {
       is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{# my_source\ndeb \[trusted=yes\] hello.there jessie main\n})
+    }
+  end
+
+  context 'with a https location, install apt-transport-https' do
+    let :facts do
+      {
+        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
+        lsbdistid: 'Debian',
+        lsbdistcodename: 'jessie',
+        osfamily: 'Debian',
+        puppetversion: Puppet.version,
+      }
+    end
+    let :params do
+      {
+        location: 'HTTPS://foo.bar',
+        allow_unsigned: false,
+      }
+    end
+
+    it {
+      is_expected.to contain_package('apt-transport-https')
+    }
+  end
+
+  context 'with a https location, do not install apt-transport-https on oses not in list eg buster' do
+    let :facts do
+      {
+        os: { family: 'Debian', name: 'Debian', release: { major: '10', full: '10.0' } },
+        lsbdistid: 'Debian',
+        lsbdistcodename: 'buster',
+        osfamily: 'Debian',
+        puppetversion: Puppet.version,
+      }
+    end
+    let :params do
+      {
+        location: 'https://foo.bar',
+        allow_unsigned: false,
+      }
+    end
+
+    it {
+      is_expected.not_to contain_package('apt-transport-https')
     }
   end
 
