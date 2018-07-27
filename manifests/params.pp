@@ -9,6 +9,7 @@ class apt::params {
   $provider       = '/usr/bin/apt-get'
   $sources_list   = "${root}/sources.list"
   $sources_list_d = "${root}/sources.list.d"
+  $trusted_gpg_d  = "${root}/trusted.gpg.d"
   $conf_d         = "${root}/apt.conf.d"
   $preferences    = "${root}/preferences"
   $preferences_d  = "${root}/preferences.d"

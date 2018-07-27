@@ -25,6 +25,10 @@ define apt::ppa(
   $filename_no_specialchars = regsubst($filename_no_slashes, '[\.\+]', '_', 'G')
   $sources_list_d_filename  = "${filename_no_specialchars}.list"
 
+  $name_no_slashes = regsubst($name, '/', '-', 'G')
+  $name_no_specialchars = regsubst($name_no_slashes, '[\.\+]', '_', 'G')
+  $trusted_gpg_d_filename = regsubst($name_no_specialchars, '^ppa:(.+)', "\\1.gpg")
+
   if $ensure == 'present' {
     if $package_manage {
       ensure_packages($package_name)
@@ -47,7 +51,7 @@ define apt::ppa(
     exec { "add-apt-repository-${name}":
       environment => $_proxy_env,
       command     => "/usr/bin/add-apt-repository ${options} ${name}",
-      unless      => "/usr/bin/test -f ${::apt::sources_list_d}/${sources_list_d_filename}",
+      unless      => "/usr/bin/test -f ${::apt::sources_list_d}/${sources_list_d_filename} && /usr/bin/test -f ${::apt::trusted_gpg_d}/${trusted_gpg_d_filename}",
       user        => 'root',
       logoutput   => 'on_failure',
       notify      => Class['apt::update'],
