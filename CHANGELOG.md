@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [5.0.1](https://github.com/puppetlabs/puppetlabs-apt/tree/5.0.1) (2018-07-27)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/5.0.0...5.0.1)
+
+### Fixed
+
+- \(MODULES-7540\) - add apt-transport-https with https [\#775](https://github.com/puppetlabs/puppetlabs-apt/pull/775) ([tphoney](https://github.com/tphoney))
+
 ## [5.0.0](https://github.com/puppetlabs/puppetlabs-apt/tree/5.0.0) (2018-07-18)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/4.5.1...5.0.0)
@@ -678,6 +686,9 @@ This release includes Ubuntu 12.10 (Quantal) support for PPAs.
 * 87777d8 Typo in README
 * f848bac First commit
 
+[5.0.1]:https://github.com/puppetlabs/puppetlabs-apt/compare/5.0.0...5.0.1
+[5.0.0]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.5.1...5.0.0
+[4.5.1]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.5.0...4.5.1
 [4.5.0]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.4.1...4.5.0
 [4.4.1]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.4.0...4.4.1
 [4.4.0]:https://github.com/puppetlabs/puppetlabs-apt/compare/4.3.0...4.4.0
