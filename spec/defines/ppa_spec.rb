@@ -47,7 +47,7 @@ describe 'apt::ppa' do
     it {
       is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with(environment: [],
                                                                                                               command: '/usr/bin/add-apt-repository -y ppa:user/foo',
-                                                                                                              unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-ubuntu-foo-wily.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/user-foo.gpg', # rubocop:disable Metrics/LineLength
+                                                                                                              unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-ubuntu-foo-wily.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/user_ubuntu_foo.gpg', # rubocop:disable Metrics/LineLength
                                                                                                               user: 'root',
                                                                                                               logoutput: 'on_failure')
     }
