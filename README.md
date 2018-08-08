@@ -556,9 +556,9 @@ All parameters are optional.
 
 ## Limitations
 
-This module is tested and officially supported on Debian 8 and 9 and Ubuntu 14.04, and 16.04. Testing on other platforms has been light and cannot be guaranteed.
-
 This module is not designed to be split across [run stages](https://docs.puppetlabs.com/puppet/latest/reference/lang_run_stages.html).
+
+For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-apt/blob/master/metadata.json)
 
 ### Adding new sources or PPAs
 
