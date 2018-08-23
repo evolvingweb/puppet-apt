@@ -228,18 +228,18 @@ apt::source { "archive.ubuntu.com-${lsbdistcodename}-backports":
 
 ### Manage login configuration settings for an APT source or proxy in `/etc/apt/auth.conf`
 
-Starting with APT version 1.5 you can define login configuration settings (like
-username and password) for APT sources or proxies that require authentication
-in the file `/etc/apt/auth.conf`. This is preferable to embedding login
-information directly in `source.list` entries which are usually world-readable.
+Starting with APT version 1.5, you can define login configuration settings, such as
+username and password, for APT sources or proxies that require authentication
+in the `/etc/apt/auth.conf` file. This is preferable to embedding login
+information directly in `source.list` entries, which are usually world-readable.
 
-The file `/etc/apt/auth.conf` follows the format of netrc (as used by ftp or
+The `/etc/apt/auth.conf` file follows the format of netrc (used by ftp or
 curl) and has restrictive file permissions. See
 https://manpages.debian.org/testing/apt/apt_auth.conf.5.en.html for details.
 
 Use the optional `apt::auth_conf_entries` parameter to specify an array of
 hashes containing login configuration settings. These hashes may only contain
-the keys `machine`, `login` and `password`.
+the `machine`, `login` and `password` keys.
 
 ```puppet
 class { 'apt':
@@ -556,9 +556,9 @@ All parameters are optional.
 
 ## Limitations
 
-This module is tested and officially supported on Debian 8 and 9 and Ubuntu 14.04, and 16.04. Testing on other platforms has been light and cannot be guaranteed.
-
 This module is not designed to be split across [run stages](https://docs.puppetlabs.com/puppet/latest/reference/lang_run_stages.html).
+
+For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-apt/blob/master/metadata.json)
 
 ### Adding new sources or PPAs
 
