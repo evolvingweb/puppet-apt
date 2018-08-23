@@ -16,14 +16,25 @@ define apt::ppa(
 
   if versioncmp($facts['lsbdistrelease'], '15.10') >= 0 {
     $distid = downcase($facts['lsbdistid'])
-    $filename = regsubst($name, '^ppa:([^/]+)/(.+)$', "\\1-${distid}-\\2-${release}")
+    $dash_filename = regsubst($name, '^ppa:([^/]+)/(.+)$', "\\1-${distid}-\\2")
+    $underscore_filename = regsubst($name, '^ppa:([^/]+)/(.+)$', "\\1_${distid}_\\2")
   } else {
-    $filename = regsubst($name, '^ppa:([^/]+)/(.+)$', "\\1-\\2-${release}")
+    $dash_filename = regsubst($name, '^ppa:([^/]+)/(.+)$', "\\1-\\2")
+    $underscore_filename = regsubst($name, '^ppa:([^/]+)/(.+)$', "\\1_\\2")
   }
 
-  $filename_no_slashes      = regsubst($filename, '/', '-', 'G')
-  $filename_no_specialchars = regsubst($filename_no_slashes, '[\.\+]', '_', 'G')
-  $sources_list_d_filename  = "${filename_no_specialchars}.list"
+  $dash_filename_no_slashes      = regsubst($dash_filename, '/', '-', 'G')
+  $dash_filename_no_specialchars = regsubst($dash_filename_no_slashes, '[\.\+]', '_', 'G')
+  $underscore_filename_no_slashes      = regsubst($underscore_filename, '/', '-', 'G')
+  $underscore_filename_no_specialchars = regsubst($underscore_filename_no_slashes, '[\.\+]', '_', 'G')
+
+  $sources_list_d_filename  = "${dash_filename_no_specialchars}-${release}.list"
+
+  if versioncmp($facts['lsbdistrelease'], '15.10') >= 0 {
+    $trusted_gpg_d_filename = "${underscore_filename_no_specialchars}.gpg"
+  } else {
+    $trusted_gpg_d_filename = "${dash_filename_no_specialchars}.gpg"
+  }
 
   if $ensure == 'present' {
     if $package_manage {
@@ -47,7 +58,7 @@ define apt::ppa(
     exec { "add-apt-repository-${name}":
       environment => $_proxy_env,
       command     => "/usr/bin/add-apt-repository ${options} ${name}",
-      unless      => "/usr/bin/test -f ${::apt::sources_list_d}/${sources_list_d_filename}",
+      unless      => "/usr/bin/test -f ${::apt::sources_list_d}/${sources_list_d_filename} && /usr/bin/test -f ${::apt::trusted_gpg_d}/${trusted_gpg_d_filename}",
       user        => 'root',
       logoutput   => 'on_failure',
       notify      => Class['apt::update'],
