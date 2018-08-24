@@ -15,7 +15,7 @@ class apt (
   Hash $confs                   = $apt::params::confs,
   Hash $update                  = $apt::params::update,
   Hash $purge                   = $apt::params::purge,
-  Hash $proxy                   = $apt::params::proxy,
+  Apt::Proxy $proxy             = $apt::params::proxy,
   Hash $sources                 = $apt::params::sources,
   Hash $keys                    = $apt::params::keys,
   Hash $ppas                    = $apt::params::ppas,
@@ -67,23 +67,6 @@ class apt (
   }
 
   $_purge = merge($::apt::purge_defaults, $purge)
-
-  if $proxy['ensure'] {
-    assert_type(Enum['file', 'present', 'absent'], $proxy['ensure'])
-  }
-  if $proxy['host'] {
-    assert_type(String, $proxy['host'])
-  }
-  if $proxy['port'] {
-    assert_type(Integer, $proxy['port'])
-  }
-  if $proxy['https']{
-    assert_type(Boolean, $proxy['https'])
-  }
-  if $proxy['direct']{
-    assert_type(Boolean, $proxy['direct'])
-  }
-
   $_proxy = merge($apt::proxy_defaults, $proxy)
 
   $confheadertmp = epp('apt/_conf_header.epp')

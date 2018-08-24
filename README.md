@@ -280,6 +280,7 @@ class { 'apt':
 * [`apt::ppa`](#defined-type-aptppa)
 * [`apt::setting`](#defined-type-aptsetting)
 * [`apt::source`](#defined-type-aptsource)
+* [`apt::proxy`](#defined-type-aptproxy)
 
 ### Types
 
@@ -321,17 +322,7 @@ All parameters are optional unless specified.
 
 * `ppas`: Creates new `apt::ppa` resources. Valid options: a hash to be passed to the [`create_resources` function](https://docs.puppetlabs.com/references/latest/function.html#createresources). Default: {}.
 
-* `proxy`: Configures Apt to connect to a proxy server. Valid options: a hash made up from the following keys:
-
-  * `host`: Specifies a proxy host to be stored in `/etc/apt/apt.conf.d/01proxy`. Valid options: a string containing a hostname. Default: undef.
-
-  * `port`: Specifies a proxy port to be stored in `/etc/apt/apt.conf.d/01proxy`. Valid options: an integer containing a port number. Default: 8080.
-
-  * `https`: Specifies whether to enable https proxies. Valid options: `true` and `false`. Default: `false`.
-
-  * `ensure`: Optional parameter. Valid options: 'file', 'present', and 'absent'. Default: `undef`. Prefer 'file' over 'present'.
-
-  * `direct`: Specifies whether or not to use a 'DIRECT' https proxy if http proxy is used but https is not. Valid options: `true` and `false`. Default: `false`.
+* `proxy`: Configures Apt to connect to a proxy server. Valid options: a hash matching the locally defined type [`apt::proxy`](#defined-type-aptproxy).
 
 * `purge`: Specifies whether to purge any existing settings that aren't managed by Puppet. Valid options: a hash made up from the following keys:
 
@@ -546,13 +537,31 @@ Manages the GPG keys that Apt uses to authenticate packages.
 
 All parameters are optional.
 
-* `content`: Supplies the entire GPG key. Useful in case the key can't be fetched from a remote location and using a file resource is inconvenient. Cannot be used in combination with `source`. Valid options: a string. Default: undef.
+* `content`: Supplies the entire GPG key. Useful in case the key can't be fetched from a remote location and using a file resource is inconvenient. Cannot be used in combination with `source`. Valid options: a string. Default: `undef`.
 
-* `options`: Passes additional options to `apt-key adv --keyserver-options`. Valid options: a string. Default: undef.
+* `options`: Passes additional options to `apt-key adv --keyserver-options`. Valid options: a string. Default: `undef`.
 
-* `server`: Specifies a keyserver to provide Puppet's GPG key. Valid options: a string containing a domain name or a full URL. Default: 'keyserver.ubuntu.com'.
+* `server`: Specifies a keyserver to provide Puppet's GPG key. Valid options: a string containing a domain name or a full URL. Default: `keyserver.ubuntu.com`.
 
-* `source`: Specifies the location of an existing GPG key file to copy. Cannot be used in combination with `content`. Valid options: a string containing a URL (ftp://, http://, or https://) or an absolute path. Default: undef.
+* `source`: Specifies the location of an existing GPG key file to copy. Cannot be used in combination with `content`. Valid options: a string containing a URL (ftp://, http://, or https://) or an absolute path. Default: `undef`.
+
+#### Defined Type: `apt::proxy`
+
+Configures Apt to connect to a proxy server.
+
+##### Parameters
+
+All parameters are optional.
+
+* `host`: *Optional.* Specifies a proxy host to be stored in `/etc/apt/apt.conf.d/01proxy`. Valid options: a string containing a hostname. Default: `undef`.
+
+* `port`: *Optional.* Specifies a proxy port to be stored in `/etc/apt/apt.conf.d/01proxy`. Valid options: an integer containing a port number. Default: `8080`.
+
+* `https`: *Optional.* Specifies whether to enable https proxies. Valid options: `true` and `false`. Default: `false`.
+
+* `direct`: *Optional.* Specifies whether or not to use a `DIRECT` https proxy if http proxy is used but https is not. Valid options: `true` and `false`. Default: `false`.
+
+* `ensure`: *Optional.* Specifies whether the proxy should exist. Valid options: 'file', 'present', and 'absent'. Default: undef. Prefer 'file' over 'present'.
 
 ## Limitations
 
