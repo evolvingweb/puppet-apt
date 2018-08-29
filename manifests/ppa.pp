@@ -14,7 +14,7 @@ define apt::ppa(
     fail('apt::ppa is not currently supported on Debian.')
   }
 
-  if versioncmp($facts['lsbdistrelease'], '15.10') >= 0 {
+  if versioncmp($facts['lsbdistrelease'], '14.10') >= 0 {
     $distid = downcase($facts['lsbdistid'])
     $dash_filename = regsubst($name, '^ppa:([^/]+)/(.+)$', "\\1-${distid}-\\2")
     $underscore_filename = regsubst($name, '^ppa:([^/]+)/(.+)$', "\\1_${distid}_\\2")
