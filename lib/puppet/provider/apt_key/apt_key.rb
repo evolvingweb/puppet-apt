@@ -119,7 +119,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
   def source_to_file(value)
     parsed_value = URI.parse(value)
     if parsed_value.scheme.nil?
-      raise("The file #{value} does not exist") unless File.exist?(value)
+      raise(_('The file %{_value} does not exist') % { _value: value }) unless File.exist?(value)
       # Because the tempfile method has to return a live object to prevent GC
       # of the underlying file from occuring too early, we also have to return
       # a file object here.  The caller can still call the #path method on the
@@ -139,9 +139,9 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
           key = open(parsed_value, http_basic_authentication: user_pass).read
         end
       rescue OpenURI::HTTPError, Net::FTPPermError => e
-        raise("#{e.message} for #{resource[:source]}")
+        raise(_('%{_e} for %{_resource}') % { _e: e.message, _resource: resource[:source] })
       rescue SocketError
-        raise("could not resolve #{resource[:source]}")
+        raise(_('could not resolve %{_resource}') % { _resource: resource[:source] })
       else
         tempfile(key)
       end
@@ -168,7 +168,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
           end
         end
         unless found_match
-          raise("The id in your manifest #{resource[:name]} and the fingerprint from content/source don't match. Check for an error in the id and content/source is legitimate.")
+          raise(_('The id in your manifest %{_resource} and the fingerprint from content/source don\'t match. Check for an error in the id and content/source is legitimate.') % { _name: resource[:name] }) # rubocop:disable Metrics/LineLength
         end
       else
         warning('/usr/bin/gpg cannot be found for verification of the id.')
@@ -199,7 +199,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
       command.push('add', key_file.path)
     # In case we really screwed up, better safe than sorry.
     else
-      raise("an unexpected condition occurred while trying to add the key: #{resource[:id]}")
+      raise(_('an unexpected condition occurred while trying to add the key: %{_resource}') % { _resource: resource[:id] })
     end
     apt_key(command)
     @property_hash[:ensure] = :present
@@ -215,7 +215,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
   end
 
   def read_only(_value)
-    raise('This is a read-only property.')
+    raise(_('This is a read-only property.'))
   end
 
   mk_resource_methods

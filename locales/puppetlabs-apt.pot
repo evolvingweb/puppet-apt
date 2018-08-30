@@ -1,0 +1,266 @@
+# #-#-#-#-#  accounts.pot (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  accounts.pot (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  puppetlabs-apt.pot (puppetlabs-apt 6.0.0-9-g1d5c598)  #-#-#-#-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018 Puppet, Inc.
+# This file is distributed under the same license as the puppetlabs-apt package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+# #-#-#-#-#  puppetlabs-apt_metadata.pot (PACKAGE VERSION)  #-#-#-#-#
+#
+# #-#-#-#-#  puppetlabs-apt.pot (puppetlabs-apt 6.0.0-9-g1d5c598)  #-#-#-#-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018 Puppet, Inc.
+# This file is distributed under the same license as the puppetlabs-apt package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+# #-#-#-#-#  puppetlabs-apt_metadata.pot (PACKAGE VERSION)  #-#-#-#-#
+#
+# #-#-#-#-#  puppetlabs-apt.pot (puppetlabs-apt 6.0.0-9-g1d5c598)  #-#-#-#-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018 Puppet, Inc.
+# This file is distributed under the same license as the puppetlabs-apt package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+# #-#-#-#-#  puppetlabs-apt_metadata.pot (PACKAGE VERSION)  #-#-#-#-#
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"#-#-#-#-#  accounts.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"#-#-#-#-#  accounts.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"#-#-#-#-#  puppet.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-08-30 14:54:05 +0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 2.0.0\n"
+"#-#-#-#-#  puppetlabs-apt.pot (puppetlabs-apt 6.0.0-9-g1d5c598)  #-#-#-#-#\n"
+"Project-Id-Version: puppetlabs-apt 6.0.0-9-g1d5c598\n"
+"\n"
+"Report-Msgid-Bugs-To: docs@puppet.com\n"
+"POT-Creation-Date: 2018-08-30 14:48+0100\n"
+"PO-Revision-Date: 2018-08-30 14:48+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"#-#-#-#-#  puppetlabs-apt_metadata.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To:\n"
+"POT-Creation-Date: 2018-08-30T14:54:45+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 2.0.0\n"
+"#-#-#-#-#  puppet.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-08-30 14:54:05 +0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 2.0.0\n"
+"#-#-#-#-#  puppetlabs-apt.pot (puppetlabs-apt 6.0.0-9-g1d5c598)  #-#-#-#-#\n"
+"Project-Id-Version: puppetlabs-apt 6.0.0-9-g1d5c598\n"
+"\n"
+"Report-Msgid-Bugs-To: docs@puppet.com\n"
+"POT-Creation-Date: 2018-08-30 14:48+0100\n"
+"PO-Revision-Date: 2018-08-30 14:48+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"#-#-#-#-#  puppetlabs-apt_metadata.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To:\n"
+"POT-Creation-Date: 2018-08-30T14:54:45+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 2.0.0\n"
+"#-#-#-#-#  puppet.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-08-30 16:09:57 +0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 2.0.0\n"
+"#-#-#-#-#  puppetlabs-apt.pot (puppetlabs-apt 6.0.0-9-g1d5c598)  #-#-#-#-#\n"
+"Project-Id-Version: puppetlabs-apt 6.0.0-9-g1d5c598\n"
+"\n"
+"Report-Msgid-Bugs-To: docs@puppet.com\n"
+"POT-Creation-Date: 2018-08-30 16:09+0100\n"
+"PO-Revision-Date: 2018-08-30 16:09+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"#-#-#-#-#  puppetlabs-apt_metadata.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To:\n"
+"POT-Creation-Date: 2018-08-30T14:54:45+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 2.0.0\n"
+
+#. ./manifests/backports.pp:36
+msgid ""
+"If not on Debian or Ubuntu, you must explicitly pass location, release, "
+"repos, and key"
+msgstr ""
+
+#. ./manifests/backports.pp:50
+msgid "pin must be either a string, number or hash"
+msgstr ""
+
+#. ./manifests/conf.pp:11
+msgid "Need to pass in content parameter"
+msgstr ""
+
+#. ./manifests/init.pp:37 - ./manifests/params.pp:5
+msgid "This module only works on Debian or derivatives like Ubuntu"
+msgstr ""
+
+#. ./manifests/params.pp:97
+msgid "Unable to determine value for fact os['name']"
+msgstr ""
+
+#. ./manifests/pin.pp:52
+msgid "parameters release, origin, and version are mutually exclusive"
+msgstr ""
+
+#. ./manifests/pin.pp:56
+msgid "parameter version cannot be used in general form"
+msgstr ""
+
+#. ./manifests/pin.pp:59
+msgid "parameters release and origin are mutually exclusive"
+msgstr ""
+
+#. ./manifests/ppa.pp:10 - ./manifests/source.pp:25
+msgid "lsbdistcodename fact not available: release parameter required"
+msgstr ""
+
+#. ./manifests/ppa.pp:14
+msgid "apt::ppa is not currently supported on Debian."
+msgstr ""
+
+#. ./manifests/setting.pp:11
+msgid "apt::setting cannot have both content and source"
+msgstr ""
+
+#. ./manifests/setting.pp:15
+msgid "apt::setting needs either of content or source"
+msgstr ""
+
+#. ./manifests/setting.pp:23
+msgid ""
+"apt::setting resource name/title must start with either 'conf-', 'pref-' or "
+"'list-'"
+msgstr ""
+
+#. ./manifests/setting.pp:29
+msgid "apt::setting priority must be an integer or a zero-padded integer"
+msgstr ""
+
+#. ./manifests/source.pp:33
+msgid "cannot create a source entry without specifying a location"
+msgstr ""
+
+#. ./manifests/source.pp:47
+msgid "key hash must contain at least an id entry"
+msgstr ""
+
+#. ./manifests/source.pp:86
+msgid "Received invalid value for pin parameter"
+msgstr ""
+
+#: ../lib/puppet/provider/apt_key/apt_key.rb:122
+msgid "The file %{_value} does not exist"
+msgstr ""
+
+#: ../lib/puppet/provider/apt_key/apt_key.rb:218
+msgid "This is a read-only property."
+msgstr ""
+
+#: ../lib/puppet/type/apt_key.rb:23
+msgid "The properties content and source are mutually exclusive."
+msgstr ""
+
+#. metadata.json
+#: .summary
+msgid ""
+"Provides an interface for managing Apt source, key, and definitions with "
+"Puppet"
+msgstr ""
+
+#. ./manifests/params.pp:97
+msgid "Unable to determine value for fact os[\"name\"]"
+msgstr ""
+
+#. ./manifests/key.pp:29
+msgid "key with id %{_id} already ensured as absent"
+msgstr ""
+
+#. ./manifests/key.pp:62
+msgid "key with id %{_id} already ensured as present"
+msgstr ""
+
+#. ./manifests/key.pp:78
+msgid "Invalid 'ensure' value '%{_ensure}' for apt::key"
+msgstr ""
+
+#: ../lib/puppet/provider/apt_key/apt_key.rb:142
+msgid "%{_e} for %{_resource}"
+msgstr ""
+
+#: ../lib/puppet/provider/apt_key/apt_key.rb:144
+msgid "could not resolve %{_resource}"
+msgstr ""
+
+#: ../lib/puppet/provider/apt_key/apt_key.rb:171
+msgid ""
+"The id in your manifest %{_resource} and the fingerprint from content/source "
+"don't match. Check for an error in the id and content/source is legitimate."
+msgstr ""
+
+#: ../lib/puppet/provider/apt_key/apt_key.rb:202
+msgid ""
+"an unexpected condition occurred while trying to add the key: %{_resource}"
+msgstr ""
+
+#: ../lib/puppet/type/apt_key.rb:26
+msgid "The id should be a full fingerprint (40 characters), see README."
+msgstr ""
