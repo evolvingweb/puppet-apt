@@ -271,7 +271,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        is_expected.to raise_error(%r{expects a match})
+        is_expected.to raise_error(%r{evaluating a Resource})
       end
     end
 
