@@ -1,27 +1,12 @@
 # == Define: apt::key
 define apt::key (
-    String $id                           = $title,
-    Enum['present', 'absent'] $ensure    = present,
-    Optional[String] $content            = undef,
-    Optional[String] $source             = undef,
-    String $server                       = $::apt::keyserver,
-    Optional[String] $options            = undef,
-    ) {
-
-  assert_type(
-    Pattern[
-      /\A(0x)?[0-9a-fA-F]{8}\Z/,
-      /\A(0x)?[0-9a-fA-F]{16}\Z/,
-      /\A(0x)?[0-9a-fA-F]{40}\Z/,
-    ], $id)
-
-  if $source {
-    assert_type(Pattern[/\Ahttps?:\/\//, /\Aftp:\/\//, /\A\/\w+/], $source)
-  }
-
-  if $server {
-    assert_type(Pattern[/\A((hkp|http|https):\/\/)?([a-z\d])([a-z\d-]{0,61}\.)+[a-z\d]+(:\d{2,5})?$/], $server)
-  }
+  Pattern[/\A(0x)?[0-9a-fA-F]{8}\Z/, /\A(0x)?[0-9a-fA-F]{16}\Z/, /\A(0x)?[0-9a-fA-F]{40}\Z/] $id = $title,
+  Enum['present', 'absent'] $ensure                                                              = present,
+  Optional[String] $content                                                                      = undef,
+  Optional[Pattern[/\Ahttps?:\/\//, /\Aftp:\/\//, /\A\/\w+/]] $source                            = undef,
+  Pattern[/\A((hkp|http|https):\/\/)?([a-z\d])([a-z\d-]{0,61}\.)+[a-z\d]+(:\d{2,5})?$/] $server  = $::apt::keyserver,
+  Optional[String] $options                                                                      = undef,
+  ) {
 
   case $ensure {
     present: {
