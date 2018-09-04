@@ -1,4 +1,7 @@
-# Setting params for the module
+# @summary Provides defaults for the Apt module parameters.
+# 
+# @api private
+#
 class apt::params {
 
   if $::osfamily != 'Debian' {

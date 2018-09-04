@@ -27,7 +27,7 @@ end
 
 def install_key(key)
   retry_on_error_matching do
-    shell("apt-key adv --keyserver hkps.pool.sks-keyservers.net --recv-keys #{key}")
+    shell("apt-key adv --keyserver pgp.mit.edu --recv-keys #{key}")
   end
 end
 
@@ -384,7 +384,7 @@ hkps_pool_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'present',
-          server => 'hkps.pool.sks-keyservers.net',
+          server => 'pgp.mit.edu',
         }
   MANIFEST
 
@@ -392,7 +392,7 @@ hkp_pool_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_FINGERPRINT}',
           ensure => 'present',
-          server => 'hkp://hkps.pool.sks-keyservers.net:80',
+          server => 'hkp://pgp.mit.edu:80',
         }
   MANIFEST
 
@@ -653,7 +653,7 @@ describe 'apt_key' do
   end
 
   describe 'server =>' do
-    context 'with hkps.pool.sks-keyservers.net' do
+    context 'with pgp.mit.edu' do
       it 'works' do
         # Apply the manifest (Retry if timeout error is received from key pool)
         retry_on_error_matching do
@@ -665,7 +665,7 @@ describe 'apt_key' do
       end
     end
 
-    context 'with hkp://hkps.pool.sks-keyservers.net:80' do
+    context 'with hkp://pgp.mit.edu:80' do
       it 'works' do
         retry_on_error_matching do
           apply_manifest(hkp_pool_pp, catch_failures: true)

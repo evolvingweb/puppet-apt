@@ -1,4 +1,7 @@
-# Defining apt update
+# @summary Updates the list of available packages using apt-get update.
+#
+# @api private
+#
 class apt::update {
   assert_private()
 

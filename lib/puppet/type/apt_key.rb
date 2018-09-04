@@ -6,14 +6,17 @@ Puppet::Type.newtype(:apt_key) do
     by apt to perform package validation. Apt has it's own GPG keyring that can
     be manipulated through the `apt-key` command.
 
-    apt_key { '6F6B15509CF8E59E6E469F327F438280EF8D349F':
-      source => 'http://apt.puppetlabs.com/pubkey.gpg'
-    }
+    @example Basic usage
+      apt_key { '6F6B15509CF8E59E6E469F327F438280EF8D349F':
+        source => 'http://apt.puppetlabs.com/pubkey.gpg'
+      }
 
-    **Autorequires**:
+    **Autorequires**
 
     If Puppet is given the location of a key file which looks like an absolute
     path this type will autorequire that file.
+
+    @api private
   MANIFEST
 
   ensurable
