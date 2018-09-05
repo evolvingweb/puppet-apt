@@ -11,6 +11,8 @@ if RUBY_VERSION == '1.8.7'
 end
 
 Puppet::Type.type(:apt_key).provide(:apt_key) do
+  desc 'apt-key provider for apt_key resource'
+
   confine    osfamily: :debian
   defaultfor osfamily: :debian
   commands   apt_key: 'apt-key'

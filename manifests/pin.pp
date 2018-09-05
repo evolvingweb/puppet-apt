@@ -1,6 +1,38 @@
-# pin.pp
-# pin a release in apt, useful for unstable repositories
-
+# @summary Manages Apt pins. Does not trigger an apt-get update run.
+#
+# @see http://linux.die.net/man/5/apt_preferences for context on these parameters
+#
+# @param ensure
+#   Specifies whether the pin should exist. Valid options: 'file', 'present', and 'absent'.
+#
+# @param explanation
+#   Supplies a comment to explain the pin. Default: "${caller_module_name}: ${name}".
+#
+# @param order
+#   Determines the order in which Apt processes the pin file. Files with lower order numbers are loaded first.
+#
+# @param packages
+#   Specifies which package(s) to pin.
+#
+# @param priority
+#   Sets the priority of the package. If multiple versions of a given package are available, `apt-get` installs the one with the highest 
+#   priority number (subject to dependency constraints). Valid options: an integer.
+#
+# @param release
+#   Tells APT to prefer packages that support the specified release. Typical values include 'stable', 'testing', and 'unstable'.
+#
+# @param release_version
+#   Tells APT to prefer packages that support the specified operating system release version (such as Debian release version 7).
+#
+# @param component
+#   Names the licensing component associated with the packages in the directory tree of the Release file.
+#
+# @param originator
+#   Names the originator of the packages in the directory tree of the Release file.
+#
+# @param label
+#   Names the label of the packages in the directory tree of the Release file.
+#
 define apt::pin(
   Optional[Enum['file', 'present', 'absent']] $ensure = present,
   Optional[String] $explanation                       = undef,

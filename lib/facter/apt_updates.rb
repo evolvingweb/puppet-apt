@@ -1,6 +1,9 @@
 apt_package_updates = nil
 apt_dist_updates = nil
 
+# Executes the upgrading of packages
+# @param
+#   upgrade_option Type of upgrade passed into apt-get command arguments i.e. 'upgrade' or 'dist-upgrade'
 def get_updates(upgrade_option)
   apt_updates = nil
   if File.executable?('/usr/bin/apt-get')
