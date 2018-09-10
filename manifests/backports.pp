@@ -64,23 +64,22 @@ class apt::backports (
   if $key {
     $_key = $key
   }
-  if ($facts['lsbdistid'] == 'Debian' or $facts['lsbdistid'] == 'Ubuntu') {
-    unless $location {
-      $_location = $::apt::backports['location']
-    }
-    unless $release {
-      $_release = "${facts['lsbdistcodename']}-backports"
-    }
-    unless $repos {
-      $_repos = $::apt::backports['repos']
-    }
-    unless $key {
-      $_key =  $::apt::backports['key']
-    }
-  } else {
+  if (!($facts['lsbdistid'] == 'Debian' or $facts['lsbdistid'] == 'Ubuntu')) {
     unless $location and $release and $repos and $key {
       fail(translate('If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key'))
     }
+  }
+  unless $location {
+    $_location = $::apt::backports['location']
+  }
+  unless $release {
+    $_release = "${facts['lsbdistcodename']}-backports"
+  }
+  unless $repos {
+    $_repos = $::apt::backports['repos']
+  }
+  unless $key {
+    $_key =  $::apt::backports['key']
   }
 
   if $pin =~ Hash {
