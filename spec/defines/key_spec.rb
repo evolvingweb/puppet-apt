@@ -99,6 +99,21 @@ describe 'apt::key' do
       end
     end
 
+    describe 'ensure => refreshed' do
+      let :params do
+        {
+          ensure: 'refreshed',
+        }
+      end
+
+      it 'contains the apt_key with refresh => true' do
+        is_expected.to contain_apt_key(title).with(
+          ensure: 'present',
+          refresh: true,
+        )
+      end
+    end
+
     describe 'set a bunch of things!' do
       let :params do
         {
@@ -317,7 +332,7 @@ describe 'apt::key' do
     end
 
     context 'with invalid ensure' do
-      ['foo', 'aabsent', 'absenta', 'apresent', 'presenta'].each do |param|
+      ['foo', 'aabsent', 'absenta', 'apresent', 'presenta', 'refresh', 'arefreshed', 'refresheda'].each do |param|
         let :params do
           {
             ensure: param,
@@ -325,7 +340,7 @@ describe 'apt::key' do
         end
 
         it 'fails' do
-          is_expected.to raise_error(%r{for Enum\['absent', 'present'\], got})
+          is_expected.to raise_error(%r{for Enum\['absent', 'present', 'refreshed'\], got})
         end
       end
     end

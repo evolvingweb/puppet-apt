@@ -319,7 +319,7 @@ describe 'apt::key', type: :define do
       end
 
       it 'fails' do
-        is_expected.to raise_error(%r{Enum\['absent', 'present'\]})
+        is_expected.to raise_error(%r{Enum\['absent', 'present', 'refreshed'\]})
       end
     end
 
