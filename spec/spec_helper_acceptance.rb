@@ -50,7 +50,7 @@ RSpec.configure do |c|
 
   # Configure all nodes in nodeset
   c.before :suite do
-    run_puppet_access_login(user: 'admin') if pe_install? && puppet_version =~ %r{(5\.\d\.\d)}
+    run_puppet_access_login(user: 'admin') if pe_install? && (Gem::Version.new(puppet_version) >= Gem::Version.new('5.0.0'))
 
     hosts.each do |host|
       # This will be removed, this is temporary to test localisation.
