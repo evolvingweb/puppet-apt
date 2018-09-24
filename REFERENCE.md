@@ -31,7 +31,9 @@ _Public Resource types_
 
 _Private Resource types_
 
-* `apt_key`: This type provides Puppet with the capabilities to manage GPG keys needed by apt to perform package validation. Apt has it's own GPG keyring 
+* `apt_key`: This type provides Puppet with the capabilities to manage GPG keys needed
+by apt to perform package validation. Apt has it's own GPG keyring that can
+be manipulated through the `apt-key` command.
 
 **Tasks**
 
@@ -444,7 +446,7 @@ The following parameters are available in the `apt::key` defined type.
 
 ##### `id`
 
-Data type: `String`
+Data type: `Pattern[/\A(0x)?[0-9a-fA-F]{8}\Z/, /\A(0x)?[0-9a-fA-F]{16}\Z/, /\A(0x)?[0-9a-fA-F]{40}\Z/]`
 
 Specifies a GPG key to authenticate Apt package signatures. Valid options: a string containing a key ID (8 or 16 hexadecimal
 characters, optionally prefixed with "0x") or a full key fingerprint (40 hexadecimal characters).
@@ -469,7 +471,7 @@ Default value: `undef`
 
 ##### `source`
 
-Data type: `Optional[String]`
+Data type: `Optional[Pattern[/\Ahttps?:\/\//, /\Aftp:\/\//, /\A\/\w+/]]`
 
 Specifies the location of an existing GPG key file to copy. Valid options: a string containing a URL (ftp://, http://, or https://) or
 an absolute path.
@@ -478,7 +480,7 @@ Default value: `undef`
 
 ##### `server`
 
-Data type: `String`
+Data type: `Pattern[/\A((hkp|http|https):\/\/)?([a-z\d])([a-z\d-]{0,61}\.)+[a-z\d]+(:\d{2,5})?$/]`
 
 Specifies a keyserver to provide the GPG key. Valid options: a string containing a domain name or a full URL (http://, https://, or
 hkp://).
