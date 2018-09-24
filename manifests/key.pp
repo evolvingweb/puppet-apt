@@ -15,7 +15,8 @@
 #   characters, optionally prefixed with "0x") or a full key fingerprint (40 hexadecimal characters).
 #
 # @param ensure
-#   Specifies whether the key should exist. Valid options: 'present' and 'absent'.
+#   Specifies whether the key should exist. Valid options: 'present', 'absent' or 'refreshed'. Using 'refreshed' will make keys auto
+#   update when they have expired (assuming a new key exists on the key server).
 #
 # @param content
 #   Supplies the entire GPG key. Useful in case the key can't be fetched from a remote location and using a file resource is inconvenient.
@@ -33,7 +34,7 @@
 #
 define apt::key (
   Pattern[/\A(0x)?[0-9a-fA-F]{8}\Z/, /\A(0x)?[0-9a-fA-F]{16}\Z/, /\A(0x)?[0-9a-fA-F]{40}\Z/] $id = $title,
-  Enum['present', 'absent'] $ensure                                                              = present,
+  Enum['present', 'absent', 'refreshed'] $ensure                                                 = present,
   Optional[String] $content                                                                      = undef,
   Optional[Pattern[/\Ahttps?:\/\//, /\Aftp:\/\//, /\A\/\w+/]] $source                            = undef,
   Pattern[/\A((hkp|http|https):\/\/)?([a-z\d])([a-z\d-]{0,61}\.)+[a-z\d]+(:\d{2,5})?$/] $server  = $::apt::keyserver,
@@ -41,14 +42,15 @@ define apt::key (
   ) {
 
   case $ensure {
-    present: {
+    /^(refreshed|present)$/: {
       if defined(Anchor["apt_key ${id} absent"]){
         fail(translate('key with id %{_id} already ensured as absent'),{'_id' => id})
       }
 
       if !defined(Anchor["apt_key ${id} present"]) {
         apt_key { $title:
-          ensure  => $ensure,
+          ensure  => present,
+          refresh => $ensure == 'refreshed',
           id      => $id,
           source  => $source,
           content => $content,

@@ -1,19 +1,23 @@
 require 'spec_helper_acceptance'
 
-PUPPETLABS_GPG_KEY_SHORT_ID    = 'EF8D349F'.freeze
-PUPPETLABS_GPG_KEY_LONG_ID     = '7F438280EF8D349F'.freeze
-PUPPETLABS_GPG_KEY_FINGERPRINT = '6F6B15509CF8E59E6E469F327F438280EF8D349F'.freeze
-PUPPETLABS_APT_URL             = 'apt.puppetlabs.com'.freeze
-PUPPETLABS_GPG_KEY_FILE        = 'DEB-GPG-KEY-puppet'.freeze
-CENTOS_GPG_KEY_SHORT_ID        = 'C105B9DE'.freeze
-CENTOS_GPG_KEY_LONG_ID         = '0946FCA2C105B9DE'.freeze
-CENTOS_GPG_KEY_FINGERPRINT     = 'C1DAC52D1664E8A4386DBA430946FCA2C105B9DE'.freeze
-CENTOS_REPO_URL                = 'ftp.cvut.cz/centos'.freeze
-CENTOS_GPG_KEY_FILE            = 'RPM-GPG-KEY-CentOS-6'.freeze
-SHOULD_NEVER_EXIST_ID          = 'EF8D349F'.freeze
-KEY_CHECK_COMMAND              = 'apt-key adv --list-keys --with-colons --fingerprint | grep '.freeze
-PUPPETLABS_KEY_CHECK_COMMAND   = "#{KEY_CHECK_COMMAND} #{PUPPETLABS_GPG_KEY_FINGERPRINT}".freeze
-CENTOS_KEY_CHECK_COMMAND       = "#{KEY_CHECK_COMMAND} #{CENTOS_GPG_KEY_FINGERPRINT}".freeze
+PUPPETLABS_GPG_KEY_SHORT_ID         = 'EF8D349F'.freeze
+PUPPETLABS_GPG_KEY_LONG_ID          = '7F438280EF8D349F'.freeze
+PUPPETLABS_GPG_KEY_FINGERPRINT      = '6F6B15509CF8E59E6E469F327F438280EF8D349F'.freeze
+PUPPETLABS_APT_URL                  = 'apt.puppetlabs.com'.freeze
+PUPPETLABS_GPG_KEY_FILE             = 'DEB-GPG-KEY-puppet'.freeze
+CENTOS_GPG_KEY_SHORT_ID             = 'C105B9DE'.freeze
+CENTOS_GPG_KEY_LONG_ID              = '0946FCA2C105B9DE'.freeze
+CENTOS_GPG_KEY_FINGERPRINT          = 'C1DAC52D1664E8A4386DBA430946FCA2C105B9DE'.freeze
+CENTOS_REPO_URL                     = 'ftp.cvut.cz/centos'.freeze
+CENTOS_GPG_KEY_FILE                 = 'RPM-GPG-KEY-CentOS-6'.freeze
+PUPPETLABS_EXP_KEY_LONG_ID          = '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'.freeze
+PUPPETLABS_EXP_KEY_DATES            = 'pub:e:4096:1:1054B7A24BD6EC30:2010-07-10:2017-01-05::-:Puppet Labs Release Key'.freeze
+SHOULD_NEVER_EXIST_ID               = 'EF8D349F'.freeze
+KEY_CHECK_COMMAND                   = 'apt-key adv --list-keys --with-colons --fingerprint | grep '.freeze
+PUPPETLABS_KEY_CHECK_COMMAND        = "#{KEY_CHECK_COMMAND} #{PUPPETLABS_GPG_KEY_FINGERPRINT}".freeze
+CENTOS_KEY_CHECK_COMMAND            = "#{KEY_CHECK_COMMAND} #{CENTOS_GPG_KEY_FINGERPRINT}".freeze
+PUPPETLABS_EXP_CHECK_COMMAND        = "#{KEY_CHECK_COMMAND} '#{PUPPETLABS_EXP_KEY_DATES}'".freeze
+DEBIAN_PUPPETLABS_EXP_CHECK_COMMAND = 'apt-key list | grep -F -A 1 \'pub   rsa4096 2010-07-10 [SC] [expired: 2017-01-05]\' | grep \'47B3 20EB 4C7C 375A A9DA  E1A0 1054 B7A2 4BD6 EC30\''.freeze
 
 def populate_default_options_pp(value)
   default_options_pp = <<-MANIFEST
@@ -58,6 +62,84 @@ ensure_absent_long_key_pp = <<-MANIFEST
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
           ensure => 'absent',
         }
+  MANIFEST
+
+refresh_pp = <<-MANIFEST
+        apt_key { '#{PUPPETLABS_EXP_KEY_LONG_ID}':
+          id      => '#{PUPPETLABS_EXP_KEY_LONG_ID}',
+          ensure  => 'present',
+          content => '-----BEGIN PGP PUBLIC KEY BLOCK-----
+  Version: GnuPG v1
+
+  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
+  fBt3Tu1IYpw=
+  =cXcR
+  -----END PGP PUBLIC KEY BLOCK-----'
+          }
   MANIFEST
 
 gpg_key_pp = <<-MANIFEST
@@ -548,6 +630,34 @@ fingerprint_does_not_match_pp = <<-MANIFEST
         }
   MANIFEST
 
+refresh_true_pp = <<-MANIFEST
+        apt_key { '#{PUPPETLABS_EXP_KEY_LONG_ID}':
+          id      => '#{PUPPETLABS_EXP_KEY_LONG_ID}',
+          ensure  => 'present',
+          refresh => true,
+        }
+  MANIFEST
+
+refresh_false_pp = <<-MANIFEST
+        apt_key { '#{PUPPETLABS_EXP_KEY_LONG_ID}':
+          id      => '#{PUPPETLABS_EXP_KEY_LONG_ID}',
+          ensure  => 'present',
+          refresh => false,
+        }
+MANIFEST
+
+refresh_del_key_pp = <<-MANIFEST
+        apt_key { '#{PUPPETLABS_EXP_KEY_LONG_ID}':
+          ensure  => 'absent',
+        }
+MANIFEST
+
+refresh_check_for_dirmngr_pp = <<-MANIFEST
+        package { 'dirmngr':
+          ensure  => 'present',
+        }
+MANIFEST
+
 describe 'apt_key' do
   before(:each) do
     # Delete twice to make sure everything is cleaned
@@ -828,6 +938,41 @@ describe 'apt_key' do
         apply_manifest(fingerprint_does_not_match_pp, expect_failures: true) do |r|
           expect(r.stderr).to match(%r{don't match})
         end
+      end
+    end
+  end
+
+  describe 'refresh' do
+    if fact('osfamily') == 'Debian' && (fact('lsbdistcodename') == 'stretch' || fact('lsbdistcodename') == 'bionic')
+      # Set Debian Stetch specific value of puppetlabs_exp_check_command
+      let(:puppetlabs_exp_check_command) { DEBIAN_PUPPETLABS_EXP_CHECK_COMMAND }
+    else
+      # Set default value of puppetlabs_exp_check_command
+      let(:puppetlabs_exp_check_command) { PUPPETLABS_EXP_CHECK_COMMAND }
+    end
+    before(:each) do
+      if fact('lsbdistcodename') == 'stretch' || fact('lsbdistcodename') == 'bionic'
+        # Ensure dirmngr package is installed
+        apply_manifest(refresh_check_for_dirmngr_pp, acceptable_exit_codes: [0, 2])
+        # Export environment variable to disable apt-key warning when using grep
+        shell('export APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1')
+      end
+      # Delete the Puppet Labs Release Key and install an expired version of the key
+      apply_manifest(refresh_del_key_pp)
+      apply_manifest(refresh_pp, catch_failures: true)
+    end
+    context 'when refresh => true' do
+      it 'updates an expired key' do
+        apply_manifest(refresh_true_pp)
+        # Check key has been updated to new version
+        shell(puppetlabs_exp_check_command.to_s, acceptable_exit_codes: [0])
+      end
+    end
+    context 'when refresh => false' do
+      it 'does not replace an expired key' do
+        apply_manifest(refresh_false_pp)
+        # Expired key is present and has not been updated by the new version
+        shell(puppetlabs_exp_check_command.to_s, acceptable_exit_codes: [1])
       end
     end
   end
