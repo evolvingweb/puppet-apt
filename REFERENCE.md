@@ -455,9 +455,10 @@ Default value: $title
 
 ##### `ensure`
 
-Data type: `Enum['present', 'absent']`
+Data type: `Enum['present', 'absent', 'refreshed']`
 
-Specifies whether the key should exist. Valid options: 'present' and 'absent'.
+Specifies whether the key should exist. Valid options: 'present', 'absent' or 'refreshed'. Using 'refreshed' will make keys auto
+update when they have expired (assuming a new key exists on the key server).
 
 Default value: present
 
