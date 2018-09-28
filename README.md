@@ -11,7 +11,7 @@
     * [Add GPG keys](#add-gpg-keys)
     * [Prioritize backports](#prioritize-backports)
     * [Update the list of packages](#update-the-list-of-packages)
-    * [Pin a specific release](#pin-a-specific-release)
+    * [Pin a specific release](#pin-a-specific-release) 
     * [Add a Personal Package Archive repository](#add-a-personal-package-archive-repository)
     * [Configure Apt from Hiera](#configure-apt-from-hiera)
     * [Replace the default sources.list file](#replace-the-default-sourceslist-file)
@@ -21,9 +21,9 @@
 
 ## Module Description
 
-The apt module lets you use Puppet to manage Apt sources, keys, and other configuration options.
+The apt module lets you use Puppet to manage APT (Advanced Package Tool) sources, keys, and other configuration options.
 
-Apt (Advanced Package Tool) is a package manager available on Debian, Ubuntu, and several other operating systems. The apt module provides a series of classes, defines, types, and facts to help you automate Apt package management.
+APT is a package manager available on Debian, Ubuntu, and several other operating systems. The apt module provides a series of classes, defines, types, and facts to help you automate APT package management.
 
 **Note**: For this module to correctly autodetect which version of Debian/Ubuntu (or derivative) you're running, you need to make sure the 'lsb-release' package is installed. We highly recommend you either make this part of your provisioning layer, if you run many Debian or derivative systems, or ensure that you have Facter 2.2.0 or later installed, which will pull this dependency in for you.
 
@@ -120,7 +120,7 @@ apt::pin { 'stable':
 
 To pin multiple packages, pass them to the `packages` parameter as an array or a space-delimited string.
 
-### Add a Personal Package Archive repository
+### Add a Personal Package Archive (PPA) repository
 
 ```puppet
 apt::ppa { 'ppa:drizzle-developers/ppa': }
@@ -161,9 +161,7 @@ apt::source { 'puppetlabs':
 
 ### Configure Apt from Hiera
 
-Instead of specifying your sources directly as resources, you can instead just
-include the `apt` class, which will pick up the values automatically from
-hiera.
+Instead of specifying your sources directly as resources, you can instead just include the `apt` class, which will pick up the values automatically from hiera.
 
 ```yaml
 apt::sources:
@@ -229,12 +227,9 @@ in the `/etc/apt/auth.conf` file. This is preferable to embedding login
 information directly in `source.list` entries, which are usually world-readable.
 
 The `/etc/apt/auth.conf` file follows the format of netrc (used by ftp or
-curl) and has restrictive file permissions. See
-https://manpages.debian.org/testing/apt/apt_auth.conf.5.en.html for details.
+curl) and has restrictive file permissions. See [here](https://manpages.debian.org/testing/apt/apt_auth.conf.5.en.html) for details.
 
-Use the optional `apt::auth_conf_entries` parameter to specify an array of
-hashes containing login configuration settings. These hashes may only contain
-the `machine`, `login` and `password` keys.
+Use the optional `apt::auth_conf_entries` parameter to specify an array of hashes containing login configuration settings. These hashes may only contain the `machine`, `login` and `password` keys.
 
 ```puppet
 class { 'apt':
@@ -285,7 +280,7 @@ For an extensive list of supported operating systems, see [metadata.json](https:
 
 ### Adding new sources or PPAs
 
-If you are adding a new source or PPA and trying to install packages from the new source or PPA on the same Puppet run, your `package` resource should depend on `Class['apt::update']`, in addition to depending on the `Apt::Source` or the `Apt::Ppa`. You can also add [collectors](https://docs.puppetlabs.com/puppet/latest/reference/lang_collectors.html) to ensure that all packages happen after `apt::update`, but this can lead to dependency cycles and has implications for [virtual resources](https://docs.puppetlabs.com/puppet/latest/reference/lang_collectors.html#behavior). Before running the command below, ensure that all packages have the provider set to apt.
+If you are adding a new source or PPA and trying to install packages from the new source or PPA on the same Puppet run, your `package` resource should depend on `Class['apt::update']`, as well as depending on the `Apt::Source` or the `Apt::Ppa`. You can also add [collectors](https://docs.puppetlabs.com/puppet/latest/reference/lang_collectors.html) to ensure that all packages happen after `apt::update`, but this can lead to dependency cycles and has implications for [virtual resources](https://docs.puppetlabs.com/puppet/latest/reference/lang_collectors.html#behavior). Before running the command below, ensure that all packages have the provider set to apt.
 
 ```puppet
 Class['apt::update'] -> Package <| provider == 'apt' |>
