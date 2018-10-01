@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [6.1.0](https://github.com/puppetlabs/puppetlabs-apt/tree/6.1.0) (2018-09-27)
+## [6.1.1](https://github.com/puppetlabs/puppetlabs-apt/tree/6.1.1) (2018-10-01)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/6.1.0...6.1.1)
+
+### Fixed
+
+- Revert "\(MODULES-6408\) - Fix dirmngr install failing" [\#808](https://github.com/puppetlabs/puppetlabs-apt/pull/808) ([eimlav](https://github.com/eimlav))
+
+## [6.1.0](https://github.com/puppetlabs/puppetlabs-apt/tree/6.1.0) (2018-09-28)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/6.0.0...6.1.0)
 
