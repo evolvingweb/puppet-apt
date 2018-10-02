@@ -270,7 +270,7 @@ class { 'apt':
 
 ### More Information
 
-See [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-motd/blob/master/REFERENCE.md) for all other reference documentation.
+See [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-apt/blob/master/REFERENCE.md) for all other reference documentation.
 
 ## Limitations
 
