@@ -1,275 +1,155 @@
-# #-#-#-#-#  accounts.pot (PACKAGE VERSION)  #-#-#-#-#
-# #-#-#-#-#  accounts.pot (PACKAGE VERSION)  #-#-#-#-#
-# #-#-#-#-#  puppetlabs-apt.pot (puppetlabs-apt 6.0.0-9-g1d5c598)  #-#-#-#-#
+# #-#-#-#-#  puppetlabs-apt.pot (puppetlabs-apt 6.0.0-27-gbb0f842)  #-#-#-#-#
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2018 Puppet, Inc.
 # This file is distributed under the same license as the puppetlabs-apt package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
-#
+# 
 # #-#-#-#-#  puppetlabs-apt_metadata.pot (PACKAGE VERSION)  #-#-#-#-#
-#
-# #-#-#-#-#  puppetlabs-apt.pot (puppetlabs-apt 6.0.0-9-g1d5c598)  #-#-#-#-#
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2018 Puppet, Inc.
-# This file is distributed under the same license as the puppetlabs-apt package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
-#
-# #-#-#-#-#  puppetlabs-apt_metadata.pot (PACKAGE VERSION)  #-#-#-#-#
-#
-# #-#-#-#-#  puppetlabs-apt.pot (puppetlabs-apt 6.0.0-9-g1d5c598)  #-#-#-#-#
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2018 Puppet, Inc.
-# This file is distributed under the same license as the puppetlabs-apt package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
-#
-# #-#-#-#-#  puppetlabs-apt_metadata.pot (PACKAGE VERSION)  #-#-#-#-#
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  accounts.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  accounts.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  puppet.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-30 14:54:05 +0100\n"
+"POT-Creation-Date: 2018-09-21T09:17:39+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: Eriko Kashiwagi <eriko.55@d5.dion.ne.jp>, 2018\n"
+"Language-Team: Japanese (Japan) (https://www.transifex.com/puppet/teams/41915/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
-"#-#-#-#-#  puppetlabs-apt.pot (puppetlabs-apt 6.0.0-9-g1d5c598)  #-#-#-#-#\n"
-"Project-Id-Version: puppetlabs-apt 6.0.0-9-g1d5c598\n"
-"\n"
-"Report-Msgid-Bugs-To: docs@puppet.com\n"
-"POT-Creation-Date: 2018-08-30 14:48+0100\n"
-"PO-Revision-Date: 2018-08-30 14:48+0100\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"#-#-#-#-#  puppetlabs-apt_metadata.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To:\n"
-"POT-Creation-Date: 2018-08-30T14:54:45+01:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
-"#-#-#-#-#  puppet.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-30 14:54:05 +0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
-"#-#-#-#-#  puppetlabs-apt.pot (puppetlabs-apt 6.0.0-9-g1d5c598)  #-#-#-#-#\n"
-"Project-Id-Version: puppetlabs-apt 6.0.0-9-g1d5c598\n"
-"\n"
-"Report-Msgid-Bugs-To: docs@puppet.com\n"
-"POT-Creation-Date: 2018-08-30 14:48+0100\n"
-"PO-Revision-Date: 2018-08-30 14:48+0100\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"#-#-#-#-#  puppetlabs-apt_metadata.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To:\n"
-"POT-Creation-Date: 2018-08-30T14:54:45+01:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
-"#-#-#-#-#  puppet.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-30 16:09:57 +0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
-"#-#-#-#-#  puppetlabs-apt.pot (puppetlabs-apt 6.0.0-9-g1d5c598)  #-#-#-#-#\n"
-"Project-Id-Version: puppetlabs-apt 6.0.0-9-g1d5c598\n"
-"\n"
-"Report-Msgid-Bugs-To: docs@puppet.com\n"
-"POT-Creation-Date: 2018-08-30 16:09+0100\n"
-"PO-Revision-Date: 2018-08-30 16:09+0100\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"#-#-#-#-#  puppetlabs-apt_metadata.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To:\n"
-"POT-Creation-Date: 2018-08-30T14:54:45+01:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Language: ja_JP\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 
-#. ./manifests/backports.pp:36
+#. ./manifests/backports.pp:69
 msgid ""
 "If not on Debian or Ubuntu, you must explicitly pass location, release, "
 "repos, and key"
-msgstr ""
-"Īƒ ƞǿŧ ǿƞ Ḓḗƀīȧƞ ǿř Ŭƀŭƞŧŭ, ẏǿŭ ḿŭşŧ ḗẋƥŀīƈīŧŀẏ ƥȧşş ŀǿƈȧŧīǿƞ, řḗŀḗȧşḗ, "
-"řḗƥǿş, ȧƞḓ ķḗẏ"
+msgstr "DebianまたはUbuntu以外の場合、場所、リリース、リポジトリ、およびキーを明示的に渡す必要があります。"
 
-#. ./manifests/backports.pp:50
+#. ./manifests/backports.pp:95
 msgid "pin must be either a string, number or hash"
-msgstr "ƥīƞ ḿŭşŧ ƀḗ ḗīŧħḗř ȧ şŧřīƞɠ, ƞŭḿƀḗř ǿř ħȧşħ"
+msgstr "pinは、文字列、数値またはハッシュのいずれかである必要があります。"
 
-#. ./manifests/conf.pp:11
+#. ./manifests/conf.pp:25
 msgid "Need to pass in content parameter"
-msgstr "Ƞḗḗḓ ŧǿ ƥȧşş īƞ ƈǿƞŧḗƞŧ ƥȧřȧḿḗŧḗř"
+msgstr "contentパラメータを渡す必要があります。"
 
-#. ./manifests/init.pp:37 - ./manifests/params.pp:5
+#. ./manifests/init.pp:143 ./manifests/params.pp:8
 msgid "This module only works on Debian or derivatives like Ubuntu"
-msgstr "Ŧħīş ḿǿḓŭŀḗ ǿƞŀẏ ẇǿřķş ǿƞ Ḓḗƀīȧƞ ǿř ḓḗřīṽȧŧīṽḗş ŀīķḗ Ŭƀŭƞŧŭ"
+msgstr "本モジュールは、DebianまたはUbuntuなどの派生OSでのみ動作します。"
 
-#. ./manifests/params.pp:97
-msgid "Unable to determine value for fact os['name']"
-msgstr "Ŭƞȧƀŀḗ ŧǿ ḓḗŧḗřḿīƞḗ ṽȧŀŭḗ ƒǿř ƒȧƈŧ ǿş['ƞȧḿḗ']"
+#. ./manifests/key.pp:47
+msgid "key with id %{_id} already ensured as absent"
+msgstr "id %{_id}のキーは、存在しないことが既に確認されています。"
 
-#. ./manifests/pin.pp:52
+#. ./manifests/key.pp:81
+msgid "key with id %{_id} already ensured as present"
+msgstr "id %{_id}のキーは、存在することが既に確認されています。"
+
+#. ./manifests/key.pp:97
+msgid "Invalid 'ensure' value '%{_ensure}' for apt::key"
+msgstr "apt::keyの'%{_ensure}'の'ensure'の値が無効です。"
+
+#. ./manifests/params.pp:100
+msgid "Unable to determine value for fact os[\"name\"]"
+msgstr "fact os[\"name\"]の値を特定できません。"
+
+#. ./manifests/pin.pp:84
 msgid "parameters release, origin, and version are mutually exclusive"
-msgstr "ƥȧřȧḿḗŧḗřş řḗŀḗȧşḗ, ǿřīɠīƞ, ȧƞḓ ṽḗřşīǿƞ ȧřḗ ḿŭŧŭȧŀŀẏ ḗẋƈŀŭşīṽḗ"
+msgstr "パラメータrelease、origin、versionは相互に排他的です。"
 
-#. ./manifests/pin.pp:56
+#. ./manifests/pin.pp:88
 msgid "parameter version cannot be used in general form"
-msgstr "ƥȧřȧḿḗŧḗř ṽḗřşīǿƞ ƈȧƞƞǿŧ ƀḗ ŭşḗḓ īƞ ɠḗƞḗřȧŀ ƒǿřḿ"
+msgstr "パラメータのバージョンは、一般的な形式では使用できません"
 
-#. ./manifests/pin.pp:59
+#. ./manifests/pin.pp:91
 msgid "parameters release and origin are mutually exclusive"
-msgstr "ƥȧřȧḿḗŧḗřş řḗŀḗȧşḗ ȧƞḓ ǿřīɠīƞ ȧřḗ ḿŭŧŭȧŀŀẏ ḗẋƈŀŭşīṽḗ"
+msgstr "パラメータreleaseとoriginは相互に排他的です。"
 
-#. ./manifests/ppa.pp:10 - ./manifests/source.pp:25
+#. ./manifests/ppa.pp:30 ./manifests/source.pp:79
 msgid "lsbdistcodename fact not available: release parameter required"
-msgstr "ŀşƀḓīşŧƈǿḓḗƞȧḿḗ ƒȧƈŧ ƞǿŧ ȧṽȧīŀȧƀŀḗ: řḗŀḗȧşḗ ƥȧřȧḿḗŧḗř řḗɋŭīřḗḓ"
+msgstr "lsbdistcodenameのfactが使用できません。releaseパラメータが必要です。"
 
-#. ./manifests/ppa.pp:14
+#. ./manifests/ppa.pp:34
 msgid "apt::ppa is not currently supported on Debian."
-msgstr "ȧƥŧ::ƥƥȧ īş ƞǿŧ ƈŭřřḗƞŧŀẏ şŭƥƥǿřŧḗḓ ǿƞ Ḓḗƀīȧƞ."
+msgstr "apt::ppaは、現在Debianではサポートされていません。"
 
-#. ./manifests/setting.pp:11
+#. ./manifests/setting.pp:31
 msgid "apt::setting cannot have both content and source"
-msgstr "ȧƥŧ::şḗŧŧīƞɠ ƈȧƞƞǿŧ ħȧṽḗ ƀǿŧħ ƈǿƞŧḗƞŧ ȧƞḓ şǿŭřƈḗ"
+msgstr "apt::settingがcontentとsourceの両方を持つことはできません。"
 
-#. ./manifests/setting.pp:15
+#. ./manifests/setting.pp:35
 msgid "apt::setting needs either of content or source"
-msgstr "ȧƥŧ::şḗŧŧīƞɠ ƞḗḗḓş ḗīŧħḗř ǿƒ ƈǿƞŧḗƞŧ ǿř şǿŭřƈḗ"
+msgstr "apt::settingには、contentまたはsourceのいずれかが必要です。"
 
-#. ./manifests/setting.pp:23
+#. ./manifests/setting.pp:43
 msgid ""
 "apt::setting resource name/title must start with either 'conf-', 'pref-' or "
 "'list-'"
-msgstr ""
-"ȧƥŧ::şḗŧŧīƞɠ řḗşǿŭřƈḗ ƞȧḿḗ/title ḿŭşŧ şŧȧřŧ ẇīŧħ ḗīŧħḗř 'ƈǿƞƒ-', 'ƥřḗƒ-' ǿř "
-"'ŀīşŧ-'"
+msgstr "apt::settingのリソース名/タイトルの先頭は、'conf-'、'pref-'、'list-'にする必要があります。"
 
-#. ./manifests/setting.pp:29
+#. ./manifests/setting.pp:49
 msgid "apt::setting priority must be an integer or a zero-padded integer"
-msgstr "ȧƥŧ::şḗŧŧīƞɠ ƥřīǿřīŧẏ ḿŭşŧ ƀḗ ȧƞ īƞŧḗɠḗř ǿř ȧ zḗřǿ-ƥȧḓḓḗḓ īƞŧḗɠḗř"
+msgstr "apt::settingのpriorityは、整数またはゼロパディングされた整数にする必要があります。"
 
-#. ./manifests/source.pp:33
+#. ./manifests/source.pp:87
 msgid "cannot create a source entry without specifying a location"
-msgstr "ƈȧƞƞǿŧ ƈřḗȧŧḗ ȧ şǿŭřƈḗ ḗƞŧřẏ ẇīŧħǿŭŧ şƥḗƈīƒẏīƞɠ ȧ ŀǿƈȧŧīǿƞ"
+msgstr "場所を指定せずにソースエントリを作成することはできません。"
 
-#. ./manifests/source.pp:47
+#. ./manifests/source.pp:101
 msgid "key hash must contain at least an id entry"
-msgstr "ķḗẏ ħȧşħ ḿŭşŧ ƈǿƞŧȧīƞ ȧŧ ŀḗȧşŧ ȧƞ īḓ ḗƞŧřẏ"
+msgstr "キーハッシュには、少なくともidエントリを含める必要があります。"
 
-#. ./manifests/source.pp:86
+#. ./manifests/source.pp:140
 msgid "Received invalid value for pin parameter"
-msgstr "Řḗƈḗīṽḗḓ īƞṽȧŀīḓ ṽȧŀŭḗ ƒǿř ƥīƞ ƥȧřȧḿḗŧḗř"
+msgstr "pinパラメータに無効な値を受信しました。"
 
-#: ../lib/puppet/provider/apt_key/apt_key.rb:122
+#: ../lib/puppet/provider/apt_key/apt_key.rb:124
 msgid "The file %{_value} does not exist"
-msgstr "Ŧħḗ ƒīŀḗ %{_value} ḓǿḗş ƞǿŧ ḗẋīşŧ"
+msgstr "ファイル%{_value}が存在しません。"
 
-#: ../lib/puppet/provider/apt_key/apt_key.rb:218
+#: ../lib/puppet/provider/apt_key/apt_key.rb:144
+msgid "%{_e} for %{_resource}"
+msgstr "%{_resource}の%{_e}"
+
+#: ../lib/puppet/provider/apt_key/apt_key.rb:146
+msgid "could not resolve %{_resource}"
+msgstr "%{_resource}を解決できませんでした。"
+
+#: ../lib/puppet/provider/apt_key/apt_key.rb:173
+msgid ""
+"The id in your manifest %{_resource} and the fingerprint from content/source"
+" don't match. Check for an error in the id and content/source is legitimate."
+msgstr ""
+"マニフェスト%{_resource}に含まれるidと、content/sourceのフィンガープリントが一致しません。idに間違いがないか、content/sourceが正当であるかを確認してください。"
+
+#: ../lib/puppet/provider/apt_key/apt_key.rb:191
+#: ../lib/puppet/provider/apt_key/apt_key.rb:227
+msgid ""
+"an unexpected condition occurred while trying to add the key: %{_resource}"
+msgstr "キー%{_resource}の追加中に、予期しない状況が発生しました。"
+
+#: ../lib/puppet/provider/apt_key/apt_key.rb:243
 msgid "This is a read-only property."
-msgstr "Ŧħīş īş ȧ řḗȧḓ-ǿƞŀẏ ƥřǿƥḗřŧẏ."
+msgstr "これは、読み込み専用のプロパティです。"
 
-#: ../lib/puppet/type/apt_key.rb:23
+#: ../lib/puppet/type/apt_key.rb:27
+msgid "ensure => absent and refresh => true are mutually exclusive"
+msgstr "ensure => absentとrefresh => trueは相互に排他的です。"
+
+#: ../lib/puppet/type/apt_key.rb:30
 msgid "The properties content and source are mutually exclusive."
-msgstr "Ŧħḗ ƥřǿƥḗřŧīḗş ƈǿƞŧḗƞŧ ȧƞḓ şǿŭřƈḗ ȧřḗ ḿŭŧŭȧŀŀẏ ḗẋƈŀŭşīṽḗ."
+msgstr "プロパティcontentとsourceは相互に排他的です。 are mutually exclusive."
+
+#: ../lib/puppet/type/apt_key.rb:33
+msgid "The id should be a full fingerprint (40 characters), see README."
+msgstr "idは完全なフィンガープリント(40文字)である必要があります。READMEを参照してください。"
 
 #. metadata.json
 #: .summary
 msgid ""
 "Provides an interface for managing Apt source, key, and definitions with "
 "Puppet"
-msgstr ""
-"Ƥřǿṽīḓḗş ȧƞ īƞŧḗřƒȧƈḗ ƒǿř ḿȧƞȧɠīƞɠ Ȧƥŧ şǿŭřƈḗ, ķḗẏ, ȧƞḓ ḓḗƒīƞīŧīǿƞş ẇīŧħ "
-"Ƥŭƥƥḗŧ"
-
-#. ./manifests/params.pp:97
-msgid "Unable to determine value for fact os[\"name\"]"
-msgstr "Ŭƞȧƀŀḗ ŧǿ ḓḗŧḗřḿīƞḗ ṽȧŀŭḗ ƒǿř ƒȧƈŧ ǿş[\"ƞȧḿḗ\"]"
-
-#. ./manifests/key.pp:29
-msgid "key with id %{_id} already ensured as absent"
-msgstr "ķḗẏ ẇīŧħ īḓ %{_id} ȧŀřḗȧḓẏ ḗƞşŭřḗḓ ȧş ȧƀşḗƞŧ"
-
-#. ./manifests/key.pp:62
-msgid "key with id %{_id} already ensured as present"
-msgstr "ķḗẏ ẇīŧħ īḓ %{_id} ȧŀřḗȧḓẏ ḗƞşŭřḗḓ ȧş ƥřḗşḗƞŧ"
-
-#. ./manifests/key.pp:78
-msgid "Invalid 'ensure' value '%{_ensure}' for apt::key"
-msgstr "Īƞṽȧŀīḓ 'ḗƞşŭřḗ' ṽȧŀŭḗ '%{_ensure}' ƒǿř ȧƥŧ::ķḗẏ"
-
-#: ../lib/puppet/provider/apt_key/apt_key.rb:142
-msgid "%{_e} for %{_resource}"
-msgstr "%{_e} ƒǿř %{_resource}"
-
-#: ../lib/puppet/provider/apt_key/apt_key.rb:144
-msgid "could not resolve %{_resource}"
-msgstr "ƈǿŭŀḓ ƞǿŧ řḗşǿŀṽḗ %{_resource}"
-
-#: ../lib/puppet/provider/apt_key/apt_key.rb:171
-msgid ""
-"The id in your manifest %{_resource} and the fingerprint from content/source "
-"don't match. Check for an error in the id and content/source is legitimate."
-msgstr ""
-"Ŧħḗ īḓ īƞ ẏǿŭř ḿȧƞīƒḗşŧ %{_resource} ȧƞḓ ŧħḗ ƒīƞɠḗřƥřīƞŧ ƒřǿḿ ƈǿƞŧḗƞŧ/source "
-"ḓǿƞ'ŧ ḿȧŧƈħ. Ƈħḗƈķ ƒǿř ȧƞ ḗřřǿř īƞ ŧħḗ īḓ ȧƞḓ ƈǿƞŧḗƞŧ/source īş ŀḗɠīŧīḿȧŧḗ."
-
-#: ../lib/puppet/provider/apt_key/apt_key.rb:202
-msgid ""
-"an unexpected condition occurred while trying to add the key: %{_resource}"
-msgstr ""
-"ȧƞ ŭƞḗẋƥḗƈŧḗḓ ƈǿƞḓīŧīǿƞ ǿƈƈŭřřḗḓ ẇħīŀḗ ŧřẏīƞɠ ŧǿ ȧḓḓ ŧħḗ ķḗẏ: %{_resource}"
-
-#: ../lib/puppet/type/apt_key.rb:26
-msgid "The id should be a full fingerprint (40 characters), see README."
-msgstr "Ŧħḗ īḓ şħǿŭŀḓ ƀḗ ȧ ƒŭŀŀ ƒīƞɠḗřƥřīƞŧ (40 ƈħȧřȧƈŧḗřş), şḗḗ ŘḖȦḒḾḖ."
+msgstr "Aptソース、キー、および定義をPuppetで管理するためのインターフェースを提供します。"
