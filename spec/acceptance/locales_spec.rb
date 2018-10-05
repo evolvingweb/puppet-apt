@@ -1,33 +1,38 @@
 require 'spec_helper_acceptance'
-
 require 'beaker/i18n_helper'
 
 PUPPETLABS_GPG_KEY_LONG_ID     = '7F438280EF8D349F'.freeze
 PUPPETLABS_LONG_FINGERPRINT    = '123456781274D2C8A956789A456789A456789A9A'.freeze
 
 id_doesnt_match_fingerprint_pp = <<-MANIFEST
-        apt_key { '#{PUPPETLABS_LONG_FINGERPRINT}':
-          ensure => 'present',
-          content => '123456781274D2C8A956789A456789A456789A9B',
-        }
-  MANIFEST
+  apt_key { '#{PUPPETLABS_LONG_FINGERPRINT}':
+    ensure => 'present',
+    content => '123456781274D2C8A956789A456789A456789A9B',
+  }
+MANIFEST
 
 location_not_specified_fail_pp = <<-MANIFEST
-        apt::source { 'puppetlabs':
-          ensure => 'present',
-          repos    => 'main',
-          key      => {
-            id     => '6F6B15509CF8E59E6E469F327F438280EF8D349F',
-            server => 'hkps.pool.sks-keyservers.net',
-          },
-        }
-  MANIFEST
+  apt::source { 'puppetlabs':
+    ensure => 'present',
+    repos    => 'main',
+    key      => {
+      id     => '6F6B15509CF8E59E6E469F327F438280EF8D349F',
+      server => 'hkps.pool.sks-keyservers.net',
+    },
+  }
+MANIFEST
 
-  no_content_param = <<-MANIFEST
-          apt_key { '#{123456781274D2C8A956789A456789A456789A9A}':
-            ensure => 'present',
-          }
-    MANIFEST
+no_content_param = <<-MANIFEST
+  apt_conf {
+    ensure => 'present',
+  }
+MANIFEST
+
+invalid_ensure = <<-MANIFEST
+  apt_key { '#{PUPPETLABS_LONG_FINGERPRINT}':
+    ensure => 'bourbon',
+  }
+MANIFEST
 
 describe 'localization', if: (fact('osfamily') == 'Debian' || fact('osfamily') == 'RedHat') && (Gem::Version.new(puppet_version) >= Gem::Version.new('4.10.5')) do
   before :all do
@@ -52,13 +57,13 @@ describe 'localization', if: (fact('osfamily') == 'Debian' || fact('osfamily') =
 
   describe 'puppet translations' do
     it 'fails with interpolated string' do
-      apply_manifest(no_content_param, expect_failures: true) do |r|
-        expect(r.stderr).to match(%r{contentパラメータを渡す必要があります})
+      apply_manifest(invalid_ensure, expect_failures: true) do |r|
+        expect(r.stderr).to match(%r{失敗しました: 無効な値\"bourbon\" 有効な値は})
       end
     end
     it 'fails with simple string' do
       apply_manifest(no_content_param, expect_failures: true) do |r|
-        expect(r.stderr).to match(%r{need a test})
+        expect(r.stderr).to match(%r{この表現は無効です。タイトルなしの'apt_conf'リソースの宣言を試みましたか？})
       end
     end
   end
