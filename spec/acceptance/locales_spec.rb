@@ -6,31 +6,32 @@ PUPPETLABS_LONG_FINGERPRINT    = '123456781274D2C8A956789A456789A456789A9A'.free
 
 id_doesnt_match_fingerprint_pp = <<-MANIFEST
   apt_key { '#{PUPPETLABS_LONG_FINGERPRINT}':
-    ensure => 'present',
+    ensure  => 'present',
     content => '123456781274D2C8A956789A456789A456789A9B',
   }
 MANIFEST
 
 location_not_specified_fail_pp = <<-MANIFEST
   apt::source { 'puppetlabs':
-    ensure => 'present',
-    repos    => 'main',
-    key      => {
-      id     => '6F6B15509CF8E59E6E469F327F438280EF8D349F',
-      server => 'hkps.pool.sks-keyservers.net',
+    ensure  => 'present',
+    repos   => 'main',
+    key     => {
+      id      => '6F6B15509CF8E59E6E469F327F438280EF8D349F',
+      server  => 'hkps.pool.sks-keyservers.net',
     },
   }
 MANIFEST
 
-no_content_param = <<-MANIFEST
-  apt_conf {
-    ensure => 'present',
+invalid_title_pp = <<-MANIFEST
+  apt::setting { 'test':
+    ensure  => 'present',
+    content => 'test'
   }
 MANIFEST
 
-invalid_ensure = <<-MANIFEST
-  apt_key { '#{PUPPETLABS_LONG_FINGERPRINT}':
-    ensure => 'bourbon',
+no_content_param_pp = <<-MANIFEST
+  apt::conf { 'test':
+    ensure => 'present',
   }
 MANIFEST
 
@@ -43,27 +44,27 @@ describe 'localization', if: (fact('osfamily') == 'Debian' || fact('osfamily') =
   end
 
   describe 'ruby translations' do
-    it 'fails with interpolated string' do
+    it 'translates an interpolated string' do
       apply_manifest(id_doesnt_match_fingerprint_pp, expect_failures: true) do |r|
-        expect(r.stderr).to match(%r{を設定できませんでした: マニフェスト123456781274D2C8A956789A456789A456789A9Aに含まれるidと、content/sourceのフィンガープリントが一致しません。idに間違いがないか、content/sourceが正当であるかを確認してください})
+        expect(r.stderr).to match(%r{content/sourceが正当であるかを確認してください})
       end
     end
-    it 'fails with simple string' do
+    it 'translates a simple string' do
       apply_manifest(location_not_specified_fail_pp, expect_failures: true) do |r|
-        expect(r.stderr).to match(%r{の検証中にエラーが生じました。Evaluation Error: a Function Callの検証中にエラーが生じました。場所を指定せずにソースエントリを作成することはできません})
+        expect(r.stderr).to match(%r{場所を指定せずにソースエントリを作成することはできません})
       end
     end
   end
 
   describe 'puppet translations' do
-    it 'fails with interpolated string' do
-      apply_manifest(invalid_ensure, expect_failures: true) do |r|
-        expect(r.stderr).to match(%r{失敗しました: 無効な値\"bourbon\" 有効な値は})
+    it 'translates a concatenated string' do
+      apply_manifest(invalid_title_pp, expect_failures: true) do |r|
+        expect(r.stderr).to match(%r{apt::settingのリソース名/タイトルの先頭は、'conf-'、'pref-'、'list-'にする必要があります})
       end
     end
-    it 'fails with simple string' do
-      apply_manifest(no_content_param, expect_failures: true) do |r|
-        expect(r.stderr).to match(%r{この表現は無効です。タイトルなしの'apt_conf'リソースの宣言を試みましたか？})
+    it 'translates a simple string' do
+      apply_manifest(no_content_param_pp, expect_failures: true) do |r|
+        expect(r.stderr).to match(%r{contentパラメータを渡す必要があります})
       end
     end
   end
