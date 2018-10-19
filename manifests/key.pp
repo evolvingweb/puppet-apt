@@ -26,8 +26,8 @@
 #   an absolute path.
 #
 # @param server
-#   Specifies a keyserver to provide the GPG key. Valid options: a string containing a domain name or a full URL (http://, https://, or 
-#   hkp://).
+#   Specifies a keyserver to provide the GPG key. Valid options: a string containing a domain name or a full URL (http://, https://,
+#   hkp:// or hkps://). The hkps:// protocol is currently only supported on Ubuntu 18.04.
 #
 # @param options
 #   Passes additional options to `apt-key adv --keyserver-options`.
