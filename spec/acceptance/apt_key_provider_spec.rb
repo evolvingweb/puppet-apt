@@ -479,7 +479,7 @@ hkp_pool_pp = <<-MANIFEST
   MANIFEST
 
 hkps_protocol_supported = fact('operatingsystem') =~ %r{Ubuntu} && \
-                            fact('operatingsystemrelease') =~ %r{^18\.04}
+                          fact('operatingsystemrelease') =~ %r{^18\.04}
 
 if hkps_protocol_supported
   hkps_ubuntu_pp = <<-MANIFEST
