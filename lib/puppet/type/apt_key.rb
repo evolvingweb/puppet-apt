@@ -77,6 +77,7 @@ Puppet::Type.newtype(:apt_key) do
 
   newparam(:refresh, boolean: true, parent: Puppet::Parameter::Boolean) do
     desc 'When true, recreate an existing expired key'
+    defaultto false
   end
 
   newproperty(:fingerprint) do
