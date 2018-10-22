@@ -15,7 +15,8 @@ def default_apt_key_example(title)
     source: nil,
     server: 'keyserver.ubuntu.com',
     content: nil,
-    options: nil }
+    options: nil,
+    refresh: false }
 end
 
 def bunch_things_apt_key_example(title, params)
