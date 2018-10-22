@@ -120,7 +120,9 @@ describe 'apt::source' do
           location: 'http://debian.mirror.iweb.ca/debian/',
           release: 'sid',
           repos: 'testing',
-          key: { 'id' => GPG_KEY_ID, 'server' => 'pgp.mit.edu',
+          key: { 'ensure' => 'refreshed',
+                 'id' => GPG_KEY_ID,
+                 'server' => 'pgp.mit.edu',
                  'content' => 'GPG key content',
                  'source'  => 'http://apt.puppetlabs.com/pubkey.gpg' },
           pin: '10',
@@ -141,7 +143,7 @@ describe 'apt::source' do
       }
 
       it {
-        is_expected.to contain_apt__key("Add key: #{GPG_KEY_ID} from Apt::Source my_source").that_comes_before('Apt::Setting[list-my_source]').with(ensure: 'present',
+        is_expected.to contain_apt__key("Add key: #{GPG_KEY_ID} from Apt::Source my_source").that_comes_before('Apt::Setting[list-my_source]').with(ensure: 'refreshed',
                                                                                                                                                     id: GPG_KEY_ID,
                                                                                                                                                     server: 'pgp.mit.edu',
                                                                                                                                                     content: 'GPG key content',
@@ -149,7 +151,7 @@ describe 'apt::source' do
       }
     end
   end
-  
+
   context 'with allow_unsigned true' do
     let :facts do
       {
