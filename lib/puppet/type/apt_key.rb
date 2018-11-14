@@ -64,6 +64,10 @@ Puppet::Type.newtype(:apt_key) do
     end
   end
 
+  autorequire(:package) do
+    'dirmngr'
+  end
+
   newparam(:server) do
     desc 'The key server to fetch the key from based on the ID. It can either be a domain name or url.'
     defaultto :'keyserver.ubuntu.com'

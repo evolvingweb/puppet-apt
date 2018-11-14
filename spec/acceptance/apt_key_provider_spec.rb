@@ -665,12 +665,6 @@ refresh_del_key_pp = <<-MANIFEST
         }
 MANIFEST
 
-refresh_check_for_dirmngr_pp = <<-MANIFEST
-        package { 'dirmngr':
-          ensure  => 'present',
-        }
-MANIFEST
-
 describe 'apt_key' do
   before(:each) do
     # Delete twice to make sure everything is cleaned
@@ -977,10 +971,6 @@ describe 'apt_key' do
       let(:puppetlabs_exp_check_command) { PUPPETLABS_EXP_CHECK_COMMAND }
     end
     before(:each) do
-      if fact('lsbdistcodename') == 'stretch' || fact('lsbdistcodename') == 'bionic'
-        # Ensure dirmngr package is installed
-        apply_manifest(refresh_check_for_dirmngr_pp, acceptable_exit_codes: [0, 2])
-      end
       # Delete the Puppet Labs Release Key and install an expired version of the key
       apply_manifest(refresh_del_key_pp)
       apply_manifest(refresh_pp, catch_failures: true)
