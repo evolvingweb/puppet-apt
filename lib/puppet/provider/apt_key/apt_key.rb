@@ -19,7 +19,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
   commands   gpg: '/usr/bin/gpg'
 
   def self.instances
-    cli_args = ['adv', '--list-keys', '--with-colons', '--fingerprint', '--fixed-list-mode']
+    cli_args = ['adv', '--no-tty', '--list-keys', '--with-colons', '--fingerprint', '--fixed-list-mode']
 
     key_output = apt_key(cli_args).encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
 
@@ -160,7 +160,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
     # confirm that the fingerprint from the file, matches the long key that is in the manifest
     if name.size == 40
       if File.executable? command(:gpg)
-        extracted_key = execute(["#{command(:gpg)} --with-fingerprint --with-colons #{file.path} | awk -F: '/^fpr:/ { print $10 }'"], failonfail: false)
+        extracted_key = execute(["#{command(:gpg)} --no-tty --with-fingerprint --with-colons #{file.path} | awk -F: '/^fpr:/ { print $10 }'"], failonfail: false)
         extracted_key = extracted_key.chomp
 
         found_match = false
@@ -193,7 +193,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
 
     # Breaking up the command like this is needed because it blows up
     # if --recv-keys isn't the last argument.
-    command.push('adv', '--keyserver', resource[:server])
+    command.push('adv', '--no-tty', '--keyserver', resource[:server])
     unless resource[:options].nil?
       command.push('--keyserver-options', resource[:options])
     end
@@ -211,7 +211,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
     if resource[:source].nil? && resource[:content].nil?
       # Breaking up the command like this is needed because it blows up
       # if --recv-keys isn't the last argument.
-      command.push('adv', '--keyserver', resource[:server])
+      command.push('adv', '--no-tty', '--keyserver', resource[:server])
       unless resource[:options].nil?
         command.push('--keyserver-options', resource[:options])
       end

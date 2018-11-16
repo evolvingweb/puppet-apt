@@ -13,7 +13,7 @@ CENTOS_GPG_KEY_FILE                 = 'RPM-GPG-KEY-CentOS-6'.freeze
 PUPPETLABS_EXP_KEY_LONG_ID          = '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'.freeze
 PUPPETLABS_EXP_KEY_DATES            = 'pub:e:4096:1:1054B7A24BD6EC30:2010-07-10:2017-01-05::-:Puppet Labs Release Key'.freeze
 SHOULD_NEVER_EXIST_ID               = 'EF8D349F'.freeze
-KEY_CHECK_COMMAND                   = 'apt-key adv --list-keys --with-colons --fingerprint | grep '.freeze
+KEY_CHECK_COMMAND                   = 'apt-key adv --no-tty --list-keys --with-colons --fingerprint | grep '.freeze
 PUPPETLABS_KEY_CHECK_COMMAND        = "#{KEY_CHECK_COMMAND} #{PUPPETLABS_GPG_KEY_FINGERPRINT}".freeze
 CENTOS_KEY_CHECK_COMMAND            = "#{KEY_CHECK_COMMAND} #{CENTOS_GPG_KEY_FINGERPRINT}".freeze
 PUPPETLABS_EXP_CHECK_COMMAND        = "#{KEY_CHECK_COMMAND} '#{PUPPETLABS_EXP_KEY_DATES}'".freeze
@@ -31,7 +31,7 @@ end
 
 def install_key(key)
   retry_on_error_matching do
-    shell("apt-key adv --keyserver pgp.mit.edu --recv-keys #{key}")
+    shell("apt-key adv --no-tty --keyserver pgp.mit.edu --recv-keys #{key}")
   end
 end
 
@@ -665,12 +665,6 @@ refresh_del_key_pp = <<-MANIFEST
         }
 MANIFEST
 
-refresh_check_for_dirmngr_pp = <<-MANIFEST
-        package { 'dirmngr':
-          ensure  => 'present',
-        }
-MANIFEST
-
 describe 'apt_key' do
   before(:each) do
     # Delete twice to make sure everything is cleaned
@@ -977,12 +971,6 @@ describe 'apt_key' do
       let(:puppetlabs_exp_check_command) { PUPPETLABS_EXP_CHECK_COMMAND }
     end
     before(:each) do
-      if fact('lsbdistcodename') == 'stretch' || fact('lsbdistcodename') == 'bionic'
-        # Ensure dirmngr package is installed
-        apply_manifest(refresh_check_for_dirmngr_pp, acceptable_exit_codes: [0, 2])
-        # Export environment variable to disable apt-key warning when using grep
-        shell('export APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1')
-      end
       # Delete the Puppet Labs Release Key and install an expired version of the key
       apply_manifest(refresh_del_key_pp)
       apply_manifest(refresh_pp, catch_failures: true)
