@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [6.2.0](https://github.com/puppetlabs/puppetlabs-apt/tree/6.2.0) (2018-11-16)
+## [6.2.1](https://github.com/puppetlabs/puppetlabs-apt/tree/6.2.1) (2018-11-20)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/6.2.0...6.2.1)
+
+### Fixed
+
+- \(MODULES-8272\) - Revert "Autorequire dirmngr in apt\_key types" [\#825](https://github.com/puppetlabs/puppetlabs-apt/pull/825) ([eimlav](https://github.com/eimlav))
+
+## [6.2.0](https://github.com/puppetlabs/puppetlabs-apt/tree/6.2.0) (2018-11-19)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/6.1.1...6.2.0)
 
