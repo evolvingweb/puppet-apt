@@ -12,9 +12,9 @@
 #   Specifies the password to connect with.
 #
 type Apt::Auth_conf_entry = Struct[
-  { 
-    machine => String[1], 
-    login => String, 
-    password => String 
+  {
+    machine => String[1],
+    login => String,
+    password => String
   }
 ]

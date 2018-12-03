@@ -6,11 +6,11 @@
 #   Specifies the provider that should be used by apt::update.
 #
 # @param keyserver
-#   Specifies a keyserver to provide the GPG key. Valid options: a string containing a domain name or a full URL (http://, https://, or 
+#   Specifies a keyserver to provide the GPG key. Valid options: a string containing a domain name or a full URL (http://, https://, or
 #   hkp://).
 #
 # @param ppa_options
-#   Supplies options to be passed to the `add-apt-repository` command. 
+#   Supplies options to be passed to the `add-apt-repository` command.
 #
 # @param ppa_package
 #   Names the package that provides the `apt-add-repository` command.
@@ -18,13 +18,13 @@
 # @param backports
 #   Specifies some of the default parameters used by apt::backports. Valid options: a hash made up from the following keys:
 #
-# @option backports [String] :location 
+# @option backports [String] :location
 #   See apt::backports for documentation.
 #
-# @option backports [String] :repos 
+# @option backports [String] :repos
 #   See apt::backports for documentation.
 #
-# @option backports [String] :key 
+# @option backports [String] :key
 #   See apt::backports for documentation.
 #
 # @param confs
@@ -34,9 +34,9 @@
 #   Configures various update settings. Valid options: a hash made up from the following keys:
 #
 # @option update [String] :frequency
-#   Specifies how often to run `apt-get update`. If the exec resource `apt_update` is notified, `apt-get update` runs regardless of this value. 
-#   Valid options: 'always' (at every Puppet run); 'daily' (if the value of `apt_update_last_success` is less than current epoch time minus 86400); 
-#   'weekly' (if the value of `apt_update_last_success` is less than current epoch time minus 604800); and 'reluctantly' (only if the exec resource 
+#   Specifies how often to run `apt-get update`. If the exec resource `apt_update` is notified, `apt-get update` runs regardless of this value.
+#   Valid options: 'always' (at every Puppet run); 'daily' (if the value of `apt_update_last_success` is less than current epoch time minus 86400);
+#   'weekly' (if the value of `apt_update_last_success` is less than current epoch time minus 604800); and 'reluctantly' (only if the exec resource
 #   `apt_update` is notified). Default: 'reluctantly'.
 #
 # @option update [Integer] :loglevel
@@ -86,28 +86,31 @@
 #   the auth_conf_entries parameter. When false, the file will be ignored (note that this does not set the file to absent.
 #
 # @param auth_conf_entries
-#   An optional array of login configuration settings (hashes) that are recorded in the file /etc/apt/auth.conf. This file has a netrc-like 
-#   format (similar to what curl uses) and contains the login configuration for APT sources and proxies that require authentication. See 
-#   https://manpages.debian.org/testing/apt/apt_auth.conf.5.en.html for details. If specified each hash must contain the keys machine, login and 
+#   An optional array of login configuration settings (hashes) that are recorded in the file /etc/apt/auth.conf. This file has a netrc-like
+#   format (similar to what curl uses) and contains the login configuration for APT sources and proxies that require authentication. See
+#   https://manpages.debian.org/testing/apt/apt_auth.conf.5.en.html for details. If specified each hash must contain the keys machine, login and
 #   password and no others. Specifying manage_auth_conf and not specifying this parameter will set /etc/apt/auth.conf to absent.
+#
+# @param auth_conf_owner
+#   The owner of the file /etc/apt/auth.conf. Default: '_apt' or 'root' on old releases.
 #
 # @param root
 #   Specifies root directory of Apt executable.
 #
 # @param sources_list
-#   Specifies the path of the sources_list file to use. 
+#   Specifies the path of the sources_list file to use.
 #
 # @param sources_list_d
-#   Specifies the path of the sources_list.d file to use. 
+#   Specifies the path of the sources_list.d file to use.
 #
 # @param conf_d
-#   Specifies the path of the conf.d file to use. 
+#   Specifies the path of the conf.d file to use.
 #
 # @param preferences
-#   Specifies the path of the preferences file to use. 
+#   Specifies the path of the preferences file to use.
 #
 # @param preferences_d
-#   Specifies the path of the preferences.d file to use. 
+#   Specifies the path of the preferences.d file to use.
 #
 # @param config_files
 #   A hash made up of the various configuration files used by Apt.
@@ -134,6 +137,7 @@ class apt (
   Boolean $manage_auth_conf     = $apt::params::manage_auth_conf,
   Array[Apt::Auth_conf_entry]
     $auth_conf_entries          = $apt::params::auth_conf_entries,
+  String $auth_conf_owner       = $apt::params::auth_conf_owner,
   String $root                  = $apt::params::root,
   String $sources_list          = $apt::params::sources_list,
   String $sources_list_d        = $apt::params::sources_list_d,
@@ -284,7 +288,7 @@ class apt (
 
     file { '/etc/apt/auth.conf':
       ensure  => $auth_conf_ensure,
-      owner   => 'root',
+      owner   => $auth_conf_owner,
       group   => 'root',
       mode    => '0600',
       content => "${confheadertmp}${auth_conf_tmp}",
