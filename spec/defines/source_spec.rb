@@ -196,6 +196,29 @@ describe 'apt::source' do
     }
   end
 
+  context 'with a https location and custom release, install apt-transport-https' do
+    let :facts do
+      {
+        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
+        lsbdistid: 'Debian',
+        lsbdistcodename: 'jessie',
+        osfamily: 'Debian',
+        puppetversion: Puppet.version,
+      }
+    end
+    let :params do
+      {
+        location: 'HTTPS://foo.bar',
+        allow_unsigned: false,
+        release: 'customrelease',
+      }
+    end
+
+    it {
+      is_expected.to contain_package('apt-transport-https')
+    }
+  end
+
   context 'with a https location, do not install apt-transport-https on oses not in list eg buster' do
     let :facts do
       {
