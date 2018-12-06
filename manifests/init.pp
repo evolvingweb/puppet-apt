@@ -81,11 +81,15 @@
 # @param settings
 #   Creates new `apt::setting` resources. Valid options: a hash to be passed to the create_resources function linked above.
 #
+# @param manage_auth_conf
+#   Specifies whether to manage the /etc/apt/auth.conf file. When true, the file will be overwritten with the entries specified in
+#   the auth_conf_entries parameter. When false, the file will be ignored (note that this does not set the file to absent.
+#
 # @param auth_conf_entries
 #   An optional array of login configuration settings (hashes) that are recorded in the file /etc/apt/auth.conf. This file has a netrc-like 
 #   format (similar to what curl uses) and contains the login configuration for APT sources and proxies that require authentication. See 
 #   https://manpages.debian.org/testing/apt/apt_auth.conf.5.en.html for details. If specified each hash must contain the keys machine, login and 
-#   password and no others.
+#   password and no others. Specifying manage_auth_conf and not specifying this parameter will set /etc/apt/auth.conf to absent.
 #
 # @param root
 #   Specifies root directory of Apt executable.
@@ -127,6 +131,7 @@ class apt (
   Hash $ppas                    = $apt::params::ppas,
   Hash $pins                    = $apt::params::pins,
   Hash $settings                = $apt::params::settings,
+  Boolean $manage_auth_conf     = $apt::params::manage_auth_conf,
   Array[Apt::Auth_conf_entry]
     $auth_conf_entries          = $apt::params::auth_conf_entries,
   String $root                  = $apt::params::root,
@@ -269,20 +274,22 @@ class apt (
     create_resources('apt::setting', $settings)
   }
 
-  $auth_conf_ensure = $auth_conf_entries ? {
-    []      => 'absent',
-    default => 'present',
-  }
+  if $manage_auth_conf {
+    $auth_conf_ensure = $auth_conf_entries ? {
+      []      => 'absent',
+      default => 'present',
+    }
 
-  $auth_conf_tmp = epp('apt/auth_conf.epp')
+    $auth_conf_tmp = epp('apt/auth_conf.epp')
 
-  file { '/etc/apt/auth.conf':
-    ensure  => $auth_conf_ensure,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0600',
-    content => "${confheadertmp}${auth_conf_tmp}",
-    notify  => Class['apt::update'],
+    file { '/etc/apt/auth.conf':
+      ensure  => $auth_conf_ensure,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0600',
+      content => "${confheadertmp}${auth_conf_tmp}",
+      notify  => Class['apt::update'],
+    }
   }
 
   # manage pins if present

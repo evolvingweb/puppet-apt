@@ -202,19 +202,35 @@ describe 'apt' do
       }
     end
 
-    auth_conf_content = "// This file is managed by Puppet. DO NOT EDIT.
+    context 'with manage_auth_conf => true' do
+      let(:params) do
+        super().merge(manage_auth_conf: true)
+      end
+
+      auth_conf_content = "// This file is managed by Puppet. DO NOT EDIT.
 machine deb.example.net login foologin password secret
 machine apt.example.com login aptlogin password supersecret
 "
 
-    it {
-      is_expected.to contain_file('/etc/apt/auth.conf').with(ensure: 'present',
-                                                             owner: 'root',
-                                                             group: 'root',
-                                                             mode: '0600',
-                                                             notify: 'Class[Apt::Update]',
-                                                             content: auth_conf_content)
-    }
+      it {
+        is_expected.to contain_file('/etc/apt/auth.conf').with(ensure: 'present',
+                                                               owner: 'root',
+                                                               group: 'root',
+                                                               mode: '0600',
+                                                               notify: 'Class[Apt::Update]',
+                                                               content: auth_conf_content)
+      }
+    end
+
+    context 'with manage_auth_conf => false' do
+      let(:params) do
+        super().merge(manage_auth_conf: false)
+      end
+
+      it {
+        is_expected.not_to contain_file('/etc/apt/auth.conf')
+      }
+    end
   end
 
   context 'with improperly specified entries for /etc/apt/auth.conf' do
