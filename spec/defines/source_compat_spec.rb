@@ -7,17 +7,16 @@ describe 'apt::source', type: :define do
     'my_source'
   end
 
-  context 'with mostly defaults' do
-    let :facts do
-      {
-        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-        lsbdistid: 'Debian',
-        lsbdistcodename: 'jessie',
-        osfamily: 'Debian',
-        puppetversion: Puppet.version,
-      }
-    end
+  let :facts do
+    {
+      os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
+      lsbdistid: 'Debian',
+      lsbdistcodename: 'jessie',
+      osfamily: 'Debian',
+    }
+  end
 
+  context 'with mostly defaults' do
     let :params do
       {
         'include' => { 'deb' => false, 'src' => true },
@@ -31,15 +30,6 @@ describe 'apt::source', type: :define do
   end
 
   context 'with no defaults' do
-    let :facts do
-      {
-        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-        lsbdistid: 'Debian',
-        lsbdistcodename: 'jessie',
-        osfamily: 'Debian',
-        puppetversion: Puppet.version,
-      }
-    end
     let :params do
       {
         'comment'        => 'foo',
@@ -72,15 +62,6 @@ describe 'apt::source', type: :define do
   end
 
   context 'when allow_unsigned true' do
-    let :facts do
-      {
-        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-        lsbdistid: 'Debian',
-        lsbdistcodename: 'jessie',
-        osfamily: 'Debian',
-        puppetversion: Puppet.version,
-      }
-    end
     let :params do
       {
         'include'        => { 'src' => false },
@@ -93,15 +74,6 @@ describe 'apt::source', type: :define do
   end
 
   context 'with architecture equals x86_64' do
-    let :facts do
-      {
-        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-        lsbdistid: 'Debian',
-        lsbdistcodename: 'jessie',
-        osfamily: 'Debian',
-        puppetversion: Puppet.version,
-      }
-    end
     let :params do
       {
         'location'     => 'http://debian.mirror.iweb.ca/debian/',
@@ -115,15 +87,6 @@ describe 'apt::source', type: :define do
   end
 
   context 'with ensure => absent' do
-    let :facts do
-      {
-        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-        lsbdistid: 'Debian',
-        lsbdistcodename: 'jessie',
-        osfamily: 'Debian',
-        puppetversion: Puppet.version,
-      }
-    end
     let :params do
       {
         'ensure' => 'absent',
@@ -140,9 +103,7 @@ describe 'apt::source', type: :define do
       let :facts do
         {
           os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-          lsbdistid: 'Debian',
           osfamily: 'Debian',
-          puppetversion: Puppet.version,
         }
       end
 

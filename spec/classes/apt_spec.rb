@@ -38,8 +38,7 @@ describe 'apt' do
       os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
       lsbdistid: 'Debian',
       osfamily: 'Debian',
-      lsbdistcodename: 'wheezy',
-      puppetversion: Puppet.version,
+      lsbdistcodename: 'jessie',
     }
   end
 
@@ -252,12 +251,13 @@ machine apt.example.com login aptlogin password supersecret
 
   context 'with sources defined on valid osfamily' do
     let :facts do
-      { os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
+      {
+        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
         osfamily: 'Debian',
         lsbdistcodename: 'xenial',
         lsbdistid: 'Ubuntu',
         lsbdistrelease: '16.04',
-        puppetversion: Puppet.version }
+      }
     end
     let(:params) do
       { sources: {
@@ -297,8 +297,7 @@ machine apt.example.com login aptlogin password supersecret
         os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
         osfamily: 'Debian',
         lsbdistcodename: 'xenial',
-        lsbdistid: 'Debian',
-        puppetversion: Puppet.version,
+        lsbdistid: 'Ubuntu',
       }
     end
     let(:params) do
@@ -327,8 +326,7 @@ machine apt.example.com login aptlogin password supersecret
         os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
         osfamily: 'Debian',
         lsbdistcodename: 'xenial',
-        lsbdistid: 'Debian',
-        puppetversion: Puppet.version,
+        lsbdistid: 'Ubuntu',
       }
     end
     let(:params) do
@@ -357,9 +355,8 @@ machine apt.example.com login aptlogin password supersecret
         os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
         osfamily: 'Debian',
         lsbdistcodename: 'xenial',
-        lsbdistid: 'ubuntu',
+        lsbdistid: 'Ubuntu',
         lsbdistrelease: '16.04',
-        puppetversion: Puppet.version,
       }
     end
     let(:params) do
@@ -379,8 +376,7 @@ machine apt.example.com login aptlogin password supersecret
         os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
         osfamily: 'Debian',
         lsbdistcodename: 'xenial',
-        lsbdistid: 'Debian',
-        puppetversion: Puppet.version,
+        lsbdistid: 'Ubuntu',
       }
     end
     let(:params) do
@@ -400,8 +396,7 @@ machine apt.example.com login aptlogin password supersecret
         os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
         osfamily: 'Debian',
         lsbdistcodename: 'xenial',
-        lsbdistid: 'Debian',
-        puppetversion: Puppet.version,
+        lsbdistid: 'Ubuntu',
       }
     end
     let(:params) do
