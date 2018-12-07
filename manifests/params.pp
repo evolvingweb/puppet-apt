@@ -26,6 +26,7 @@ class apt::params {
   $ppas           = {}
   $pins           = {}
   $settings       = {}
+  $manage_auth_conf = true
   $auth_conf_entries = []
 
   $config_files = {
