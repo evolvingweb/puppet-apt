@@ -88,7 +88,7 @@ define apt::source(
     }
     # Newer oses, do not need the package for HTTPS transport.
     $_transport_https_releases = [ 'wheezy', 'jessie', 'stretch', 'trusty', 'xenial' ]
-    if $_release in $_transport_https_releases and $location =~ /(?i:^https:\/\/)/ {
+    if ($_release in $_transport_https_releases or $facts['lsbdistcodename'] in $_transport_https_releases) and $location =~ /(?i:^https:\/\/)/ {
       ensure_packages('apt-transport-https')
     }
   }
