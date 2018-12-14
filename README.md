@@ -28,10 +28,10 @@ APT is a package manager available on Debian, Ubuntu, and several other operatin
 
 **Note**: For this module to correctly autodetect which version of Debian/Ubuntu (or derivative) you're running, you need to make sure the 'lsb-release' package is installed. We highly recommend you either make this part of your provisioning layer, if you run many Debian or derivative systems, or ensure that you have Facter 2.2.0 or later installed, which will pull this dependency in for you.
 
-<a id="what-apt-affects"></a>
+<a id="setup"></a>
 ## Setup
 
-<a id="setup"></a>
+<a id="what-apt-affects"></a>
 ### What apt affects
 
 * Your system's `preferences` file and `preferences.d` directory
