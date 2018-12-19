@@ -19,6 +19,7 @@
 1. [Limitations - OS compatibility, etc.](#limitations)
 1. [Development - Guide for contributing to the module](#development)
 
+<a id="module-description"></a>
 ## Module Description
 
 The apt module lets you use Puppet to manage APT (Advanced Package Tool) sources, keys, and other configuration options.
@@ -27,8 +28,10 @@ APT is a package manager available on Debian, Ubuntu, and several other operatin
 
 **Note**: For this module to correctly autodetect which version of Debian/Ubuntu (or derivative) you're running, you need to make sure the 'lsb-release' package is installed. We highly recommend you either make this part of your provisioning layer, if you run many Debian or derivative systems, or ensure that you have Facter 2.2.0 or later installed, which will pull this dependency in for you.
 
+<a id="setup"></a>
 ## Setup
 
+<a id="what-apt-affects"></a>
 ### What apt affects
 
 * Your system's `preferences` file and `preferences.d` directory
@@ -38,6 +41,7 @@ APT is a package manager available on Debian, Ubuntu, and several other operatin
 
 **Note:** This module offers `purge` parameters which, if set to `true`, **destroy** any configuration on the node's `sources.list(.d)` and `preferences(.d)` that you haven't declared through Puppet. The default for these parameters is `false`.
 
+<a id="beginning-with-apt"></a>
 ### Beginning with apt
 
 To use the apt module with default parameters, declare the `apt` class.
@@ -48,8 +52,10 @@ include apt
 
 **Note:** The main `apt` class is required by all other classes, types, and defined types in this module. You must declare it whenever you use the module.
 
+<a id="usage"></a>
 ## Usage
 
+<a id="add-gpg-keys"></a>
 ### Add GPG keys
 
 **Warning:** Using short key IDs presents a serious security issue, potentially leaving you open to collision attacks. We recommend you always use full fingerprints to identify your GPG keys. This module allows short keys, but issues a security warning if you use them.
@@ -64,6 +70,7 @@ apt::key { 'puppetlabs':
 }
 ```
 
+<a id="prioritize-backports"></a>
 ### Prioritize backports
 
 ```puppet
@@ -76,6 +83,7 @@ By default, the `apt::backports` class drops a pin file for backports, pinning i
 
 If you raise the priority through the `pin` parameter to 500, normal policy goes into effect and Apt installs or upgrades to the newest version. This means that if a package is available from backports, it and its dependencies are pulled in from backports unless you explicitly set the `ensure` attribute of the `package` resource to `installed`/`present` or a specific version.
 
+<a id="update-the-list-of-packages"></a>
 ### Update the list of packages
 
 By default, Puppet runs `apt-get update` on the first Puppet run after you include the `apt` class, and anytime `notify  => Exec['apt_update']` occurs; i.e., whenever config files get updated or other relevant changes occur. If you set `update['frequency']` to 'always', the update runs on every Puppet run. You can also set `update['frequency']` to 'daily' or 'weekly':
@@ -98,6 +106,7 @@ class { 'apt':
 }
 ```
 
+<a id="pin-a-specific-release"></a>
 ### Pin a specific release
 
 ```puppet
@@ -120,6 +129,7 @@ apt::pin { 'stable':
 
 To pin multiple packages, pass them to the `packages` parameter as an array or a space-delimited string.
 
+<a id="add-a-personal-package-archive-repository"></a>
 ### Add a Personal Package Archive (PPA) repository
 
 ```puppet
@@ -159,6 +169,7 @@ apt::source { 'puppetlabs':
 }
 ```
 
+<a id="configure-apt-from-hiera"></a>
 ### Configure Apt from Hiera
 
 Instead of specifying your sources directly as resources, you can instead just include the `apt` class, which will pick up the values automatically from hiera.
@@ -186,6 +197,7 @@ apt::sources:
       server: 'pgp.mit.edu'
 ```
 
+<a id="replace-the-default-sourceslist-file"></a>
 ### Replace the default `sources.list` file
 
 The following example replaces the default `/etc/apt/sources.list`. Along with this code, be sure to use the `purge` parameter, or you might get duplicate source warnings when running Apt.
@@ -248,6 +260,7 @@ class { 'apt':
 }
 ```
 
+<a id="reference"></a>
 ## Reference
 
 ### Facts
@@ -272,6 +285,7 @@ class { 'apt':
 
 See [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-apt/blob/master/REFERENCE.md) for all other reference documentation.
 
+<a id="limitations"></a> 
 ## Limitations
 
 This module is not designed to be split across [run stages](https://docs.puppetlabs.com/puppet/latest/reference/lang_run_stages.html).
@@ -286,6 +300,7 @@ If you are adding a new source or PPA and trying to install packages from the ne
 Class['apt::update'] -> Package <| provider == 'apt' |>
 ```
 
+<a id="development"></a> 
 ## Development
 
 Puppet modules on the Puppet Forge are open projects, and community contributions are essential for keeping them great. We can't access the huge number of platforms and myriad hardware, software, and deployment configurations that Puppet is intended to serve. We want to keep it as easy as possible to contribute changes so that our modules work in your environment. There are a few guidelines that we need contributors to follow so that we can have a chance of keeping on top of things.
