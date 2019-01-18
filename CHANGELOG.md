@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [6.3.0](https://github.com/puppetlabs/puppetlabs-apt/tree/6.3.0) (2019-01-18)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/6.2.1...6.3.0)
+
+### Added
+
+- Add support for dist-upgrade & autoremove action [\#832](https://github.com/puppetlabs/puppetlabs-apt/pull/832) ([aboks](https://github.com/aboks))
+- \(MODULES-8321\) - Add manage\_auth\_conf parameter [\#831](https://github.com/puppetlabs/puppetlabs-apt/pull/831) ([eimlav](https://github.com/eimlav))
+
+### Fixed
+
+- \(MODULES-8418\) Fix /etc/apt/auth.conf owner changing endlessly [\#836](https://github.com/puppetlabs/puppetlabs-apt/pull/836) ([antaflos](https://github.com/antaflos))
+- pdksync - \(FM-7655\) Fix rubygems-update for ruby \< 2.3 [\#835](https://github.com/puppetlabs/puppetlabs-apt/pull/835) ([tphoney](https://github.com/tphoney))
+- \(MODULES-8326\) - apt-transport-https not ensured properly [\#830](https://github.com/puppetlabs/puppetlabs-apt/pull/830) ([eimlav](https://github.com/eimlav))
+
 ## [6.2.1](https://github.com/puppetlabs/puppetlabs-apt/tree/6.2.1) (2018-11-20)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/6.2.0...6.2.1)
