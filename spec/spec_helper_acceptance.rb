@@ -65,12 +65,6 @@ RSpec.configure do |c|
         install_language_on(host, 'ja_JP.utf-8') if not_controller(host)
         # This will be removed, this is temporary to test localisation.
       end
-      # Required for binding tests.
-      if fact('osfamily') == 'RedHat'
-        if fact('operatingsystemmajrelease') =~ %r{7} || fact('operatingsystem') =~ %r{Fedora}
-          shell('yum install -y bzip2')
-        end
-      end
       on host, puppet('module', 'install', 'stahnma/epel')
     end
   end
