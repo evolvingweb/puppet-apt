@@ -14,8 +14,8 @@ install_module_on(hosts)
 install_module_dependencies_on(hosts)
 
 UNSUPPORTED_PLATFORMS = ['RedHat', 'Suse', 'windows', 'AIX', 'Solaris'].freeze
-MAX_RETRY_COUNT       = 12
-RETRY_WAIT            = 10
+MAX_RETRY_COUNT       = 5
+RETRY_WAIT            = 3
 ERROR_MATCHER         = %r{(no valid OpenPGP data found|keyserver timed out|keyserver receive failed)}
 
 # This method allows a block to be passed in and if an exception is raised
@@ -36,7 +36,7 @@ def retry_on_error_matching(max_retry_count = MAX_RETRY_COUNT, retry_wait_interv
     try += 1
     yield
   rescue StandardError => e
-    raise unless try < max_retry_count && (error_matcher.nil? || e.message =~ error_matcher)
+    raise(_('Attempted this %{value0} times. Raising %{value1}') % { value0: max_retry_count, value1: e }) unless try < max_retry_count && (error_matcher.nil? || e.message =~ error_matcher)
     sleep retry_wait_interval_secs
     retry
   end
