@@ -8,17 +8,17 @@ describe 'apt_update_last_success fact' do
 
   describe 'on Debian based distro which has not yet created the update-success-stamp file' do
     it 'has a value of -1' do
-      Facter.fact(:osfamily).stubs(:value).returns 'Debian'
-      File.expects(:exist?).with('/var/lib/apt/periodic/update-success-stamp').returns false
+      allow(Facter.fact(:osfamily)).to receive(:value).and_return('Debian')
+      allow(File).to receive(:exist?).with('/var/lib/apt/periodic/update-success-stamp').and_return(false)
       is_expected.to eq(-1)
     end
   end
 
   describe 'on Debian based distro which has created the update-success-stamp' do
     it 'has the value of the mtime of the file' do
-      Facter.fact(:osfamily).stubs(:value).returns 'Debian'
-      File.stubs(:exist?).returns true
-      File.stubs(:mtime).returns 1_407_660_561
+      allow(Facter.fact(:osfamily)).to receive(:value).and_return('Debian')
+      allow(File).to receive(:exist?).and_return(true)
+      allow(File).to receive(:mtime).and_return(1_407_660_561)
       is_expected.to eq(1_407_660_561)
     end
   end

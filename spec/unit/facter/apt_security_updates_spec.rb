@@ -7,18 +7,18 @@ describe 'apt_security_updates fact' do
 
   describe 'when apt has no updates' do
     before(:each) do
-      Facter.fact(:apt_has_updates).stubs(:value).returns false
+      allow(Facter.fact(:apt_has_updates)).to receive(:value).and_return(false)
     end
     it { is_expected.to be nil }
   end
 
   describe 'when apt has security updates' do
     before(:each) do
-      Facter.fact(:osfamily).stubs(:value).returns 'Debian'
-      File.stubs(:executable?) # Stub all other calls
-      Facter::Util::Resolution.stubs(:exec) # Catch all other calls
-      File.expects(:executable?).with('/usr/bin/apt-get').returns true
-      Facter::Util::Resolution.expects(:exec).with('/usr/bin/apt-get -s -o Debug::NoLocking=true upgrade 2>&1').returns apt_get_upgrade_output
+      allow(Facter.fact(:osfamily)).to receive(:value).and_return('Debian')
+      allow(File).to receive(:executable?) # Stub all other calls
+      allow(Facter::Util::Resolution).to receive(:exec) # Catch all other calls
+      allow(File).to receive(:executable?).with('/usr/bin/apt-get').and_return(true)
+      allow(Facter::Util::Resolution).to receive(:exec).with('/usr/bin/apt-get -s -o Debug::NoLocking=true upgrade 2>&1').and_return(apt_get_upgrade_output)
     end
 
     describe 'on Debian' do
