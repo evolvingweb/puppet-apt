@@ -126,7 +126,11 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
         # Only send basic auth if URL contains userinfo
         # Some webservers (e.g. Amazon S3) return code 400 if empty basic auth is sent
         if parsed_value.userinfo.nil?
-          key = parsed_value.read
+          key = if parsed_value.scheme == 'https' && resource[:weak_ssl] == true
+                  open(parsed_value, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).read
+                else
+                  parsed_value.read
+                end
         else
           user_pass = parsed_value.userinfo.split(':')
           parsed_value.userinfo = ''
