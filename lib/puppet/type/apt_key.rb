@@ -80,6 +80,11 @@ Puppet::Type.newtype(:apt_key) do
     defaultto false
   end
 
+  newparam(:weak_ssl, boolean: true, parent: Puppet::Parameter::Boolean) do
+    desc 'When true and source uses https, accepts download of keys without SSL verfication'
+    defaultto false
+  end
+
   newproperty(:fingerprint) do
     desc <<-MANIFEST
       The 40-digit hexadecimal fingerprint of the specified GPG key.

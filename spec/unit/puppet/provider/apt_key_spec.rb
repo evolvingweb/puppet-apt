@@ -113,6 +113,21 @@ OUTPUT
       expect(provider).to be_exist
     end
 
+    it 'apt_key with source and weak ssl verify set' do
+      expect(described_class).to receive(:apt_key).with(array_including('add', kind_of(String)))
+      resource = Puppet::Type::Apt_key.new(name: 'gsd',
+                                           id: 'C105B9DE',
+                                           source: 'https://bla/herpderp.gpg',
+                                           ensure: 'present',
+                                           weak_ssl: true)
+
+      provider = described_class.new(resource)
+      expect(provider).not_to be_exist
+      expect(provider).to receive(:source_to_file).and_return(Tempfile.new('foo'))
+      provider.create
+      expect(provider).to be_exist
+    end
+
     describe 'different valid id keys' do
       hash_of_keys = {
         '32bit key id' => 'EF8D349F',

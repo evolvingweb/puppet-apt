@@ -533,6 +533,15 @@ https_works_pp = <<-MANIFEST
         }
   MANIFEST
 
+https_with_weak_ssl_works_pp = <<-MANIFEST
+        apt_key { 'puppetlabs':
+          id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
+          ensure => 'present',
+          source => 'https://#{PUPPETLABS_APT_URL}/#{PUPPETLABS_GPG_KEY_FILE}',
+          weak_ssl => true,
+        }
+  MANIFEST
+
 https_userinfo_pp = <<-MANIFEST
         apt_key { 'puppetlabs':
           id     => '#{PUPPETLABS_GPG_KEY_LONG_ID}',
@@ -790,6 +799,11 @@ describe 'apt_key' do
     context 'with https://' do
       it 'works' do
         apply_manifest_twice(https_works_pp)
+        shell(PUPPETLABS_KEY_CHECK_COMMAND)
+      end
+
+      it 'works with weak ssl' do
+        apply_manifest_twice(https_with_weak_ssl_works_pp)
         shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
