@@ -16,7 +16,6 @@ describe 'apt::backports', type: :class do
 
       it {
         is_expected.to contain_apt__source('backports').with(location: 'http://deb.debian.org/debian',
-                                                             key: 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553',
                                                              repos: 'main contrib non-free',
                                                              release: 'jessie-backports',
                                                              pin: { 'priority' => 200, 'release' => 'jessie-backports' })
