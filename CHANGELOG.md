@@ -2,7 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [6.3.0](https://github.com/puppetlabs/puppetlabs-apt/tree/6.3.0) (2019-01-18)
+## [v7.0.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.0.0) (2019-04-24)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/6.3.0...v7.0.0)
+
+### Changed
+
+- pdksync - \(MODULES-8444\) - Raise lower Puppet bound [\#853](https://github.com/puppetlabs/puppetlabs-apt/pull/853) ([david22swan](https://github.com/david22swan))
+
+### Added
+
+- Allow weak SSL verification for apt\_key [\#849](https://github.com/puppetlabs/puppetlabs-apt/pull/849) ([tuxmea](https://github.com/tuxmea))
+
+## [6.3.0](https://github.com/puppetlabs/puppetlabs-apt/tree/6.3.0) (2019-01-21)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/6.2.1...6.3.0)
 
