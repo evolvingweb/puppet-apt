@@ -65,8 +65,8 @@ Default value: $apt::params::provider
 
 Data type: `String`
 
-Specifies a keyserver to provide the GPG key. Valid options: a string containing a domain name or a full URL (http://, https://,
-hkp:// or hkps://). The hkps:// protocol is currently only supported on Ubuntu 18.04.
+Specifies a keyserver to provide the GPG key. Valid options: a string containing a domain name or a full URL (http://, https://, or
+hkp://).
 
 Default value: $apt::params::keyserver
 
@@ -189,6 +189,15 @@ Creates new `apt::setting` resources. Valid options: a hash to be passed to the 
 
 Default value: $apt::params::settings
 
+##### `manage_auth_conf`
+
+Data type: `Boolean`
+
+Specifies whether to manage the /etc/apt/auth.conf file. When true, the file will be overwritten with the entries specified in
+the auth_conf_entries parameter. When false, the file will be ignored (note that this does not set the file to absent.
+
+Default value: $apt::params::manage_auth_conf
+
 ##### `auth_conf_entries`
 
 Data type: `Array[Apt::Auth_conf_entry]`
@@ -196,9 +205,17 @@ Data type: `Array[Apt::Auth_conf_entry]`
 An optional array of login configuration settings (hashes) that are recorded in the file /etc/apt/auth.conf. This file has a netrc-like
 format (similar to what curl uses) and contains the login configuration for APT sources and proxies that require authentication. See
 https://manpages.debian.org/testing/apt/apt_auth.conf.5.en.html for details. If specified each hash must contain the keys machine, login and
-password and no others.
+password and no others. Specifying manage_auth_conf and not specifying this parameter will set /etc/apt/auth.conf to absent.
 
 Default value: $apt::params::auth_conf_entries
+
+##### `auth_conf_owner`
+
+Data type: `String`
+
+The owner of the file /etc/apt/auth.conf. Default: '_apt' or 'root' on old releases.
+
+Default value: $apt::params::auth_conf_owner
 
 ##### `root`
 
@@ -487,6 +504,14 @@ Specifies a keyserver to provide the GPG key. Valid options: a string containing
 hkp:// or hkps://). The hkps:// protocol is currently only supported on Ubuntu 18.04.
 
 Default value: $::apt::keyserver
+
+##### `weak_ssl`
+
+Data type: `Boolean`
+
+Specifies whether strict SSL verification on a https URL should be disabled. Valid options: true or false.
+
+Default value: `false`
 
 ##### `options`
 
@@ -859,7 +884,7 @@ Allows you to perform apt functions
 
 ##### `action`
 
-Data type: `Enum[update, upgrade]`
+Data type: `Enum[update, upgrade, dist-upgrade, autoremove]`
 
 Action to perform 
 
