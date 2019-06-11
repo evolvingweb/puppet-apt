@@ -1,17 +1,9 @@
-require 'beaker-pe'
-require 'beaker-puppet'
-require 'beaker-rspec'
-require 'beaker/puppet_install_helper'
-require 'beaker/module_install_helper'
-require 'beaker-task_helper'
-require 'beaker/i18n_helper'
-require 'beaker-task_helper'
+# frozen_string_literal: true
 
-run_puppet_install_helper
-configure_type_defaults_on(hosts)
-install_bolt_on(hosts) unless pe_install?
-install_module_on(hosts)
-install_module_dependencies_on(hosts)
+require 'serverspec'
+require 'puppet_litmus'
+require 'spec_helper_acceptance_local' if File.file?(File.join(File.dirname(__FILE__), 'spec_helper_acceptance_local.rb'))
+include PuppetLitmus
 
 UNSUPPORTED_PLATFORMS = ['RedHat', 'Suse', 'windows', 'AIX', 'Solaris'].freeze
 MAX_RETRY_COUNT       = 5
@@ -42,30 +34,68 @@ def retry_on_error_matching(max_retry_count = MAX_RETRY_COUNT, retry_wait_interv
   end
 end
 
-RSpec.configure do |c|
-  File.expand_path(File.join(File.dirname(__FILE__), '..'))
+def pe_install?
+  false
+end
 
-  # Readable test descriptions
-  c.formatter = :documentation
-
-  # Configure all nodes in nodeset
-  c.before :suite do
-    run_puppet_access_login(user: 'admin') if pe_install? && (Gem::Version.new(puppet_version) >= Gem::Version.new('5.0.0'))
-
-    hosts.each do |host|
-      # This will be removed, this is temporary to test localisation.
-      if (fact('osfamily') == 'Debian' || fact('osfamily') == 'RedHat') &&
-         (Gem::Version.new(puppet_version) >= Gem::Version.new('4.10.5') &&
-          Gem::Version.new(puppet_version) < Gem::Version.new('5.2.0'))
-        on(host, 'mkdir /opt/puppetlabs/puppet/share/locale/ja')
-        on(host, 'touch /opt/puppetlabs/puppet/share/locale/ja/puppet.po')
-      end
-      if fact('osfamily') == 'Debian'
-        # install language on debian systems
-        install_language_on(host, 'ja_JP.utf-8') if not_controller(host)
-        # This will be removed, this is temporary to test localisation.
-      end
-      on host, puppet('module', 'install', 'stahnma/epel')
-    end
+if ENV['TARGET_HOST'].nil? || ENV['TARGET_HOST'] == 'localhost'
+  puts 'Running tests against this machine !'
+  if Gem.win_platform?
+    set :backend, :cmd
+  else
+    set :backend, :exec
   end
+else
+  # load inventory
+  inventory_hash = inventory_hash_from_inventory_file
+  node_config = config_from_node(inventory_hash, ENV['TARGET_HOST'])
+
+  if target_in_group(inventory_hash, ENV['TARGET_HOST'], 'docker_nodes')
+    host = ENV['TARGET_HOST']
+    set :backend, :docker
+    set :docker_container, host
+  elsif target_in_group(inventory_hash, ENV['TARGET_HOST'], 'ssh_nodes')
+    set :backend, :ssh
+    options = Net::SSH::Config.for(host)
+    options[:user] = node_config.dig('ssh', 'user') unless node_config.dig('ssh', 'user').nil?
+    options[:port] = node_config.dig('ssh', 'port') unless node_config.dig('ssh', 'port').nil?
+    options[:keys] = node_config.dig('ssh', 'private-key') unless node_config.dig('ssh', 'private-key').nil?
+    options[:password] = node_config.dig('ssh', 'password') unless node_config.dig('ssh', 'password').nil?
+    options[:verify_host_key] = Net::SSH::Verifiers::Null.new unless node_config.dig('ssh', 'host-key-check').nil?
+    host = if ENV['TARGET_HOST'].include?(':')
+             ENV['TARGET_HOST'].split(':').first
+           else
+             ENV['TARGET_HOST']
+           end
+    set :host,        options[:host_name] || host
+    set :ssh_options, options
+    set :request_pty, true
+  elsif target_in_group(inventory_hash, ENV['TARGET_HOST'], 'winrm_nodes')
+    require 'winrm'
+
+    set :backend, :winrm
+    set :os, family: 'windows'
+    user = node_config.dig('winrm', 'user') unless node_config.dig('winrm', 'user').nil?
+    pass = node_config.dig('winrm', 'password') unless node_config.dig('winrm', 'password').nil?
+    endpoint = "http://#{ENV['TARGET_HOST']}:5985/wsman"
+
+    opts = {
+      user: user,
+      password: pass,
+      endpoint: endpoint,
+      operation_timeout: 300,
+    }
+
+    winrm = WinRM::Connection.new opts
+    Specinfra.configuration.winrm = winrm
+  end
+
+  lsb_package = <<-MANIFEST
+    package { 'lsb-release':
+	    ensure => installed,
+    }
+    MANIFEST
+
+  apply_manifest(lsb_package)
+  run_shell('puppet module install stahnma/epel')
 end

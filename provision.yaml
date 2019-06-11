@@ -1,0 +1,10 @@
+---
+default:
+  provisioner: docker 
+  images: ['waffleimage/debian8']
+travis_deb:
+  provisioner: docker
+  images: ['debian:8', 'debian:9', 'ubuntu:14.04', 'ubuntu:16.04', 'ubuntu:18.04']
+waffle_deb:
+  provisioner: docker 
+  images: ['waffleimage/debian8', 'waffleimage/debian9', 'waffleimage/ubuntu14.04', 'waffleimage/ubuntu16.04', 'waffleimage/ubuntu18.04']
