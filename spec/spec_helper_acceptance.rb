@@ -5,39 +5,6 @@ require 'puppet_litmus'
 require 'spec_helper_acceptance_local' if File.file?(File.join(File.dirname(__FILE__), 'spec_helper_acceptance_local.rb'))
 include PuppetLitmus
 
-UNSUPPORTED_PLATFORMS = ['RedHat', 'Suse', 'windows', 'AIX', 'Solaris'].freeze
-MAX_RETRY_COUNT       = 5
-RETRY_WAIT            = 3
-ERROR_MATCHER         = %r{(no valid OpenPGP data found|keyserver timed out|keyserver receive failed)}
-
-# This method allows a block to be passed in and if an exception is raised
-# that matches the 'error_matcher' matcher, the block will wait a set number
-# of seconds before retrying.
-# Params:
-# - max_retry_count - Max number of retries
-# - retry_wait_interval_secs - Number of seconds to wait before retry
-# - error_matcher - Matcher which the exception raised must match to allow retry
-# Example Usage:
-# retry_on_error_matching(3, 5, /OpenGPG Error/) do
-#   apply_manifest(pp, :catch_failures => true)
-# end
-def retry_on_error_matching(max_retry_count = MAX_RETRY_COUNT, retry_wait_interval_secs = RETRY_WAIT, error_matcher = ERROR_MATCHER)
-  try = 0
-  begin
-    puts "retry_on_error_matching: try #{try}" unless try.zero?
-    try += 1
-    yield
-  rescue StandardError => e
-    raise(_('Attempted this %{value0} times. Raising %{value1}') % { value0: max_retry_count, value1: e }) unless try < max_retry_count && (error_matcher.nil? || e.message =~ error_matcher)
-    sleep retry_wait_interval_secs
-    retry
-  end
-end
-
-def pe_install?
-  false
-end
-
 if ENV['TARGET_HOST'].nil? || ENV['TARGET_HOST'] == 'localhost'
   puts 'Running tests against this machine !'
   if Gem.win_platform?
@@ -69,7 +36,6 @@ else
            end
     set :host,        options[:host_name] || host
     set :ssh_options, options
-    set :request_pty, true
   elsif target_in_group(inventory_hash, ENV['TARGET_HOST'], 'winrm_nodes')
     require 'winrm'
 
@@ -89,13 +55,4 @@ else
     winrm = WinRM::Connection.new opts
     Specinfra.configuration.winrm = winrm
   end
-
-  lsb_package = <<-MANIFEST
-    package { 'lsb-release':
-	    ensure => installed,
-    }
-    MANIFEST
-
-  apply_manifest(lsb_package)
-  run_shell('puppet module install stahnma/epel')
 end

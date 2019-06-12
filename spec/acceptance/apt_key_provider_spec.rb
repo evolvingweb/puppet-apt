@@ -888,15 +888,16 @@ describe 'apt_key' do
   end
 
   describe 'refresh' do
-    if os[:family] == 'debian' && (os[:distro][:codename] == 'stretch' || os[:distro][:codename] == 'bionic')
-      # Set Debian Stetch specific value of puppetlabs_exp_check_command
+    if ['8', '14.04', '16.04'].include?(host_inventory['facter']['os']['release']['major'])
+      # older OSes use puppetlabs_exp_check_command
+      let(:puppetlabs_exp_check_command) { PUPPETLABS_EXP_CHECK_COMMAND }
+
+    else
+      # Set Debian Stetch and newer OSes puppetlabs_exp_check_command
       let(:puppetlabs_exp_check_command) { DEBIAN_PUPPETLABS_EXP_CHECK_COMMAND }
 
       # Ensure dirmngr package is installed
       apply_manifest(refresh_check_for_dirmngr_pp, acceptable_exit_codes: [0, 2])
-    else
-      # Set default value of puppetlabs_exp_check_command
-      let(:puppetlabs_exp_check_command) { PUPPETLABS_EXP_CHECK_COMMAND }
     end
     before(:each) do
       # Delete the Puppet Labs Release Key and install an expired version of the key

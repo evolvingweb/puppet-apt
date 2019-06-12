@@ -8,3 +8,6 @@ travis_deb:
 waffle_deb:
   provisioner: docker 
   images: ['waffleimage/debian8', 'waffleimage/debian9', 'waffleimage/ubuntu14.04', 'waffleimage/ubuntu16.04', 'waffleimage/ubuntu18.04']
+release_checks:
+  provisioner: vmpooler
+  images: ['debian-8-x86_64', 'debian-9-x86_64',  'ubuntu-1404-x86_64', 'ubuntu-1604-x86_64', 'ubuntu-1804-x86_64']
