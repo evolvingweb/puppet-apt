@@ -21,7 +21,7 @@ DEBIAN_PUPPETLABS_EXP_CHECK_COMMAND = 'apt-key list | grep -F -A 1 \'pub   rsa40
 
 def install_key(key)
   retry_on_error_matching do
-    shell("apt-key adv --no-tty --keyserver pgp.mit.edu --recv-keys #{key}")
+    run_shell("apt-key adv --no-tty --keyserver pgp.mit.edu --recv-keys #{key}")
   end
 end
 
@@ -440,8 +440,8 @@ hkp_pool_pp = <<-MANIFEST
         }
   MANIFEST
 
-hkps_protocol_supported = fact('operatingsystem') =~ %r{Ubuntu} && \
-                          fact('operatingsystemrelease') =~ %r{^18\.04}
+hkps_protocol_supported = os[:family] =~ %r{Ubuntu} && \
+                          os[:family][:release][:full] =~ %r{^18\.04}
 
 if hkps_protocol_supported
   hkps_ubuntu_pp = <<-MANIFEST
@@ -646,10 +646,8 @@ describe 'apt_key' do
   before(:each) do
     # Delete twice to make sure everything is cleaned
     # up after the short key collision
-    shell("apt-key del #{PUPPETLABS_GPG_KEY_SHORT_ID}",
-          acceptable_exit_codes: [0, 1, 2])
-    shell("apt-key del #{PUPPETLABS_GPG_KEY_SHORT_ID}",
-          acceptable_exit_codes: [0, 1, 2])
+    run_shell("apt-key del #{PUPPETLABS_GPG_KEY_SHORT_ID}", expect_failures: true)
+    run_shell("apt-key del #{PUPPETLABS_GPG_KEY_SHORT_ID}", expect_failures: true)
   end
 
   describe 'ensure =>' do
@@ -684,14 +682,14 @@ describe 'apt_key' do
         end
 
         apply_manifest(gpg_key_pp, catch_changes: true)
-        shell(PUPPETLABS_KEY_CHECK_COMMAND)
+        run_shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
 
     context 'with multiple keys' do
       it 'runs without errors' do
         apply_manifest_twice(multiple_keys_pp)
-        shell(PUPPETLABS_KEY_CHECK_COMMAND)
+        run_shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
 
@@ -712,7 +710,7 @@ describe 'apt_key' do
         end
 
         apply_manifest(hkp_pool_pp, catch_changes: true)
-        shell(PUPPETLABS_KEY_CHECK_COMMAND)
+        run_shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
 
@@ -724,7 +722,7 @@ describe 'apt_key' do
           end
 
           apply_manifest(hkps_ubuntu_pp, catch_changes: true)
-          shell(PUPPETLABS_KEY_CHECK_COMMAND)
+          run_shell(PUPPETLABS_KEY_CHECK_COMMAND)
         end
       end
     end
@@ -750,12 +748,12 @@ describe 'apt_key' do
     context 'with http://' do
       it 'works' do
         apply_manifest_twice(http_works_pp)
-        shell(PUPPETLABS_KEY_CHECK_COMMAND)
+        run_shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
       it 'works with userinfo' do
         apply_manifest_twice(http_works_userinfo_pp)
-        shell(PUPPETLABS_KEY_CHECK_COMMAND)
+        run_shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
       it 'fails with a 404' do
@@ -774,13 +772,12 @@ describe 'apt_key' do
     # disabled when running in travis, security issues prevent FTP
     context 'with ftp://', unless: (ENV['TRAVIS'] == 'true') do
       before(:each) do
-        shell("apt-key del #{CENTOS_GPG_KEY_LONG_ID}",
-              acceptable_exit_codes: [0, 1, 2])
+        run_shell("apt-key del #{CENTOS_GPG_KEY_LONG_ID}", expect_failures: true)
       end
 
       it 'works' do
         apply_manifest_twice(ftp_works_pp)
-        shell(CENTOS_KEY_CHECK_COMMAND)
+        run_shell(CENTOS_KEY_CHECK_COMMAND)
       end
 
       it 'fails with a 550' do
@@ -799,17 +796,17 @@ describe 'apt_key' do
     context 'with https://' do
       it 'works' do
         apply_manifest_twice(https_works_pp)
-        shell(PUPPETLABS_KEY_CHECK_COMMAND)
+        run_shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
       it 'works with weak ssl' do
         apply_manifest_twice(https_with_weak_ssl_works_pp)
-        shell(PUPPETLABS_KEY_CHECK_COMMAND)
+        run_shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
       it 'works with userinfo' do
         apply_manifest_twice(https_userinfo_pp)
-        shell(PUPPETLABS_KEY_CHECK_COMMAND)
+        run_shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
 
       it 'fails with a 404' do
@@ -827,17 +824,17 @@ describe 'apt_key' do
 
     context 'with /path/that/exists' do
       before(:each) do
-        shell("curl -o /tmp/puppetlabs-pubkey.gpg \
+        run_shell("curl -o /tmp/puppetlabs-pubkey.gpg \
               http://#{PUPPETLABS_APT_URL}/#{PUPPETLABS_GPG_KEY_FILE}")
       end
 
       after(:each) do
-        shell('rm /tmp/puppetlabs-pubkey.gpg')
+        run_shell('rm /tmp/puppetlabs-pubkey.gpg')
       end
 
       it 'works' do
         apply_manifest_twice(path_exists_pp)
-        shell(PUPPETLABS_KEY_CHECK_COMMAND)
+        run_shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
 
@@ -851,11 +848,11 @@ describe 'apt_key' do
 
     context 'with /path/that/exists/with/bogus/content' do
       before(:each) do
-        shell('echo "here be dragons" > /tmp/fake-key.gpg')
+        run_shell('echo "here be dragons" > /tmp/fake-key.gpg')
       end
 
       after(:each) do
-        shell('rm /tmp/fake-key.gpg')
+        run_shell('rm /tmp/fake-key.gpg')
       end
       it 'fails' do
         apply_manifest(path_bogus_content_pp, expect_failures: true) do |r|
@@ -869,7 +866,7 @@ describe 'apt_key' do
     context 'with debug' do
       it 'works' do
         apply_manifest_twice(debug_works_pp)
-        shell(PUPPETLABS_KEY_CHECK_COMMAND)
+        run_shell(PUPPETLABS_KEY_CHECK_COMMAND)
       end
     end
   end
@@ -891,18 +888,18 @@ describe 'apt_key' do
   end
 
   describe 'refresh' do
-    if fact('osfamily') == 'Debian' && (fact('lsbdistcodename') == 'stretch' || fact('lsbdistcodename') == 'bionic')
-      # Set Debian Stetch specific value of puppetlabs_exp_check_command
-      let(:puppetlabs_exp_check_command) { DEBIAN_PUPPETLABS_EXP_CHECK_COMMAND }
-    else
-      # Set default value of puppetlabs_exp_check_command
+    if ['8', '14.04', '16.04'].include?(host_inventory['facter']['os']['release']['major'])
+      # older OSes use puppetlabs_exp_check_command
       let(:puppetlabs_exp_check_command) { PUPPETLABS_EXP_CHECK_COMMAND }
+
+    else
+      # Set Debian Stetch and newer OSes puppetlabs_exp_check_command
+      let(:puppetlabs_exp_check_command) { DEBIAN_PUPPETLABS_EXP_CHECK_COMMAND }
+
+      # Ensure dirmngr package is installed
+      apply_manifest(refresh_check_for_dirmngr_pp, acceptable_exit_codes: [0, 2])
     end
     before(:each) do
-      if fact('lsbdistcodename') == 'stretch' || fact('lsbdistcodename') == 'bionic'
-        # Ensure dirmngr package is installed
-        apply_manifest(refresh_check_for_dirmngr_pp, acceptable_exit_codes: [0, 2])
-      end
       # Delete the Puppet Labs Release Key and install an expired version of the key
       apply_manifest(refresh_del_key_pp)
       apply_manifest(refresh_pp, catch_failures: true)
@@ -911,14 +908,14 @@ describe 'apt_key' do
       it 'updates an expired key' do
         apply_manifest(refresh_true_pp)
         # Check key has been updated to new version
-        shell(puppetlabs_exp_check_command.to_s, acceptable_exit_codes: [0])
+        run_shell(puppetlabs_exp_check_command.to_s)
       end
     end
     context 'when refresh => false' do
       it 'does not replace an expired key' do
         apply_manifest(refresh_false_pp)
         # Expired key is present and has not been updated by the new version
-        shell(puppetlabs_exp_check_command.to_s, acceptable_exit_codes: [1])
+        run_shell(puppetlabs_exp_check_command.to_s, expect_failures: true)
       end
     end
   end
