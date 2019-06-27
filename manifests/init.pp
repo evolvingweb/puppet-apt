@@ -302,5 +302,5 @@ class apt (
   }
 
   # required for adding GPG keys on Debian 9 (and derivatives)
-  ensure_packages(['dirmngr'])
+  ensure_packages(['gnupg'])
 }
