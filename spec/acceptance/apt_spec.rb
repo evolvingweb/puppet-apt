@@ -23,6 +23,7 @@ everything_everything_pp = <<-MANIFEST
           'sources.list.d' => true,
           'preferences'    => true,
           'preferences.d'  => true,
+          'apt.conf.d'     => true,
         },
         sources => $sources,
       }
