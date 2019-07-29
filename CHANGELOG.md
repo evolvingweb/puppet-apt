@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.1.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.1.0) (2019-07-29)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.0.1...v7.1.0)
+
+### Added
+
+- \(FM-8215\) Convert to using litmus [\#864](https://github.com/puppetlabs/puppetlabs-apt/pull/864) ([florindragos](https://github.com/florindragos))
+
 ## [v7.0.1](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.0.1) (2019-05-13)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/7.0.0...v7.0.1)
