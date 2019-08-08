@@ -9,6 +9,9 @@
 #   Specifies a keyserver to provide the GPG key. Valid options: a string containing a domain name or a full URL (http://, https://, or
 #   hkp://).
 #
+# @param key_options
+#   Specifies the default options for apt::key resources.
+#
 # @param ppa_options
 #   Supplies options to be passed to the `add-apt-repository` command.
 #
@@ -122,6 +125,7 @@ class apt (
   Hash $include_defaults        = $apt::params::include_defaults,
   String $provider              = $apt::params::provider,
   String $keyserver             = $apt::params::keyserver,
+  Optional[String] $key_options = $apt::params::key_options,
   Optional[String] $ppa_options = $apt::params::ppa_options,
   Optional[String] $ppa_package = $apt::params::ppa_package,
   Optional[Hash] $backports     = $apt::params::backports,
