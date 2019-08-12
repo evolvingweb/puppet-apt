@@ -144,6 +144,7 @@ class apt (
   String $conf_d                = $apt::params::conf_d,
   String $preferences           = $apt::params::preferences,
   String $preferences_d         = $apt::params::preferences_d,
+  String $apt_conf_d            = $apt::params::apt_conf_d,
   Hash $config_files            = $apt::params::config_files,
   Hash $source_key_defaults     = $apt::params::source_key_defaults,
 ) inherits apt::params {
@@ -179,6 +180,9 @@ class apt (
   }
   if $purge['preferences.d'] {
     assert_type(Boolean, $purge['preferences.d'])
+  }
+  if $purge['apt.conf.d'] {
+    assert_type(Boolean, $purge['apt.conf.d'])
   }
 
   $_purge = merge($::apt::purge_defaults, $purge)
@@ -255,6 +259,17 @@ class apt (
     mode    => '0644',
     purge   => $_purge['preferences.d'],
     recurse => $_purge['preferences.d'],
+    notify  => Class['apt::update'],
+  }
+
+  file { 'apt.conf.d':
+    ensure  => directory,
+    path    => $::apt::apt_conf_d,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    purge   => $_purge['apt.conf.d'],
+    recurse => $_purge['apt.conf.d'],
     notify  => Class['apt::update'],
   }
 

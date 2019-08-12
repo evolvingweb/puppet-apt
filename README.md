@@ -36,10 +36,11 @@ APT is a package manager available on Debian, Ubuntu, and several other operatin
 
 * Your system's `preferences` file and `preferences.d` directory
 * Your system's `sources.list` file and `sources.list.d` directory
+* Your system's `apt.conf.d` directory
 * System repositories
 * Authentication keys
 
-**Note:** This module offers `purge` parameters which, if set to `true`, **destroy** any configuration on the node's `sources.list(.d)` and `preferences(.d)` that you haven't declared through Puppet. The default for these parameters is `false`.
+**Note:** This module offers `purge` parameters which, if set to `true`, **destroy** any configuration on the node's `sources.list(.d)`, `preferences(.d)` and `apt.conf.d` that you haven't declared through Puppet. The default for these parameters is `false`.
 
 <a id="beginning-with-apt"></a>
 ### Beginning with apt

@@ -32,6 +32,15 @@ preferences_d = { ensure: 'directory',
                   recurse: false,
                   notify: 'Class[Apt::Update]' }
 
+apt_conf_d = {    ensure: 'directory',
+                  path: '/etc/apt/apt.conf.d',
+                  owner: 'root',
+                  group: 'root',
+                  mode: '0644',
+                  purge: false,
+                  recurse: false,
+                  notify: 'Class[Apt::Update]' }
+
 describe 'apt' do
   let(:facts) do
     {
@@ -57,6 +66,10 @@ describe 'apt' do
 
     it {
       is_expected.to contain_file('preferences.d').that_notifies('Class[Apt::Update]').only_with(preferences_d)
+    }
+
+    it {
+      is_expected.to contain_file('apt.conf.d').that_notifies('Class[Apt::Update]').only_with(apt_conf_d)
     }
 
     it { is_expected.to contain_file('/etc/apt/auth.conf').with_ensure('absent') }
@@ -158,7 +171,8 @@ describe 'apt' do
       {
         update: { 'frequency' => 'always', 'timeout' => 1, 'tries' => 3 },
         purge: { 'sources.list' => false, 'sources.list.d' => false,
-                 'preferences' => false, 'preferences.d' => false },
+                 'preferences' => false, 'preferences.d' => false,
+                 'apt.conf.d' => false },
       }
     end
 
@@ -178,6 +192,11 @@ describe 'apt' do
     it {
       is_expected.to contain_file('preferences.d').with(purge: false,
                                                         recurse: false)
+    }
+
+    it {
+      is_expected.to contain_file('apt.conf.d').with(purge: false,
+                                                     recurse: false)
     }
 
     it {
@@ -504,6 +523,14 @@ machine apt.example.com login aptlogin password supersecret
 
     context "with purge['preferences.d']=>'banana'" do
       let(:params) { { purge: { 'preferences.d' => 'banana' } } }
+
+      it do
+        is_expected.to raise_error(Puppet::Error)
+      end
+    end
+
+    context "with purge['apt.conf.d']=>'banana'" do
+      let(:params) { { purge: { 'apt.conf.d' => 'banana' } } }
 
       it do
         is_expected.to raise_error(Puppet::Error)
