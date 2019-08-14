@@ -379,4 +379,18 @@ describe 'apt::key' do
       end
     end
   end
+
+  describe 'defaults' do
+    context 'when setting keyserver on the apt class' do
+      let :pre_condition do
+        'class { "apt":
+          keyserver => "keyserver.example.com",
+        }'
+      end
+
+      it 'uses default keyserver' do
+        is_expected.to contain_apt_key(title).with_server('keyserver.example.com')
+      end
+    end
+  end
 end
