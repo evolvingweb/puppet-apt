@@ -392,5 +392,17 @@ describe 'apt::key' do
         is_expected.to contain_apt_key(title).with_server('keyserver.example.com')
       end
     end
+
+    context 'when setting key_options on the apt class' do
+      let :pre_condition do
+        'class { "apt":
+          key_options => "http-proxy=http://proxy.example.com:8080",
+        }'
+      end
+
+      it 'uses default keyserver' do
+        is_expected.to contain_apt_key(title).with_options('http-proxy=http://proxy.example.com:8080')
+      end
+    end
   end
 end
