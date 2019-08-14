@@ -18,6 +18,7 @@ class apt::params {
   $preferences_d  = "${root}/preferences.d"
   $apt_conf_d     = "${root}/apt.conf.d"
   $keyserver      = 'keyserver.ubuntu.com'
+  $key_options    = undef
   $confs          = {}
   $update         = {}
   $purge          = {}
