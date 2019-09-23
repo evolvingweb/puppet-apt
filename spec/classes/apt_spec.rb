@@ -247,6 +247,12 @@ describe 'apt' do
         osfamily: 'Debian',
         lsbdistcodename: 'stretch',
       },
+      'Debian 10.0' => {
+        os: { family: 'Debian', name: 'Debian', release: { major: '10', full: '10.0' } },
+        lsbdistid: 'Debian',
+        osfamily: 'Debian',
+        lsbdistcodename: 'buster',
+      },
     }
 
     facts_hash.each do |os, facts|
