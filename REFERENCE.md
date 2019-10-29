@@ -19,6 +19,7 @@ _Private Classes_
 
 * [`apt::conf`](#aptconf): Specifies a custom Apt configuration file.
 * [`apt::key`](#aptkey): Manages the GPG keys that Apt uses to authenticate packages.
+* [`apt::mark`](#aptmark): defined typeapt::mark
 * [`apt::pin`](#aptpin): Manages Apt pins. Does not trigger an apt-get update run.
 * [`apt::ppa`](#aptppa): Manages PPA repositories using `add-apt-repository`. Not supported on Debian.
 * [`apt::setting`](#aptsetting): Manages Apt configuration files.
@@ -34,6 +35,11 @@ _Private Resource types_
 * `apt_key`: This type provides Puppet with the capabilities to manage GPG keys needed
 by apt to perform package validation. Apt has it's own GPG keyring that can
 be manipulated through the `apt-key` command.
+
+**Data types**
+
+* [`Apt::Auth_conf_entry`](#aptauth_conf_entry): Login configuration settings that are recorded in the file `/etc/apt/auth.conf`.
+* [`Apt::Proxy`](#aptproxy): Configures Apt to connect to a proxy server.
 
 **Tasks**
 
@@ -69,6 +75,14 @@ Specifies a keyserver to provide the GPG key. Valid options: a string containing
 hkp://).
 
 Default value: $apt::params::keyserver
+
+##### `key_options`
+
+Data type: `Optional[String]`
+
+Specifies the default options for apt::key resources.
+
+Default value: $apt::params::key_options
 
 ##### `ppa_options`
 
@@ -305,6 +319,14 @@ Data type: `Hash`
 
 Default value: $apt::params::include_defaults
 
+##### `apt_conf_d`
+
+Data type: `String`
+
+
+
+Default value: $apt::params::apt_conf_d
+
 ##### `source_key_defaults`
 
 Data type: `Hash`
@@ -519,7 +541,23 @@ Data type: `Optional[String]`
 
 Passes additional options to `apt-key adv --keyserver-options`.
 
-Default value: `undef`
+Default value: $::apt::key_options
+
+### apt::mark
+
+defined typeapt::mark
+
+#### Parameters
+
+The following parameters are available in the `apt::mark` defined type.
+
+##### `setting`
+
+Data type: `Enum['auto','manual','hold','unhold']`
+
+auto, manual, hold, unhold
+specifies the behavior of apt in case of no more dependencies installed
+https://manpages.debian.org/sretch/apt/apt-mark.8.en.html
 
 ### apt::pin
 
@@ -871,6 +909,74 @@ Specifies whether to trigger an `apt-get update` run.
 Default value: `true`
 
 ## Resource types
+
+## Data types
+
+### Apt::Auth_conf_entry
+
+Login configuration settings that are recorded in the file `/etc/apt/auth.conf`.
+
+* **See also**
+https://manpages.debian.org/testing/apt/apt_auth.conf.5.en.html
+for more information
+
+Alias of `Struct[{
+    machine => String[1],
+    login => String,
+    password => String
+  }]`
+
+#### Parameters
+
+The following parameters are available in the `Apt::Auth_conf_entry` data type.
+
+##### `machine`
+
+Hostname of machine to connect to.
+
+##### `login`
+
+Specifies the username to connect with.
+
+##### `password`
+
+Specifies the password to connect with.
+
+### Apt::Proxy
+
+Configures Apt to connect to a proxy server.
+
+Alias of `Struct[{
+    ensure => Optional[Enum['file', 'present', 'absent']],
+    host   => Optional[String],
+    port   => Optional[Integer[0, 65535]],
+    https  => Optional[Boolean],
+    direct => Optional[Boolean],
+  }]`
+
+#### Parameters
+
+The following parameters are available in the `Apt::Proxy` data type.
+
+##### `ensure`
+
+Specifies whether the proxy should exist. Valid options: 'file', 'present', and 'absent'. Prefer 'file' over 'present'.
+
+##### `host`
+
+Specifies a proxy host to be stored in `/etc/apt/apt.conf.d/01proxy`. Valid options: a string containing a hostname.
+
+##### `port`
+
+Specifies a proxy port to be stored in `/etc/apt/apt.conf.d/01proxy`. Valid options: an integer containing a port number.
+
+##### `https`
+
+Specifies whether to enable https proxies.
+
+##### `direct`
+
+Specifies whether or not to use a `DIRECT` https proxy if http proxy is used but https is not.
 
 ## Tasks
 

@@ -2,7 +2,22 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v7.1.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.1.0) (2019-07-29)
+## [v7.2.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.2.0) (2019-10-29)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.1.0...v7.2.0)
+
+### Added
+
+- Add apt::mark defined type [\#879](https://github.com/puppetlabs/puppetlabs-apt/pull/879) ([tuxmea](https://github.com/tuxmea))
+- \(FM-8394\) add debian 10 testing [\#876](https://github.com/puppetlabs/puppetlabs-apt/pull/876) ([ThoughtCrhyme](https://github.com/ThoughtCrhyme))
+- Add apt::key\_options for default apt::key options [\#873](https://github.com/puppetlabs/puppetlabs-apt/pull/873) ([raphink](https://github.com/raphink))
+- implement apt.conf.d purging [\#869](https://github.com/puppetlabs/puppetlabs-apt/pull/869) ([lelutin](https://github.com/lelutin))
+
+### Fixed
+
+- Install gnupg instead of dirmngr [\#866](https://github.com/puppetlabs/puppetlabs-apt/pull/866) ([martijndegouw](https://github.com/martijndegouw))
+
+## [v7.1.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.1.0) (2019-07-30)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.0.1...v7.1.0)
 
