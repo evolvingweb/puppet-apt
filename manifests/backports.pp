@@ -52,6 +52,9 @@ class apt::backports (
   Optional[Variant[String, Hash]] $key          = undef,
   Optional[Variant[Integer, String, Hash]] $pin = 200,
 ){
+
+  include apt
+
   if $location {
     $_location = $location
   }
