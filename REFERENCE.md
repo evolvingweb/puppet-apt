@@ -717,6 +717,15 @@ Specifies the operating system of your node. Valid options: a string containing 
 
 Default value: $facts['lsbdistcodename']
 
+##### `dist`
+
+Data type: `Optional[String]`
+
+Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint).
+Specifies the distribution of your node. Valid options: a string containing a valid distribution codename.
+
+Default value: $facts['lsbdistid']
+
 ##### `package_name`
 
 Data type: `Optional[String]`

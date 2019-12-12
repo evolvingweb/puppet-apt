@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.3.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.3.0) (2019-12-11)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.2.0...v7.3.0)
+
+### Added
+
+- Adding a new parameter for dist [\#890](https://github.com/puppetlabs/puppetlabs-apt/pull/890) ([luckyraul](https://github.com/luckyraul))
+
+### Fixed
+
+- MODULES-10063, extend apt::key to support deeplinks, this time with f… [\#894](https://github.com/puppetlabs/puppetlabs-apt/pull/894) ([atarax](https://github.com/atarax))
+- MODULES-10063, extend apt::key to support deeplinks [\#892](https://github.com/puppetlabs/puppetlabs-apt/pull/892) ([atarax](https://github.com/atarax))
+
 ## [v7.2.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.2.0) (2019-10-29)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.1.0...v7.2.0)
