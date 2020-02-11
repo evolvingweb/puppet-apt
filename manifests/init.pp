@@ -204,9 +204,9 @@ class apt (
     }
   }
 
-  $sources_list_content = $_purge['sources.list'] ? {
-    true    => "# Repos managed by puppet.\n",
-    default => undef,
+  $sources_list_ensure = $_purge['sources.list'] ? {
+    true    => absent,
+    default => file,
   }
 
   $preferences_ensure = $_purge['preferences'] ? {
@@ -226,13 +226,12 @@ class apt (
   }
 
   file { 'sources.list':
-    ensure  => file,
-    path    => $::apt::sources_list,
-    owner   => root,
-    group   => root,
-    mode    => '0644',
-    content => $sources_list_content,
-    notify  => Class['apt::update'],
+    ensure => $sources_list_ensure,
+    path   => $::apt::sources_list,
+    owner  => root,
+    group  => root,
+    mode   => '0644',
+    notify => Class['apt::update'],
   }
 
   file { 'sources.list.d':
