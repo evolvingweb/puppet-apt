@@ -35,7 +35,7 @@ describe 'apt::conf', type: :define do
                                                  'content'   => %r{Apt::Install-Recommends 0;\nApt::AutoRemove::InstallRecommends 1;},
                                                  'owner'     => 'root',
                                                  'group'     => 'root',
-                                                 'mode'      => '0644')
+                                                 'mode'      => '0444')
     }
 
     context 'with notify_update = true (default)' do
@@ -83,7 +83,7 @@ describe 'apt::conf', type: :define do
       is_expected.to contain_file(filename).with('ensure' => 'absent',
                                                  'owner'     => 'root',
                                                  'group'     => 'root',
-                                                 'mode'      => '0644')
+                                                 'mode'      => '0444')
     }
   end
 end

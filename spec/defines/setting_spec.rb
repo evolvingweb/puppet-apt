@@ -50,7 +50,7 @@ describe 'apt::setting' do
         is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Class[Apt::Update]').with(ensure: 'file',
                                                                                                                 owner: 'root',
                                                                                                                 group: 'root',
-                                                                                                                mode: '0644',
+                                                                                                                mode: '0444',
                                                                                                                 source: params[:source].to_s)
       }
     end
@@ -62,7 +62,7 @@ describe 'apt::setting' do
         is_expected.to contain_file('/etc/apt/apt.conf.d/50teddybear').that_notifies('Class[Apt::Update]').with(ensure: 'file',
                                                                                                                 owner: 'root',
                                                                                                                 group: 'root',
-                                                                                                                mode: '0644',
+                                                                                                                mode: '0444',
                                                                                                                 content: params[:content].to_s)
       }
     end
