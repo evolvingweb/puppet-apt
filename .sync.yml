@@ -17,8 +17,8 @@
   use_litmus: true
   litmus:
     provision_list:
-      - travis_el6
-      - travis_el7
+      - travis_deb
+      - travis_ub
       - ---travis_el
   simplecov: true
   notifications:
