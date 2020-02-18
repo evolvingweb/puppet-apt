@@ -45,12 +45,16 @@
 #   Specifies a pin priority for the backports. Valid options: a number or string to be passed to the `id` parameter of the `apt::pin` defined 
 #   type, or a hash of `parameter => value` pairs to be passed to `apt::pin`'s corresponding parameters.
 #
+# @param include
+#   Specifies whether to include 'deb' or 'src', or both.
+#
 class apt::backports (
   Optional[String] $location                    = undef,
   Optional[String] $release                     = undef,
   Optional[String] $repos                       = undef,
   Optional[Variant[String, Hash]] $key          = undef,
   Optional[Variant[Integer, String, Hash]] $pin = 200,
+  Optional[Variant[Hash]] $include              = {},
 ){
 
   include apt
@@ -102,6 +106,7 @@ class apt::backports (
     location => $_location,
     release  => $_release,
     repos    => $_repos,
+    include  => $include,
     key      => $_key,
     pin      => $_pin,
   }
