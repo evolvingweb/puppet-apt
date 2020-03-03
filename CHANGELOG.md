@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.4.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.4.0) (2020-02-27)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.3.0...v7.4.0)
+
+### Added
+
+- Add 'include' param to apt::backports [\#910](https://github.com/puppetlabs/puppetlabs-apt/pull/910) ([paladox](https://github.com/paladox))
+- pdksync - \(FM-8581\) - Debian 10 added to travis and provision file refactored [\#902](https://github.com/puppetlabs/puppetlabs-apt/pull/902) ([david22swan](https://github.com/david22swan))
+
+### Fixed
+
+- MODULES-10548: make files readonly [\#906](https://github.com/puppetlabs/puppetlabs-apt/pull/906) ([anarcat](https://github.com/anarcat))
+- MODULES-10543: only consider lsbdistcodename for apt-transport-https [\#905](https://github.com/puppetlabs/puppetlabs-apt/pull/905) ([anarcat](https://github.com/anarcat))
+- MODULES-10543: remove sources.list file on purging [\#904](https://github.com/puppetlabs/puppetlabs-apt/pull/904) ([anarcat](https://github.com/anarcat))
+- Include apt in apt::backports [\#891](https://github.com/puppetlabs/puppetlabs-apt/pull/891) ([zivis](https://github.com/zivis))
+
 ## [v7.3.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.3.0) (2019-12-11)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.2.0...v7.3.0)
