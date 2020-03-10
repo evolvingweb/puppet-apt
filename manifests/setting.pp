@@ -69,7 +69,7 @@ define apt::setting (
     ensure  => $ensure,
     owner   => 'root',
     group   => 'root',
-    mode    => '0444',
+    mode    => '0644',
     content => $content,
     source  => $source,
     notify  => $_notify,
