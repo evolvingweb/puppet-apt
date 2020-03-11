@@ -4,14 +4,12 @@ sources_list = {  ensure: 'file',
                   path: '/etc/apt/sources.list',
                   owner: 'root',
                   group: 'root',
-                  mode: '0644',
                   notify: 'Class[Apt::Update]' }
 
 sources_list_d = { ensure: 'directory',
                    path: '/etc/apt/sources.list.d',
                    owner: 'root',
                    group: 'root',
-                   mode: '0644',
                    purge: false,
                    recurse: false,
                    notify: 'Class[Apt::Update]' }
@@ -20,14 +18,12 @@ preferences = { ensure: 'file',
                 path: '/etc/apt/preferences',
                 owner: 'root',
                 group: 'root',
-                mode: '0644',
                 notify: 'Class[Apt::Update]' }
 
 preferences_d = { ensure: 'directory',
                   path: '/etc/apt/preferences.d',
                   owner: 'root',
                   group: 'root',
-                  mode: '0644',
                   purge: false,
                   recurse: false,
                   notify: 'Class[Apt::Update]' }
@@ -36,7 +32,6 @@ apt_conf_d = {    ensure: 'directory',
                   path: '/etc/apt/apt.conf.d',
                   owner: 'root',
                   group: 'root',
-                  mode: '0644',
                   purge: false,
                   recurse: false,
                   notify: 'Class[Apt::Update]' }
@@ -76,7 +71,6 @@ describe 'apt' do
 
     it 'lays down /etc/apt/apt.conf.d/15update-stamp' do
       is_expected.to contain_file('/etc/apt/apt.conf.d/15update-stamp').with(group: 'root',
-                                                                             mode: '0644',
                                                                              owner: 'root').with_content(
                                                                                %r{APT::Update::Post-Invoke-Success {"touch /var/lib/apt/periodic/update-success-stamp 2>/dev/null || true";};},
                                                                              )

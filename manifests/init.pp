@@ -230,7 +230,6 @@ class apt (
     path   => $::apt::sources_list,
     owner  => root,
     group  => root,
-    mode   => '0644',
     notify => Class['apt::update'],
   }
 
@@ -239,7 +238,6 @@ class apt (
     path    => $::apt::sources_list_d,
     owner   => root,
     group   => root,
-    mode    => '0644',
     purge   => $_purge['sources.list.d'],
     recurse => $_purge['sources.list.d'],
     notify  => Class['apt::update'],
@@ -250,7 +248,6 @@ class apt (
     path   => $::apt::preferences,
     owner  => root,
     group  => root,
-    mode   => '0644',
     notify => Class['apt::update'],
   }
 
@@ -259,7 +256,6 @@ class apt (
     path    => $::apt::preferences_d,
     owner   => root,
     group   => root,
-    mode    => '0644',
     purge   => $_purge['preferences.d'],
     recurse => $_purge['preferences.d'],
     notify  => Class['apt::update'],
@@ -270,7 +266,6 @@ class apt (
     path    => $::apt::apt_conf_d,
     owner   => root,
     group   => root,
-    mode    => '0644',
     purge   => $_purge['apt.conf.d'],
     recurse => $_purge['apt.conf.d'],
     notify  => Class['apt::update'],
