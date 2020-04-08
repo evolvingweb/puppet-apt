@@ -13,7 +13,7 @@ define apt::mark (
       $unless_cmd = undef
     }
     default: {
-      $unless_cmd = "/usr/bin/apt-mark showm${setting} ${title} | /bin/fgrep -qs ${title}"
+      $unless_cmd = "/usr/bin/apt-mark show${setting} ${title} | /bin/fgrep -qs ${title}"
     }
   }
   exec { "/usr/bin/apt-mark ${setting} ${title}":
