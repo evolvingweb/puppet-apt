@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.4.2](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.4.2) (2020-05-14)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.4.1...v7.4.2)
+
+### Fixed
+
+- fix apt-mark syntax [\#927](https://github.com/puppetlabs/puppetlabs-apt/pull/927) ([tryfunc](https://github.com/tryfunc))
+- Do not specify file modes unless relevant [\#923](https://github.com/puppetlabs/puppetlabs-apt/pull/923) ([anarcat](https://github.com/anarcat))
+
 ## [v7.4.1](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.4.1) (2020-03-10)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.4.0...v7.4.1)
