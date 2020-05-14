@@ -418,6 +418,14 @@ type, or a hash of `parameter => value` pairs to be passed to `apt::pin`'s corre
 
 Default value: 200
 
+##### `include`
+
+Data type: `Optional[Variant[Hash]]`
+
+Specifies whether to include 'deb' or 'src', or both.
+
+Default value: {}
+
 ## Defined types
 
 ### apt::conf
