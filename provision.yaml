@@ -18,5 +18,5 @@ travis_el7:
   provisioner: docker 
   images: []
 release_checks:
-  provisioner: vmpooler
+  provisioner: abs
   images: ['debian-8-x86_64', 'debian-9-x86_64', 'debian-10-x86_64', 'ubuntu-1404-x86_64', 'ubuntu-1604-x86_64', 'ubuntu-1804-x86_64']
