@@ -86,11 +86,19 @@ define apt::source(
     if ! $location {
       fail(translate('cannot create a source entry without specifying a location'))
     }
+    elsif ($::apt::proxy['https_acng']) and ($location =~ /(?i:^https:\/\/)/) {
+      $_location = regsubst($location, 'https://','http://HTTPS///')
+    }
+    else {
+      $_location = $location
+    }
     # Newer oses, do not need the package for HTTPS transport.
     $_transport_https_releases = [ 'wheezy', 'jessie', 'stretch', 'trusty', 'xenial' ]
-    if ($facts['lsbdistcodename'] in $_transport_https_releases) and $location =~ /(?i:^https:\/\/)/ {
+    if ($facts['lsbdistcodename'] in $_transport_https_releases) and $_location =~ /(?i:^https:\/\/)/ {
       ensure_packages('apt-transport-https')
     }
+  } else {
+    $_location = undef
   }
 
   $includes = merge($::apt::include_defaults, $include)
@@ -113,7 +121,7 @@ define apt::source(
     'includes'         => $includes,
     'opt_architecture' => $architecture,
     'allow_unsigned'   => $allow_unsigned,
-    'location'         => $location,
+    'location'         => $_location,
     'release'          => $_release,
     'repos'            => $repos,
   })
