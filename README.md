@@ -96,7 +96,7 @@ class { 'apt':
   },
 }
 ```
-When `Exec['apt_update']` is triggered, it generates a `Notice` message. Because the default [logging level for agents](https://docs.puppet.com/puppet/latest/configuration.html#loglevel) is `notice`, this causes the repository update to appear in logs and agent reports. Some tools, such as [The Foreman](https://www.theforeman.org), report the update notice as a significant change. To eliminate these updates from reports, set the [loglevel](https://docs.puppet.com/puppet/latest/metaparameter.html#loglevel) metaparameter for `Exec['apt_update']` above the agent logging level:
+When `Exec['apt_update']` is triggered, it generates a `notice`-level message. Because the default [logging level for agents](https://puppet.com/docs/puppet/latest/configuration.html#loglevel) is `notice`, this causes the repository update to appear in agent logs. To silence these updates from the default log output, set the [loglevel](https://puppet.com/docs/puppet/latest/metaparameter.html#loglevel) metaparameter for `Exec['apt_update']` above the agent logging level:
 
 ```puppet
 class { 'apt':
@@ -106,6 +106,8 @@ class { 'apt':
   },
 }
 ```
+
+> **NOTE:** Every `Exec['apt_update']` run will generate a corrective change, even if the apt caches are not updated. For example, setting an update frequency of `always` can result in every Puppet run resulting in a corrective change. This is a known issue. For details, see [MODULES-10763](https://tickets.puppetlabs.com/browse/MODULES-10763).
 
 <a id="pin-a-specific-release"></a>
 ### Pin a specific release
