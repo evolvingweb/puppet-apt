@@ -286,14 +286,14 @@ class { 'apt':
 
 ### More Information
 
-See [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-apt/blob/master/REFERENCE.md) for all other reference documentation.
+See [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-apt/blob/main/REFERENCE.md) for all other reference documentation.
 
 <a id="limitations"></a> 
 ## Limitations
 
 This module is not designed to be split across [run stages](https://docs.puppetlabs.com/puppet/latest/reference/lang_run_stages.html).
 
-For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-apt/blob/master/metadata.json)
+For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-apt/blob/main/metadata.json)
 
 ### Adding new sources or PPAs
 
