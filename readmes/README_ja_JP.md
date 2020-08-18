@@ -266,13 +266,13 @@ class { 'apt':
 
 ### 詳細情報
 
-その他すべてのリファレンスマニュアルについては、[REFERENCE.md](https://github.com/puppetlabs/puppetlabs-apt/blob/master/REFERENCE.md)を参照してください。
+その他すべてのリファレンスマニュアルについては、[REFERENCE.md](https://github.com/puppetlabs/puppetlabs-apt/blob/main/REFERENCE.md)を参照してください。
 
 ## 制約
 
 このモジュールは、[実行ステージ](https://docs.puppetlabs.com/puppet/latest/reference/lang_run_stages.html)に分割するようには設計されていません。
 
-サポート対象のオペレーティングシステムの全リストについては、[metadata.json](https://github.com/puppetlabs/puppetlabs-apt/blob/master/metadata.json)を参照してください。
+サポート対象のオペレーティングシステムの全リストについては、[metadata.json](https://github.com/puppetlabs/puppetlabs-apt/blob/main/metadata.json)を参照してください。
 
 ### 新しいソースまたはPPAの追加
 

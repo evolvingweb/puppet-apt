@@ -15,6 +15,7 @@ describe Puppet::Type.type(:apt_key).provider(:apt_key) do
 
   context 'self.instances no key' do
     before :each do
+      # Unable to remove `master` from below terminology as it relies on outside code
       allow(described_class).to receive(:apt_key).with(
         ['adv', '--no-tty', '--list-keys', '--with-colons', '--fingerprint', '--fixed-list-mode'],
       ).and_return('uid:-::::1284991450::07BEBE04F4AE4A8E885A761325717D8509D9C1DC::Ubuntu Extras Archive Automatic Signing Key <ftpmaster@ubuntu.com>::::::::::0:')
