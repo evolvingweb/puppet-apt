@@ -8,28 +8,29 @@ class apt::params {
     fail(translate('This module only works on Debian or derivatives like Ubuntu'))
   }
 
-  $root           = '/etc/apt'
-  $provider       = '/usr/bin/apt-get'
-  $sources_list   = "${root}/sources.list"
-  $sources_list_d = "${root}/sources.list.d"
-  $trusted_gpg_d  = "${root}/trusted.gpg.d"
-  $conf_d         = "${root}/apt.conf.d"
-  $preferences    = "${root}/preferences"
-  $preferences_d  = "${root}/preferences.d"
-  $apt_conf_d     = "${root}/apt.conf.d"
-  $keyserver      = 'keyserver.ubuntu.com'
-  $key_options    = undef
-  $confs          = {}
-  $update         = {}
-  $purge          = {}
-  $proxy          = {}
-  $sources        = {}
-  $keys           = {}
-  $ppas           = {}
-  $pins           = {}
-  $settings       = {}
-  $manage_auth_conf = true
-  $auth_conf_entries = []
+  $root                 = '/etc/apt'
+  $provider             = '/usr/bin/apt-get'
+  $sources_list         = "${root}/sources.list"
+  $sources_list_force   = false
+  $sources_list_d       = "${root}/sources.list.d"
+  $trusted_gpg_d        = "${root}/trusted.gpg.d"
+  $conf_d               = "${root}/apt.conf.d"
+  $preferences          = "${root}/preferences"
+  $preferences_d        = "${root}/preferences.d"
+  $apt_conf_d           = "${root}/apt.conf.d"
+  $keyserver            = 'keyserver.ubuntu.com'
+  $key_options          = undef
+  $confs                = {}
+  $update               = {}
+  $purge                = {}
+  $proxy                = {}
+  $sources              = {}
+  $keys                 = {}
+  $ppas                 = {}
+  $pins                 = {}
+  $settings             = {}
+  $manage_auth_conf     = true
+  $auth_conf_entries    = []
 
   $config_files = {
     'conf'   => {
