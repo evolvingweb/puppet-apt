@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'apt_reboot_required fact' do
   subject { Facter.fact(:apt_reboot_required).value }
 
-  after(:each) { Facter.clear }
+  before(:each) { Facter.clear }
 
   describe 'if a reboot is required' do
     before(:each) do

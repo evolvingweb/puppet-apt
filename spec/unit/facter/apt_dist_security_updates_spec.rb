@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'apt_security_updates fact' do
   subject { Facter.fact(:apt_security_dist_updates).value }
 
-  after(:each) { Facter.clear }
+  before(:each) { Facter.clear }
 
   describe 'when apt has no updates' do
     before(:each) do
