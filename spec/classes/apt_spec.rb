@@ -200,6 +200,74 @@ describe 'apt' do
     }
   end
 
+  context 'with lots of non-defaults' do
+    let :params do
+      {
+        update: { 'frequency' => 'always', 'timeout' => 1, 'tries' => 3 },
+        purge: { 'sources.list' => true, 'sources.list.d' => true,
+                 'preferences' => true, 'preferences.d' => true,
+                 'apt.conf.d' => true },
+      }
+    end
+
+    it {
+      is_expected.to contain_file('sources.list').with(content: "# Repos managed by puppet.\n")
+    }
+
+    it {
+      is_expected.to contain_file('sources.list.d').with(purge: true,
+                                                         recurse: true)
+    }
+
+    it {
+      is_expected.to contain_file('preferences').with(ensure: 'absent')
+    }
+
+    it {
+      is_expected.to contain_file('preferences.d').with(purge: true,
+                                                        recurse: true)
+    }
+
+    it {
+      is_expected.to contain_file('apt.conf.d').with(purge: true,
+                                                     recurse: true)
+    }
+
+    it {
+      is_expected.to contain_exec('apt_update').with(refreshonly: false,
+                                                     timeout: 1,
+                                                     tries: 3)
+    }
+  end
+
+  context 'with defaults for sources_list_force' do
+    let :params do
+      {
+        update: { 'frequency' => 'always', 'timeout' => 1, 'tries' => 3 },
+        purge: { 'sources.list' => true },
+        sources_list_force: false,
+      }
+    end
+
+    it {
+      is_expected.to contain_file('sources.list').with(content: "# Repos managed by puppet.\n")
+    }
+  end
+
+  context 'with non defaults for sources_list_force' do
+    let :params do
+      {
+        update: { 'frequency' => 'always', 'timeout' => 1, 'tries' => 3 },
+        purge: { 'sources.list' => true },
+        sources_list_force: true,
+      }
+    end
+
+    it {
+      is_expected.to contain_file('sources.list').with(ensure: 'absent')
+    }
+  end
+
   context 'with entries for /etc/apt/auth.conf' do
     facts_hash = {
       'Ubuntu 14.04' => {

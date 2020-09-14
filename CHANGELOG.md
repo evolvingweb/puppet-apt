@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.5.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.5.0) (2020-08-12)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.4.2...v7.5.0)
+
+### Added
+
+- pdksync - \(IAC-973\) - Update travis/appveyor to run on new default branch main [\#940](https://github.com/puppetlabs/puppetlabs-apt/pull/940) ([david22swan](https://github.com/david22swan))
+- patch-acng-ssl-support [\#938](https://github.com/puppetlabs/puppetlabs-apt/pull/938) ([mdklapwijk](https://github.com/mdklapwijk))
+- \(IAC-746\) - Add ubuntu 20.04 support [\#936](https://github.com/puppetlabs/puppetlabs-apt/pull/936) ([david22swan](https://github.com/david22swan))
+
+### Fixed
+
+- \(MODULES-10763\) loglevel won't affect reports [\#942](https://github.com/puppetlabs/puppetlabs-apt/pull/942) ([gguillotte](https://github.com/gguillotte))
+
 ## [v7.4.2](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.4.2) (2020-05-14)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.4.1...v7.4.2)
