@@ -118,6 +118,9 @@
 # @param config_files
 #   A hash made up of the various configuration files used by Apt.
 #
+# @param sources_list_force
+#   Specifies whether to perform force purge or delete. Default false.
+#
 class apt (
   Hash $update_defaults         = $apt::params::update_defaults,
   Hash $purge_defaults          = $apt::params::purge_defaults,
@@ -151,6 +154,7 @@ class apt (
   String $apt_conf_d            = $apt::params::apt_conf_d,
   Hash $config_files            = $apt::params::config_files,
   Hash $source_key_defaults     = $apt::params::source_key_defaults,
+  Boolean $sources_list_force   = $apt::params::sources_list_force,
 ) inherits apt::params {
 
   if $facts['osfamily'] != 'Debian' {
@@ -185,6 +189,9 @@ class apt (
   if $purge['preferences.d'] {
     assert_type(Boolean, $purge['preferences.d'])
   }
+  if $sources_list_force {
+    assert_type(Boolean, $sources_list_force)
+  }
   if $purge['apt.conf.d'] {
     assert_type(Boolean, $purge['apt.conf.d'])
   }
@@ -204,10 +211,27 @@ class apt (
     }
   }
 
-  $sources_list_ensure = $_purge['sources.list'] ? {
-    true    => absent,
-    default => file,
+  if $sources_list_force {
+    $sources_list_ensure = $_purge['sources.list'] ? {
+      true    => absent,
+      default  => file,
+    }
+    $sources_list_content = $_purge['sources.list'] ? {
+      true    => nil,
+      default => undef,
+    }
   }
+  else
+    {
+    $sources_list_ensure = $_purge['sources.list'] ? {
+      true    => file,
+      default => file,
+    }
+    $sources_list_content = $_purge['sources.list'] ? {
+      true    => "# Repos managed by puppet.\n",
+      default => undef,
+    }
+    }
 
   $preferences_ensure = $_purge['preferences'] ? {
     true    => absent,
@@ -226,11 +250,12 @@ class apt (
   }
 
   file { 'sources.list':
-    ensure => $sources_list_ensure,
-    path   => $::apt::sources_list,
-    owner  => root,
-    group  => root,
-    notify => Class['apt::update'],
+    ensure  => $sources_list_ensure,
+    path    => $::apt::sources_list,
+    owner   => root,
+    group   => root,
+    content => $sources_list_content,
+    notify  => Class['apt::update'],
   }
 
   file { 'sources.list.d':
