@@ -32,18 +32,18 @@ group :development do
   gem "puppet-lint-i18n",                                        require: false
 end
 
-# puppet_version = ENV['PUPPET_GEM_VERSION']
-# facter_version = ENV['FACTER_GEM_VERSION']
+puppet_version = ENV['PUPPET_GEM_VERSION']
+facter_version = ENV['FACTER_GEM_VERSION']
 hiera_version = ENV['HIERA_GEM_VERSION']
 
 gems = {}
 
-# gems['puppet'] = location_for(puppet_version)
+gems['puppet'] = location_for(puppet_version)
 
 # If facter or hiera versions have been specified via the environment
 # variables
 
-# gems['facter'] = location_for(facter_version) if facter_version
+gems['facter'] = location_for(facter_version) if facter_version
 gems['hiera'] = location_for(hiera_version) if hiera_version
 
 if Gem.win_platform? && puppet_version =~ %r{^(file:///|git://)}
@@ -65,12 +65,6 @@ extra_gemfiles = [
   "#{__FILE__}.local",
   File.join(Dir.home, '.gemfile'),
 ]
-
-gem 'facter', path:"/Users/bogdan.irimie/projects/facter"
-gem 'puppet', path:"/Users/bogdan.irimie/projects/puppet"
-# gem 'facter'
-gem 'pry-byebug'
-
 
 extra_gemfiles.each do |gemfile|
   if File.file?(gemfile) && File.readable?(gemfile)
