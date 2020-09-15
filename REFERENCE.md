@@ -288,6 +288,14 @@ A hash made up of the various configuration files used by Apt.
 
 Default value: `$apt::params::config_files`
 
+##### `sources_list_force`
+
+Data type: `Boolean`
+
+Specifies whether to perform force purge or delete. Default false.
+
+Default value: `$apt::params::sources_list_force`
+
 ##### `update_defaults`
 
 Data type: `Hash`

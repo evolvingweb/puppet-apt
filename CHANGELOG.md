@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.6.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.6.0) (2020-09-15)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.5.0...v7.6.0)
+
+### Added
+
+- \(MODULES-10804\) option to force purge source.lists file [\#948](https://github.com/puppetlabs/puppetlabs-apt/pull/948) ([sheenaajay](https://github.com/sheenaajay))
+
+### Fixed
+
+- \(IAC-978\) - Removal of inappropriate terminology [\#947](https://github.com/puppetlabs/puppetlabs-apt/pull/947) ([david22swan](https://github.com/david22swan))
+
 ## [v7.5.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.5.0) (2020-08-12)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.4.2...v7.5.0)
