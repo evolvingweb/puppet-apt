@@ -3,12 +3,10 @@ require 'spec_helper'
 describe 'apt_has_dist_updates fact' do
   subject { Facter.fact(:apt_has_dist_updates).value }
 
-  after(:each) { Facter.clear }
+  before(:each) { Facter.clear }
 
   describe 'on non-Debian distro' do
     before(:each) do
-      # Adding temporary workaround for this ticket https://tickets.puppetlabs.com/browse/IAC-1143
-      Facter.clear
       allow(Facter.fact(:osfamily)).to receive(:value).once.and_return('Redhat')
     end
     it { is_expected.to be_nil }

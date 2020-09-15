@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'apt_has_updates fact' do
   subject { Facter.fact(:apt_has_updates).value }
 
-  after(:each) { Facter.clear }
+  before(:each) { Facter.clear }
 
   describe 'on non-Debian distro' do
     before(:each) do
