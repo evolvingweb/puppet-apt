@@ -329,7 +329,7 @@ class apt (
       owner   => $auth_conf_owner,
       group   => 'root',
       mode    => '0600',
-      content => "${confheadertmp}${auth_conf_tmp}",
+      content => Sensitive("${confheadertmp}${auth_conf_tmp}"),
       notify  => Class['apt::update'],
     }
   }
