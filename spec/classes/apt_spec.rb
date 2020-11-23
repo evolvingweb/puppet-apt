@@ -365,7 +365,7 @@ machine apt.example.com login aptlogin password supersecret
                                                                    group: 'root',
                                                                    mode: '0600',
                                                                    notify: 'Class[Apt::Update]',
-                                                                   content: auth_conf_content)
+                                                                   content: sensitive(auth_conf_content))
           }
         end
 
