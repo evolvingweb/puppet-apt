@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.7.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.7.0) (2020-12-08)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.6.0...v7.7.0)
+
+### Added
+
+- pdksync - \(feat\) - Add support for Puppet 7 [\#958](https://github.com/puppetlabs/puppetlabs-apt/pull/958) ([daianamezdrea](https://github.com/daianamezdrea))
+- Make auth.conf contents Sensitive [\#953](https://github.com/puppetlabs/puppetlabs-apt/pull/953) ([suchpuppet](https://github.com/suchpuppet))
+
 ## [v7.6.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.6.0) (2020-09-15)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.5.0...v7.6.0)
