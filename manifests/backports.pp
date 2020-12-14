@@ -1,7 +1,7 @@
 # @summary Manages backports.
 #
-# @example Set up a backport for linuxmint qiana
-#   apt::backports { 'qiana':
+# @example Set up a backport source for Linux Mint qiana
+#   class { 'apt::backports':
 #     location => 'http://us.archive.ubuntu.com/ubuntu',
 #     release  => 'trusty-backports',
 #     repos    => 'main universe multiverse restricted',
