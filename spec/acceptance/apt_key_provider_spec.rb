@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 PUPPETLABS_GPG_KEY_SHORT_ID         = 'EF8D349F'.freeze

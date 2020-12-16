@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 describe 'apt::pin', type: :define do
   let :pre_condition do

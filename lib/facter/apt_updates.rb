@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 apt_package_updates = nil
 apt_dist_updates = nil
 

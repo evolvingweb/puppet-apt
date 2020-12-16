@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open-uri'
 require 'net/ftp'
 require 'tempfile'
@@ -166,7 +168,7 @@ Puppet::Type.type(:apt_key).provide(:apt_key) do
           end
         end
         unless found_match
-          raise(_('The id in your manifest %{_resource} and the fingerprint from content/source don\'t match. Check for an error in the id and content/source is legitimate.') % { _resource: resource[:name] }) # rubocop:disable Metrics/LineLength
+          raise(_('The id in your manifest %{_resource} and the fingerprint from content/source don\'t match. Check for an error in the id and content/source is legitimate.') % { _resource: resource[:name] }) # rubocop:disable Layout/LineLength
         end
       else
         warning('/usr/bin/gpg cannot be found for verification of the id.')

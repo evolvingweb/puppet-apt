@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # apt_reboot_required.rb
 Facter.add(:apt_reboot_required) do
   confine osfamily: 'Debian'
