@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'apt::source', type: :define do
-  GPG_KEY_ID = '6F6B15509CF8E59E6E469F327F438280EF8D349F'.freeze
+  GPG_KEY_ID = '6F6B15509CF8E59E6E469F327F438280EF8D349F'
 
   let :title do
     'my_source'

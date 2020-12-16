@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-GPG_KEY_ID = '6F6B15509CF8E59E6E469F327F438280EF8D349F'.freeze
+GPG_KEY_ID = '6F6B15509CF8E59E6E469F327F438280EF8D349F'
 
 title_key_example = { id: GPG_KEY_ID,
                       ensure: 'present',
