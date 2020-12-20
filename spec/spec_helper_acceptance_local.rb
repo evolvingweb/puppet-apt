@@ -5,7 +5,8 @@ MAX_RETRY_COUNT       = 5
 RETRY_WAIT            = 3
 ERROR_MATCHER         = %r{(no valid OpenPGP data found|keyserver timed out|keyserver receive failed)}.freeze
 
-# this is needed for puppet facts / apply
+# lsb-release is needed for facter 3 (puppet 6) to resolve os.distro facts. Not needed with facter
+# 4 (puppet 7).
 lsb_package = <<-MANIFEST
 package { 'lsb-release':
   ensure => installed,
