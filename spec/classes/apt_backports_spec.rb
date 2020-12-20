@@ -131,14 +131,14 @@ describe 'apt::backports', type: :class do
       {
         os: {
           family: 'Debian',
-          name: 'Linuxmint',
+          name: 'LinuxMint',
           release: {
             major: '17',
             full: '17',
           },
           distro: {
             codename: 'qiana',
-            id: 'linuxmint',
+            id: 'LinuxMint',
           },
         },
       }
