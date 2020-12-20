@@ -4,17 +4,17 @@
 #   apt::ppa{ 'ppa:openstack-ppa/bleeding-edge': }
 #
 # @param ensure
-#   Specifies whether the PPA should exist. Valid options: 'present' and 'absent'. 
+#   Specifies whether the PPA should exist. Valid options: 'present' and 'absent'.
 #
 # @param options
 #   Supplies options to be passed to the `add-apt-repository` command. Default: '-y'.
 #
 # @param release
-#   Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint). 
+#   Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint).
 #   Specifies the operating system of your node. Valid options: a string containing a valid LSB distribution codename.
 #
 # @param dist
-#   Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint). 
+#   Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint).
 #   Specifies the distribution of your node. Valid options: a string containing a valid distribution codename.
 #
 # @param package_name

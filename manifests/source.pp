@@ -27,7 +27,7 @@
 #
 # @param include
 #   Configures include options. Valid options: a hash of available keys.
-# 
+#
 # @option include [Boolean] :deb
 #   Specifies whether to request the distribution's compiled binaries. Default true.
 #
@@ -35,17 +35,17 @@
 #   Specifies whether to request the distribution's uncompiled source code. Default false.
 #
 # @param key
-#   Creates a declaration of the apt::key defined type. Valid options: a string to be passed to the `id` parameter of the `apt::key` 
-#   defined type, or a hash of `parameter => value` pairs to be passed to `apt::key`'s `id`, `server`, `content`, `source`, and/or 
+#   Creates a declaration of the apt::key defined type. Valid options: a string to be passed to the `id` parameter of the `apt::key`
+#   defined type, or a hash of `parameter => value` pairs to be passed to `apt::key`'s `id`, `server`, `content`, `source`, and/or
 #   `options` parameters.
 #
 # @param pin
-#   Creates a declaration of the apt::pin defined type. Valid options: a number or string to be passed to the `id` parameter of the 
+#   Creates a declaration of the apt::pin defined type. Valid options: a number or string to be passed to the `id` parameter of the
 #   `apt::pin` defined type, or a hash of `parameter => value` pairs to be passed to `apt::pin`'s corresponding parameters.
 #
 # @param architecture
-#   Tells Apt to only download information for specified architectures. Valid options: a string containing one or more architecture names, 
-#   separated by commas (e.g., 'i386' or 'i386,alpha,powerpc'). Default: undef (if unspecified, Apt downloads information for all architectures 
+#   Tells Apt to only download information for specified architectures. Valid options: a string containing one or more architecture names,
+#   separated by commas (e.g., 'i386' or 'i386,alpha,powerpc'). Default: undef (if unspecified, Apt downloads information for all architectures
 #   defined in the Apt::Architectures option).
 #
 # @param allow_unsigned
