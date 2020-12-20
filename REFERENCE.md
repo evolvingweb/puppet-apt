@@ -386,7 +386,7 @@ Default value: ``undef``
 Data type: `Optional[String]`
 
 Specifies a distribution of the Apt repository containing the backports to manage. Used in populating the `source.list` configuration file.
-Default: on Debian and Ubuntu, '${lsbdistcodename}-backports'. We recommend keeping this default, except on other operating
+Default: on Debian and Ubuntu, `${facts['os']['distro']['codename']}-backports`. We recommend keeping this default, except on other operating
 systems.
 
 Default value: ``undef``
@@ -729,19 +729,19 @@ Default value: `$::apt::ppa_options`
 
 Data type: `Optional[String]`
 
-Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint).
 Specifies the operating system of your node. Valid options: a string containing a valid LSB distribution codename.
+Optional if `puppet facts show os.distro.codename` returns your correct distribution release codename.
 
-Default value: `$facts['lsbdistcodename']`
+Default value: `$facts['os']['distro']['codename']`
 
 ##### `dist`
 
 Data type: `Optional[String]`
 
-Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint).
 Specifies the distribution of your node. Valid options: a string containing a valid distribution codename.
+Optional if `puppet facts show os.name` returns your correct distribution name.
 
-Default value: `$facts['lsbdistid']`
+Default value: `$facts['os']['name']`
 
 ##### `package_name`
 

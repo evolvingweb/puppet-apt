@@ -41,10 +41,18 @@ apt_conf_d = {    ensure: 'directory',
 describe 'apt' do
   let(:facts) do
     {
-      os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-      lsbdistid: 'Debian',
-      osfamily: 'Debian',
-      lsbdistcodename: 'jessie',
+      os: {
+        family: 'Debian',
+        name: 'Debian',
+        release: {
+          major: '8',
+          full: '8.0',
+        },
+        distro: {
+          codename: 'jessie',
+          id: 'Debian',
+        },
+      },
     }
   end
 
@@ -273,49 +281,102 @@ describe 'apt' do
   context 'with entries for /etc/apt/auth.conf' do
     facts_hash = {
       'Ubuntu 14.04' => {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
-        osfamily: 'Debian',
-        lsbdistcodename: 'trusty',
-        lsbdistid: 'Ubuntu',
-        lsbdistrelease: '14.04',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '14',
+            full: '14.04',
+          },
+          distro: {
+            codename: 'trusty',
+            id: 'Ubuntu',
+          },
+        },
       },
       'Ubuntu 16.04' => {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
-        osfamily: 'Debian',
-        lsbdistcodename: 'xenial',
-        lsbdistid: 'Ubuntu',
-        lsbdistrelease: '16.04',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '16',
+            full: '16.04',
+          },
+          distro: {
+            codename: 'xenial',
+            id: 'Ubuntu',
+          },
+        },
       },
       'Ubuntu 18.04' => {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '18', full: '18.04' } },
-        osfamily: 'Debian',
-        lsbdistcodename: 'bionic',
-        lsbdistid: 'Ubuntu',
-        lsbdistrelease: '18.04',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '18',
+            full: '18.04',
+          },
+          distro: {
+            codename: 'bionic',
+            id: 'Ubuntu',
+          },
+        },
       },
       'Debian 7.0' => {
-        os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
-        lsbdistid: 'Debian',
-        osfamily: 'Debian',
-        lsbdistcodename: 'wheezy',
+        os: {
+          family: 'Debian',
+          name: 'Debian',
+          release: {
+            major: '7',
+            full: '7.0',
+          },
+          distro: {
+            codename: 'wheezy',
+            id: 'Debian',
+          },
+        },
       },
       'Debian 8.0' => {
-        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-        lsbdistid: 'Debian',
-        osfamily: 'Debian',
-        lsbdistcodename: 'jessie',
+        os: {
+          family: 'Debian',
+          name: 'Debian',
+          release: {
+            major: '8',
+            full: '8.0',
+          },
+          distro: {
+            codename: 'jessie',
+            id: 'Debian',
+          },
+        },
       },
       'Debian 9.0' => {
-        os: { family: 'Debian', name: 'Debian', release: { major: '9', full: '9.0' } },
-        lsbdistid: 'Debian',
-        osfamily: 'Debian',
-        lsbdistcodename: 'stretch',
+        os: {
+          family: 'Debian',
+          name: 'Debian',
+          release: {
+            major: '9',
+            full: '9.0',
+          },
+          distro: {
+            codename: 'stretch',
+            id: 'Debian',
+          },
+        },
       },
       'Debian 10.0' => {
-        os: { family: 'Debian', name: 'Debian', release: { major: '10', full: '10.0' } },
-        lsbdistid: 'Debian',
-        osfamily: 'Debian',
-        lsbdistcodename: 'buster',
+        os: {
+          family: 'Debian',
+          name: 'Debian',
+          release: {
+            major: '10',
+            full: '10.0',
+          },
+          distro: {
+            codename: 'buster',
+            id: 'Debian',
+          },
+        },
       },
     }
 
@@ -405,14 +466,21 @@ machine apt.example.com login aptlogin password supersecret
     end
   end
 
-  context 'with sources defined on valid osfamily' do
+  context 'with sources defined on valid os.family' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
-        osfamily: 'Debian',
-        lsbdistcodename: 'xenial',
-        lsbdistid: 'Ubuntu',
-        lsbdistrelease: '16.04',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '16',
+            full: '16.04',
+          },
+          distro: {
+            codename: 'xenial',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
     let(:params) do
@@ -447,13 +515,21 @@ machine apt.example.com login aptlogin password supersecret
     it { is_expected.to contain_file('/etc/apt/sources.list.d/puppetlabs.list').with_content(%r{^deb http://apt.puppetlabs.com xenial main$}) }
   end
 
-  context 'with confs defined on valid osfamily' do
+  context 'with confs defined on valid os.family' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
-        osfamily: 'Debian',
-        lsbdistcodename: 'xenial',
-        lsbdistid: 'Ubuntu',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '16',
+            full: '16.04',
+          },
+          distro: {
+            codename: 'xenial',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
     let(:params) do
@@ -476,13 +552,21 @@ machine apt.example.com login aptlogin password supersecret
     }
   end
 
-  context 'with keys defined on valid osfamily' do
+  context 'with keys defined on valid os.family' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
-        osfamily: 'Debian',
-        lsbdistcodename: 'xenial',
-        lsbdistid: 'Ubuntu',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '16',
+            full: '16.04',
+          },
+          distro: {
+            codename: 'xenial',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
     let(:params) do
@@ -505,14 +589,21 @@ machine apt.example.com login aptlogin password supersecret
     }
   end
 
-  context 'with ppas defined on valid osfamily' do
+  context 'with ppas defined on valid os.family' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
-        osfamily: 'Debian',
-        lsbdistcodename: 'xenial',
-        lsbdistid: 'Ubuntu',
-        lsbdistrelease: '16.04',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '16',
+            full: '16.04',
+          },
+          distro: {
+            codename: 'xenial',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
     let(:params) do
@@ -526,13 +617,21 @@ machine apt.example.com login aptlogin password supersecret
     it { is_expected.to contain_apt__ppa('ppa:nginx/stable') }
   end
 
-  context 'with settings defined on valid osfamily' do
+  context 'with settings defined on valid os.family' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
-        osfamily: 'Debian',
-        lsbdistcodename: 'xenial',
-        lsbdistid: 'Ubuntu',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '16',
+            full: '16.04',
+          },
+          distro: {
+            codename: 'xenial',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
     let(:params) do
@@ -546,13 +645,21 @@ machine apt.example.com login aptlogin password supersecret
     it { is_expected.to contain_apt__setting('pref-banana') }
   end
 
-  context 'with pins defined on valid osfamily' do
+  context 'with pins defined on valid os.family' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
-        osfamily: 'Debian',
-        lsbdistcodename: 'xenial',
-        lsbdistid: 'Ubuntu',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '16',
+            full: '16.04',
+          },
+          distro: {
+            codename: 'xenial',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
     let(:params) do

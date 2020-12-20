@@ -6,12 +6,18 @@ describe 'apt::setting' do
   let(:pre_condition) { 'class { "apt": }' }
   let :facts do
     {
-      os: { distro: { codename: 'jessie' }, family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-      lsbdistrelease: '8.0',
-      lsbdistcodename: 'jessie',
-      operatingsystem: 'Debian',
-      osfamily: 'Debian',
-      lsbdistid: 'Debian',
+      os: {
+        family: 'Debian',
+        name: 'Debian',
+        release: {
+          major: '8',
+          full: '8.0',
+        },
+        distro: {
+          codename: 'jessie',
+          id: 'Debian',
+        },
+      },
     }
   end
   let(:title) { 'conf-teddybear' }
@@ -76,10 +82,18 @@ describe 'apt::setting' do
     end
     let(:facts) do
       {
-        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-        lsbdistid: 'Debian',
-        osfamily: 'Debian',
-        lsbdistcodename: 'jessie',
+        os: {
+          family: 'Debian',
+          name: 'Debian',
+          release: {
+            major: '8',
+            full: '8.0',
+          },
+          distro: {
+            codename: 'jessie',
+            id: 'Debian',
+          },
+        },
       }
     end
     let(:title) { 'conf-teddybear' }

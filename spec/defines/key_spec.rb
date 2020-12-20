@@ -46,10 +46,18 @@ describe 'apt::key' do
 
   let(:facts) do
     {
-      os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-      lsbdistid: 'Debian',
-      osfamily: 'Debian',
-      lsbdistcodename: 'jessie',
+      os: {
+        family: 'Debian',
+        name: 'Debian',
+        release: {
+          major: '8',
+          full: '8.0',
+        },
+        distro: {
+          codename: 'jessie',
+          id: 'Debian',
+        },
+      },
     }
   end
 

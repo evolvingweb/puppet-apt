@@ -2,7 +2,7 @@
 class { 'apt': }
 
 # Install the puppetlabs apt source
-# Release is automatically obtained from lsbdistcodename fact if available.
+# Release is automatically obtained from facts.
 apt::source { 'puppetlabs':
   location => 'http://apt.puppetlabs.com',
   repos    => 'main',

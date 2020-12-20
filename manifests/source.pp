@@ -73,10 +73,10 @@ define apt::source(
   $_before = Apt::Setting["list-${title}"]
 
   if !$release {
-    if $facts['lsbdistcodename'] {
-      $_release = $facts['lsbdistcodename']
+    if $facts['os']['distro']['codename'] {
+      $_release = $facts['os']['distro']['codename']
     } else {
-      fail(translate('lsbdistcodename fact not available: release parameter required'))
+      fail(translate('os.distro.codename fact not available: release parameter required'))
     }
   } else {
     $_release = $release
@@ -94,7 +94,7 @@ define apt::source(
     }
     # Newer oses, do not need the package for HTTPS transport.
     $_transport_https_releases = [ 'wheezy', 'jessie', 'stretch', 'trusty', 'xenial' ]
-    if ($facts['lsbdistcodename'] in $_transport_https_releases) and $_location =~ /(?i:^https:\/\/)/ {
+    if ($facts['os']['distro']['codename'] in $_transport_https_releases) and $_location =~ /(?i:^https:\/\/)/ {
       ensure_packages('apt-transport-https')
     }
   } else {

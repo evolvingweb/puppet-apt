@@ -2,7 +2,6 @@
 
 #### 目次
 
-
 1. [説明 - モジュールの機能とその有益性](#module-description)
 1. [セットアップ - apt導入の基本](#setup)
     * [aptが影響を与えるもの](#what-apt-affects)
@@ -191,31 +190,31 @@ apt::sources:
 デフォルトの`/etc/apt/sources.list`を置き換える例を以下に示します。以下のコードと合わせて、`purge`パラメータを必ず使用してください。使用しない場合、Apt実行時にソース重複の警告が出ます。
 
 ```puppet
-apt::source { "archive.ubuntu.com-${lsbdistcodename}":
+apt::source { "archive.ubuntu.com-${facts['os']['distro']['codename']}":
   location => 'http://archive.ubuntu.com/ubuntu',
   key      => '630239CC130E1A7FD81A27B140976EAF437D05B5',
   repos    => 'main universe multiverse restricted',
 }
 
-apt::source { "archive.ubuntu.com-${lsbdistcodename}-security":
+apt::source { "archive.ubuntu.com-${facts['os']['distro']['codename']}-security":
   location => 'http://archive.ubuntu.com/ubuntu',
   key      => '630239CC130E1A7FD81A27B140976EAF437D05B5',
   repos    => 'main universe multiverse restricted',
-  release  => "${lsbdistcodename}-security"
+  release  => "${facts['os']['distro']['codename']}-security"
 }
 
-apt::source { "archive.ubuntu.com-${lsbdistcodename}-updates":
+apt::source { "archive.ubuntu.com-${facts['os']['distro']['codename']}-updates":
   location => 'http://archive.ubuntu.com/ubuntu',
   key      => '630239CC130E1A7FD81A27B140976EAF437D05B5',
   repos    => 'main universe multiverse restricted',
-  release  => "${lsbdistcodename}-updates"
+  release  => "${facts['os']['distro']['codename']}-updates"
 }
 
-apt::source { "archive.ubuntu.com-${lsbdistcodename}-backports":
+apt::source { "archive.ubuntu.com-${facts['os']['distro']['codename']}-backports":
  location => 'http://archive.ubuntu.com/ubuntu',
  key      => '630239CC130E1A7FD81A27B140976EAF437D05B5',
  repos    => 'main universe multiverse restricted',
- release  => "${lsbdistcodename}-backports"
+ release  => "${facts['os']['distro']['codename']}-backports"
 }
 ```
 

@@ -21,7 +21,7 @@
 #
 # @param release
 #   Specifies a distribution of the Apt repository containing the backports to manage. Used in populating the `source.list` configuration file.
-#   Default: on Debian and Ubuntu, '${lsbdistcodename}-backports'. We recommend keeping this default, except on other operating
+#   Default: on Debian and Ubuntu, `${facts['os']['distro']['codename']}-backports`. We recommend keeping this default, except on other operating
 #   systems.
 #
 # @param repos
@@ -70,7 +70,7 @@ class apt::backports (
   if $key {
     $_key = $key
   }
-  if (!($facts['lsbdistid'] == 'Debian' or $facts['lsbdistid'] == 'Ubuntu')) {
+  if (!($facts['os']['name'] == 'Debian' or $facts['os']['name'] == 'Ubuntu')) {
     unless $location and $release and $repos and $key {
       fail(translate('If not on Debian or Ubuntu, you must explicitly pass location, release, repos, and key'))
     }
@@ -79,7 +79,7 @@ class apt::backports (
     $_location = $::apt::backports['location']
   }
   unless $release {
-    $_release = "${facts['lsbdistcodename']}-backports"
+    $_release = "${facts['os']['distro']['codename']}-backports"
   }
   unless $repos {
     $_repos = $::apt::backports['repos']

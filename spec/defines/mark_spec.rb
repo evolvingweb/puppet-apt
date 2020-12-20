@@ -9,10 +9,18 @@ describe 'apt::mark', type: :define do
 
   let :facts do
     {
-      os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-      lsbdistid: 'Debian',
-      lsbdistcodename: 'jessie',
-      osfamily: 'Debian',
+      os: {
+        family: 'Debian',
+        name: 'Debian',
+        release: {
+          major: '8',
+          full: '8.0',
+        },
+        distro: {
+          codename: 'jessie',
+          id: 'Debian',
+        },
+      },
     }
   end
 

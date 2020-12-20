@@ -11,10 +11,18 @@ describe 'apt::source', type: :define do
 
   let :facts do
     {
-      os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-      lsbdistid: 'Debian',
-      lsbdistcodename: 'jessie',
-      osfamily: 'Debian',
+      os: {
+        family: 'Debian',
+        name: 'Debian',
+        release: {
+          major: '8',
+          full: '8.0',
+        },
+        distro: {
+          codename: 'jessie',
+          id: 'Debian',
+        },
+      },
     }
   end
 
@@ -104,13 +112,22 @@ describe 'apt::source', type: :define do
     context 'with no release' do
       let :facts do
         {
-          os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-          osfamily: 'Debian',
+          os: {
+            family: 'Debian',
+            name: 'Debian',
+            release: {
+              major: '8',
+              full: '8.0',
+            },
+            distro: {
+              id: 'Debian',
+            },
+          },
         }
       end
 
       it do
-        is_expected.to raise_error(Puppet::Error, %r{lsbdistcodename fact not available: release parameter required})
+        is_expected.to raise_error(Puppet::Error, %r{os.distro.codename fact not available: release parameter required})
       end
     end
   end
