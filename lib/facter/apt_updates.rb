@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 apt_package_updates = nil
 apt_dist_updates = nil
 
@@ -11,7 +13,7 @@ def get_updates(upgrade_option)
     unless apt_get_result.nil?
       apt_updates = [[], []]
       apt_get_result.each_line do |line|
-        next unless line =~ %r{^Inst\s}
+        next unless %r{^Inst\s}.match?(line)
         package = line.gsub(%r{^Inst\s([^\s]+)\s.*}, '\1').strip
         apt_updates[0].push(package)
         security_matches = [

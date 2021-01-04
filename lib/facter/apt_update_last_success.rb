@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'facter'
 
 # This is derived from the file /var/lib/apt/periodic/update-success-stamp
