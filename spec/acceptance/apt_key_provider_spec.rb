@@ -442,8 +442,8 @@ hkp_pool_pp = <<-MANIFEST
         }
   MANIFEST
 
-hkps_protocol_supported = os[:family] =~ %r{Ubuntu}i && \
-                          os[:family][:release][:full] =~ %r{^18\.04}
+hkps_protocol_supported = host_inventory['facter']['os']['family'] =~ %r{Ubuntu}i && \
+                          host_inventory['facter']['os']['release']['major'] =~ %r{^18\.04}
 
 if hkps_protocol_supported
   hkps_ubuntu_pp = <<-MANIFEST
