@@ -15,11 +15,18 @@ describe 'apt::source' do
 
   let :facts do
     {
-      os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-      lsbdistid: 'Debian',
-      lsbdistcodename: 'jessie',
-      operatingsystem: 'Debian',
-      osfamily: 'Debian',
+      os: {
+        family: 'Debian',
+        name: 'Debian',
+        release: {
+          major: '8',
+          full: '8.0',
+        },
+        distro: {
+          codename: 'jessie',
+          id: 'Debian',
+        },
+      },
     }
   end
 
@@ -163,10 +170,18 @@ describe 'apt::source' do
   context 'with a https location and custom release, install apt-transport-https' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-        lsbdistid: 'Debian',
-        lsbdistcodename: 'jessie',
-        osfamily: 'Debian',
+        os: {
+          family: 'Debian',
+          name: 'Debian',
+          release: {
+            major: '8',
+            full: '8.0',
+          },
+          distro: {
+            codename: 'jessie',
+            id: 'Debian',
+          },
+        },
         puppetversion: Puppet.version,
       }
     end
@@ -186,10 +201,18 @@ describe 'apt::source' do
   context 'with a https location, do not install apt-transport-https on oses not in list eg buster' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Debian', release: { major: '10', full: '10.0' } },
-        lsbdistid: 'Debian',
-        lsbdistcodename: 'buster',
-        osfamily: 'Debian',
+        os: {
+          family: 'Debian',
+          name: 'Debian',
+          release: {
+            major: '10',
+            full: '10.0',
+          },
+          distro: {
+            codename: 'buster',
+            id: 'Debian',
+          },
+        },
       }
     end
     let :params do
@@ -207,10 +230,18 @@ describe 'apt::source' do
   context 'with architecture equals x86_64' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Debian', release: { major: '7', full: '7.0' } },
-        lsbdistid: 'Debian',
-        lsbdistcodename: 'wheezy',
-        osfamily: 'Debian',
+        os: {
+          family: 'Debian',
+          name: 'Debian',
+          release: {
+            major: '7',
+            full: '7.0',
+          },
+          distro: {
+            codename: 'wheezy',
+            id: 'Debian',
+          },
+        },
       }
     end
     let :params do
@@ -299,14 +330,23 @@ describe 'apt::source' do
     context 'with no release' do
       let :facts do
         {
-          os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-          osfamily: 'Debian',
+          os: {
+            family: 'Debian',
+            name: 'Debian',
+            release: {
+              major: '8',
+              full: '8.0',
+            },
+            distro: {
+              id: 'Debian',
+            },
+          },
         }
       end
       let(:params) { { location: 'hello.there' } }
 
       it do
-        is_expected.to raise_error(Puppet::Error, %r{lsbdistcodename fact not available: release parameter required})
+        is_expected.to raise_error(Puppet::Error, %r{os.distro.codename fact not available: release parameter required})
       end
     end
 

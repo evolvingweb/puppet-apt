@@ -9,12 +9,18 @@ describe 'apt::ppa' do
   describe 'defaults' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '41.04' } },
-        lsbdistrelease: '14.04',
-        lsbdistcodename: 'trusty',
-        operatingsystem: 'Ubuntu',
-        osfamily: 'Debian',
-        lsbdistid: 'Ubuntu',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '14',
+            full: '14.04',
+          },
+          distro: {
+            codename: 'trusty',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
 
@@ -33,12 +39,18 @@ describe 'apt::ppa' do
   describe 'Ubuntu 15.10 sources.list filename' do
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '15', full: '15.10' } },
-        lsbdistrelease: '15.10',
-        lsbdistcodename: 'wily',
-        operatingsystem: 'Ubuntu',
-        osfamily: 'Debian',
-        lsbdistid: 'Ubuntu',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '15',
+            full: '15.10',
+          },
+          distro: {
+            codename: 'wily',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
 
@@ -65,12 +77,18 @@ describe 'apt::ppa' do
     end
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
-        lsbdistrelease: '14.04',
-        lsbdistcodename: 'trusty',
-        operatingsystem: 'Ubuntu',
-        osfamily: 'Debian',
-        lsbdistid: 'Ubuntu',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '14',
+            full: '14.04',
+          },
+          distro: {
+            codename: 'trusty',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
 
@@ -96,12 +114,18 @@ describe 'apt::ppa' do
     end
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
-        lsbdistrelease: '14.04',
-        lsbdistcodename: 'trusty',
-        operatingsystem: 'Ubuntu',
-        osfamily: 'Debian',
-        lsbdistid: 'Ubuntu',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '14',
+            full: '14.04',
+          },
+          distro: {
+            codename: 'trusty',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
     let :params do
@@ -134,12 +158,18 @@ describe 'apt::ppa' do
     end
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
-        lsbdistrelease: '14.04',
-        lsbdistcodename: 'trusty',
-        operatingsystem: 'Ubuntu',
-        lsbdistid: 'Ubuntu',
-        osfamily: 'Debian',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '14',
+            full: '14.04',
+          },
+          distro: {
+            codename: 'trusty',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
     let :params do
@@ -170,12 +200,18 @@ describe 'apt::ppa' do
     end
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
-        lsbdistrelease: '14.04',
-        lsbdistcodename: 'trusty',
-        operatingsystem: 'Ubuntu',
-        lsbdistid: 'Ubuntu',
-        osfamily: 'Debian',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '14',
+            full: '14.04',
+          },
+          distro: {
+            codename: 'trusty',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
     let :params do
@@ -204,12 +240,18 @@ describe 'apt::ppa' do
     end
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
-        lsbdistrelease: '14.04',
-        lsbdistcodename: 'trusty',
-        operatingsystem: 'Ubuntu',
-        lsbdistid: 'Ubuntu',
-        osfamily: 'Debian',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '14',
+            full: '14.04',
+          },
+          distro: {
+            codename: 'trusty',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
     let :params do
@@ -238,12 +280,18 @@ describe 'apt::ppa' do
     end
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
-        lsbdistrelease: '14.04',
-        lsbdistcodename: 'trusty',
-        operatingsystem: 'Ubuntu',
-        lsbdistid: 'Ubuntu',
-        osfamily: 'Debian',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '14',
+            full: '14.04',
+          },
+          distro: {
+            codename: 'trusty',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
     let :params do
@@ -270,12 +318,18 @@ describe 'apt::ppa' do
     end
     let :facts do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
-        lsbdistrelease: '14.04',
-        lsbdistcodename: 'trusty',
-        operatingsystem: 'Ubuntu',
-        lsbdistid: 'Ubuntu',
-        osfamily: 'Debian',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '14',
+            full: '14.04',
+          },
+          distro: {
+            codename: 'trusty',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
     let(:title) { 'ppa:user/foo' }
@@ -294,30 +348,42 @@ describe 'apt::ppa' do
     describe 'no release' do
       let :facts do
         {
-          os: { family: 'Debian', name: 'Ubuntu', release: { major: '14', full: '14.04' } },
-          lsbdistrelease: '14.04',
-          operatingsystem: 'Ubuntu',
-          lsbdistid: 'Ubuntu',
-          osfamily: 'Debian',
-          lsbdistcodeanme: nil,
+          os: {
+            family: 'Debian',
+            name: 'Ubuntu',
+            release: {
+              major: '14',
+              full: '14.04',
+            },
+            distro: {
+              codename: nil,
+              id: 'Ubuntu',
+            },
+          },
         }
       end
       let(:title) { 'ppa:user/foo' }
 
       it do
-        is_expected.to raise_error(Puppet::Error, %r{lsbdistcodename fact not available: release parameter required})
+        is_expected.to raise_error(Puppet::Error, %r{os.distro.codename fact not available: release parameter required})
       end
     end
 
     describe 'not ubuntu' do
       let :facts do
         {
-          os: { family: 'Debian', name: 'Debian', release: { major: '6', full: '6.0.7' } },
-          lsbdistrelease: '6.0.7',
-          lsbdistcodename: 'wheezy',
-          operatingsystem: 'Debian',
-          lsbdistid: 'debian',
-          osfamily: 'Debian',
+          os: {
+            family: 'Debian',
+            name: 'Debian',
+            release: {
+              major: '6',
+              full: '6.0.7',
+            },
+            distro: {
+              codename: 'wheezy',
+              id: 'Debian',
+            },
+          },
         }
       end
       let(:title) { 'ppa:user/foo' }

@@ -157,7 +157,7 @@ class apt (
   Boolean $sources_list_force   = $apt::params::sources_list_force,
 ) inherits apt::params {
 
-  if $facts['osfamily'] != 'Debian' {
+  if $facts['os']['family'] != 'Debian' {
     fail(translate('This module only works on Debian or derivatives like Ubuntu'))
   }
 

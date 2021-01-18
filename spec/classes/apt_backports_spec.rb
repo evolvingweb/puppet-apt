@@ -9,10 +9,18 @@ describe 'apt::backports', type: :class do
     context 'with defaults on deb' do
       let(:facts) do
         {
-          os: { family: 'Debian', name: 'Debian', release: { major: '8', full: '8.0' } },
-          lsbdistid: 'Debian',
-          osfamily: 'Debian',
-          lsbdistcodename: 'jessie',
+          os: {
+            family: 'Debian',
+            name: 'Debian',
+            release: {
+              major: '8',
+              full: '8.0',
+            },
+            distro: {
+              codename: 'jessie',
+              id: 'Debian',
+            },
+          },
         }
       end
 
@@ -26,11 +34,18 @@ describe 'apt::backports', type: :class do
     context 'with defaults on ubuntu' do
       let(:facts) do
         {
-          os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
-          lsbdistid: 'Ubuntu',
-          osfamily: 'Debian',
-          lsbdistcodename: 'xenial',
-          lsbdistrelease: '16.04',
+          os: {
+            family: 'Debian',
+            name: 'Ubuntu',
+            release: {
+              major: '16',
+              full: '16.04',
+            },
+            distro: {
+              codename: 'xenial',
+              id: 'Ubuntu',
+            },
+          },
         }
       end
 
@@ -45,11 +60,18 @@ describe 'apt::backports', type: :class do
     context 'with everything set' do
       let(:facts) do
         {
-          os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
-          lsbdistid: 'Ubuntu',
-          osfamily: 'Debian',
-          lsbdistcodename: 'xenial',
-          lsbdistrelease: '16.04',
+          os: {
+            family: 'Debian',
+            name: 'Ubuntu',
+            release: {
+              major: '16',
+              full: '16.04',
+            },
+            distro: {
+              codename: 'xenial',
+              id: 'Ubuntu',
+            },
+          },
         }
       end
       let(:params) do
@@ -73,11 +95,18 @@ describe 'apt::backports', type: :class do
     context 'when set things with hashes' do
       let(:facts) do
         {
-          os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
-          lsbdistid: 'Ubuntu',
-          osfamily: 'Debian',
-          lsbdistcodename: 'xenial',
-          lsbdistrelease: '16.04',
+          os: {
+            family: 'Debian',
+            name: 'Ubuntu',
+            release: {
+              major: '16',
+              full: '16.04',
+            },
+            distro: {
+              codename: 'xenial',
+              id: 'Ubuntu',
+            },
+          },
         }
       end
       let(:params) do
@@ -100,10 +129,18 @@ describe 'apt::backports', type: :class do
   describe 'mint tests' do
     let(:facts) do
       {
-        os: { family: 'Debian', name: 'Linuxmint', release: { major: '17', full: '17' } },
-        lsbdistid: 'linuxmint',
-        osfamily: 'Debian',
-        lsbdistcodename: 'qiana',
+        os: {
+          family: 'Debian',
+          name: 'LinuxMint',
+          release: {
+            major: '17',
+            full: '17',
+          },
+          distro: {
+            codename: 'qiana',
+            id: 'LinuxMint',
+          },
+        },
       }
     end
 
@@ -181,11 +218,18 @@ describe 'apt::backports', type: :class do
   describe 'validation' do
     let(:facts) do
       {
-        os: { family: 'Debian', name: 'Ubuntu', release: { major: '16', full: '16.04' } },
-        lsbdistid: 'Ubuntu',
-        osfamily: 'Debian',
-        lsbdistcodename: 'xenial',
-        lsbdistrelease: '16.04',
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: {
+            major: '16',
+            full: '16.04',
+          },
+          distro: {
+            codename: 'xenial',
+            id: 'Ubuntu',
+          },
+        },
       }
     end
 

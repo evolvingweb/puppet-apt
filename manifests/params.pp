@@ -1,10 +1,10 @@
 # @summary Provides defaults for the Apt module parameters.
-# 
+#
 # @api private
 #
 class apt::params {
 
-  if $::osfamily != 'Debian' {
+  if $facts['os']['family'] != 'Debian' {
     fail(translate('This module only works on Debian or derivatives like Ubuntu'))
   }
 

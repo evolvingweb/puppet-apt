@@ -92,7 +92,7 @@ msgid "parameters release and origin are mutually exclusive"
 msgstr ""
 
 #. ./manifests/ppa.pp:30 ./manifests/source.pp:79
-msgid "lsbdistcodename fact not available: release parameter required"
+msgid "os.distro.codename fact not available: release parameter required"
 msgstr ""
 
 #. ./manifests/ppa.pp:34

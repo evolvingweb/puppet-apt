@@ -2,7 +2,6 @@
 
 #### 目次
 
-
 1. [説明 - モジュールの機能とその有益性](#module-description)
 1. [セットアップ - apt導入の基本](#setup)
     * [aptが影響を与えるもの](#what-apt-affects)
@@ -25,7 +24,9 @@ aptモジュールを導入すると、Puppetを使用してAPT (Advanced Packag
 
 APTとは、Debian、Ubuntu、およびその他いくつかのオペレーティングシステムで利用可能なパッケージマネージャです。aptモジュールは、APTのパッケージ管理を自動化するのに役立つ一連のクラス、定義型、およびfactsを提供します。
 
-**注意**: このモジュールが実行中のDebian/Ubuntu (もしくは派生OS)のバージョンを正しく自動検出するためには、'lsb-release'パッケージがインストールされていることを確認する必要があります。これをプロビジョニングレイヤの一部にするか(多くのDebianシステムまたは派生OSシステムを実行する場合はこちらを推奨)、この依存関係を自動的に取得する機能をもつFacter 2.2.0以降をインストールしておくことを強くお勧めします。
+**注**：Puppet 7 より前は、このモジュールがどのバージョンのを正しく自動検出するか
+実行している Debian / Ubuntu（または派生物）、 `lsb-release`パッケージが
+インストールされています。 Puppet 7 では、 `lsb-release`パッケージは必要ありません。
 
 ## セットアップ
 
@@ -191,31 +192,31 @@ apt::sources:
 デフォルトの`/etc/apt/sources.list`を置き換える例を以下に示します。以下のコードと合わせて、`purge`パラメータを必ず使用してください。使用しない場合、Apt実行時にソース重複の警告が出ます。
 
 ```puppet
-apt::source { "archive.ubuntu.com-${lsbdistcodename}":
+apt::source { "archive.ubuntu.com-${facts['os']['distro']['codename']}":
   location => 'http://archive.ubuntu.com/ubuntu',
   key      => '630239CC130E1A7FD81A27B140976EAF437D05B5',
   repos    => 'main universe multiverse restricted',
 }
 
-apt::source { "archive.ubuntu.com-${lsbdistcodename}-security":
+apt::source { "archive.ubuntu.com-${facts['os']['distro']['codename']}-security":
   location => 'http://archive.ubuntu.com/ubuntu',
   key      => '630239CC130E1A7FD81A27B140976EAF437D05B5',
   repos    => 'main universe multiverse restricted',
-  release  => "${lsbdistcodename}-security"
+  release  => "${facts['os']['distro']['codename']}-security"
 }
 
-apt::source { "archive.ubuntu.com-${lsbdistcodename}-updates":
+apt::source { "archive.ubuntu.com-${facts['os']['distro']['codename']}-updates":
   location => 'http://archive.ubuntu.com/ubuntu',
   key      => '630239CC130E1A7FD81A27B140976EAF437D05B5',
   repos    => 'main universe multiverse restricted',
-  release  => "${lsbdistcodename}-updates"
+  release  => "${facts['os']['distro']['codename']}-updates"
 }
 
-apt::source { "archive.ubuntu.com-${lsbdistcodename}-backports":
+apt::source { "archive.ubuntu.com-${facts['os']['distro']['codename']}-backports":
  location => 'http://archive.ubuntu.com/ubuntu',
  key      => '630239CC130E1A7FD81A27B140976EAF437D05B5',
  repos    => 'main universe multiverse restricted',
- release  => "${lsbdistcodename}-backports"
+ release  => "${facts['os']['distro']['codename']}-backports"
 }
 ```
 

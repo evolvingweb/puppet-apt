@@ -3,9 +3,9 @@
 # Copyright (C) 2018 Puppet, Inc.
 # This file is distributed under the same license as the puppetlabs-apt package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
-# 
+#
 # #-#-#-#-#  puppetlabs-apt_metadata.pot (PACKAGE VERSION)  #-#-#-#-#
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
@@ -69,8 +69,8 @@ msgid "parameters release and origin are mutually exclusive"
 msgstr "パラメータreleaseとoriginは相互に排他的です。"
 
 #. ./manifests/ppa.pp:30 ./manifests/source.pp:79
-msgid "lsbdistcodename fact not available: release parameter required"
-msgstr "lsbdistcodenameのfactが使用できません。releaseパラメータが必要です。"
+msgid "os.distro.codename fact not available: release parameter required"
+msgstr "os.distro.codenameのfactが使用できません。releaseパラメータが必要です。"
 
 #. ./manifests/ppa.pp:34
 msgid "apt::ppa is not currently supported on Debian."

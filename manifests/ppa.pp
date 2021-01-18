@@ -4,18 +4,18 @@
 #   apt::ppa{ 'ppa:openstack-ppa/bleeding-edge': }
 #
 # @param ensure
-#   Specifies whether the PPA should exist. Valid options: 'present' and 'absent'. 
+#   Specifies whether the PPA should exist. Valid options: 'present' and 'absent'.
 #
 # @param options
 #   Supplies options to be passed to the `add-apt-repository` command. Default: '-y'.
 #
 # @param release
-#   Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint). 
 #   Specifies the operating system of your node. Valid options: a string containing a valid LSB distribution codename.
+#   Optional if `puppet facts show os.distro.codename` returns your correct distribution release codename.
 #
 # @param dist
-#   Optional if lsb-release is installed (unless you're using a different release than indicated by lsb-release, e.g., Linux Mint). 
 #   Specifies the distribution of your node. Valid options: a string containing a valid distribution codename.
+#   Optional if `puppet facts show os.name` returns your correct distribution name.
 #
 # @param package_name
 #   Names the package that provides the `apt-add-repository` command. Default: 'software-properties-common'.
@@ -26,20 +26,20 @@
 define apt::ppa(
   String $ensure                 = 'present',
   Optional[String] $options      = $::apt::ppa_options,
-  Optional[String] $release      = $facts['lsbdistcodename'],
-  Optional[String] $dist         = $facts['lsbdistid'],
+  Optional[String] $release      = $facts['os']['distro']['codename'],
+  Optional[String] $dist         = $facts['os']['name'],
   Optional[String] $package_name = $::apt::ppa_package,
   Boolean $package_manage        = false,
 ) {
   unless $release {
-    fail(translate('lsbdistcodename fact not available: release parameter required'))
+    fail(translate('os.distro.codename fact not available: release parameter required'))
   }
 
   if $dist == 'Debian' {
     fail(translate('apt::ppa is not currently supported on Debian.'))
   }
 
-  if versioncmp($facts['lsbdistrelease'], '14.10') >= 0 {
+  if versioncmp($facts['os']['release']['full'], '14.10') >= 0 {
     $distid = downcase($dist)
     $dash_filename = regsubst($name, '^ppa:([^/]+)/(.+)$', "\\1-${distid}-\\2")
     $underscore_filename = regsubst($name, '^ppa:([^/]+)/(.+)$', "\\1_${distid}_\\2")
@@ -55,7 +55,7 @@ define apt::ppa(
 
   $sources_list_d_filename  = "${dash_filename_no_specialchars}-${release}.list"
 
-  if versioncmp($facts['lsbdistrelease'], '15.10') >= 0 {
+  if versioncmp($facts['os']['release']['full'], '15.10') >= 0 {
     $trusted_gpg_d_filename = "${underscore_filename_no_specialchars}.gpg"
   } else {
     $trusted_gpg_d_filename = "${dash_filename_no_specialchars}.gpg"
