@@ -5,16 +5,20 @@ MAX_RETRY_COUNT       = 5
 RETRY_WAIT            = 3
 ERROR_MATCHER         = %r{(no valid OpenPGP data found|keyserver timed out|keyserver receive failed)}.freeze
 
-# lsb-release is needed for facter 3 (puppet 6) to resolve os.distro facts. Not needed with facter
-# 4 (puppet 7).
-lsb_package = <<-MANIFEST
+RSpec.configure do |c|
+  c.before :suite do
+    # lsb-release is needed for facter 3 (puppet 6) to resolve os.distro facts. Not needed with facter
+    # 4 (puppet 7).
+    lsb_package = <<-MANIFEST
 package { 'lsb-release':
   ensure => installed,
 }
 MANIFEST
-
-include PuppetLitmus
-apply_manifest(lsb_package)
+    include PuppetLitmus
+    extend PuppetLitmus
+    apply_manifest(lsb_package)
+  end
+end
 
 # This method allows a block to be passed in and if an exception is raised
 # that matches the 'error_matcher' matcher, the block will wait a set number
