@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.0.1](https://github.com/puppetlabs/puppetlabs-apt/tree/v8.0.1) (2021-03-15)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v8.0.0...v8.0.1)
+
+### Fixed
+
+- MODULES-10956 remove redundant code in provider apt\_key [\#973](https://github.com/puppetlabs/puppetlabs-apt/pull/973) ([moritz-makandra](https://github.com/moritz-makandra))
+
 ## [v8.0.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v8.0.0) (2021-03-01)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v7.7.1...v8.0.0)
@@ -84,7 +92,6 @@ All notable changes to this project will be documented in this file. The format 
 - MODULES-10548: make files readonly [\#906](https://github.com/puppetlabs/puppetlabs-apt/pull/906) ([anarcat](https://github.com/anarcat))
 - MODULES-10543: only consider lsbdistcodename for apt-transport-https [\#905](https://github.com/puppetlabs/puppetlabs-apt/pull/905) ([anarcat](https://github.com/anarcat))
 - MODULES-10543: remove sources.list file on purging [\#904](https://github.com/puppetlabs/puppetlabs-apt/pull/904) ([anarcat](https://github.com/anarcat))
-- MODULES-10063, extend apt::key to support deeplinks [\#892](https://github.com/puppetlabs/puppetlabs-apt/pull/892) ([atarax](https://github.com/atarax))
 - Include apt in apt::backports [\#891](https://github.com/puppetlabs/puppetlabs-apt/pull/891) ([zivis](https://github.com/zivis))
 
 ## [v7.3.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.3.0) (2019-12-11)
@@ -98,6 +105,7 @@ All notable changes to this project will be documented in this file. The format 
 ### Fixed
 
 - MODULES-10063, extend apt::key to support deeplinks, this time with f… [\#894](https://github.com/puppetlabs/puppetlabs-apt/pull/894) ([atarax](https://github.com/atarax))
+- MODULES-10063, extend apt::key to support deeplinks [\#892](https://github.com/puppetlabs/puppetlabs-apt/pull/892) ([atarax](https://github.com/atarax))
 
 ## [v7.2.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v7.2.0) (2019-10-29)
 
