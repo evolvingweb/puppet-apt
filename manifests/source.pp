@@ -76,7 +76,7 @@ define apt::source(
     if $facts['os']['distro']['codename'] {
       $_release = $facts['os']['distro']['codename']
     } else {
-      fail(translate('os.distro.codename fact not available: release parameter required'))
+      fail('os.distro.codename fact not available: release parameter required')
     }
   } else {
     $_release = $release
@@ -84,7 +84,7 @@ define apt::source(
 
   if $ensure == 'present' {
     if ! $location {
-      fail(translate('cannot create a source entry without specifying a location'))
+      fail('cannot create a source entry without specifying a location')
     }
     elsif ($::apt::proxy['https_acng']) and ($location =~ /(?i:^https:\/\/)/) {
       $_location = regsubst($location, 'https://','http://HTTPS///')
@@ -106,7 +106,7 @@ define apt::source(
   if $key {
     if $key =~ Hash {
       unless $key['id'] {
-        fail(translate('key hash must contain at least an id entry'))
+        fail('key hash must contain at least an id entry')
       }
       $_key = merge($::apt::source_key_defaults, $key)
     } else {
@@ -145,7 +145,7 @@ define apt::source(
         'origin'   => $host,
       }
     } else {
-      fail(translate('Received invalid value for pin parameter'))
+      fail('Received invalid value for pin parameter')
     }
     create_resources('apt::pin', { "${name}" => $_pin })
   }

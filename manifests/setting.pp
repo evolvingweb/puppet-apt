@@ -28,11 +28,11 @@ define apt::setting (
 ) {
 
   if $content and $source {
-    fail(translate('apt::setting cannot have both content and source'))
+    fail('apt::setting cannot have both content and source')
   }
 
   if !$content and !$source {
-    fail(translate('apt::setting needs either of content or source'))
+    fail('apt::setting needs either of content or source')
   }
 
   $title_array = split($title, '-')
@@ -40,13 +40,13 @@ define apt::setting (
   $base_name = join(delete_at($title_array, 0), '-')
 
   assert_type(Pattern[/\Aconf\z/, /\Apref\z/, /\Alist\z/], $setting_type) |$a, $b| {
-    fail(translate("apt::setting resource name/title must start with either 'conf-', 'pref-' or 'list-'"))
+    fail("apt::setting resource name/title must start with either 'conf-', 'pref-' or 'list-'")
   }
 
   if $priority !~ Integer {
     # need this to allow zero-padded priority.
     assert_type(Pattern[/^\d+$/], $priority) |$a, $b| {
-      fail(translate('apt::setting priority must be an integer or a zero-padded integer'))
+      fail('apt::setting priority must be an integer or a zero-padded integer')
     }
   }
 
