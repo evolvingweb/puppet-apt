@@ -5,7 +5,7 @@
 class apt::params {
 
   if $facts['os']['family'] != 'Debian' {
-    fail(translate('This module only works on Debian or derivatives like Ubuntu'))
+    fail('This module only works on Debian or derivatives like Ubuntu')
   }
 
   $root                 = '/etc/apt'
@@ -112,7 +112,7 @@ class apt::params {
       }
     }
     undef: {
-      fail(translate('Unable to determine value for fact os[\"name\"]'))
+      fail('Unable to determine value for fact os[\"name\"]')
     }
     default: {
       $ppa_options = undef

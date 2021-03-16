@@ -32,11 +32,11 @@ define apt::ppa(
   Boolean $package_manage        = false,
 ) {
   unless $release {
-    fail(translate('os.distro.codename fact not available: release parameter required'))
+    fail('os.distro.codename fact not available: release parameter required')
   }
 
   if $dist == 'Debian' {
-    fail(translate('apt::ppa is not currently supported on Debian.'))
+    fail('apt::ppa is not currently supported on Debian.')
   }
 
   if versioncmp($facts['os']['release']['full'], '14.10') >= 0 {

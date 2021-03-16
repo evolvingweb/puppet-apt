@@ -2,8 +2,6 @@ fixtures:
   repositories:
     "stdlib":
       "repo": "https://github.com/puppetlabs/puppetlabs-stdlib.git"
-    "translate": 
-      "repo": "https://github.com/puppetlabs/puppetlabs-translate"
     facts: 'https://github.com/puppetlabs/puppetlabs-facts.git'
     puppet_agent: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'
     provision: 'https://github.com/puppetlabs/provision.git'

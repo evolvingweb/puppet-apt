@@ -48,7 +48,7 @@ define apt::key (
   case $ensure {
     /^(refreshed|present)$/: {
       if defined(Anchor["apt_key ${id} absent"]){
-        fail(translate('key with id %{_id} already ensured as absent'), {'_id' => id})
+        fail("key with id ${id} already ensured as absent")
       }
 
       if !defined(Anchor["apt_key ${id} present"]) {
@@ -83,7 +83,7 @@ define apt::key (
 
     absent: {
       if defined(Anchor["apt_key ${id} present"]){
-        fail(translate('key with id %{_id} already ensured as present', {'_id' => id}))
+        fail("key with id ${id} already ensured as present")
       }
 
       if !defined(Anchor["apt_key ${id} absent"]){
@@ -100,7 +100,7 @@ define apt::key (
     }
 
     default: {
-      fail translate('Invalid \'ensure\' value \'%{_ensure}\' for apt::key', {'_ensure' => ensure})
+      fail("Invalid \'ensure\' value \'${ensure}\' for apt::key")
     }
   }
 }

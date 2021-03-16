@@ -81,14 +81,14 @@ define apt::pin(
   if $packages_string != '*' { # specific form
     if ( $pin_release != '' and ( $origin != '' or $version != '' )) or
       ( $version != '' and ( $pin_release != '' or $origin != '' )) {
-      fail(translate('parameters release, origin, and version are mutually exclusive'))
+      fail('parameters release, origin, and version are mutually exclusive')
     }
   } else { # general form
     if $version != '' {
-      fail(translate('parameter version cannot be used in general form'))
+      fail('parameter version cannot be used in general form')
     }
     if ( $pin_release != '' and $origin != '' ) {
-      fail(translate('parameters release and origin are mutually exclusive'))
+      fail('parameters release and origin are mutually exclusive')
     }
   }
 
