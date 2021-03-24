@@ -71,13 +71,6 @@ class apt::params {
     'apt.conf.d'     => false,
   }
 
-  $source_key_defaults = {
-    'server'  => $keyserver,
-    'options' => undef,
-    'content' => undef,
-    'source'  => undef,
-  }
-
   $include_defaults = {
     'deb' => true,
     'src' => false,
