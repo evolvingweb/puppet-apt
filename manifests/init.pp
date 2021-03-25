@@ -153,8 +153,15 @@ class apt (
   String $preferences_d         = $apt::params::preferences_d,
   String $apt_conf_d            = $apt::params::apt_conf_d,
   Hash $config_files            = $apt::params::config_files,
-  Hash $source_key_defaults     = $apt::params::source_key_defaults,
   Boolean $sources_list_force   = $apt::params::sources_list_force,
+
+  Hash $source_key_defaults = {
+    'server'  => $keyserver,
+    'options' => undef,
+    'content' => undef,
+    'source'  => undef,
+  }
+
 ) inherits apt::params {
 
   if $facts['os']['family'] != 'Debian' {
