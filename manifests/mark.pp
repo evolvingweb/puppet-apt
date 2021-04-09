@@ -1,13 +1,13 @@
-# defined typeapt::mark
+# @summary Manages apt-mark settings
 #
 # @param setting
 #   auto, manual, hold, unhold
 #   specifies the behavior of apt in case of no more dependencies installed
-#   https://manpages.debian.org/sretch/apt/apt-mark.8.en.html
+#   https://manpages.debian.org/stable/apt/apt-mark.8.en.html
 #
 define apt::mark (
   Enum['auto','manual','hold','unhold'] $setting,
-){
+) {
   case $setting {
     'unhold': {
       $unless_cmd = undef
