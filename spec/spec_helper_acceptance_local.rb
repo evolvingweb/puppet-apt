@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 UNSUPPORTED_PLATFORMS = ['RedHat', 'Suse', 'windows', 'AIX', 'Solaris'].freeze
-MAX_RETRY_COUNT       = 5
 RETRY_WAIT            = 3
 ERROR_MATCHER         = %r{(no valid OpenPGP data found|keyserver timed out|keyserver receive failed)}.freeze
+MAX_RETRY_COUNT       = 10
 
 RSpec.configure do |c|
   c.before :suite do
