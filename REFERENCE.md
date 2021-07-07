@@ -397,7 +397,7 @@ class { 'apt::backports':
   repos    => 'main universe multiverse restricted',
   key      => {
     id     => '630239CC130E1A7FD81A27B140976EAF437D05B5',
-    server => 'hkps.pool.sks-keyservers.net',
+    server => 'keyserver.ubuntu.com',
   },
 }
 ```
@@ -541,7 +541,7 @@ Manages the GPG keys that Apt uses to authenticate packages.
 ```puppet
 apt::key { 'puppetlabs':
   id      => '6F6B15509CF8E59E6E469F327F438280EF8D349F',
-  server  => 'hkps.pool.sks-keyservers.net',
+  server  => 'keyserver.ubuntu.com',
   options => 'http-proxy="http://proxyuser:proxypass@example.org:3128"',
 }
 ```
@@ -914,7 +914,7 @@ apt::source { 'puppetlabs':
   repos    => 'main',
   key      => {
     id     => '6F6B15509CF8E59E6E469F327F438280EF8D349F',
-    server => 'hkps.pool.sks-keyservers.net',
+    server => 'keyserver.ubuntu.com',
   },
 }
 ```

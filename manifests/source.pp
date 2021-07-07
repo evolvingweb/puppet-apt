@@ -6,7 +6,7 @@
 #     repos    => 'main',
 #     key      => {
 #       id     => '6F6B15509CF8E59E6E469F327F438280EF8D349F',
-#       server => 'hkps.pool.sks-keyservers.net',
+#       server => 'keyserver.ubuntu.com',
 #     },
 #   }
 #
