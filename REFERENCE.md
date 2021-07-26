@@ -20,7 +20,7 @@
 
 * [`apt::conf`](#aptconf): Specifies a custom Apt configuration file.
 * [`apt::key`](#aptkey): Manages the GPG keys that Apt uses to authenticate packages.
-* [`apt::mark`](#aptmark): defined typeapt::mark
+* [`apt::mark`](#aptmark): Manages apt-mark settings
 * [`apt::pin`](#aptpin): Manages Apt pins. Does not trigger an apt-get update run.
 * [`apt::ppa`](#aptppa): Manages PPA repositories using `add-apt-repository`. Not supported on Debian.
 * [`apt::setting`](#aptsetting): Manages Apt configuration files.
@@ -620,7 +620,7 @@ Default value: `$::apt::key_options`
 
 ### <a name="aptmark"></a>`apt::mark`
 
-defined typeapt::mark
+Manages apt-mark settings
 
 #### Parameters
 
@@ -634,7 +634,7 @@ Data type: `Enum['auto','manual','hold','unhold']`
 
 auto, manual, hold, unhold
 specifies the behavior of apt in case of no more dependencies installed
-https://manpages.debian.org/sretch/apt/apt-mark.8.en.html
+https://manpages.debian.org/stable/apt/apt-mark.8.en.html
 
 ### <a name="aptpin"></a>`apt::pin`
 
@@ -930,6 +930,7 @@ The following parameters are available in the `apt::source` defined type:
 * [`repos`](#repos)
 * [`include`](#include)
 * [`key`](#key)
+* [`keyring`](#keyring)
 * [`pin`](#pin)
 * [`architecture`](#architecture)
 * [`allow_unsigned`](#allow_unsigned)
@@ -993,8 +994,17 @@ Default value: `{}`
 Data type: `Optional[Variant[String, Hash]]`
 
 Creates a declaration of the apt::key defined type. Valid options: a string to be passed to the `id` parameter of the `apt::key`
-defined type, or a hash of `parameter => value` pairs to be passed to `apt::key`'s `id`, `server`, `content`, `source`, and/or
-`options` parameters.
+defined type, or a hash of `parameter => value` pairs to be passed to `apt::key`'s `id`, `server`, `content`, `source`, `weak_ssl`,
+and/or `options` parameters.
+
+Default value: ``undef``
+
+##### <a name="keyring"></a>`keyring`
+
+Data type: `Optional[Stdlib::AbsolutePath]`
+
+Absolute path to a file containing the PGP keyring used to sign this repository. Value is used to set signed-by on the source entry.
+See https://wiki.debian.org/DebianRepository/UseThirdParty for details.
 
 Default value: ``undef``
 
