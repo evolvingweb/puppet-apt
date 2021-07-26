@@ -14,8 +14,6 @@ All notable changes to this project will be documented in this file. The format 
 
 - \(IAC-1597\) Increasing MAX\_RETRY\_COUNT [\#987](https://github.com/puppetlabs/puppetlabs-apt/pull/987) ([pmcmaw](https://github.com/pmcmaw))
 
-### UNCATEGORIZED PRS; LABEL THEM ON GITHUB
-
 - apt::source: pass the weak\_ssl param to apt::key [\#993](https://github.com/puppetlabs/puppetlabs-apt/pull/993) ([kenyon](https://github.com/kenyon))
 
 ## [v8.0.2](https://github.com/puppetlabs/puppetlabs-apt/tree/v8.0.2) (2021-03-29)
