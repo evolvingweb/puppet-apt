@@ -109,11 +109,14 @@ describe 'apt::source' do
           location: 'http://debian.mirror.iweb.ca/debian/',
           release: 'sid',
           repos: 'testing',
-          key: { 'ensure' => 'refreshed',
-                 'id' => GPG_KEY_ID,
-                 'server' => 'pgp.mit.edu',
-                 'content' => 'GPG key content',
-                 'source'  => 'http://apt.puppetlabs.com/pubkey.gpg' },
+          key: {
+            'ensure' => 'refreshed',
+            'id' => GPG_KEY_ID,
+            'server' => 'pgp.mit.edu',
+            'content' => 'GPG key content',
+            'source'  => 'http://apt.puppetlabs.com/pubkey.gpg',
+            'weak_ssl' => true,
+          },
           pin: '10',
           architecture: 'x86_64',
           allow_unsigned: true,
@@ -136,7 +139,8 @@ describe 'apt::source' do
                                                                                                                                                     id: GPG_KEY_ID,
                                                                                                                                                     server: 'pgp.mit.edu',
                                                                                                                                                     content: 'GPG key content',
-                                                                                                                                                    source: 'http://apt.puppetlabs.com/pubkey.gpg')
+                                                                                                                                                    source: 'http://apt.puppetlabs.com/pubkey.gpg',
+                                                                                                                                                    weak_ssl: true)
       }
     end
   end
