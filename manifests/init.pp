@@ -204,7 +204,29 @@ class apt (
   }
 
   $_purge = merge($::apt::purge_defaults, $purge)
-  $_proxy = merge($apt::proxy_defaults, $proxy)
+
+  if $proxy['perhost'] {
+    $_perhost = $proxy['perhost'].map |$item| {
+      $_item = merge($apt::proxy_defaults, $item)
+      $_scheme = $_item['https'] ? {
+        true    => 'https',
+        default => 'http' }
+      $_port = $_item['port'] ? {
+        Integer => ":${_item['port']}",
+        default => ''
+      }
+      $_target = $_item['direct'] ? {
+        true    => 'DIRECT',
+        default => "${_scheme}://${_item['host']}${_port}/" }
+      merge($item, {
+        'scheme' => $_scheme,
+        'target' => $_target })
+    }
+  } else {
+    $_perhost = {}
+  }
+
+  $_proxy = merge($apt::proxy_defaults, $proxy, { 'perhost' => $_perhost } )
 
   $confheadertmp = epp('apt/_conf_header.epp')
   $proxytmp = epp('apt/proxy.epp', {'proxies' => $_proxy})

@@ -1,4 +1,7 @@
 <%- | Hash $proxies | -%>
+<% $proxies['perhost'].each |$proxy| { -%>
+Acquire::<%= $proxy['scheme'] %>::proxy::<%= $proxy['scope'] %> "<%= $proxy['target'] %>";
+<% } -%>
 Acquire::http::proxy "http://<%= $proxies['host'] %>:<%= $proxies['port'] %>/";
 <%- if $proxies['https'] { %>
 Acquire::https::proxy "https://<%= $proxies['host'] %>:<%= $proxies['port'] %>/";
