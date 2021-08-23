@@ -8,6 +8,8 @@ Gemfile:
   optional:
     ":development":
     - gem: github_changelog_generator
+Rakefile:
+  changelog_max_issues: 500
 spec/spec_helper.rb:
   mock_with: ":rspec"
   coverage_report: true
