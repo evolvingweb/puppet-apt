@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.2.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v8.2.0) (2021-08-25)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v8.1.0...v8.2.0)
+
+### Added
+
+- \(maint\) Add support for Debian 11 [\#1001](https://github.com/puppetlabs/puppetlabs-apt/pull/1001) ([smortex](https://github.com/smortex))
+
+### Fixed
+
+- \(main\) Allow stdlib 8.0.0 [\#1000](https://github.com/puppetlabs/puppetlabs-apt/pull/1000) ([smortex](https://github.com/smortex))
+
 ## [v8.1.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v8.1.0) (2021-07-26)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v8.0.2...v8.1.0)
@@ -12,9 +24,8 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Fixed
 
-- \(IAC-1597\) Increasing MAX\_RETRY\_COUNT [\#987](https://github.com/puppetlabs/puppetlabs-apt/pull/987) ([pmcmaw](https://github.com/pmcmaw))
-
 - apt::source: pass the weak\_ssl param to apt::key [\#993](https://github.com/puppetlabs/puppetlabs-apt/pull/993) ([kenyon](https://github.com/kenyon))
+- \(IAC-1597\) Increasing MAX\_RETRY\_COUNT [\#987](https://github.com/puppetlabs/puppetlabs-apt/pull/987) ([pmcmaw](https://github.com/pmcmaw))
 
 ## [v8.0.2](https://github.com/puppetlabs/puppetlabs-apt/tree/v8.0.2) (2021-03-29)
 
