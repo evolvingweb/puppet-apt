@@ -8,6 +8,7 @@ require 'puppet'
 def apt_get(action)
   cmd = ['apt-get', action]
   cmd << '-y' if ['upgrade', 'dist-upgrade', 'autoremove'].include?(action)
+  ENV['DEBIAN_FRONTEND'] = 'noninteractive' if ['upgrade', 'dist-upgrade'].include?(action)
   stdout, stderr, status = Open3.capture3(*cmd)
   raise Puppet::Error, stderr if status != 0
   { status: stdout.strip }
