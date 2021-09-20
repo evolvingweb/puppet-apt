@@ -23,5 +23,6 @@ type Apt::Proxy = Struct[
     https      => Optional[Boolean],
     https_acng => Optional[Boolean],
     direct     => Optional[Boolean],
+    perhost    => Optional[Array[Apt::Proxy_Per_Host]],
   }
 ]

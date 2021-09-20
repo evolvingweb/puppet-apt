@@ -101,7 +101,69 @@ describe 'apt' do
         is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
           %r{Acquire::http::proxy "http://localhost:8080/";},
         ).without_content(
-          %r{Acquire::https::proxy},
+          %r{Acquire::https::proxy },
+        )
+      }
+    end
+
+    context 'when host=localhost and per-host[proxyscope]=proxyhost' do
+      let(:params) { { proxy: { 'host' => 'localhost', 'perhost' => [{ 'scope' => 'proxyscope', 'host' => 'proxyhost' }] } } }
+
+      it {
+        is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
+          %r{Acquire::http::proxy::proxyscope "http://proxyhost:8080/";},
+        )
+      }
+    end
+
+    context 'when host=localhost and per-host[proxyscope]=proxyhost:8081' do
+      let(:params) { { proxy: { 'host' => 'localhost', 'perhost' => [{ 'scope' => 'proxyscope', 'host' => 'proxyhost', 'port' => 8081 }] } } }
+
+      it {
+        is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
+          %r{Acquire::http::proxy::proxyscope "http://proxyhost:8081/";},
+        )
+      }
+    end
+
+    context 'when host=localhost and per-host[proxyscope]=[https]proxyhost' do
+      let(:params) { { proxy: { 'host' => 'localhost', 'perhost' => [{ 'scope' => 'proxyscope', 'host' => 'proxyhost', 'https' => true }] } } }
+
+      it {
+        is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
+          %r{Acquire::https::proxy::proxyscope "https://proxyhost:8080/";},
+        )
+      }
+    end
+
+    context 'when host=localhost and per-host[proxyscope]=[direct]' do
+      let(:params) { { proxy: { 'host' => 'localhost', 'perhost' => [{ 'scope' => 'proxyscope', 'direct' => true }] } } }
+
+      it {
+        is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
+          %r{Acquire::http::proxy::proxyscope "DIRECT";},
+        )
+      }
+    end
+
+    context 'when host=localhost and per-host[proxyscope]=[https][direct]' do
+      let(:params) { { proxy: { 'host' => 'localhost', 'perhost' => [{ 'scope' => 'proxyscope', 'https' => true, 'direct' => true }] } } }
+
+      it {
+        is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
+          %r{Acquire::https::proxy::proxyscope "DIRECT";},
+        )
+      }
+    end
+
+    context 'when host=localhost and per-host[proxyscope]=proxyhost and per-host[proxyscope2]=proxyhost2' do
+      let(:params) { { proxy: { 'host' => 'localhost', 'perhost' => [{ 'scope' => 'proxyscope', 'host' => 'proxyhost' }, { 'scope' => 'proxyscope2', 'host' => 'proxyhost2' }] } } }
+
+      it {
+        is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
+          %r{Acquire::http::proxy::proxyscope "http://proxyhost:8080/";},
+        ).with_content(
+          %r{Acquire::http::proxy::proxyscope2 "http://proxyhost2:8080/";},
         )
       }
     end
@@ -113,7 +175,7 @@ describe 'apt' do
         is_expected.to contain_apt__setting('conf-proxy').with(priority: '01').with_content(
           %r{Acquire::http::proxy "http://localhost:8180/";},
         ).without_content(
-          %r{Acquire::https::proxy},
+          %r{Acquire::https::proxy },
         )
       }
     end
