@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.3.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v8.3.0) (2021-10-04)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v8.2.0...v8.3.0)
+
+### Added
+
+- \(MODULES-11173\) Add per-host overrides for apt::proxy [\#1007](https://github.com/puppetlabs/puppetlabs-apt/pull/1007) ([maturnbull](https://github.com/maturnbull))
+
+### Fixed
+
+- pdksync - \(IAC-1598\) - Remove Support for Debian 8 [\#1008](https://github.com/puppetlabs/puppetlabs-apt/pull/1008) ([david22swan](https://github.com/david22swan))
+
 ## [v8.2.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v8.2.0) (2021-08-25)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v8.1.0...v8.2.0)
