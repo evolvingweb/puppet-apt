@@ -61,6 +61,36 @@ describe 'apt::update', type: :class do
         is_expected.to contain_exec('apt_update').with('refreshonly' => false)
       end
     end
+    context 'and Exec[apt_update] refreshonly is overridden to true and has recent run' do
+      let(:facts) do
+        {
+          os: {
+            family: 'Debian',
+            name: 'Debian',
+            release: {
+              major: '8',
+              full: '8.0',
+            },
+            distro: {
+              codename: 'jessie',
+              id: 'Debian',
+            },
+          },
+          apt_update_last_success: Time.now.to_i,
+        }
+      end
+      let(:pre_condition) do
+        "
+        class{'::apt': update => {'frequency' => 'always' },}
+        Exec <| title=='apt_update' |> { refreshonly => true }
+        "
+      end
+
+      it 'skips an apt-get update run' do
+        # set the apt_update exec's refreshonly attribute to false
+        is_expected.to contain_exec('apt_update').with('refreshonly' => true)
+      end
+    end
   end
   context "when apt::update['frequency']='reluctantly'" do
     {
