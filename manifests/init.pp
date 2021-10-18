@@ -267,12 +267,6 @@ class apt (
     default => file,
   }
 
-  if $_update['frequency'] == 'always' {
-    Exec <| title=='apt_update' |> {
-      refreshonly => false,
-    }
-  }
-
   apt::setting { 'conf-update-stamp':
     priority => 15,
     content  => "${confheadertmp}${updatestamptmp}",
