@@ -125,11 +125,17 @@ define apt::source(
 
   $header = epp('apt/_header.epp')
 
+  if $architecture {
+    $_architecture = regsubst($architecture, '\baarch64\b', 'arm64')
+  } else {
+    $_architecture = undef
+  }
+
   $sourcelist = epp('apt/source.list.epp', {
     'comment'          => $comment,
     'includes'         => $includes,
     'options'          => delete_undef_values({
-      'arch'      => $architecture,
+      'arch'      => $_architecture,
       'trusted'   => $allow_unsigned ? {true => "yes", false => undef},
       'signed-by' => $keyring,
     }),
