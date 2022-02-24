@@ -79,8 +79,8 @@ define apt::source(
   $_before = Apt::Setting["list-${title}"]
 
   if !$release {
-    if $facts['os']['distro']['codename'] {
-      $_release = $facts['os']['distro']['codename']
+    if fact('os.distro.codename') {
+      $_release = fact('os.distro.codename')
     } else {
       fail('os.distro.codename fact not available: release parameter required')
     }
@@ -100,7 +100,7 @@ define apt::source(
     }
     # Newer oses, do not need the package for HTTPS transport.
     $_transport_https_releases = [ 'wheezy', 'jessie', 'stretch', 'trusty', 'xenial' ]
-    if ($facts['os']['distro']['codename'] in $_transport_https_releases) and $_location =~ /(?i:^https:\/\/)/ {
+    if (fact('os.distro.codename') in $_transport_https_releases) and $_location =~ /(?i:^https:\/\/)/ {
       ensure_packages('apt-transport-https')
       Package['apt-transport-https'] -> Class['apt::update']
     }
