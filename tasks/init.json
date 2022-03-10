@@ -1,9 +1,9 @@
 {
-  "description": "Allows you to perform apt functions",
+  "description": "Allows you to perform apt-get functions",
   "input_method": "stdin",
   "parameters": {
     "action": {
-      "description": "Action to perform ",
+      "description": "Action to perform with apt-get",
       "type": "Enum[update, upgrade, dist-upgrade, autoremove]"
     }
   }
