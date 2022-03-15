@@ -432,7 +432,7 @@ Default value: ``undef``
 Data type: `Optional[String]`
 
 Specifies a distribution of the Apt repository containing the backports to manage. Used in populating the `source.list` configuration file.
-Default: on Debian and Ubuntu, `${facts['os']['distro']['codename']}-backports`. We recommend keeping this default, except on other operating
+Default: on Debian and Ubuntu, `${fact('os.distro.codename')}-backports`. We recommend keeping this default, except on other operating
 systems.
 
 Default value: ``undef``
@@ -814,7 +814,7 @@ Data type: `Optional[String]`
 Specifies the operating system of your node. Valid options: a string containing a valid LSB distribution codename.
 Optional if `puppet facts show os.distro.codename` returns your correct distribution release codename.
 
-Default value: `$facts['os']['distro']['codename']`
+Default value: `fact('os.distro.codename')`
 
 ##### <a name="dist"></a>`dist`
 
@@ -935,8 +935,8 @@ The following parameters are available in the `apt::source` defined type:
 * [`pin`](#pin)
 * [`architecture`](#architecture)
 * [`allow_unsigned`](#allow_unsigned)
-* [`allow_insecure`](#allow_insecure)
 * [`notify_update`](#notify_update)
+* [`allow_insecure`](#allow_insecure)
 
 ##### <a name="location"></a>`location`
 
@@ -1037,16 +1037,6 @@ Specifies whether to authenticate packages from this release, even if the Releas
 
 Default value: ``false``
 
-##### <a name="allow_insecure"></a>`allow_insecure`
-
-Data type: `Boolean`
-
-Specifies whether to authenticate packages from this release, even if the Release file is not signed or the signature can't be checked.
-Unlike the `allow_unsigned` (trusted=yes) option, this should throw a warning that the interaction is insecure.  
-See [this comment](https://unix.stackexchange.com/a/480550) for a brief discussion of the difference and why this option might be preferable to `allow_unsigned`.
-
-Default value: ``false``
-
 ##### <a name="notify_update"></a>`notify_update`
 
 Data type: `Boolean`
@@ -1054,6 +1044,14 @@ Data type: `Boolean`
 Specifies whether to trigger an `apt-get update` run.
 
 Default value: ``true``
+
+##### <a name="allow_insecure"></a>`allow_insecure`
+
+Data type: `Boolean`
+
+
+
+Default value: ``false``
 
 ## Resource types
 

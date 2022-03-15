@@ -26,7 +26,7 @@
 define apt::ppa(
   String $ensure                 = 'present',
   Optional[String] $options      = $::apt::ppa_options,
-  Optional[String] $release      = $facts['os']['distro']['codename'],
+  Optional[String] $release      = fact('os.distro.codename'),
   Optional[String] $dist         = $facts['os']['name'],
   Optional[String] $package_name = $::apt::ppa_package,
   Boolean $package_manage        = false,
