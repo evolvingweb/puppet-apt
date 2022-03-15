@@ -99,8 +99,8 @@ define apt::source(
       $_location = $location
     }
     # Newer oses, do not need the package for HTTPS transport.
-    $_transport_https_releases = [ 'wheezy', 'jessie', 'stretch', 'trusty', 'xenial' ]
-    if (fact('os.distro.codename') in $_transport_https_releases) and $_location =~ /(?i:^https:\/\/)/ {
+    $_transport_https_releases = [ '7', '8', '9', '14.04', '16.04' ]
+    if (fact('os.release.major') in $_transport_https_releases) and $_location =~ /(?i:^https:\/\/)/ {
       ensure_packages('apt-transport-https')
       Package['apt-transport-https'] -> Class['apt::update']
     }
