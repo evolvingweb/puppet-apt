@@ -361,7 +361,4 @@ class apt (
   if $pins {
     create_resources('apt::pin', $pins)
   }
-
-  # required for adding GPG keys on Debian 9 (and derivatives)
-  ensure_packages(['gnupg'])
 }
