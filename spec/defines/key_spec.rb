@@ -50,11 +50,11 @@ describe 'apt::key' do
         family: 'Debian',
         name: 'Debian',
         release: {
-          major: '8',
-          full: '8.0',
+          major: '9',
+          full: '9.0',
         },
         distro: {
-          codename: 'jessie',
+          codename: 'stretch',
           id: 'Debian',
         },
       },

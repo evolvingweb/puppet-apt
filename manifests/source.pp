@@ -99,7 +99,7 @@ define apt::source(
       $_location = $location
     }
     # Newer oses, do not need the package for HTTPS transport.
-    $_transport_https_releases = [ '7', '8', '9', '14.04', '16.04' ]
+    $_transport_https_releases = ['9']
     if (fact('os.release.major') in $_transport_https_releases) and $_location =~ /(?i:^https:\/\/)/ {
       ensure_packages('apt-transport-https')
       Package['apt-transport-https'] -> Class['apt::update']
@@ -111,7 +111,7 @@ define apt::source(
   $includes = merge($::apt::include_defaults, $include)
 
   if $key and $keyring {
-    fail("parameters key and keyring are mutualy exclusive")
+    fail('parameters key and keyring are mutualy exclusive')
   }
 
   if $key {
@@ -138,8 +138,8 @@ define apt::source(
     'includes'         => $includes,
     'options'          => delete_undef_values({
       'arch'           => $architecture,
-      'trusted'        => $allow_unsigned ? {true => "yes", false => undef},
-      'allow-insecure' => $allow_insecure ? {true => "yes", false => undef},
+      'trusted'        => $allow_unsigned ? {true => 'yes', false => undef},
+      'allow-insecure' => $allow_insecure ? {true => 'yes', false => undef},
       'signed-by'      => $keyring,
     }),
     'location'         => $_location,

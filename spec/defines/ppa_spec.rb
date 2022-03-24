@@ -13,8 +13,8 @@ describe 'apt::ppa' do
           family: 'Debian',
           name: 'Ubuntu',
           release: {
-            major: '14',
-            full: '14.04',
+            major: '18',
+            full: '18.04',
           },
           distro: {
             codename: 'trusty',
@@ -29,8 +29,8 @@ describe 'apt::ppa' do
     it { is_expected.not_to contain_package('python-software-properties') }
     it {
       is_expected.to contain_exec('add-apt-repository-ppa:needs/such.substitution/wow+type').that_notifies('Class[Apt::Update]').with(environment: [],
-                                                                                                                                      command: '/usr/bin/add-apt-repository -y ppa:needs/such.substitution/wow+type || (rm /etc/apt/sources.list.d/needs-such_substitution-wow_type-trusty.list && false)', # rubocop:disable Layout/LineLength
-                                                                                                                                      unless: '/usr/bin/test -f /etc/apt/sources.list.d/needs-such_substitution-wow_type-trusty.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/needs-such_substitution-wow_type.gpg', # rubocop:disable Layout/LineLength
+                                                                                                                                      command: '/usr/bin/add-apt-repository -y ppa:needs/such.substitution/wow+type || (rm /etc/apt/sources.list.d/needs-ubuntu-such_substitution-wow_type-trusty.list && false)', # rubocop:disable Layout/LineLength
+                                                                                                                                      unless: '/usr/bin/test -f /etc/apt/sources.list.d/needs-ubuntu-such_substitution-wow_type-trusty.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/needs_ubuntu_such_substitution-wow_type.gpg', # rubocop:disable Layout/LineLength
                                                                                                                                       user: 'root',
                                                                                                                                       logoutput: 'on_failure')
     }
@@ -81,8 +81,8 @@ describe 'apt::ppa' do
           family: 'Debian',
           name: 'Ubuntu',
           release: {
-            major: '14',
-            full: '14.04',
+            major: '18',
+            full: '18.04',
           },
           distro: {
             codename: 'trusty',
@@ -97,14 +97,14 @@ describe 'apt::ppa' do
     it { is_expected.to contain_package('software-properties-common') }
     it {
       is_expected.to contain_exec('add-apt-repository-ppa:needs/such.substitution/wow').that_notifies('Class[Apt::Update]').with('environment' => [],
-                                                                                                                                 'command'     => '/usr/bin/add-apt-repository -y ppa:needs/such.substitution/wow || (rm /etc/apt/sources.list.d/needs-such_substitution-wow-trusty.list && false)', # rubocop:disable Layout/LineLength
-                                                                                                                                 'unless'      => '/usr/bin/test -f /etc/apt/sources.list.d/needs-such_substitution-wow-trusty.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/needs-such_substitution-wow.gpg', # rubocop:disable Layout/LineLength
+                                                                                                                                 'command'     => '/usr/bin/add-apt-repository -y ppa:needs/such.substitution/wow || (rm /etc/apt/sources.list.d/needs-ubuntu-such_substitution-wow-trusty.list && false)', # rubocop:disable Layout/LineLength
+                                                                                                                                 'unless'      => '/usr/bin/test -f /etc/apt/sources.list.d/needs-ubuntu-such_substitution-wow-trusty.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/needs_ubuntu_such_substitution-wow.gpg', # rubocop:disable Layout/LineLength
                                                                                                                                  'user'        => 'root',
                                                                                                                                  'logoutput'   => 'on_failure')
     }
 
     it {
-      is_expected.to contain_file('/etc/apt/sources.list.d/needs-such_substitution-wow-trusty.list').that_requires('Exec[add-apt-repository-ppa:needs/such.substitution/wow]').with('ensure' => 'file')
+      is_expected.to contain_file('/etc/apt/sources.list.d/needs-ubuntu-such_substitution-wow-trusty.list').that_requires('Exec[add-apt-repository-ppa:needs/such.substitution/wow]').with('ensure' => 'file') # rubocop:disable Layout/LineLength
     }
   end
 
@@ -118,8 +118,8 @@ describe 'apt::ppa' do
           family: 'Debian',
           name: 'Ubuntu',
           release: {
-            major: '14',
-            full: '14.04',
+            major: '18',
+            full: '18.04',
           },
           distro: {
             codename: 'trusty',
@@ -139,14 +139,14 @@ describe 'apt::ppa' do
     it { is_expected.not_to contain_package('python-software-properties') }
     it {
       is_expected.to contain_exec('add-apt-repository-ppa:needs/such.substitution/wow').that_notifies('Class[Apt::Update]').with('environment' => [],
-                                                                                                                                 'command'     => '/usr/bin/add-apt-repository -y ppa:needs/such.substitution/wow || (rm /etc/apt/sources.list.d/needs-such_substitution-wow-trusty.list && false)', # rubocop:disable Layout/LineLength
-                                                                                                                                 'unless'      => '/usr/bin/test -f /etc/apt/sources.list.d/needs-such_substitution-wow-trusty.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/needs-such_substitution-wow.gpg', # rubocop:disable Layout/LineLength
+                                                                                                                                 'command'     => '/usr/bin/add-apt-repository -y ppa:needs/such.substitution/wow || (rm /etc/apt/sources.list.d/needs-ubuntu-such_substitution-wow-trusty.list && false)', # rubocop:disable Layout/LineLength
+                                                                                                                                 'unless'      => '/usr/bin/test -f /etc/apt/sources.list.d/needs-ubuntu-such_substitution-wow-trusty.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/needs_ubuntu_such_substitution-wow.gpg', # rubocop:disable Layout/LineLength
                                                                                                                                  'user'        => 'root',
                                                                                                                                  'logoutput'   => 'on_failure')
     }
 
     it {
-      is_expected.to contain_file('/etc/apt/sources.list.d/needs-such_substitution-wow-trusty.list').that_requires('Exec[add-apt-repository-ppa:needs/such.substitution/wow]').with('ensure' => 'file')
+      is_expected.to contain_file('/etc/apt/sources.list.d/needs-ubuntu-such_substitution-wow-trusty.list').that_requires('Exec[add-apt-repository-ppa:needs/such.substitution/wow]').with('ensure' => 'file') # rubocop:disable Layout/LineLength
     }
   end
 
@@ -162,8 +162,8 @@ describe 'apt::ppa' do
           family: 'Debian',
           name: 'Ubuntu',
           release: {
-            major: '14',
-            full: '14.04',
+            major: '18',
+            full: '18.04',
           },
           distro: {
             codename: 'trusty',
@@ -185,8 +185,8 @@ describe 'apt::ppa' do
     it { is_expected.to contain_package('software-properties-common') }
     it {
       is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with(environment: [],
-                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || (rm /etc/apt/sources.list.d/user-foo-trusty.list && false)', # rubocop:disable Layout/LineLength
-                                                                                                              unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-foo-trusty.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/user-foo.gpg', # rubocop:disable Layout/LineLength
+                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || (rm /etc/apt/sources.list.d/user-ubuntu-foo-trusty.list && false)', # rubocop:disable Layout/LineLength
+                                                                                                              unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-ubuntu-foo-trusty.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/user_ubuntu_foo.gpg', # rubocop:disable Layout/LineLength
                                                                                                               user: 'root',
                                                                                                               logoutput: 'on_failure')
     }
@@ -204,8 +204,8 @@ describe 'apt::ppa' do
           family: 'Debian',
           name: 'Ubuntu',
           release: {
-            major: '14',
-            full: '14.04',
+            major: '18',
+            full: '18.04',
           },
           distro: {
             codename: 'trusty',
@@ -225,8 +225,8 @@ describe 'apt::ppa' do
     it { is_expected.to contain_package('software-properties-common') }
     it {
       is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with(environment: ['http_proxy=http://localhost:8080'],
-                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || (rm /etc/apt/sources.list.d/user-foo-trusty.list && false)', # rubocop:disable Layout/LineLength
-                                                                                                              unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-foo-trusty.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/user-foo.gpg', # rubocop:disable Layout/LineLength
+                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || (rm /etc/apt/sources.list.d/user-ubuntu-foo-trusty.list && false)', # rubocop:disable Layout/LineLength
+                                                                                                              unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-ubuntu-foo-trusty.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/user_ubuntu_foo.gpg', # rubocop:disable Layout/LineLength
                                                                                                               user: 'root',
                                                                                                               logoutput: 'on_failure')
     }
@@ -244,8 +244,8 @@ describe 'apt::ppa' do
           family: 'Debian',
           name: 'Ubuntu',
           release: {
-            major: '14',
-            full: '14.04',
+            major: '18',
+            full: '18.04',
           },
           distro: {
             codename: 'trusty',
@@ -265,8 +265,8 @@ describe 'apt::ppa' do
     it { is_expected.to contain_package('software-properties-common') }
     it {
       is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with(environment: ['http_proxy=http://localhost:8180'],
-                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || (rm /etc/apt/sources.list.d/user-foo-trusty.list && false)', # rubocop:disable Layout/LineLength
-                                                                                                              unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-foo-trusty.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/user-foo.gpg', # rubocop:disable Layout/LineLength
+                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || (rm /etc/apt/sources.list.d/user-ubuntu-foo-trusty.list && false)', # rubocop:disable Layout/LineLength
+                                                                                                              unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-ubuntu-foo-trusty.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/user_ubuntu_foo.gpg', # rubocop:disable Layout/LineLength
                                                                                                               user: 'root',
                                                                                                               logoutput: 'on_failure')
     }
@@ -284,8 +284,8 @@ describe 'apt::ppa' do
           family: 'Debian',
           name: 'Ubuntu',
           release: {
-            major: '14',
-            full: '14.04',
+            major: '18',
+            full: '18.04',
           },
           distro: {
             codename: 'trusty',
@@ -305,8 +305,8 @@ describe 'apt::ppa' do
     it { is_expected.to contain_package('software-properties-common') }
     it {
       is_expected.to contain_exec('add-apt-repository-ppa:user/foo').that_notifies('Class[Apt::Update]').with(environment: ['http_proxy=http://localhost:8180', 'https_proxy=https://localhost:8180'],
-                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || (rm /etc/apt/sources.list.d/user-foo-trusty.list && false)', # rubocop:disable Layout/LineLength
-                                                                                                              unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-foo-trusty.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/user-foo.gpg', # rubocop:disable Layout/LineLength
+                                                                                                              command: '/usr/bin/add-apt-repository  ppa:user/foo || (rm /etc/apt/sources.list.d/user-ubuntu-foo-trusty.list && false)', # rubocop:disable Layout/LineLength
+                                                                                                              unless: '/usr/bin/test -f /etc/apt/sources.list.d/user-ubuntu-foo-trusty.list && /usr/bin/test -f /etc/apt/trusted.gpg.d/user_ubuntu_foo.gpg', # rubocop:disable Layout/LineLength
                                                                                                               user: 'root',
                                                                                                               logoutput: 'on_failure')
     }
@@ -322,8 +322,8 @@ describe 'apt::ppa' do
           family: 'Debian',
           name: 'Ubuntu',
           release: {
-            major: '14',
-            full: '14.04',
+            major: '18',
+            full: '18.04',
           },
           distro: {
             codename: 'trusty',
@@ -340,7 +340,7 @@ describe 'apt::ppa' do
     end
 
     it {
-      is_expected.to contain_file('/etc/apt/sources.list.d/user-foo-trusty.list').that_notifies('Class[Apt::Update]').with(ensure: 'absent')
+      is_expected.to contain_file('/etc/apt/sources.list.d/user-ubuntu-foo-trusty.list').that_notifies('Class[Apt::Update]').with(ensure: 'absent')
     }
   end
 
@@ -352,8 +352,8 @@ describe 'apt::ppa' do
             family: 'Debian',
             name: 'Ubuntu',
             release: {
-              major: '14',
-              full: '14.04',
+              major: '18',
+              full: '18.04',
             },
             distro: {
               codename: nil,

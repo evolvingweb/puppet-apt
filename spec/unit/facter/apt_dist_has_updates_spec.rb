@@ -32,8 +32,8 @@ describe 'apt_has_dist_updates fact' do
       allow(Facter::Util::Resolution).to receive(:exec).with('/usr/bin/apt-get -s -o Debug::NoLocking=true upgrade 2>&1').and_return('test')
       apt_output = "Inst extremetuxracer [2015f-0+deb8u1] (2015g-0+deb8u1 Debian:stable-updates [all])\n" \
                    "Conf extremetuxracer (2015g-0+deb8u1 Debian:stable-updates [all])\n" \
-                   "Inst planet.rb [13-1.1] (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n" \
-                   "Conf planet.rb (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n"
+                   "Inst planet.rb [13-1.1] (22-2~bpo8+1 Debian Backports:stretch-backports [all])\n" \
+                   "Conf planet.rb (22-2~bpo8+1 Debian Backports:stretch-backports [all])\n"
       allow(Facter::Util::Resolution).to receive(:exec).with('/usr/bin/apt-get -s -o Debug::NoLocking=true dist-upgrade 2>&1').and_return(apt_output)
     end
     it { is_expected.to be true }
