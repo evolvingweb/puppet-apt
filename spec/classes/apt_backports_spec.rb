@@ -13,11 +13,11 @@ describe 'apt::backports', type: :class do
             family: 'Debian',
             name: 'Debian',
             release: {
-              major: '8',
-              full: '8.0',
+              major: '9',
+              full: '9.0',
             },
             distro: {
-              codename: 'jessie',
+              codename: 'stretch',
               id: 'Debian',
             },
           },
@@ -27,8 +27,8 @@ describe 'apt::backports', type: :class do
       it {
         is_expected.to contain_apt__source('backports').with(location: 'http://deb.debian.org/debian',
                                                              repos: 'main contrib non-free',
-                                                             release: 'jessie-backports',
-                                                             pin: { 'priority' => 200, 'release' => 'jessie-backports' })
+                                                             release: 'stretch-backports',
+                                                             pin: { 'priority' => 200, 'release' => 'stretch-backports' })
       }
     end
     context 'with defaults on ubuntu' do
@@ -38,11 +38,11 @@ describe 'apt::backports', type: :class do
             family: 'Debian',
             name: 'Ubuntu',
             release: {
-              major: '16',
-              full: '16.04',
+              major: '18',
+              full: '18.04',
             },
             distro: {
-              codename: 'xenial',
+              codename: 'bionac',
               id: 'Ubuntu',
             },
           },
@@ -53,8 +53,8 @@ describe 'apt::backports', type: :class do
         is_expected.to contain_apt__source('backports').with(location: 'http://archive.ubuntu.com/ubuntu',
                                                              key: '630239CC130E1A7FD81A27B140976EAF437D05B5',
                                                              repos: 'main universe multiverse restricted',
-                                                             release: 'xenial-backports',
-                                                             pin: { 'priority' => 200, 'release' => 'xenial-backports' })
+                                                             release: 'bionac-backports',
+                                                             pin: { 'priority' => 200, 'release' => 'bionac-backports' })
       }
     end
     context 'with everything set' do
@@ -64,11 +64,11 @@ describe 'apt::backports', type: :class do
             family: 'Debian',
             name: 'Ubuntu',
             release: {
-              major: '16',
-              full: '16.04',
+              major: '18',
+              full: '18.04',
             },
             distro: {
-              codename: 'xenial',
+              codename: 'bionac',
               id: 'Ubuntu',
             },
           },
@@ -99,11 +99,11 @@ describe 'apt::backports', type: :class do
             family: 'Debian',
             name: 'Ubuntu',
             release: {
-              major: '16',
-              full: '16.04',
+              major: '18',
+              full: '18.04',
             },
             distro: {
-              codename: 'xenial',
+              codename: 'bionac',
               id: 'Ubuntu',
             },
           },
@@ -222,11 +222,11 @@ describe 'apt::backports', type: :class do
           family: 'Debian',
           name: 'Ubuntu',
           release: {
-            major: '16',
-            full: '16.04',
+            major: '18',
+            full: '18.04',
           },
           distro: {
-            codename: 'xenial',
+            codename: 'bionac',
             id: 'Ubuntu',
           },
         },

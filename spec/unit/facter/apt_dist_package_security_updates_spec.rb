@@ -29,8 +29,8 @@ describe 'apt_package_security_dist_updates fact' do
       let(:apt_get_upgrade_output) do
         "Inst extremetuxracer [2015f-0+deb8u1] (2015g-0+deb8u1 Debian:stable-updates [all])\n" \
           "Conf extremetuxracer (2015g-0+deb8u1 Debian:stable-updates [all])\n" \
-          "Inst planet.rb [13-1.1] (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n" \
-          "Conf planet.rb (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n" \
+          "Inst planet.rb [13-1.1] (22-2~bpo8+1 Debian Backports:-backports [all])\n" \
+          "Conf planet.rb (22-2~bpo8+1 Debian Backports:-backports [all])\n" \
           "Inst vim [7.52.1-5] (7.52.1-5+deb9u2 Debian-Security:9/stable [amd64]) []\n" \
           "Conf vim (7.52.1-5+deb9u2 Debian-Security:9/stable [amd64])\n" \
       end
@@ -40,12 +40,12 @@ describe 'apt_package_security_dist_updates fact' do
 
     describe 'on Ubuntu' do
       let(:apt_get_upgrade_output) do
-        "Inst extremetuxracer [2016f-0ubuntu0.16.04] (2016j-0ubuntu0.16.04 Ubuntu:16.04/xenial-security, Ubuntu:16.04/xenial-updates [all])\n" \
-          "Conf extremetuxracer (2016j-0ubuntu0.16.04 Ubuntu:16.04/xenial-security, Ubuntu:16.04/xenial-updates [all])\n" \
-          "Inst vim [7.47.0-1ubuntu2] (7.47.0-1ubuntu2.2 Ubuntu:16.04/xenial-security [amd64]) []\n" \
-          "Conf vim (7.47.0-1ubuntu2.2 Ubuntu:16.04/xenial-security [amd64])\n" \
-          "Inst onioncircuits [2:3.3.10-4ubuntu2] (2:3.3.10-4ubuntu2.3 Ubuntu:16.04/xenial-updates [amd64])\n" \
-          "Conf onioncircuits (2:3.3.10-4ubuntu2.3 Ubuntu:16.04/xenial-updates [amd64])\n"
+        "Inst extremetuxracer [2016f-0ubuntu0.18.04] (2016j-0ubuntu0.18.04 Ubuntu:18.04/xenial-security, Ubuntu:18.04/xenial-updates [all])\n" \
+          "Conf extremetuxracer (2016j-0ubuntu0.18.04 Ubuntu:18.04/xenial-security, Ubuntu:18.04/xenial-updates [all])\n" \
+          "Inst vim [7.47.0-1ubuntu2] (7.47.0-1ubuntu2.2 Ubuntu:18.04/xenial-security [amd64]) []\n" \
+          "Conf vim (7.47.0-1ubuntu2.2 Ubuntu:18.04/xenial-security [amd64])\n" \
+          "Inst onioncircuits [2:3.3.10-4ubuntu2] (2:3.3.10-4ubuntu2.3 Ubuntu:18.04/xenial-updates [amd64])\n" \
+          "Conf onioncircuits (2:3.3.10-4ubuntu2.3 Ubuntu:18.04/xenial-updates [amd64])\n"
       end
 
       it { is_expected.to eq(['extremetuxracer', 'vim']) }

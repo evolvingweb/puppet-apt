@@ -24,8 +24,8 @@ describe 'apt_package_dist_updates fact' do
       allow(File).to receive(:executable?).with('/usr/bin/apt-get').and_return(true)
       apt_output = "Inst extremetuxracer [2015f-0+deb8u1] (2015g-0+deb8u1 Debian:stable-updates [all])\n" \
                    "Conf extremetuxracer (2015g-0+deb8u1 Debian:stable-updates [all])\n" \
-                   "Inst planet.rb [13-1.1] (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n" \
-                   "Conf planet.rb (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n"
+                   "Inst planet.rb [13-1.1] (22-2~bpo8+1 Debian Backports:-backports [all])\n" \
+                   "Conf planet.rb (22-2~bpo8+1 Debian Backports:-backports [all])\n"
       allow(Facter::Util::Resolution).to receive(:exec).with('/usr/bin/apt-get -s -o Debug::NoLocking=true dist-upgrade 2>&1').and_return(apt_output)
     end
     it { is_expected.to eq(['extremetuxracer', 'planet.rb']) }

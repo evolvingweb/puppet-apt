@@ -18,8 +18,7 @@ SHOULD_NEVER_EXIST_ID               = 'EF8D349F'
 KEY_CHECK_COMMAND                   = 'apt-key adv --no-tty --list-keys --with-colons --fingerprint | grep '
 PUPPETLABS_KEY_CHECK_COMMAND        = "#{KEY_CHECK_COMMAND} #{PUPPETLABS_GPG_KEY_FINGERPRINT}"
 CENTOS_KEY_CHECK_COMMAND            = "#{KEY_CHECK_COMMAND} #{CENTOS_GPG_KEY_FINGERPRINT}"
-PUPPETLABS_EXP_CHECK_COMMAND        = "#{KEY_CHECK_COMMAND} '#{PUPPETLABS_EXP_KEY_DATES}'"
-DEBIAN_PUPPETLABS_EXP_CHECK_COMMAND = 'apt-key list | grep -F -A 1 \'pub   rsa4096 2010-07-10 [SC] [expired: 2017-01-05]\' | grep \'47B3 20EB 4C7C 375A A9DA  E1A0 1054 B7A2 4BD6 EC30\''
+PUPPETLABS_EXP_CHECK_COMMAND        = 'apt-key list | grep -F -A 1 \'pub   rsa4096 2010-07-10 [SC] [expired: 2017-01-05]\' | grep \'47B3 20EB 4C7C 375A A9DA  E1A0 1054 B7A2 4BD6 EC30\''
 
 def install_key(key)
   retry_on_error_matching do
@@ -890,17 +889,9 @@ describe 'apt_key' do
   end
 
   describe 'refresh' do
-    if ['8', '14.04', '16.04'].include?(host_inventory['facter']['os']['release']['major'])
-      # older OSes use puppetlabs_exp_check_command
-      let(:puppetlabs_exp_check_command) { PUPPETLABS_EXP_CHECK_COMMAND }
+    # Ensure dirmngr package is installed
+    apply_manifest(refresh_check_for_dirmngr_pp, acceptable_exit_codes: [0, 2])
 
-    else
-      # Set Debian Stetch and newer OSes puppetlabs_exp_check_command
-      let(:puppetlabs_exp_check_command) { DEBIAN_PUPPETLABS_EXP_CHECK_COMMAND }
-
-      # Ensure dirmngr package is installed
-      apply_manifest(refresh_check_for_dirmngr_pp, acceptable_exit_codes: [0, 2])
-    end
     before(:each) do
       # Delete the Puppet Labs Release Key and install an expired version of the key
       apply_manifest(refresh_del_key_pp)
@@ -910,14 +901,14 @@ describe 'apt_key' do
       it 'updates an expired key' do
         apply_manifest(refresh_true_pp)
         # Check key has been updated to new version
-        run_shell(puppetlabs_exp_check_command.to_s)
+        run_shell(PUPPETLABS_EXP_CHECK_COMMAND.to_s)
       end
     end
     context 'when refresh => false' do
       it 'does not replace an expired key' do
         apply_manifest(refresh_false_pp)
         # Expired key is present and has not been updated by the new version
-        run_shell(puppetlabs_exp_check_command.to_s, expect_failures: true)
+        run_shell(PUPPETLABS_EXP_CHECK_COMMAND.to_s, expect_failures: true)
       end
     end
   end

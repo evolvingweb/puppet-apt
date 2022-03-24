@@ -19,11 +19,11 @@ describe 'apt::source' do
         family: 'Debian',
         name: 'Debian',
         release: {
-          major: '8',
-          full: '8.0',
+          major: '9',
+          full: '9.0',
         },
         distro: {
-          codename: 'jessie',
+          codename: 'stretch',
           id: 'Debian',
         },
       },
@@ -58,7 +58,7 @@ describe 'apt::source' do
       end
 
       it {
-        is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{hello.there jessie main\n})
+        is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{hello.there stretch main\n})
       }
 
       it { is_expected.to contain_file('/etc/apt/sources.list.d/my_source.list').that_notifies('Class[Apt::Update]') }
@@ -154,7 +154,7 @@ describe 'apt::source' do
     end
 
     it {
-      is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{# my_source\ndeb \[allow-insecure=yes\] hello.there jessie main\n})
+      is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{# my_source\ndeb \[allow-insecure=yes\] hello.there stretch main\n})
     }
   end
 
@@ -167,7 +167,7 @@ describe 'apt::source' do
     end
 
     it {
-      is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{# my_source\ndeb \[trusted=yes\] hello.there jessie main\n})
+      is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{# my_source\ndeb \[trusted=yes\] hello.there stretch main\n})
     }
   end
 
@@ -182,7 +182,7 @@ describe 'apt::source' do
     it {
       is_expected.to contain_apt__setting('list-my_source')
         .with(ensure: 'present')
-        .with_content(%r{# my_source\ndeb \[signed-by=/usr/share/keyrings/foo-archive-keyring.gpg\] hello.there jessie main\n})
+        .with_content(%r{# my_source\ndeb \[signed-by=/usr/share/keyrings/foo-archive-keyring.gpg\] hello.there stretch main\n})
     }
   end
 
@@ -199,7 +199,7 @@ describe 'apt::source' do
     it {
       is_expected.to contain_apt__setting('list-my_source')
         .with(ensure: 'present')
-        .with_content(%r{# my_source\ndeb \[arch=amd64 trusted=yes signed-by=/usr/share/keyrings/foo-archive-keyring.gpg\] hello.there jessie main\n})
+        .with_content(%r{# my_source\ndeb \[arch=amd64 trusted=yes signed-by=/usr/share/keyrings/foo-archive-keyring.gpg\] hello.there stretch main\n})
     }
   end
 
@@ -223,11 +223,11 @@ describe 'apt::source' do
           family: 'Debian',
           name: 'Debian',
           release: {
-            major: '8',
-            full: '8.0',
+            major: '9',
+            full: '9.0',
           },
           distro: {
-            codename: 'jessie',
+            codename: 'stretch',
             id: 'Debian',
           },
         },
@@ -318,7 +318,7 @@ describe 'apt::source' do
     end
 
     it {
-      is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{# my_source\ndeb-src hello.there jessie main\n})
+      is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{# my_source\ndeb-src hello.there stretch main\n})
     }
   end
 
@@ -331,7 +331,7 @@ describe 'apt::source' do
     end
 
     it {
-      is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{# my_source\ndeb hello.there jessie main\ndeb-src hello.there jessie main\n})
+      is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{# my_source\ndeb hello.there stretch main\ndeb-src hello.there stretch main\n})
     }
   end
 
@@ -358,9 +358,9 @@ describe 'apt::source' do
     end
 
     it {
-      is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{deb-src hello.there jessie main\n})
+      is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{deb-src hello.there stretch main\n})
     }
-    it { is_expected.to contain_apt__setting('list-my_source').without_content(%r{deb hello.there jessie main\n}) }
+    it { is_expected.to contain_apt__setting('list-my_source').without_content(%r{deb hello.there stretch main\n}) }
   end
 
   context 'with ensure => absent' do

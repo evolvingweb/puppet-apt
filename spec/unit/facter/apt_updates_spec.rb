@@ -22,8 +22,8 @@ describe 'apt_updates fact' do
       allow(File).to receive(:executable?).with('/usr/bin/apt-get').and_return(true)
       apt_output = "Inst tzdata [2015f-0+deb8u1] (2015g-0+deb8u1 Debian:stable-updates [all])\n" \
                    "Conf tzdata (2015g-0+deb8u1 Debian:stable-updates [all])\n" \
-                   "Inst unhide.rb [13-1.1] (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n" \
-                   "Conf unhide.rb (22-2~bpo8+1 Debian Backports:jessie-backports [all])\n"
+                   "Inst unhide.rb [13-1.1] (22-2~bpo8+1 Debian Backports:-backports [all])\n" \
+                   "Conf unhide.rb (22-2~bpo8+1 Debian Backports:-backports [all])\n"
       allow(Facter::Util::Resolution).to receive(:exec).with('/usr/bin/apt-get -s -o Debug::NoLocking=true upgrade 2>&1').and_return(apt_output)
     end
     it { is_expected.to eq(2) }
