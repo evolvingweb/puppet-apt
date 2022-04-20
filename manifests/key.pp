@@ -44,10 +44,9 @@ define apt::key (
   Boolean $weak_ssl                                                                                                     = false,
   Optional[String] $options                                                                                             = $::apt::key_options,
   ) {
-
   case $ensure {
     /^(refreshed|present)$/: {
-      if defined(Anchor["apt_key ${id} absent"]){
+      if defined(Anchor["apt_key ${id} absent"]) {
         fail("key with id ${id} already ensured as absent")
       }
 
@@ -76,17 +75,19 @@ define apt::key (
               Apt::Key<| title == $title |>
             }
           }
-          default: { }
+          default: {
+            # Nothing in here
+          }
         }
       }
     }
 
     absent: {
-      if defined(Anchor["apt_key ${id} present"]){
+      if defined(Anchor["apt_key ${id} present"]) {
         fail("key with id ${id} already ensured as present")
       }
 
-      if !defined(Anchor["apt_key ${id} absent"]){
+      if !defined(Anchor["apt_key ${id} absent"]) {
         apt_key { $title:
           ensure   => $ensure,
           id       => $id,

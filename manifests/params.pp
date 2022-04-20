@@ -3,7 +3,6 @@
 # @api private
 #
 class apt::params {
-
   if $facts['os']['family'] != 'Debian' {
     fail('This module only works on Debian or derivatives like Ubuntu')
   }
@@ -44,7 +43,7 @@ class apt::params {
     'list'   => {
       'path' => $sources_list_d,
       'ext'  => '.list',
-    }
+    },
   }
 
   $update_defaults = {
@@ -76,7 +75,7 @@ class apt::params {
     'src' => false,
   }
 
-  case $facts['os']['name']{
+  case $facts['os']['name'] {
     'Debian': {
           $backports = {
             'location' => 'http://deb.debian.org/debian',

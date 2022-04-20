@@ -33,8 +33,8 @@
 # @param label
 #   Names the label of the packages in the directory tree of the Release file.
 #
-define apt::pin(
-  Optional[Enum['file', 'present', 'absent']] $ensure = present,
+define apt::pin (
+  Enum['file', 'present', 'absent'] $ensure           = present,
   Optional[String] $explanation                       = undef,
   Variant[Integer] $order                             = 50,
   Variant[String, Array] $packages                    = '*',
@@ -48,7 +48,6 @@ define apt::pin(
   Optional[String] $originator                        = '', # o=
   Optional[String] $label                             = '',  # l=
 ) {
-
   if $explanation {
     $_explanation = $explanation
   } else {

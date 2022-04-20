@@ -58,13 +58,13 @@
 # @param notify_update
 #   Specifies whether to trigger an `apt-get update` run.
 #
-define apt::source(
+define apt::source (
   Optional[String] $location                    = undef,
   String $comment                               = $name,
   String $ensure                                = present,
   Optional[String] $release                     = undef,
   String $repos                                 = 'main',
-  Optional[Variant[Hash]] $include              = {},
+  Variant[Hash] $include                        = {},
   Optional[Variant[String, Hash]] $key          = undef,
   Optional[Stdlib::AbsolutePath] $keyring       = undef,
   Optional[Variant[Hash, Numeric, String]] $pin = undef,
@@ -73,7 +73,6 @@ define apt::source(
   Boolean $allow_insecure                       = false,
   Boolean $notify_update                        = true,
 ) {
-
   include ::apt
 
   $_before = Apt::Setting["list-${title}"]
@@ -136,12 +135,13 @@ define apt::source(
   $sourcelist = epp('apt/source.list.epp', {
     'comment'          => $comment,
     'includes'         => $includes,
-    'options'          => delete_undef_values({
-      'arch'           => $architecture,
-      'trusted'        => $allow_unsigned ? {true => 'yes', false => undef},
-      'allow-insecure' => $allow_insecure ? {true => 'yes', false => undef},
-      'signed-by'      => $keyring,
-    }),
+    'options'          => delete_undef_values( {
+        'arch'           => $architecture,
+        'trusted'        => $allow_unsigned ? { true => 'yes', false => undef },
+        'allow-insecure' => $allow_insecure ? { true => 'yes', false => undef },
+        'signed-by'      => $keyring,
+      },
+    ),
     'location'         => $_location,
     'release'          => $_release,
     'repos'            => $repos,

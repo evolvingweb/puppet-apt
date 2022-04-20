@@ -63,6 +63,6 @@ class apt::update {
     refreshonly => $_refresh,
     timeout     => $::apt::_update['timeout'],
     tries       => $::apt::_update['tries'],
-    try_sleep   => 1
+    try_sleep   => 1,
   }
 }
