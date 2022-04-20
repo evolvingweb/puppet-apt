@@ -1,9 +1,9 @@
 package { 'debian-keyring':
-  ensure => present
+  ensure => present,
 }
 
 package { 'debian-archive-keyring':
-  ensure => present
+  ensure => present,
 }
 
 apt::source { 'debian_unstable':

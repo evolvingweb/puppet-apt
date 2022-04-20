@@ -23,7 +23,7 @@
 # @param package_manage
 #   Specifies whether Puppet should manage the package that provides `apt-add-repository`.
 #
-define apt::ppa(
+define apt::ppa (
   String $ensure                 = 'present',
   Optional[String] $options      = $::apt::ppa_options,
   Optional[String] $release      = fact('os.distro.codename'),

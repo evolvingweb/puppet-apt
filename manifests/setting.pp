@@ -21,12 +21,11 @@
 #
 define apt::setting (
   Variant[String, Integer, Array] $priority           = 50,
-  Optional[Enum['file', 'present', 'absent']] $ensure = file,
+  Enum['file', 'present', 'absent'] $ensure           = file,
   Optional[String] $source                            = undef,
   Optional[String] $content                           = undef,
   Boolean $notify_update                              = true,
 ) {
-
   if $content and $source {
     fail('apt::setting cannot have both content and source')
   }

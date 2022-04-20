@@ -31,3 +31,13 @@ spec/spec_helper.rb:
 .travis.yml:
   delete: true
 changelog_since_tag: '5.0.1'
+Rakefile:
+  extra_disabled_lint_checks:
+    - top_scope_facts
+    - topscope_variable
+    - relative_classname_inclusion
+    - parameter_documentation
+    - anchor_resource
+    - strict_indent
+    - unquoted_string_in_case
+    - optional_default

@@ -53,8 +53,8 @@ class apt::backports (
   Optional[String] $release                     = undef,
   Optional[String] $repos                       = undef,
   Optional[Variant[String, Hash]] $key          = undef,
-  Optional[Variant[Integer, String, Hash]] $pin = 200,
-  Optional[Variant[Hash]] $include              = {},
+  Variant[Integer, String, Hash] $pin           = 200,
+  Variant[Hash] $include                        = {},
 ) {
   include apt
 

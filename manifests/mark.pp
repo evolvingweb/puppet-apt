@@ -21,4 +21,3 @@ define apt::mark (
     unless => $unless_cmd,
   }
 }
-
