@@ -1,1 +1,9 @@
 --relative
+--no-top_scope_facts-check
+--no-topscope_variable-check
+--no-relative_classname_inclusion-check
+--no-parameter_documentation-check
+--no-anchor_resource-check
+--no-strict_indent-check
+--no-unquoted_string_in_case-check
+--no-optional_default-check
