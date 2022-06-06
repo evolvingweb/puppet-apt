@@ -17,21 +17,13 @@ All notable changes to this project will be documented in this file. The format 
 ### Fixed
 
 - pdksync - (GH-iac-334) Remove Support for Ubuntu 14.04 [#1023](https://github.com/puppetlabs/puppetlabs-apt/pull/1023) ([david22swan](https://github.com/david22swan))
-
 - pdksync - (GH-iac-334) Remove Support for Ubuntu 16.04 [#1022](https://github.com/puppetlabs/puppetlabs-apt/pull/1022) ([david22swan](https://github.com/david22swan))
-
 - (MODULES-11301) Don't install gnupg if not needed [#1020](https://github.com/puppetlabs/puppetlabs-apt/pull/1020) ([simondeziel](https://github.com/simondeziel))
-
 - Use fact() function for all os.distro.* facts [#1017](https://github.com/puppetlabs/puppetlabs-apt/pull/1017) ([root-expert](https://github.com/root-expert))
-
 - (maint) Fix resource ordering when apt-transport-https is needed [#1015](https://github.com/puppetlabs/puppetlabs-apt/pull/1015) ([smortex](https://github.com/smortex))
-
 - Omit empty options in source.list template to fix MODULES-11174 [#1013](https://github.com/puppetlabs/puppetlabs-apt/pull/1013) ([mpdude](https://github.com/mpdude))
-
 - Replace `arm64` for `aarch64` in `::apt::source` [#1012](https://github.com/puppetlabs/puppetlabs-apt/pull/1012) ([mpdude](https://github.com/mpdude))
-
 - Fixed gpg file for Ubuntu versions 21.04 and later. [#1011](https://github.com/puppetlabs/puppetlabs-apt/pull/1011) ([Conzar](https://github.com/Conzar))
-
 - (MODULES-10763) Remove frequency collector [#1010](https://github.com/puppetlabs/puppetlabs-apt/pull/1010) ([LTangaF](https://github.com/LTangaF))
 
 ## [v8.3.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v8.3.0) (2021-10-04)
