@@ -358,4 +358,20 @@ class apt (
   if $pins {
     create_resources('apt::pin', $pins)
   }
+
+  case $facts['os']['name'] {
+    'Debian': {
+      if versioncmp($facts['os']['release']['major'], '9') >= 0 {
+        ensure_packages(['gnupg'])
+      }
+    }
+    'Ubuntu': {
+      if versioncmp($facts['os']['release']['full'], '17.04') >= 0 {
+        ensure_packages(['gnupg'])
+      }
+    }
+    default: {
+      # Nothing in here
+    }
+  }
 }
