@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.5.0](https://github.com/puppetlabs/puppetlabs-apt/tree/v8.5.0) - 2022-07-03
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v8.4.1...v8.5.0)
+
+### Added
+
+- \(GH-1038\) add support for `check-valid-until` configuration [#1042](https://github.com/puppetlabs/puppetlabs-apt/pull/1042) ([david22swan](https://github.com/david22swan))
+
 ## [v8.4.1](https://github.com/puppetlabs/puppetlabs-apt/tree/v8.4.1) - 2022-06-20
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apt/compare/v8.4.0...v8.4.1)
