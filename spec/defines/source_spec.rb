@@ -171,6 +171,32 @@ describe 'apt::source' do
     }
   end
 
+  context 'with check_valid_until false' do
+    let :params do
+      {
+        location: 'hello.there',
+        check_valid_until: false,
+      }
+    end
+
+    it {
+      is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{# my_source\ndeb \[check-valid-until=false\] hello.there stretch main\n})
+    }
+  end
+
+  context 'with check_valid_until true' do
+    let :params do
+      {
+        location: 'hello.there',
+        check_valid_until: true,
+      }
+    end
+
+    it {
+      is_expected.to contain_apt__setting('list-my_source').with(ensure: 'present').with_content(%r{# my_source\ndeb hello.there stretch main\n})
+    }
+  end
+
   context 'with keyring set' do
     let :params do
       {

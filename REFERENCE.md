@@ -937,6 +937,7 @@ The following parameters are available in the `apt::source` defined type:
 * [`allow_unsigned`](#allow_unsigned)
 * [`notify_update`](#notify_update)
 * [`allow_insecure`](#allow_insecure)
+* [`check_valid_until`](#check_valid_until)
 
 ##### <a name="location"></a>`location`
 
@@ -1049,9 +1050,17 @@ Default value: ``true``
 
 Data type: `Boolean`
 
-
+Specifies whether to allow downloads from insecure repositories.
 
 Default value: ``false``
+
+##### <a name="check_valid_until"></a>`check_valid_until`
+
+Data type: `Boolean`
+
+Specifies whether to check if the package release date is valid. Defaults to `True`.
+
+Default value: ``true``
 
 ## Resource types
 

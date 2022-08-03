@@ -55,8 +55,14 @@
 # @param allow_unsigned
 #   Specifies whether to authenticate packages from this release, even if the Release file is not signed or the signature can't be checked.
 #
+# @param allow_insecure
+#   Specifies whether to allow downloads from insecure repositories.
+#
 # @param notify_update
 #   Specifies whether to trigger an `apt-get update` run.
+#
+# @param check_valid_until
+#   Specifies whether to check if the package release date is valid. Defaults to `True`.
 #
 define apt::source (
   Optional[String] $location                    = undef,
@@ -72,6 +78,7 @@ define apt::source (
   Boolean $allow_unsigned                       = false,
   Boolean $allow_insecure                       = false,
   Boolean $notify_update                        = true,
+  Boolean $check_valid_until                    = true,
 ) {
   include ::apt
 
@@ -136,10 +143,11 @@ define apt::source (
     'comment'          => $comment,
     'includes'         => $includes,
     'options'          => delete_undef_values( {
-        'arch'           => $architecture,
-        'trusted'        => $allow_unsigned ? { true => 'yes', false => undef },
-        'allow-insecure' => $allow_insecure ? { true => 'yes', false => undef },
-        'signed-by'      => $keyring,
+        'arch'              => $architecture,
+        'trusted'           => $allow_unsigned ? { true => 'yes', false => undef },
+        'allow-insecure'    => $allow_insecure ? { true => 'yes', false => undef },
+        'signed-by'         => $keyring,
+        'check-valid-until' => $check_valid_until? { true => undef, false => 'false' },
       },
     ),
     'location'         => $_location,
